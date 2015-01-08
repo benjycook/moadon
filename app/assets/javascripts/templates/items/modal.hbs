@@ -1,0 +1,144 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{#link-to 'items' tag="button" type="button" class="close sendExit"}}&times;{{/link-to}}
+        <h4 class="modal-title">
+          {{#if id}}
+            פרטי מוצר
+          {{else}}
+            יצירת מוצר
+          {{/if}}
+        </h4>
+      </div>     
+      <div class="modal-body">
+        <form>
+           {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+          {{/if}}
+
+          <div class="row">
+
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label>שם המוצר:</label>
+                  {{input type="text" class="form-control" valueBinding="name" required="required"}}
+                </div>
+              </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label>בתוקף עד:</label>
+                  {{input-date-time picker="date" class="form-control" valueBinding="expirationDate"required="required" }}
+                </div>
+              </div>
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label>ספק:</label>
+                    {{view Ember.ChosenSelectView
+                      classNames="form-control chosen-select chosen-rtl form-group" 
+                      contentBinding="suppliers"
+                      valueBinding="suppliers_id"
+                      prompt = "בחר"
+                      required="required"
+                    }}
+                </div>
+              </div>
+
+          </div>
+        <div class="row">
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>מחיר מחירון:</label>
+              {{input type="text" class="form-control" valueBinding="listPrice" required="required" data-parsley-type="number"}}
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>מחיר מועדונופש:</label>
+              {{input type="text" class="form-control" valueBinding="clubPrice" required="required" data-parsley-type="number"}}
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>מחיר נט:</label>
+              {{input type="text" class="form-control" valueBinding="netPrice" required="required" data-parsley-type="number"}}
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>הנחה(%):</label>
+              {{input type="text" class="form-control" valueBinding="discountPrecent" required="required" data-parsley-type="integer"}}
+            </div>
+          </div>
+
+        </div>
+
+
+
+          <div class="row">
+             <div class="col-md-12">
+                <div class="form-group">
+                  <label>תיאור:</label>
+                  {{textarea class="form-control" valueBinding="description" required="required"}}
+                </div>
+              </div>
+          </div>
+        <div class="row">
+          
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label>אזורים:</label>
+                    {{view Ember.ChosenSelectView
+                        classNames="form-control chosen-select chosen-rtl form-group" 
+                        multiple="true"
+                        placeholder_text_multiple = "בחר..."
+                        contentBinding="regionsSorted"
+                        selected=regions
+                        required='required'
+                      }}
+                </div>
+              </div>
+
+         </div>
+
+         <div class="row">
+          
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label>קטגוריות:</label>
+                    {{view Ember.ChosenSelectView
+                        classNames="form-control chosen-select chosen-rtl form-group" 
+                        multiple="true"
+                        placeholder_text_multiple = "בחר..."
+                        contentBinding="categoriesSorted"
+                        selected=categories
+                        required='required'
+                      }}
+                </div>
+              </div>
+
+         </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        {{#link-to 'items' tag="button" type="button" class="btn btn-default"}}ביטול{{/link-to}}
+        <div class="pull-left">
+           <button {{action "save" model view controller}} type="button" class="btn btn-success sendEnter">שמור</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

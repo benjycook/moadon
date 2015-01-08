@@ -1,0 +1,75 @@
+<div class="row tab-pane active" id="general">
+  <div class="col-xs-12">
+    <div class="row">
+
+          <div class="col-md-6">
+                <div class="form-group">
+                  <label>שם:</label>
+                  {{input type="text" class="form-control" valueBinding="name" required="required"}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>תיאור:</label>
+                  {{input type="text" class="form-control" valueBinding="description" required="required"}}
+                </div>
+              </div>
+
+          </div>
+
+          <div class="row">
+
+             <div class="col-md-6">
+                <div class="form-group">
+                  <label>שם משתמש:</label>
+                  {{input type="text" class="form-control" valueBinding="username" required="required"}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>סיסמא:</label>
+                  {{input type="text" class="form-control" valueBinding="password" required="required"}}
+                </div>
+              </div>
+
+          </div>
+
+           <div class="row">
+                <div class="col-md-12">
+                    <label class="title">איש קשר</label>
+                </div>
+          </div>
+
+          <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>שם פרטי:</label>
+                    {{input type="text" class="form-control" valueBinding="contactFirstName" required="required"}}
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>שם משפחה:</label>
+                    {{input type="text" class="form-control" valueBinding="contactLastName" required="required"}}
+                  </div>
+                </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>נייד:</label>
+                    {{input type="text" class="form-control" valueBinding="contactPhone" required="required" }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>דוא"ל:</label>
+                    {{input type="text" class="form-control" valueBinding="contactEmail" required="required" data-parsley-type="email"}}
+                </div>
+              </div>
+          </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width:710px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button  type="button" class="close sendExit" {{action 'closeWindow'}}>&times;</button>
+      </div>     
+      <div class="modal-body">
+        <label style="font-weigth:bold;font-size:24px;text-align:center">האם תרצה לעבור דף בלי לשמור?</label>
+      </div>
+      <div class="modal-footer">
+        <button  type="button" class="btn btn-default active sendEnter" style="width:80px;" {{action 'transition'}}>כן</button>
+        <div class="pull-left">
+          <button  type="button" class="btn btn-default active sendEnter" style="width:80px;" {{action 'closeWindow'}}>לא</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}
+

@@ -1,0 +1,146 @@
+<div class="row tab-pane active" id="itemGeneral">
+  <div class="col-md-12">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label>שם המוצר:</label>
+                      {{input type="text" class="form-control" valueBinding="name" required="required"}}
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                      <label>מק"ט:</label>
+                      {{input class="form-control" valueBinding="sku"required="required" }}
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                      <label>בתוקף עד:</label>
+                      {{input-date-time picker="date" class="form-control" valueBinding="expirationDate"required="required" }}
+                    </div>
+                </div>
+                
+                <div class="col-md-2">
+                    <div class="form-group">
+                      <label>סטאטוס:</label>
+                        {{view Ember.ChosenSelectView
+                              classNames="form-control chosen-select chosen-rtl form-group" 
+                              prompt = "בחר..."
+                              contentBinding="App.states"
+                              selected=states_id
+                              required="required"
+                           }}
+                    </div>
+                </div>
+                
+            </div>
+
+            <div class="row">
+               <div class="col-md-3">
+                <div class="form-group">
+                  <label>סוג מוצר:</label>
+                    {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group" 
+                          prompt = "בחר..."
+                          contentBinding="App.itemTypes"
+                          selected=itemtypes_id
+                          required="required"
+                    }}
+                </div>
+              </div>
+
+              {{#if single}}
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>מחיר מחירון לבודד:</label>
+                    {{input type="text" class="form-control" valueBinding="listPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>מחיר קופונופש לבודד:</label>
+                    {{input type="text" class="form-control" valueBinding="clubPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>מחיר נט לבודד:</label>
+                    {{input type="text" class="form-control" valueBinding="netPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                  </div>
+                </div>
+              {{/if}}
+            </div>
+
+            {{#if group}}
+              <div class="row">
+                
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>מינימום משתתפים:</label>
+                      {{input type="text" class="form-control" valueBinding="minParticipants" required="required" data-parsley-type="integer" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>מקסימום משתתפים:</label>
+                      {{input type="text" class="form-control" valueBinding="maxParticipants" required="required" data-parsley-type="integer" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>מחיר מחירון לאדם בקבוצה:</label>
+                      {{input type="text" class="form-control" valueBinding="listPriceGroup" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+                 
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>מחיר נט לאדם בקבוצה:</label>
+                      {{input type="text" class="form-control" valueBinding="netPriceGroup" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+              </div>
+
+            {{/if}}
+
+           
+            <div class="row">
+                 <div class="col-md-12">
+                    <div class="form-group">
+                      <label>תיאור מקוצר:</label>
+                      {{input class="form-control" valueBinding="shortDescription" required="required"}}
+                    </div>
+                  </div>
+            </div>
+
+            <div class="row">
+                 <div class="col-md-12">
+                    <div class="form-group">
+                      <label>תיאור:</label>
+                      {{textarea class="form-control" valueBinding="description" required="required"}}
+                    </div>
+                  </div>
+            </div>
+
+             <div class="row">
+                 <div class="col-md-12">
+                    <div class="form-group">
+                      <label>הערות:</label>
+                      {{textarea class="form-control" valueBinding="notes" }}
+                    </div>
+                  </div>
+            </div>
+
+      </div>
+</div>

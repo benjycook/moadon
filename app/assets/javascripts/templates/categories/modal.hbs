@@ -1,0 +1,58 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{#link-to 'categories' tag="button" type="button" class="close sendExit"}}&times;{{/link-to}}
+         <h4 class="modal-title">
+          {{#if id}}
+            פרטי קטגוריה
+          {{else}}
+            יצירת קטגוריה
+          {{/if}}
+        </h4>
+      </div>     
+      <div class="modal-body">
+        <form>
+           {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+          {{/if}}
+
+          <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>שם:</label>
+                  {{input type="text" class="form-control" valueBinding="name" required="required"}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>קטגוריה ראשית:</label>
+                        {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group chosen-multi" 
+                          prompt = "בחר..."
+                          contentBinding="displayCategories"
+                          selected=categories_id
+                         
+                        }}
+                  </div>
+                </div>
+          </div> 
+
+
+      <div class="modal-footer">
+        {{#link-to 'categories' tag="button" type="button" class="btn btn-default"}}ביטול{{/link-to}}
+        <div class="pull-left">
+           <button {{action "save" model view controller}} type="button" class="btn btn-success sendEnter">שמור</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

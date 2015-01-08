@@ -1,0 +1,113 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{#link-to 'members' tag="button" type="button" class="close sendExit"}}&times;{{/link-to}}
+        <h4 class="modal-title">
+          {{#if id}}
+            פרטי חבר מועדון
+          {{else}}
+            יצירת חבר מועדון
+          {{/if}}
+        </h4>
+      </div> 
+      <div class="modal-body">
+        <form>
+           {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close'}}></i>
+                </div>
+          {{/if}}
+          <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>שם פרטי:</label>
+                  {{input type="text" class="form-control" valueBinding="firstName" required="required"}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>שם משפחה:</label>
+                  {{input type="text" class="form-control" valueBinding="lastName" required="required"}}
+                </div>
+              </div>
+          </div>
+          <div class="row">
+              
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>ת.ז:</label>
+                    {{input type="text" class="form-control" valueBinding="idNumber" required="required" data-parsley-idcheck="data-parsley-idcheck"}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>מספר מזהה:</label>
+                    {{input type="text" class="form-control" valueBinding="employeeId" required="required" disabled=isDisabled}}
+                </div>
+              </div>
+                
+          </div>
+
+          <div class="row">
+
+              <div class="col-md-6">
+                  <div class="form-group">
+                    <label>טלפון:</label>
+                      {{input type="text" class="form-control" valueBinding="phone" required="required" }}
+                  </div>
+                </div>
+
+               <div class="col-md-6">
+                <div class="form-group">
+                  <label>מועדון:</label>
+                    {{view Ember.ChosenSelectView
+                      classNames="form-control chosen-select chosen-rtl form-group" 
+                      contentBinding="clubs"
+                      valueBinding="clubs_id"
+                      prompt = "בחר"
+                      required="required"
+                    }}
+                  </div>
+                </div>
+          </div>
+
+          <div class="row">
+           <div class="col-md-6">
+              <div class="form-group">
+                <label>דוא"ל:</label>
+                  {{input type="text" class="form-control" valueBinding="email" required="required" data-parsley-type="email"}}
+              </div>
+            </div>
+            {{#unless id}}
+             <div class="col-md-6">
+                <div class="form-group">
+                  <label>סיסמא:</label>
+                    {{input type="text" class="form-control" valueBinding="password" required="required" }}
+                </div>
+              </div>
+            {{/unless}}
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        {{#link-to 'members' tag="button" type="button" class="btn btn-default"}}ביטול{{/link-to}}
+        <div class="pull-left">
+          {{#if id}}
+             <button {{action "save" model view "PUT"}} type="button" class="btn btn-success sendEnter">שמור</button>
+          {{else}}
+            <button {{action "save" model view "POST"}} type="button" class="btn btn-success sendEnter">שמור</button>
+          {{/if}}
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

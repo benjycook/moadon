@@ -1,0 +1,28 @@
+{{outlet modal}}
+{{#if App.logedin}}
+<div class="container">
+	<div id="header">
+		<div class="navbar navbar-default">
+			<ul class="nav navbar-nav">
+
+		  	<li>{{#link-to 'clubs'}}מועדונים{{/link-to}}</li>
+		  	<li>{{#link-to 'suppliers'}}ספקים{{/link-to}}</li>
+		  	{{!-- <li>{{#link-to 'members'}}חברי מועדון{{/link-to}}</li> --}}
+		  	{{!-- <li>{{#link-to 'items'}}מוצרים{{/link-to}}</li> --}}
+		  	<li>{{#link-to 'regions'}}אזורים{{/link-to}}</li>
+		  	<li>{{#link-to 'categories'}}קטגוריות{{/link-to}}</li>
+		  	<li>{{#link-to 'clients'}}לקוחות{{/link-to}}</li>
+		  	<li>{{#link-to 'orders'}}הזמנות{{/link-to}}</li>
+			</ul>
+			
+			<ul class="nav navbar-nav pull-left">
+				<li class="icon">{{#link-to 'users'}}<i class="fa fa-users"></i>{{/link-to}}</li>
+				<li class="last icon">{{#link-to 'logout'}}<i class="fa fa-power-off"></i>{{/link-to}}</li>
+			</ul>
+		</div>
+	</div>
+	<div id="content">
+		{{outlet}}
+	</div>
+</div>	
+{{/if}}

@@ -1,0 +1,60 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 60%;">
+    <div class="modal-content">
+        <div class="modal-header">
+         <a {{action 'back'}} class="close sendExit">&times;</a>
+          <h4 class="modal-title">
+           מימושים
+          </h4>
+        </div>   
+
+        <div class="modal-body">
+          <form>
+             <div class="row">
+              {{#each real in realized}}
+                  <div class="col-md-6">
+                      <div class="form-group">
+                        <label>שם המוצר:</label>
+                        {{input type="text" class="form-control" valueBinding="name" disabled="disabled"}}
+                      </div>
+                  </div>
+                   <div class="col-md-2">
+                      <div class="form-group">
+                        <label>תאריך מימוש:</label>
+                        {{input-date-time picker="date" class="form-control" valueBinding="real.realizedDate" disabled="disabled" }}
+                      </div>
+                  </div>
+
+                  <div class="col-md-2">
+                      <div class="form-group">
+                        <label>שעת מימוש:</label>
+                        {{input-date-time picker="date" class="form-control" valueBinding="real.realizedTime" disabled="disabled" }}
+                      </div>
+                  </div>
+
+                   <div class="col-md-2">
+                      <div class="form-group">
+                        <label>כמות:</label>
+                        {{input class="form-control" valueBinding="real.realizedQty" disabled="disabled" }}
+                      </div>
+                  </div>
+
+              {{/each}}
+
+            </div> 
+
+          </form>
+        
+
+        <div class="modal-footer">
+          <div class="pull-left">
+               <a {{action 'back'}} class="btn btn-default active">סגור</a>
+          </div>
+        </div>
+    </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

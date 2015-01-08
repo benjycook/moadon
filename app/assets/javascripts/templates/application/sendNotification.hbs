@@ -1,0 +1,28 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header"><h4>הבקשה התבצעה</h4></div>     
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>הסיסמא נשלחה לכתובת הדוא"ל שלך.</label>
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-left">
+          <button {{action "back"}} type="button" class="btn btn-success">חזור</button>
+        </div>
+      </div>
+       
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

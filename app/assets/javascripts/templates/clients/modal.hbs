@@ -1,0 +1,156 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width:55%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        {{#link-to 'clients' tag="button" type="button" class="close sendExit"}}&times;{{/link-to}}
+        <h4 class="modal-title">
+          {{#if id}}
+            עריכת לקוח
+          {{else}}
+            לקוח חדש
+          {{/if}}
+        </h4>
+      </div>     
+      <div class="modal-body">
+        <form>
+           {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+          {{/if}}
+              <div class="row">
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>מועדון:</label>
+                         {{view Ember.ChosenSelectView
+                              classNames="form-control chosen-select chosen-rtl form-group " 
+                              prompt = "בחר..."
+                              contentBinding="App.clubs"
+                              selected=clubs_id
+                             required="required"
+                            }}
+                    </div>
+                  </div>  
+              </div>
+              <div class="row">
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>שם פרטי:</label>
+                      {{input type="text" class="form-control" valueBinding="firstName" required="required"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>שם משפחה:</label>
+                      {{input type="text" class="form-control" valueBinding="lastName" required="required"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>ת.ז/ח.פ/ע.מ:</label>
+                      {{input type="text"  class="form-control" valueBinding="taxId" data-parsley-minlength="9" data-parsley-maxlength="9" data-parsley-type="digits" data-parsley-idcheck="idcheck" required="required" }}
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                    <div class="form-group">
+                      <label>עיר:</label>
+                      {{input type="text"  class="form-control" valueBinding="city" required="required"}}
+                    </div>
+                  </div>
+
+            </div> 
+
+            <div class="row">
+
+               <div class="col-md-3">
+                  <div class="form-group">
+                    <label>נייד:</label>
+                    {{input type="text" class="form-control" valueBinding="phone1" data-parsley-type="digits" required="required"}}
+                  </div>
+                </div>
+
+               <div class="col-md-3">
+                  <div class="form-group">
+                    <label>טלפון:</label>
+                    {{input type="text" class="form-control" valueBinding="phone2" data-parsley-type="digits"}}
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>פקס:</label>
+                    {{input type="text" class="form-control" valueBinding="fax" data-parsley-type="digits"}}
+                  </div>
+                </div>
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>דוא״ל:</label>
+                    {{input type="text" class="form-control" valueBinding="email" data-parsley-type="email" required="required" }}
+                  </div>
+                </div>       
+ 
+            </div>
+
+            <div class="row">
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>רחוב:</label>
+                    {{input type="text" class="form-control" valueBinding="street"  required="required" }}
+                </div> 
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>בית:</label>
+                    {{input type="text" class="form-control" valueBinding="house" data-parsley-type="digits" required="required"}}
+                </div>
+              </div>
+              <div class="col-md-2"> 
+                <div class="form-group">
+                  <label>כניסה:</label>
+                    {{input type="text" class="form-control" valueBinding="entrance" }}
+                </div>
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>דירה:</label>
+                    {{input type="text" class="form-control" valueBinding="apartment" data-parsley-type="digits"}}
+                </div>  
+              </div>
+
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>מיקוד:</label>
+                  {{input type="text" class="form-control" valueBinding="zipcode" data-parsley-type="digits" required="required"}}
+                </div>
+              </div>
+
+            </div>
+
+             
+        </div>
+    
+        </form>
+
+      <div class="modal-footer">
+        {{#link-to 'clients' class="btn btn-default active"}}חזור{{/link-to}}
+       
+        <div class="pull-left">
+           <button class="btn btn-success sendEnter" {{action 'save' model view controller}}>שמור</button>
+        </div>
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

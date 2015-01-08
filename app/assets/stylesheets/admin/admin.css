@@ -1,0 +1,73 @@
+label.title
+{
+	color:#428bca;
+	font-size: 18px;
+}
+.imgwraper
+{
+  
+  background-color: #f8f8f8;
+  height: 170px;
+  width: 230px;
+  text-align: center;
+}
+.imgwraper .imageUpload
+{
+  max-height: inherit;
+  max-width: 100%;
+  position: relative;
+  top: 50%;
+    -webkit-transform: translate(0,-50%);
+    /*-ms-transform: translateY(-50%);*/
+    transform: translateY(-50%);
+}
+.imgDelete
+{
+  bottom: 0;
+    color: #FF7E00;
+    cursor: pointer;
+    display: block;
+    position: relative;
+    text-align: center;
+    width: 100%;
+}
+.imgDelete i 
+{
+    float: right;
+    font-size: 16px;
+    line-height: 18px;
+    margin-left: 7px;
+}
+.previewImage
+{
+  background-color: black;
+    max-width: 100%;
+  max-height: inherit;
+}
+.imageUpload
+{
+  width: auto;
+  display: block;
+  cursor: pointer;
+  max-height: inherit;
+}
+.imageUpload input
+{
+  display: none;
+}
+.chosen-container-multi
+{
+  height: auto;
+}
+.form-control.chosen-container-multi .chosen-choices
+{
+  max-height: none;
+}
+.form-control.chosen-rtl .chosen-choices li.search-choice
+{
+  margin-bottom: 5px;
+}
+.search-field input
+{
+  height: auto !important;
+}

@@ -1,0 +1,17 @@
+<ul class="gallery">
+
+	{{#each image in images}}
+		<li {{bind-attr data-id=image.id}}>
+        <div class="remove">
+            <i class="fa fa-times" {{action 'remove' image.id}}></i>
+        </div>
+        <img {{bind-attr src=image.fullSrc}} class="previewImage">
+        <label class="imageUpload">
+            {{file-upload url=image.url linkBinding="image.fullSrc" errorBinding="error" name="fileUpload"}}
+        </label>
+		</li>
+	{{/each}}
+</ul>
+<div style=" height:33px;margin: 10px 0;">
+  <button {{action 'add' images}} class="btn btn-primary pull-left" style="margin-left:17px;">הוסף</button>
+</div>

@@ -1,0 +1,165 @@
+<div class="row tab-pane" id="site">
+  <div class="col-md-12">
+    {{#view App.FormView}}
+    <form autocomplete="off">
+      	<div class="row">
+
+              <div class="col-md-6">
+                  <div class="form-group">
+                      <label>שם ספק:</label>
+                      {{input type="text" class="form-control" valueBinding="sitedetails.supplierName" required="required"}}
+                  </div>
+              </div>
+
+               <div class="col-md-6">
+                  <div class="form-group">
+                      <label>כותרת משנית:</label>
+                      {{input type="text" class="form-control" valueBinding="sitedetails.altHeadline" required="required"}}
+                  </div>
+              </div>
+
+        </div>
+      
+        <div class="row">
+
+    	    <div class="col-md-12">
+    	        <div class="form-group">
+    	          <label>תיאור:</label>
+    	          {{textarea type="text" class="form-control" valueBinding="sitedetails.description" required="required"}}
+    	        </div>
+    	     </div>
+        </div>
+        <div class="row">
+           <div class="col-md-12">
+              <div class="form-group">
+                <label>תוכן למיני סייט:</label>
+                {{textarea type="text" class="form-control" valueBinding="sitedetails.miniSiteContext" required="required"}}
+              </div>
+           </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-6">
+              <div class="form-group">
+                <label>שעות פעילות:</label>
+                {{textarea type="text" class="form-control" valueBinding="sitedetails.workingHours" required="required"}}
+              </div>
+           </div>
+
+           <div class="col-md-6">
+              <div class="form-group">
+                <label>מתאים לגילאים:</label>
+                {{textarea type="text" class="form-control" valueBinding="sitedetails.ageDevision" required="required"}}
+              </div>
+           </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <label class="title">פרטי התקשרות:</label>
+            </div>
+        </div>
+
+    	<div class="row">
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>עיר:</label>
+                {{input type="text" class="form-control" valueBinding="sitedetails.city" required="required"}}
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>כתובת:</label>
+                {{input type="text" class="form-control" valueBinding="sitedetails.address" required="required"}}
+              </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="form-group">
+                  <label>אזור ראשי:</label>
+                    {{view Ember.ChosenSelectView
+                        classNames="form-control chosen-select chosen-rtl form-group" 
+                        prompt = "בחר..."
+                        contentBinding="App.regions"
+                        selected=sitedetails.regions_id
+                        required='required'
+                      }}
+                </div>
+              </div>
+         
+    	</div>
+      <div class="row">
+         <div class="col-md-4">
+              <div class="form-group">
+                <label>נייד:</label>
+                  {{input type="text" class="form-control" valueBinding="sitedetails.phone1" required="required" }}
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label>טלפון ראשי:</label>
+                {{input type="text" class="form-control" valueBinding="sitedetails.phone2" required="required"}}
+              </div>
+            </div>
+
+             <div class="col-md-4">
+              <div class="form-group">
+                <label>טלפון משני:</label>
+                {{input type="text" class="form-control" valueBinding="sitedetails.phone3" required="required"}}
+              </div>
+            </div>
+      </div>
+      	<div class="row">
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>פקס:</label>
+                {{input type="text" class="form-control" valueBinding="sitedetails.fax" required="required" }}
+            </div>
+          </div>
+
+          <div class="col-md-4">
+    	        <div class="form-group">
+    	          <label>דוא"ל:</label>
+    	            {{input type="text" class="form-control" valueBinding="sitedetails.email" required="required" data-parsley-type="email"}}
+    	        </div>
+    	    </div>
+
+    	    <div class="col-md-4">
+    	        <div class="form-group">
+    	          <label>אתר:</label>
+    	            {{input type="text" class="form-control" valueBinding="sitedetails.site" required="required" data-parsley-type="url"}}
+    	        </div>
+    	    </div>
+          
+      	</div>
+
+      	<div class="row">
+            <div class="col-md-12">
+                <label class="title">גלריה:</label>
+            </div>
+        </div>
+
+        <div class="row tab-pane" id="gallery">
+          <div class="col-md-12">
+            {{ui-gallery data=sitedetails.galleries.main uploadUrl=sitedetails.uploadUrl error=error}}
+          </div>
+        </div>
+
+        <div class="modal-footer">
+            
+            <div class="pull-left">
+               <div class="pull-left">
+                  <button {{action "saveSiteDetails" model.sitedetails view controller }} type="button" class="btn btn-success sendEnter">שמור</button>
+                </div>
+            </div>
+        </div>
+
+    </form>
+    {{/view}}
+  </div>
+</div>

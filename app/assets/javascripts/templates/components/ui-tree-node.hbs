@@ -1,0 +1,30 @@
+<div class="tree-row">
+	<span {{bind-attr class=":toggle-icon node.children.length::leaf"}} {{action 'toggle'}}>
+	    {{#if isExpanded}}
+	      <i class="fa fa-minus-square-o"></i>
+	    {{else}}
+	      <i class="fa fa-plus-square-o"></i>
+	    {{/if}}
+	</span>
+
+	{{#if isEditable}}
+	  {{input type="text" value=node.name focus-out="toggleEdit"}}
+	{{else}}
+	  <a class="text" title="לחץ לעריכה" {{action 'toggleEdit'}}>{{node.name}}</a>
+	{{/if}}
+
+	<div class="pull-left">
+		<span class="badge">{{node.children.length}}</span>
+		{{#if isDeletable}}
+			<i class="fa fa-trash" {{action 'remChild' node}}></i>
+		{{else}}
+			<i class="fa fa-trash disabled"></i>
+		{{/if}}
+	</div>
+</div>
+
+{{#if isExpanded}}
+  {{ui-tree node=node}}
+  <span class="tree-add"><i class="fa fa-plus-circle" {{action 'addChild'}}></i>הוסף</span>
+{{/if}}
+

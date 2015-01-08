@@ -1,0 +1,123 @@
+<div class="row tab-pane active" id="supplier">
+  <div class="col-md-12">
+    {{#view App.FormView}}
+    <form autocomplete="off">
+        <div class="row">
+
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label>שם ספק:</label>
+                  {{input type="text" class="form-control" valueBinding="supplier.name" required="required"}}
+                </div>
+          </div>
+
+
+          <div class="col-md-6">
+              <div class="form-group">
+                  <label>ע.מ/ח.פ:</label>
+                  {{input type="text" class="form-control" valueBinding="supplier.idNumber" required="required" data-parsley-idcheck="idcheck"}}
+                </div>
+          </div>
+
+        </div>
+
+          <div class="row">
+
+             <div class="col-md-6">
+                <div class="form-group">
+                  <label>שם משתמש:</label>
+                  {{input type="text" class="form-control" valueBinding="supplier.username" required="required"}}
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>סיסמא:</label>
+                  {{input type="text" class="form-control" valueBinding="supplier.password" required="required"}}
+                </div>
+              </div>
+
+          </div>
+
+          <div class="row">
+                <div class="col-md-12">
+                    <label class="title">איש קשר</label>
+                </div>
+          </div>
+
+          <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>שם פרטי:</label>
+                    {{input type="text" class="form-control" valueBinding="supplier.contactFirstName" required="required"}}
+                  </div>
+                </div>
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>שם משפחה:</label>
+                    {{input type="text" class="form-control" valueBinding="supplier.contactLastName" required="required"}}
+                  </div>
+                </div>
+          </div>
+          <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>נייד:</label>
+                    {{input type="text" class="form-control" valueBinding="supplier.contactPhone" required="required" }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>דוא"ל:</label>
+                    {{input type="text" class="form-control" valueBinding="supplier.contactEmail" required="required" data-parsley-type="email"}}
+                </div>
+              </div>
+          </div>
+          <div class="row">
+          
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label>אזורים:</label>
+                    {{view Ember.ChosenSelectView
+                        classNames="form-control chosen-select chosen-rtl form-group" 
+                        multiple="true"
+                        placeholder_text_multiple = "בחר..."
+                        contentBinding="App.regions"
+                        selected=supplier.regions
+                        required='required'
+                      }}
+                </div>
+              </div>
+
+         </div>
+
+         <div class="row">
+          
+            <div class="col-md-12">
+                <div class="form-group">
+                  <label>קטגוריות:</label>
+                    {{view Ember.ChosenSelectView
+                        classNames="form-control chosen-select chosen-rtl form-group" 
+                        multiple="true"
+                        placeholder_text_multiple = "בחר..."
+                        contentBinding="App.categories"
+                        selected=supplier.categories
+                        required='required'
+                      }}
+                </div>
+              </div>
+
+         </div>
+
+          <div class="modal-footer">
+            <div class="pull-left">
+               <div class="pull-left">
+                  <button {{action "saveSupplier" model.supplier view controller }} type="button" class="btn btn-success sendEnter">שמור</button>
+                </div>
+            </div>
+          </div>
+      </form>
+      {{/view}}
+  </div>
+</div>

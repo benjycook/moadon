@@ -1,0 +1,46 @@
+
+<div class="panel panel-default grid">
+	<div class="panel-heading">
+		<div class="panel-label">פרטי ספק {{supplier.name}}</div>
+		<div class="pull-left actions">	
+			{{#link-to 'suppliers' tag="button" type="button" class="btn btn-default"}}<i class="fa fa-times"></i>{{/link-to}}
+		</div>
+	</div>
+</div>
+<div class="panel-body" style="background-color: #f4f4f4;">
+   
+		{{#if error}}
+			<div class="alert alert-danger error">
+			  <strong>שגיאה:</strong> {{error}}
+			  <i class="fa fa-times" {{action 'close' controller}}></i>
+			</div>
+		{{/if}}
+		 {{#if success}}
+                <div class="alert alert-success success">
+                  {{success}} 
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+          {{/if}}
+		<div class="row">
+                <div class="col-xs-2">
+                  <ul class="nav nav-pills nav-stacked">
+                    <li class="active"><a href="#supplier" data-toggle="tab">פרטי ספק</a></li>
+                   {{#if disableTabs}}
+                   		<li class="disabled"><a  data-toggle="tab" >פרטים באתר</a></li>
+	                    <li class="disabled"><a  data-toggle="tab">מוצרים</a></li>
+                   {{else}}
+	                    <li ><a href="#site" data-toggle="tab" >פרטים באתר</a></li>
+	                    <li ><a href="#items" data-toggle="tab">מוצרים</a></li>
+                   {{/if}}
+                  </ul>
+                </div>
+
+                <div class="col-xs-10 tab-content">
+	                {{partial "suppliers/tabs/supplier"}}
+
+					{{partial "suppliers/tabs/site"}}
+
+					{{partial "suppliers/tabs/items"}}
+                </div>
+        </div> 
+</div>

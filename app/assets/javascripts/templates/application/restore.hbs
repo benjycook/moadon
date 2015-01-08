@@ -1,0 +1,40 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header"><h4>שחזור סיסמא</h4></div>     
+      <div class="modal-body">
+        <form>
+          
+          {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" style="float: left;font-size: 20px;" {{action close controller}}></i>
+                </div>
+          {{/if}}
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>דוא"ל:</label>
+                {{input type="text" class="form-control" valueBinding="model.email" required="required" data-parsley-type="email"}}
+              </div>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-left">
+          <button {{action "sendRestore" model view}} type="button" class="btn btn-success sendEnter">שחזר</button>
+        </div>
+        <div class="pull-right">
+          <button {{action "back"}} type="button" class="btn btn-success">חזור</button>
+        </div>
+      </div>
+       
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

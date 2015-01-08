@@ -1,0 +1,51 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 70%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button {{action 'closeWindow' }} class="close sendExit" >&times;</button>
+        <h4 class="modal-title">
+          {{#if id}}
+            פרטי מוצר
+          {{else}}
+            יצירת מוצר
+          {{/if}}
+        </h4>
+      </div>     
+      <div class="modal-body">
+        <form autocomplete="off">
+           {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+          {{/if}}
+
+          <div class="row">
+                <div class="col-xs-2">
+                  <ul class="nav nav-pills nav-stacked">
+                      <li class="active"><a href="#itemGeneral" data-toggle="tab" >כללי</a></li>
+                      <li ><a href="#itemGalleries" data-toggle="tab">גלריות</a></li>
+                  </ul>
+                </div>
+
+                <div class="col-xs-10 tab-content">
+                  {{partial "suppliers/tabs/itemGeneral"}}
+
+                  {{partial "suppliers/tabs/itemGalleries"}}
+                </div>
+        </div> 
+        
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button {{action 'closeWindow'}} class="btn btn-default active" >ביטול</button>
+        <div class="pull-left">
+           <button {{action "saveItem" model view controller}} type="button" class="btn btn-success sendEnter">שמור</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

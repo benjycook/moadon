@@ -1,0 +1,31 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header">
+          <button {{action "back"}} type="button" class="close sendExit">&times;</button>
+        <h4 class="modal-title">
+         עדכון קטגוריות
+        </h4>
+      </div>     
+      <div class="modal-body">        
+        <div class="row">
+          <div class="col-xs-12">
+            <div {{bind-attr class=":alert error:alert-danger:alert-success"}}>
+              <div class="alert-heading" style="width: 330px;">
+                {{#if error}}
+                  {{error}}
+                {{else}}
+                  {{success}}
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}
