@@ -55,12 +55,16 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'moadonofesh',
-			'username'  => 'dev',
-			'password'  => 'zxcv9090',
+			'database'  => '',
+			'username'  => '',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_general_ci',
 			'prefix'    => '',
+			'options'   => array(
+         PDO::ATTR_STRINGIFY_FETCHES 	=> false,
+         PDO::ATTR_EMULATE_PREPARES		=> false
+      ),
 		),
 
 		'pgsql' => array(
