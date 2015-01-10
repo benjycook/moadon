@@ -1,0 +1,126 @@
+body 
+{
+	font-size: 14px;
+	background-color: #eeeef4;
+	direction: rtl;
+}
+
+#header, 
+#footer {
+	height: 100px;
+	width: 100%;
+}
+
+#header {
+	height: 135px;
+	border-bottom: 1px solid #bebec3;
+	background-image: url('../../img/site/headerbg.png');
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	background-color: #07578d;
+
+}
+
+#main {
+	width: 100%;
+	min-height: 800px;
+}
+
+#footer {
+	height: 45px;
+	background-color: #bdbdc2;
+	color: #fff;
+}
+
+
+.container {
+	width: 1000px;
+	margin: 0 auto;
+	overflow: auto;
+	position: relative;
+}
+
+#sidebar {
+	background-color: #000;
+	height: 800px;
+	width: 235px;
+	display: block;
+	color: #fff;
+	float: right;
+
+}
+
+#content {
+	background-color: #ff0000;
+	height: 800px;
+	display: block;
+	color: #fff;
+	position: absolute;
+	left: 0;
+	right: 255px;
+	top: 0;
+}
+
+#header #logo {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#header p {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	line-height: 24px;
+}
+
+#header p a{
+	color: #fff;
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	height: 27px;
+	padding: 0 10px;
+	text-decoration: none;
+}
+
+#header p a:hover,
+#header p a.active{
+	background-color: #0b81c1;
+}
+
+#header p.right {
+	float: right;
+}
+
+
+#header p.right a {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+#header p.left {
+	float: left;
+}
+
+#header p.left a {
+	margin-right: 10px;
+}
+
+#header #search {
+	width: 240px;
+	height: 65px;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+
+#header .container {
+	height: 135px;
+}
+
+#header #search input {
+	width: 205px;
+	height: 40px;
+	display: block;
+}
