@@ -15,7 +15,10 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
 
-Route::get('/', function(){ return Redirect::to('admin'); });
+Route::group(array(), function(){
+	Route::get('/', 'SiteIndexController@index');
+});
+
 Route::group(array('prefix' => 'admin'), function()
 {
 
