@@ -106,6 +106,12 @@ class AdminSiteDetailsController extends BaseController
     	foreach ($data['galleries'] as $gallery) 
 		{
 			$counter = 1;
+			if(!isset($gallery['id']))
+			{
+				$new = Gallery::create(array('type'=>'ראשית'));
+				$gallery['id'] = $new->id;
+				$siteDetails->galleries()->attach($new->id);
+			}
 			foreach ($gallery['images'] as &$img) {
 				if(!strpos($img['fullSrc'],"?"))
 					unset($gallery['images'][array_search($img,$gallery['images'])]);
