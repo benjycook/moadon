@@ -7,7 +7,7 @@
 		<meta charset="utf-8">
 		<title>מועדונופש</title>
 		<base href='<?php echo URL::to('admin'); ?>/' />
-		<?php echo stylesheet_link_tag("application.css"); ?>
+		<?php echo stylesheet_link_tag("admin/application.css"); ?>
 
 	</head>
 
