@@ -3,4 +3,5 @@
 //= require ember-1.7.0
 //= require application.js
 //= require router.js
+//= require_tree routes
 //= require_tree templates
