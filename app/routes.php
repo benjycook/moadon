@@ -17,6 +17,7 @@ header('Access-Control-Allow-Headers: token');
 
 Route::group(array(), function(){
 	Route::get('/', 'SiteIndexController@index');
+	Route::get('options', 'SiteIndexController@options');
 });
 
 Route::group(array('prefix' => 'admin'), function()
