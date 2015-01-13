@@ -14,10 +14,10 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
-
-Route::group(array(), function(){
+//club routes
+Route::group(array('domain' => '{slug}.moadonofesh.co.il'), function(){
 	Route::get('/', 'SiteIndexController@index');
-	Route::get('options', 'SiteIndexController@options');
+	Route::get('options', 'SiteClubsController@options');
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -29,7 +29,7 @@ Route::group(array('prefix' => 'admin'), function()
 	Route::get('logout',	'AdminLoginController@logout');
 	Route::post('restore',	'AdminLoginController@restore');
 	Route::get('options','AdminOptionsController@index');
-	
+
 	Route::group(array('before' => 'auth'), function() 
 	{
 		Route::resource('clubs','AdminClubsController');
