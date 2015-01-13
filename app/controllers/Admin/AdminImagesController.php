@@ -45,7 +45,7 @@ class AdminImagesController extends BaseController
 				$img['src'] = "";
 				$galleryimage = new GalleryImage;
 				$galleryimage = $galleryimage->create($img);
-				$img['src']   = "galleries/".$galleryimage->id."$ext";
+				$img['src']   = $galleryimage->id."$ext";
 				File::move($tempDirPath."".$fileName,$tempDirPath."".$galleryimage->id."".$ext);
 			}
 			$ids[] = $galleryimage->id;
