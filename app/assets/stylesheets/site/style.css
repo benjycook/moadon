@@ -1,0 +1,300 @@
+body 
+{
+	font-size: 14px;
+	background-color: #eeeef4;
+	direction: rtl;
+}
+
+#header, 
+#footer {
+	height: 100px;
+	width: 100%;
+}
+
+#header {
+	height: 135px;
+	border-bottom: 1px solid #bebec3;
+	background-image: url('../../img/site/headerbg.png');
+	background-repeat: repeat-x;
+	background-position: left bottom;
+	background-color: #07578d;
+
+}
+
+#main {
+	width: 100%;
+	min-height: 800px;
+	margin-top: 30px;
+}
+
+#footer {
+	height: 45px;
+	background-color: #bdbdc2;
+	color: #fff;
+}
+
+
+.container {
+	width: 1000px;
+	margin: 0 auto;
+	overflow: auto;
+	position: relative;
+}
+
+#sidebar {
+	height: 800px;
+	width: 235px;
+	display: block;
+	float: right;
+}
+
+#content {
+	height: 800px;
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 255px;
+}
+
+#header #logo {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+}
+
+#header p {
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	line-height: 24px;
+}
+
+#header p a{
+	color: #fff;
+	text-decoration: none;
+	color: #fff;
+	display: inline-block;
+	height: 27px;
+	padding: 0 10px;
+	text-decoration: none;
+}
+
+#header p a:hover,
+#header p a.active{
+	background-color: #0b81c1;
+}
+
+#header p.right {
+	float: right;
+}
+
+
+#header p.right a {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+#header p.left {
+	float: left;
+}
+
+#header p.left a {
+	margin-right: 10px;
+}
+
+
+
+#header .container {
+	height: 135px;
+}
+
+
+
+
+#search label {
+  clear: both;
+  color: #06568d;
+  display: block;
+  font-size: 22px;
+  padding-bottom: 10px;
+  white-space: nowrap;
+}
+
+#header #search {
+	width: 240px;
+	position: absolute;
+	left: 0;
+	bottom: 20px;
+}
+
+#search .search-field {
+	width: 240px;
+	height: 35px;
+}
+
+#search .search-field input {
+    border: medium none;
+    border-radius: 0 5px 5px 0;
+    box-shadow: 1px 1px 3px -1px rgba(0, 0, 0, 1) inset;
+    display: inline-block;
+    height: 35px;
+    margin: 0;
+    padding: 0 10px;
+    width: 205px;
+    box-sizing: border-box;
+}
+
+#search .search-field button {
+	width: 35px;
+	height: 35px;
+	display: inline-block;
+	background-color: #06568d;
+	color: #fff;
+	border: none;
+	border-radius:  5px 0 0 5px;
+	padding: 0;
+	margin-right: 0;
+	float: left;
+}
+
+#sidebar button.cart {
+	background-color: #22bdf1;
+	border: medium none;
+	border-radius: 5px;
+	color: #fff;
+	display: block;
+	font-size: 16px;
+	height: 40px;
+	letter-spacing: 1px;
+	margin-bottom: 10px;
+	padding-bottom: 2px;
+	width: 100%;
+}
+
+#footer ul.navigation {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	float: left;
+}
+
+#footer ul.navigation li{
+	display: inline-block;
+	margin-right: 10px;
+}
+
+#footer ul.navigation li a{
+	color: #fff;
+	font-size: 16px;
+	text-decoration: none;
+	line-height: 45px;
+}
+
+#content {
+	margin-left: -8px;
+	margin-right: -8px;
+}
+
+.box {
+	box-sizing: border-box;
+	display: block;
+	float: right;
+	padding: 0 8px 16px;
+	width: 33.33%;
+}
+
+.box .inner{
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 3px;
+	width: 100%;
+	height: 300px;
+	box-shadow: 1px 0px 2px 1px rgba(0, 0, 0, 0.12);
+	padding: 10px;
+	position: relative;
+	overflow: hidden;
+}
+
+.box .inner label{
+    background-color: #d4d4d9;
+    color: #fff;
+    display: block;
+    font-size: 16px;
+    font-weight: normal;
+    height: 40px;
+    left: -37px;
+    letter-spacing: 1px;
+    line-height: 36px;
+    position: absolute;
+    text-align: center;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    top: 18px;
+    transform: rotate(-45deg);
+    width: 150px;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+}
+
+.box .inner img {
+	height: 54%;
+	width: 100%;
+	background-color: #a0a0a0;
+	border: none;
+}
+
+.box .inner h2 {
+	color: #06568d;
+	font-size: 18px;
+	margin: 0;
+	padding: 0;
+	line-height: 18px;
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-style: normal;
+}
+
+.box .inner address {
+	color: #454547;
+	text-align: center;
+	font-style: normal;
+	font-size: 14px;
+	line-height: 16px;
+}	
+
+.box .inner .info {
+  border-top: 2px solid #e5e5e5;
+  bottom: 0;
+  box-sizing: border-box;
+  height: 50px;
+  left: 2px;
+  padding: 8px 25px 0;
+  position: absolute;
+  right: 2px;
+}
+
+.box .inner .info span {
+	color: #454545;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 27px;
+}
+
+
+.box .inner .info button {
+	width: 80px;
+	height: 30px;
+	border-radius: 3px;
+	background-color: #1b79ba;
+	color: #fff;
+	font-size: 14px;
+	font-weight: bold;
+	border: none;
+	float: left;
+	padding: 0;
+}
+
+
+.box .inner .info button:hover {
+	background-color: #2192e0;
+}

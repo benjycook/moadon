@@ -18,7 +18,7 @@ Ember.Application.initializer({
   	application.deferReadiness();
 	    $.ajax({
 				type: 'GET',
-				url: '../options',
+				url: 'options',
 			}).then(function(data){
 				App.identificationTypes.set('content', data.identificationTypes);
 				App.states.set('content', data.states);

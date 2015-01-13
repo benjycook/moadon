@@ -1,3 +1,16 @@
-{{ui-tree node=categories title="אזור חדש"}}
-<button class="btn btn-default" {{action 'addItem'}}>+ הוסף</button>
-<button class="btn btn-default" {{action 'save'}}>שמור</button>
+<div class="panel panel-default grid">
+	<div class="panel-heading">
+		<div class="panel-label">אזורים</div>
+		<div class="actions pull-left">
+			<a class="btn btn-default" {{action 'save'}}>
+				<i class="fa fa-save"></i>
+			</a>
+			<a class="btn btn-default" {{action 'addItem'}}>
+				<i class="fa fa-plus"></i>
+			</a>
+		</div>
+	</div>
+	<div class="panel-body">
+		{{ui-tree node=categories title="אזור חדש"}}
+	</div>
+</div>

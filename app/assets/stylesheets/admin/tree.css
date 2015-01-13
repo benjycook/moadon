@@ -1,0 +1,59 @@
+
+.tree-branch {
+	padding-right: 20px;
+  padding-left: 20px;
+}
+
+.tree-row {
+  font-size: 20px;
+  padding: 2px 5px;
+}
+
+.tree-row a {
+  color: #000;
+}
+
+span.tree-add {
+  font-size: 14px;
+  padding-right: 20px;
+  display: inline-block;
+  margin: 0px 5px 7px;
+  color: #31708f;
+}
+
+span.tree-add i.fa{
+  vertical-align: middle;
+  margin-left: 5px;
+}
+
+i.fa.disabled {
+  opacity: 0.3;
+}
+
+.tree-branch .fa {
+  cursor: pointer;
+  vertical-align:  middle;
+}
+
+.tree-branch li:nth-child(odd) {
+   background-color: #f4f4f4;
+}
+
+.tree-branch li:nth-child(even) {
+   background-color: #fff;
+}
+
+
+.tree-row:hover {
+  background-color: #ddd;
+}
+
+.tree-row .badge {
+  position: relative;
+  top: -2px;
+  background-color: #ed5565;
+}
+
+.panel-body > .tree-branch {
+  padding: 0;
+}
