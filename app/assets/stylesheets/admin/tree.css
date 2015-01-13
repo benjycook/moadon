@@ -53,3 +53,7 @@ i.fa.disabled {
   top: -2px;
   background-color: #ed5565;
 }
+
+.panel-body > .tree-branch {
+  padding: 0;
+}

@@ -28,7 +28,8 @@ Route::group(array('prefix' => 'admin'), function()
 	Route::post('login',	'AdminLoginController@login');
 	Route::get('logout',	'AdminLoginController@logout');
 	Route::post('restore',	'AdminLoginController@restore');
-
+	Route::get('options','AdminOptionsController@index');
+	
 	Route::group(array('before' => 'auth'), function() 
 	{
 		Route::resource('clubs','AdminClubsController');
@@ -42,6 +43,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('regions','AdminRegionsController');
 		Route::resource('sitedetails','AdminSiteDetailsController');
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
+
 	});
 });
 
@@ -59,4 +61,3 @@ Route::group(array('prefix' => 'clubs'), function()
 	Route::post('restore','LoginController@restorePassword');
 });
 
-Route::get('options','OptionsController@options');
