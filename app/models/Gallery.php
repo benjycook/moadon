@@ -5,9 +5,9 @@ class Gallery extends Eloquent {
 	protected $fillable = array('type');
 	public $timestamps = false;
 
-    public function images()
-    {
-        return $this->hasMany('GalleryImage','galleries_id','id');
-    }
+  public function images()
+  {
+      return $this->hasMany('GalleryImage','galleries_id','id');
+  }
 
 }

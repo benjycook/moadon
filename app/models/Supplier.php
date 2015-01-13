@@ -3,8 +3,18 @@
 class Supplier extends Eloquent {
 
 	protected $table = 'suppliers';
-	protected $fillable = array('name','idNumber','username','password','contactFirstName',
-								'contactLastName','contactPhone','contactEmail');
+
+	protected $fillable = array(
+		'name',
+		'idNumber',
+		'username',
+		'password',
+		'contactFirstName',
+		'contactLastName',
+		'contactPhone',
+		'contactEmail'
+	);
+	
 	public function items()
 	{
 		return $this->hasMany('Item','suppliers_id','id')->with('galleries');
@@ -16,9 +26,9 @@ class Supplier extends Eloquent {
 	}
 
 	public function regions()
-    {
-        return $this->belongsToMany('Region','suppliers_regions','suppliers_id','regions_id');
-    }
+  {
+      return $this->belongsToMany('Region','suppliers_regions','suppliers_id','regions_id');
+  }
 
   public function categories()
   {
