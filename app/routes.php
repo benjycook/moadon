@@ -14,7 +14,7 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
-$domain = 'moadonofesh.co.il';
+$domain = $_ENV['DOMAIN'];
 
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');

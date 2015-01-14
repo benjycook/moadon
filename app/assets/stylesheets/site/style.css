@@ -463,10 +463,10 @@ div.tree-row.down-arrow:after {
 }
 
 .mini-site ul.items li > div {
-  display: inline-block;
-  height: 41px;
-  padding: 12px 0;
-  vertical-align: top;
+    display: inline-block;
+    height: 50px;
+    margin: 7px 0;
+    vertical-align: top;
 }
 
 .mini-site ul.items li .name{
@@ -479,9 +479,10 @@ div.tree-row.down-arrow:after {
 }
 
 .mini-site ul.items li .description{
-	width: 180px;
+	width: 220px;
 	font-size: 14px;
 	color: #454547;
+	overflow: hidden;
 }
 
 .mini-site .items .order {
@@ -498,7 +499,7 @@ div.tree-row.down-arrow:after {
   font-weight: bold;
   line-height: 27px;
   margin-right: 15px;
-  margin-top: 4px;
+  margin-top: 9px;
   padding: 3px 10px;
   text-align: center;
   text-decoration: none;
