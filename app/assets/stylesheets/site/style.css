@@ -28,6 +28,10 @@ body
 	margin-top: 30px;
 }
 
+#main .container {
+	overflow: hidden;
+}
+
 #footer {
 	height: 45px;
 	background-color: #bdbdc2;

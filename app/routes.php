@@ -17,7 +17,7 @@ header('Access-Control-Allow-Headers: token');
 $domain = $_ENV['DOMAIN'];
 
 //club routes
-Route::group(array('domain' => "{slug}.$domain"), function(){
+Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
 	Route::get('options', 'SiteClubsController@options');
 });
