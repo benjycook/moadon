@@ -57,7 +57,7 @@ GRID.PaginatedMixin = Ember.Mixin.create({
         var controller = Em.get(this.get('itemController'));
         var addOns = this.get('addOns');
         //console.log(this.get('search.params'));
-        var addParmas = this.get('search.params') || ('query='+this.get('query'));
+        var addParmas = this.get('search.params') || ('query='+encodeURIComponent(this.get('query')));
 
         var addSort = [];
         var temp = "";
