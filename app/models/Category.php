@@ -1,8 +1,14 @@
 <?php
 
 class Category extends Eloquent {
+    
 	protected $table = 'categories';
-	protected $fillable = array('name','parent_id');
+	
+    protected $fillable = array(
+        'name',
+        'parent_id'
+    );
+
 	public $timestamps = false;
 
 	public function suppliers()
@@ -23,6 +29,7 @@ class Category extends Eloquent {
     public static function boot()
     {
         parent::boot();
+
         Category::deleting(function($cat)
         {   
            $cat->children()->delete();

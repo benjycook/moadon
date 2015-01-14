@@ -7,21 +7,21 @@
         </a>
 
         <p class="right">
-            ישראל ישראלי, חבר מועדון “יחד” ברוך הבא
+            ישראל ישראלי, חבר מועדון “{{club.name}}” ברוך הבא
             <a href="#">יציאה</a>
         </p>
 
         <p class="left">
             <strong>שרות לקוחות 1-700-700-400</strong>
-            <a href="#">צור קשר</a>
-            <a href="#" class="active">כניסה לאזור האישי</a>
+            {{#link-to contact}}צור קשר{{/link-to}}
+            {{#link-to account}}החשבון שלי{{/link-to}}
         </p>
 
         <div id="search">
             <label>החברים שלנו משלמים פחות</label>
             <div class="search-field">
                 <input type="text" placeholder="חיפוש חופשי באתר" />
-                <button type="button">&gt;</button>
+                <button type="button" {{action 'addItem'}}>&gt;</button>
             </div>
         </div>
 
@@ -34,116 +34,38 @@
     <div class="container">
        
         <div id="sidebar">
-            <button class="cart">סל הקניות שלי [ 3 ]</button>
+            <button class="cart">סל הקניות שלי [ {{cart.length}} ]</button>
 
-            <ul class="categories">
-            </ul>
+            {{ui-tree node=categories class="tree"}}
 
-            <ul class="regions">
-                <li>חיפוש לפי אזור<i class="fa fa-filter"></i></li>
-            </ul>
+            {{ui-tree node=regions class="tree"}}
+
         </div>
 
 
         <div id="content">
             
-            <div class="box">
-                <div class="inner">
-                    <label>אטרקציות</label>
-                    <img src="" />
-                    <h2>פארק מיני ישראל</h2>
-                    <address>
-                        ירושליים, לטרון
-                        <br />
-                        1700-559559
-                    </address>
-                    <div class="info">
-                        <span>25% הנחה</span>
-                        <button class="">לפרטים</button>
-                    </div>
-                </div>
-            </div>
+            {{#each supplier in suppliers itemController="supplier"}}
 
-            <div class="box">
-                <div class="inner">
-                    <label>מסעדות</label>
-                    <img src="" />
-                    <h2>פארק מיני ישראל</h2>
-                    <address>
-                        ירושליים, לטרון
-                        <br />
-                        1700-559559
-                    </address>
-                    <div class="info">
-                        <span>25% הנחה</span>
-                        <button class="">לפרטים</button>
+                <div class="box">
+                    <div class="inner">
+                        <label>אטרקציות</label>
+                        <img src="" />
+                        <h2>{{supplier.supplierName}}</h2>
+                        <address>
+                            {{supplier.regionName}}, {{supplier.city}}
+                            <br />
+                            {{supplier.phone1}}
+                        </address>
+                        <div class="info">
+                            <span>25% הנחה</span>
+                            {{#link-to 'supplier' supplier.id class="button"}}לפרטים{{/link-to}}
+                        </div>
                     </div>
                 </div>
-            </div>
+            
+            {{/each}}
 
-            <div class="box">
-                <div class="inner">
-                    <img src="" />
-                    <h2>פארק מיני ישראל</h2>
-                    <address>
-                        ירושליים, לטרון
-                        <br />
-                        1700-559559
-                    </address>
-                    <div class="info">
-                        <span>25% הנחה</span>
-                        <button class="">לפרטים</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="inner">
-                    <img src="" />
-                    <h2>פארק מיני ישראל</h2>
-                    <address>
-                        ירושליים, לטרון
-                        <br />
-                        1700-559559
-                    </address>
-                    <div class="info">
-                        <span>25% הנחה</span>
-                        <button class="">לפרטים</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="inner">
-                    <img src="" />
-                    <h2>פארק מיני ישראל</h2>
-                    <address>
-                        ירושליים, לטרון
-                        <br />
-                        1700-559559
-                    </address>
-                    <div class="info">
-                        <span>25% הנחה</span>
-                        <button class="">לפרטים</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="box">
-                <div class="inner">
-                    <img src="" />
-                    <h2>פארק מיני ישראל</h2>
-                    <address>
-                        ירושליים, לטרון
-                        <br />
-                        1700-559559
-                    </address>
-                    <div class="info">
-                        <span>25% הנחה</span>
-                        <button class="">לפרטים</button>
-                    </div>
-                </div>
-            </div>                                                
         </div>
 
     </div>

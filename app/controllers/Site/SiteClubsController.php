@@ -30,33 +30,35 @@ class SiteClubsController extends BaseController
 		$data = array();
 		$data['club'] = $club->toArray();
 		$data['club']['logo'] = URL::to('/')."/".$data['club']['logo'];
-		
-		$data['regions'] = Region::with('children')->get();
-		$data['categories'] = Category::with('children')->get();
 
-		$data['mostViewed'] = SiteDetails::site()->whereHas('supplier',function($q){
-			$q->where('views','>',0);
-			$q->orderBy('views','DESC');
+		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
+		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();
 
-		})->take(10)->get();
 
-		$ids = Collection::make($data['mostViewed'])->lists('id');
-		if(!count($ids))
-			array_push($ids,0);
+		$data['suppliers']  = SiteDetails::forPage(1,9)->get()->toArray();
+		// $data['mostViewed'] = SiteDetails::site()->whereHas('supplier',function($q){
+		// 	$q->where('views','>',0);
+		// 	$q->orderBy('views','DESC');
 
-		$data['newSuppliers'] = SiteDetails::site()->whereNotIn('id',$ids)->whereHas('supplier',function($q){
-			$q->orderBy('created_at','DESC');
-		})->take(10)->get();
+		// })->take(10)->get();
 
-		$ids = array_merge($ids,Collection::make($data['newSuppliers'])->lists('id'));
+		// $ids = Collection::make($data['mostViewed'])->lists('id');
+		// if(!count($ids))
+		// 	array_push($ids,0);
+
+		// $data['newSuppliers'] = SiteDetails::site()->whereNotIn('id',$ids)->whereHas('supplier',function($q){
+		// 	$q->orderBy('created_at','DESC');
+		// })->take(10)->get();
+
+		//$ids = array_merge($ids,Collection::make($data['newSuppliers'])->lists('id'));
 		
-		$suppliers = SiteDetails::site()->whereNotIn('id',$ids)->get();
+		//$suppliers = SiteDetails::site()->whereNotIn('id',$ids)->get();
 		
-		$data['suppliers'] = $this->setUp($suppliers,$data['regions']);
+		//$data['suppliers'] = $this->setUp($suppliers,$data['regions']);
 		
-		$data['mostViewed'] = $this->setUp($data['mostViewed'],$data['regions']);
+		//$data['mostViewed'] = $this->setUp($data['mostViewed'],$data['regions']);
 		
-		$data['newSuppliers'] = $this->setUp($data['newSuppliers'],$data['regions']);
+		//$data['newSuppliers'] = $this->setUp($data['newSuppliers'],$data['regions']);
 
 		return Response::json($data,200);
 	}

@@ -3,6 +3,7 @@ body
 	font-size: 14px;
 	background-color: #eeeef4;
 	direction: rtl;
+	font-family: arial;
 }
 
 #header, 
@@ -37,7 +38,7 @@ body
 .container {
 	width: 1000px;
 	margin: 0 auto;
-	overflow: auto;
+	overflow: hidden;
 	position: relative;
 }
 
@@ -281,7 +282,7 @@ body
 }
 
 
-.box .inner .info button {
+.box .inner .info a.button {
 	width: 80px;
 	height: 30px;
 	border-radius: 3px;
@@ -292,9 +293,86 @@ body
 	border: none;
 	float: left;
 	padding: 0;
+	text-decoration: none;
+	display: inline-block;
+	text-align: center;
+	line-height: 27px;
 }
 
-
-.box .inner .info button:hover {
+.box .inner .info a.button:hover {
 	background-color: #2192e0;
+}
+
+.tree, .tree ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+ul.tree {
+	background: #fff;
+	border: 1px solid #e7e7ec;
+	border-radius: 5px;
+}
+
+ul.tree > li > div {
+	border-radius: 5px 5px 0 0;
+	height: 35px;
+	border-bottom: 1px solid #d9dcde;
+	color: #1b79ba;
+	font-size: 16px;
+	line-height: 35px;
+	padding: 0 20px 0 15px;
+
+	background-image: linear-gradient(to top, #d3dee2 0%, #fff 50%);
+	cursor: pointer;
+	font-weight: bold;
+	position: relative;
+}
+
+ul.tree > li > div[class*="-arrow"]:after {
+	content: "\002771";
+	position: absolute;
+	display: block;
+	height: 30px;
+	left: 15px;
+	right: auto;
+	top: 0;
+	line-height: 30px;
+	transition: 0.6s;
+	font-weight: normal;
+}
+
+ul.tree > li > div.down-arrow:after {
+ transform: rotate(-90deg);
+}
+
+ul.tree > li ul {
+	padding-right: 25px;
+}
+
+.tree-row {
+	height: 30px;
+	line-height: 26px;
+	padding-right: 15px;
+	position: relative;
+	color: #828283;
+	font-weight: bold;
+}
+
+div.tree-row[class*="-arrow"]:after {
+	content: '\0025C4';
+		position: absolute;
+	display: block;
+	height: 30px;
+	right: 0;
+	top: 0;
+	line-height: 27px;
+	transition: 0.6s;
+}
+
+div.tree-row.down-arrow:after {
+
+	transform: rotate(-90deg);
+	right: -2px;
 }

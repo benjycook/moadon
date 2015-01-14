@@ -1,0 +1,11 @@
+<div {{bind-attr class=":tree-row isExpanded:down-arrow:right-arrow"}}  {{action 'toggle'}} >
+	<span {{bind-attr class=":toggle-icon node.children.length::leaf"}}>
+		{{node.name}}
+	</span>
+
+</div>
+
+{{#if isExpanded}}
+  {{ui-tree node=node}}
+{{/if}}
+
