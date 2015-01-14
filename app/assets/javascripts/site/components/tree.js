@@ -19,8 +19,23 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
   actions: {
       toggle: function() {
-        //if(this.get('node.children.length'))
-          this.toggleProperty('isExpanded');
+        var expended = this.get('isExpanded');
+        if(!expended)
+        {
+          this.set('isExpanded', !expended);
+          Ember.run.scheduleOnce('afterRender', this, function(){
+            this.$('> ul').hide();
+            this.$('> ul').slideDown();
+          });
+        }
+        else
+          Ember.run.scheduleOnce('afterRender', this, function(){
+            var self = this;
+            this.$('> ul').slideUp(function(){
+              self.set('isExpanded', !expended);
+            });
+          });
+        
       },
       
       toggleEdit: function() {
@@ -43,7 +58,6 @@ App.UiTreeNodeComponent = Ember.Component.extend({
       },
 
       remChild: function(){
-        console.log(this.get('parent'), this.get('node'));
         this.get('parent.children').removeObject(this.get('node'));
       }
 

@@ -38,19 +38,18 @@ body
 .container {
 	width: 1000px;
 	margin: 0 auto;
-	overflow: hidden;
+	overflow: visible;
 	position: relative;
 }
 
 #sidebar {
-	height: 800px;
 	width: 235px;
 	display: block;
 	float: right;
 }
 
 #content {
-	height: 800px;
+	min-height: 800px;
 	display: block;
 	position: absolute;
 	top: 0;
@@ -313,6 +312,7 @@ ul.tree {
 	background: #fff;
 	border: 1px solid #e7e7ec;
 	border-radius: 5px;
+	margin-bottom: 10px;
 }
 
 ul.tree > li > div {
@@ -339,7 +339,7 @@ ul.tree > li > div[class*="-arrow"]:after {
 	right: auto;
 	top: 0;
 	line-height: 30px;
-	transition: 0.6s;
+	transition: 0.6s ease-in-out;
 	font-weight: normal;
 }
 
@@ -349,6 +349,8 @@ ul.tree > li > div.down-arrow:after {
 
 ul.tree > li ul {
 	padding-right: 25px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 .tree-row {
@@ -368,7 +370,7 @@ div.tree-row[class*="-arrow"]:after {
 	right: 0;
 	top: 0;
 	line-height: 27px;
-	transition: 0.6s;
+	transition: 0.6s ease-in-out;
 }
 
 div.tree-row.down-arrow:after {
