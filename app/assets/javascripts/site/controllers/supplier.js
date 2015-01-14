@@ -7,6 +7,8 @@ App.SupplierController = Em.ObjectController.extend({
 	regionName: function()
 	{
 		var region = this.get('application.flatRegions').findBy('id', this.get('regions_id'));
-		return region.name;
+		if(region)
+			return region.name;
+		return 'לא ידועה';
 	}.property('regions_id')
 });

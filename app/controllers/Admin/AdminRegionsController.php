@@ -65,16 +65,12 @@ class AdminRegionsController extends BaseController
 	    $names = array();
 	    $restricted = array();
 	    foreach ($regions as $region) {
+	    	$this->branchIds = array(-1);
 	    	$this->idSet($region);
 	    	$test = array_intersect($this->branchIds,$bindings);
 	    	if(count($test))
 	    		$restricted = array_merge($restricted,$this->branchIds);
 	    }
-	    // if(count($bindings))
-	    // {
-	    // 	$region = Region::where('id','=',current($bindings))->first();
-	    // 	return Response::json(array('error'=>'לא נינן למחוק אזור '.$region->name.' מכיוון שהוא משויך לאחד הספקים','tree'=>$regionsTree),501);
-	    // }
 	   	$restricted = array_unique($restricted);
 	   	foreach ($restricted as $key => $value) {
 	   		$reg = Region::find($value);

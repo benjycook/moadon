@@ -66,17 +66,13 @@ class AdminCategoriesController extends BaseController
 	    $names = array();
 	    $restricted = array();
 	    foreach ($categories as $category) {
+	    	$this->branchIds = array(-1);
 	    	$this->idSet($category);
 	    	$test = array_intersect($this->branchIds,$bindings);
 	    	if(count($test))
 	    		$restricted = array_merge($restricted,$this->branchIds);
+
 	    }
-	    // if(count($bindings))
-	    // {
-	    // 	$category = Category::where('id','=',current($bindings))->first();
-	    // 	return Response::json(array('error'=>'לא נינן למחוק קטגוריה '.$category->name.' מכיוון שהיא משויכת לאחד הספקים','tree'=>$categoriesTree),501);
-	    // }
-	    // 
 	    $restricted = array_unique($restricted);
 	   	foreach ($restricted as $key => $value) {
 	   		$cat = Category::find($value);
@@ -89,6 +85,7 @@ class AdminCategoriesController extends BaseController
 	    }
 	    $categories = Category::orderBy('name','ASC')->get();
 	    $categoriesTree = json_decode($this->index()->getContent(),true);
+
 	    if(count($names))
 	    	return Response::json(array('error'=>'לא ניתן למחוק קטגוריה "'.implode(',',$names).'" מכיוון שהינה משויכת לאחד הספקים','tree'=>$categoriesTree),501);
 	    else
