@@ -97,6 +97,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');
 			}).fail(function(data){
+				controller.set('success',null);
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else
@@ -130,6 +131,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				controller.set('success',"נשמר בהצלחה.");
 				form.parsley().reset();
 			}).fail(function(data){
+				controller.set('success',null);
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else
@@ -157,11 +159,14 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: url,
 				data: JSON.stringify(model)
 			}).then(function(data){
-				controller.set('supplier',data);
+				controller.set('supplier',data.supplier);
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				form.parsley().reset();
+				if(!model.id)
+					controller.set('sitedetails',data.siteDetails);
 			}).fail(function(data){
+				controller.set('success',null);
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else

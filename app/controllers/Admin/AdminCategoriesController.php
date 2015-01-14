@@ -63,26 +63,32 @@ class AdminCategoriesController extends BaseController
 
 	    $bindings = DB::table('categories_suppliers')->whereNotIn('categories_id',$this->ids)->lists('categories_id');
 	    $categories = Category::whereNotIn('id',$this->ids)->get();
+	    $names = array();
+	    $restricted = array();
 	    foreach ($categories as $category) {
+	    	$this->branchIds = array(-1);
 	    	$this->idSet($category);
 	    	$test = array_intersect($this->branchIds,$bindings);
 	    	if(count($test))
-	    	{
-	    		$category = Category::where('id','=',current($bindings))->first();
-	     		return Response::json(array('error'=>'לא ניתן למחוק קטגוריה "'.$category->name.'" מכיוון שהינה משויכת לאחד הספקים','tree'=>$categoriesTree),501);
-	    	}
+	    		$restricted = array_merge($restricted,$this->branchIds);
+
 	    }
-	    // if(count($bindings))
-	    // {
-	    // 	$category = Category::where('id','=',current($bindings))->first();
-	    // 	return Response::json(array('error'=>'לא נינן למחוק קטגוריה '.$category->name.' מכיוון שהיא משויכת לאחד הספקים','tree'=>$categoriesTree),501);
-	    // }
-	    // 
+	    $restricted = array_unique($restricted);
+	   	foreach ($restricted as $key => $value) {
+	   		$cat = Category::find($value);
+	   		if($cat)
+	   			$names[] = $cat->name;
+	   	}
 	    foreach ($categories as $category) {
+	    	if(!in_array($category->id,$restricted))
 	    		$category->delete();
 	    }
 	    $categories = Category::orderBy('name','ASC')->get();
 	    $categoriesTree = json_decode($this->index()->getContent(),true);
-		return Response::json(array('categories'=>$categories,'tree'=>$categoriesTree),200);
+
+	    if(count($names))
+	    	return Response::json(array('error'=>'לא ניתן למחוק קטגוריה "'.implode(',',$names).'" מכיוון שהינה משויכת לאחד הספקים','tree'=>$categoriesTree),501);
+	    else
+			return Response::json(array('categories'=>$categories,'tree'=>$categoriesTree),200);
 	}
 }

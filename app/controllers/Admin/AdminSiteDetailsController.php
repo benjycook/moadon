@@ -55,41 +55,41 @@ class AdminSiteDetailsController extends BaseController
 			$img->delete();
 		}
 	}
-	public function store()
-	{
-		$json   = Request::getContent();
-    	$data   = json_decode($json,true);
-    	$siteDetails 	= new SiteDetails;
-    	$validator = Validator::make($data,$this->rules());
-    	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
-    	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
-    		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
-    	$siteDetails = $siteDetails->create($data);
-    	$images = $data['galleries']['main']['images'];
-		$counter = 1;
-		foreach($images as &$img) {
-			if(!strpos($img['fullSrc'],"?"))
-				unset($images[array_search($img,$images)]);
-			else
-			{
-				$img['pos'] = $counter;
-				$counter++;
-			}
-		}
-		$gallery = Gallery::create(array('type'=>'ראשית'));
-    	$gallery->images = $images;
-		$this->galleriesImages($gallery->images,$gallery->id);
-		$siteDetails->galleries()->attach($gallery->id);
-		$siteDetails = SiteDetails::with('galleries')->find($siteDetails['id'])->toArray();
-    	$siteDetails['linkId'] = $siteDetails['id'];
-		$temp = array();
-		$temp['main'] = isset($siteDetails['galleries'][0]) ? $siteDetails['galleries'][0]:array('images'=>array());
-		$temp['main']['base'] = URL::to('/')."/galleries/";
-		$siteDetails['galleries'] = $temp;
-		$siteDetails['uploadUrl'] = '/uploadImage';
-    	return Response::json($siteDetails,201);
-	}
+	// public function store()
+	// {
+	// 	$json   = Request::getContent();
+ //    	$data   = json_decode($json,true);
+ //    	$siteDetails 	= new SiteDetails;
+ //    	$validator = Validator::make($data,$this->rules());
+ //    	if($validator->fails())
+ //    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
+ //    		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
+ //    	$siteDetails = $siteDetails->create($data);
+ //    	$images = $data['galleries']['main']['images'];
+	// 	$counter = 1;
+	// 	foreach($images as &$img) {
+	// 		if(!strpos($img['fullSrc'],"?"))
+	// 			unset($images[array_search($img,$images)]);
+	// 		else
+	// 		{
+	// 			$img['pos'] = $counter;
+	// 			$counter++;
+	// 		}
+	// 	}
+	// 	$gallery = Gallery::create(array('type'=>'ראשית'));
+ //    	$gallery->images = $images;
+	// 	$this->galleriesImages($gallery->images,$gallery->id);
+	// 	$siteDetails->galleries()->attach($gallery->id);
+	// 	$siteDetails = SiteDetails::with('galleries')->find($siteDetails['id'])->toArray();
+ //    	$siteDetails['linkId'] = $siteDetails['id'];
+	// 	$temp = array();
+	// 	$temp['main'] = isset($siteDetails['galleries'][0]) ? $siteDetails['galleries'][0]:array('images'=>array());
+	// 	$temp['main']['base'] = URL::to('/')."/galleries/";
+	// 	$siteDetails['galleries'] = $temp;
+	// 	$siteDetails['uploadUrl'] = '/uploadImage';
+ //    	return Response::json($siteDetails,201);
+	// }
 
 	public function update($id)
 	{
@@ -103,6 +103,7 @@ class AdminSiteDetailsController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
+
     	foreach ($data['galleries'] as $gallery) 
 		{
 			$counter = 1;

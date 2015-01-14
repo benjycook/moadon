@@ -79,7 +79,15 @@ class AdminSuppliersController extends BaseController
     	$supplier = $supplier->create($data);
     	$supplier->categories()->attach($data['categories']);
     	$supplier->regions()->attach($data['regions']);
-    	return Response::json($supplier,201);
+    	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id));
+    	$gallery = Gallery::create(array('type'=>'ראשית'));
+		$siteDetails->galleries()->attach($gallery->id);
+		$base = URL::to('/')."/galleries/";
+		$newSite = new stdClass;
+		$newSite->linkId = $newSite->id = $siteDetails->id;
+		$newSite->uploadUrl = '/uploadImage';
+		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
+    	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
 	}
 
 	public function show($id)
@@ -137,7 +145,7 @@ class AdminSuppliersController extends BaseController
     	$supplier->regions()->sync($data['regions']);
     	$supplier->fill($data);
     	$supplier->save();
-    	return Response::json($supplier,201);
+    	return Response::json(array('supplier'=>$supplier),201);
 	}
 
 }

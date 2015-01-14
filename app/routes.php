@@ -14,10 +14,14 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
-$domain = $_ENV['DOMAIN'];
+$domain = 'moadonofesh.co.il';
 
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
+	// Route::get('/', function(){
+	// 	print_r(Config::get('app.debug','ads'));
+	// 	die();
+	// });
 	Route::get('options', 'SiteClubsController@options');
 	Route::get('supplier/{id}','SiteClubsController@supplier');
 });
