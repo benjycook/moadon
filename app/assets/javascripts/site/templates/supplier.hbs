@@ -46,13 +46,16 @@
 			{{/each}}
 		</ul>
 
-		<ul class="gallery">
-			{{#each image in images}}
-				<li><img {{bind-attr src=image}} />
-			{{/each}}
-		</ul>
+		<div class="gallery">
+			<ul class="gallery-images">
+				{{#each image in images}}
+					<li><img {{bind-attr src=image}} />
+				{{/each}}
+			</ul>
+		</div>
 
 		<div class="content">
+			{{miniSiteContext}}
 		</div>
 
 	</div>

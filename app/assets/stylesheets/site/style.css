@@ -508,3 +508,11 @@ div.tree-row.down-arrow:after {
 .mini-site .items .order button:hover {
 	background-color: #1b79ba;
 }
+
+
+.mini-site .gallery {
+	padding: 15px;
+	border-bottom: 1px solid #cbcbcc;
+	height: 135px;
+	margin-bottom: 15px;
+}
