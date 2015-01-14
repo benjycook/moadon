@@ -50,6 +50,9 @@ class AdminClubsController extends BaseController
 			return Response::json(array('error'=>'צורת הזדהות לא נמצא במערכת'),501);
 		if(Club::where('name','=',$data['name'])->count())
 			return Response::json(array('error'=>'שם מועדון זה כבר נמצא במערכת'),501);
+		if(Club::where('urlName','=',$data['urlName'])->count())
+			return Response::json(array('error'=>'תת דומיין זה קיים במערכת'),501);
+		 
     	$logo = $data['logo'];
     	unset($data['logo']);
     	$path = public_path()."/galleries/tempimages/";
@@ -88,6 +91,8 @@ class AdminClubsController extends BaseController
 			return Response::json(array('error'=>'צורת הזדהות לא נמצא במערכת'),501);
 		if(Club::where('id','!=',$data['id'])->where('name','=',$data['name'])->count())
 			return Response::json(array('error'=>'שם מועדון זה כבר נמצא במערכת'),501);
+		if(Club::where('id','!=',$data['id'])->where('urlName','=',$data['urlName'])->count())
+			return Response::json(array('error'=>'תת דומיין זה קיים במערכת'),501);
     	$path = public_path()."/galleries/tempimages/";
     	if($data['logo']!=""&&File::exists($path."".$data['logo']))
     	{
