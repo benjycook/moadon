@@ -128,4 +128,16 @@ App.ProtectedRoute = Em.Route.extend({
 });
 
 
-App.ApplicationRoute = Em.Route.extend({});
+App.ApplicationRoute = Em.Route.extend({
+	beforeModel:function()
+	{
+		var self = this;
+		 $.ajaxSetup({
+	        error: function (x, status, error) {
+	            if (x.status == 401) {
+	                self.transitionTo('login');
+	            }
+	        }
+	    });
+	}
+});
