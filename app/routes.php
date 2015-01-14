@@ -16,10 +16,10 @@ header('Access-Control-Allow-Headers: token');
 
 $domain = $_ENV['DOMAIN'];
 
-//club routes
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
 	Route::get('options', 'SiteClubsController@options');
+	Route::get('supplier/{id}','SiteClubsController@supplier');
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -52,7 +52,7 @@ Route::group(array('prefix' => 'admin'), function()
 Route::group(array('prefix' => 'clubs'), function()
 {
 	//temp 
-	Route::get('supplier/{id}','ClubsController@supplier');
+	
 	Route::get('search','ClubsController@search');
 	Route::group(array('before' => 'club_auth'), function() 
 	{
