@@ -14,8 +14,10 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
+$domain = $_ENV['DOMAIN'];
+
 //club routes
-Route::group(array('domain' => '{slug}.moadonofesh.co.il'), function(){
+Route::group(array('domain' => "{slug}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
 	Route::get('options', 'SiteClubsController@options');
 });
