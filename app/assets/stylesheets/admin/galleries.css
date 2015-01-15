@@ -43,6 +43,8 @@
 	left: 0;
 	bottom: 0;
 	z-index: 10;
+  background-color: black;
+  opacity: 0;
 }
 .gallery li img
 {

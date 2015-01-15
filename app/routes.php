@@ -15,8 +15,7 @@ header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
 $domain = getenv('ROOTDOMAIN');
-
-if(!isset($domain))
+if(empty($domain))
 	$domain = 'moadonofesh.co.il';
 
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
