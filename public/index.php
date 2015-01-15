@@ -6,8 +6,6 @@
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
 
-putenv('APP_ENV=local');
-
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

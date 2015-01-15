@@ -10,6 +10,6 @@ App.Router.map(function(){
 
 	});
 
-	this.route('supplier', {path: 'supplier/:supplier_id'});
+	this.route('supplier', {path: 'supplier/:id'});
 
 });

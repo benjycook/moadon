@@ -14,16 +14,15 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
-$domain = 'moadonofesh.co.il';
+$domain = getenv('ROOTDOMAIN');
 
-//club routes
+if(!isset($domain))
+	$domain = 'moadonofesh.co.il';
+
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
-	// Route::get('/', function(){
-	// 	print_r(Config::get('app.debug','ads'));
-	// 	die();
-	// });
 	Route::get('options', 'SiteClubsController@options');
+	Route::get('supplier/{id}','SiteClubsController@supplier');
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -56,7 +55,7 @@ Route::group(array('prefix' => 'admin'), function()
 Route::group(array('prefix' => 'clubs'), function()
 {
 	//temp 
-	Route::get('supplier/{id}','ClubsController@supplier');
+	
 	Route::get('search','ClubsController@search');
 	Route::group(array('before' => 'club_auth'), function() 
 	{

@@ -9,6 +9,10 @@ App.SupplierController = Em.ObjectController.extend({
 		var region = this.get('application.flatRegions').findBy('id', this.get('regions_id'));
 		if(region)
 			return region.name;
-		return 'לא ידועה';
-	}.property('regions_id')
+		return 'לא ידוע';
+	}.property('regions_id'),
+
+	image: function(){
+		return this.get('images.0');
+	}.property('images')
 });

@@ -35,7 +35,18 @@ class SiteClubsController extends BaseController
 		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();
 
 
-		$data['suppliers']  = SiteDetails::forPage(1,9)->get()->toArray();
+		$suppliers = SiteDetails::forPage(1,9)->with('galleries')->get()->toArray();
+		
+		foreach ($suppliers as &$supplier) {
+			$rawImages = array();
+			$images = $supplier['galleries'][0]['images'];
+			foreach ($images as $image) {
+				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
+			}
+			unset($supplier['galleries']);
+			$supplier['images'] = $rawImages;
+		}
+		$data['suppliers'] = $suppliers;
 		// $data['mostViewed'] = SiteDetails::site()->whereHas('supplier',function($q){
 		// 	$q->where('views','>',0);
 		// 	$q->orderBy('views','DESC');
@@ -75,7 +86,7 @@ class SiteClubsController extends BaseController
 		return $gallery;
 	}
 
-	public function supplier($id)
+	public function supplier($slug, $id)
 	{
 		$supplier = SiteDetails::whereHas('supplier',function($q) use($id){
 			$q->where('id','=',$id);
