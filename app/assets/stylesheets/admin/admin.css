@@ -74,3 +74,8 @@ label.title
 :-ms-input-placeholder {  
     color: black;
 }
+label.title {
+  color: #428bca;
+  border-bottom: 1px solid #428bca;
+  display: block;
+}

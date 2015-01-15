@@ -17,7 +17,11 @@ class Club extends Eloquent {
 		'clubCode',
 		'clubCommission',
 		'urlName',
-		'altHeadline'
+		'altHeadline',
+		'contactFirstName',
+		'contactLastName',
+		'contactPhone',
+		'contactEmail',
 	);
 
 	public $timestamps = false;

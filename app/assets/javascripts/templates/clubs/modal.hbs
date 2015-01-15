@@ -1,7 +1,7 @@
 {{#view App.ModalView}}
 <div class="modal-backdrop fade in"></div>
 <div class="modal fade" tabindex="-1">
-  <div class="modal-dialog">
+  <div class="modal-dialog" style="width:60%;">
     <div class="modal-content">
       <div class="modal-header">
         {{#link-to 'clubs' tag="button" type="button" class="close sendExit"}}&times;{{/link-to}}
@@ -21,132 +21,187 @@
                   <i class="fa fa-times" {{action 'close' controller}}></i>
                 </div>
           {{/if}}
-          <div class="row">
+        <div class="row">
+          <div class="col-xs-6">
 
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>שם מועדון:</label>
-                  {{input type="text" class="form-control" valueBinding="name" required="required"}}
+              <label class="title">פרטי מועדון</label>
+
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>שם מועדון:</label>
+                    {{input type="text" class="form-control" valueBinding="name" required="required"}}
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>כותרת לדף הכניסה:</label>
-                  {{input type="text" class="form-control" valueBinding="pageHeadline" required="required"}}
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>כותרת לדף הכניסה:</label>
+                    {{input type="text" class="form-control" valueBinding="pageHeadline" required="required"}}
+                  </div>
                 </div>
-              </div>
 
-          </div> 
+              </div> 
 
-          <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>תוכן לדף הכניסה:</label>
-                  {{textarea type="text" class="form-control" valueBinding="pageDescription" required="required"}}
-                </div>
-              </div>
-          </div>
-         
-          <div class="row">
-             <div class="col-md-12">
-                <div class="form-group">
-                  <label>כותרת משנה לדף כניסה:</label>
-                  {{input type="text" class="form-control" valueBinding="altHeadline" required="required" }}
-                </div>
-              </div>
-
-          </div>
-          <div class="row">
-             <div class="col-md-6">
-                <div class="form-group">
-                  <label>תת דומיין:</label>
-                  {{input type="text" class="form-control" valueBinding="urlName" required="required" }}
-                </div>
-              </div>
-
-          </div>
-          <div class="row">
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>צורת הזדהות:</label>
-                   {{view Ember.ChosenSelectView
-                      classNames="form-control chosen-select chosen-rtl form-group" 
-                      contentBinding="App.identificationTypes"
-                      valueBinding="identificationtypes_id"
-                      prompt = "בחר"
-                      required="required"
-                    }}
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>קוד מועדון:</label>
-                  {{input type="text" class="form-control" valueBinding="clubCode" required="required" }}
-                </div>
-              </div>
-
-          </div>
-
-          <div class="row">
-
-             <div class="col-md-6">
-                <div class="form-group">
-                  <label>מזהה מועדון:</label>
-                  {{input type="text" class="form-control" valueBinding="clubId" required="required" }}
-                </div>
-              </div>
-
-              <div class="col-md-6">
-                <div class="form-group">
-                  <label>סיסמא:</label>
-                  {{input type="text" class="form-control" valueBinding="password" required="required" }}
-                </div>
-              </div>
-
-          </div>
-          <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label>הנחה רגילה:</label>
-                  {{input type="text" class="form-control" valueBinding="regularDiscount" required="required" data-parsley-type="integer" data-parsley-range="[1,100]"}}
-                </div>
-              </div>
-
-               <div class="col-md-4">
-                <div class="form-group">
-                  <label>הנחת אשראי:</label>
-                  {{input type="text" class="form-control" valueBinding="creditDiscount" required="required" data-parsley-type="integer" data-parsley-range="[1,100]"}}
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label>עמלת מועדון:</label>
-                  {{input type="text" class="form-control" valueBinding="clubCommission" required="required" data-parsley-type="integer" data-parsley-range="[1,100]"}}
-                </div>
-              </div>
-              
-          </div>
-
-          <div class="row">
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label>לוגו:</label>
-                  <div class="imgwraper" style="height:170px; max-height:170px;">
-                        <label class="imageUpload">
-                            <img {{bind-attr src=logoUrl}} class="previewImage">
-                            {{file-upload url=uploadUrl linkBinding="logoUrl" errorBinding="error" name="fileUpload"}}
-                        </label>
+              <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>תוכן לדף הכניסה:</label>
+                      {{textarea type="text" class="form-control" valueBinding="pageDescription" required="required"}}
+                    </div>
                   </div>
               </div>
-            </div>
+         
+              <div class="row">
+
+                 <div class="col-md-12">
+                    <div class="form-group">
+                      <label>כותרת משנה לדף כניסה:</label>
+                      {{input type="text" class="form-control" valueBinding="altHeadline" required="required" }}
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="row">
+                 <div class="col-md-6">
+                    <div class="form-group">
+                      <label>תת דומיין:</label>
+                      {{input type="text" class="form-control" valueBinding="urlName" required="required" data-parsley-type="alphanum"}}
+                    </div>
+                  </div>
+              </div>
+              <div class="row">
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>צורת הזדהות:</label>
+                       {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group" 
+                          contentBinding="App.identificationTypes"
+                          valueBinding="identificationtypes_id"
+                          prompt = "בחר"
+                          required="required"
+                        }}
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>קוד מועדון:</label>
+                      {{input type="text" class="form-control" valueBinding="clubCode" required="required" }}
+                    </div>
+                  </div>
+
+              </div>
+
+              <div class="row">
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>הנחה רגילה:</label>
+                      {{input type="text" class="form-control" valueBinding="regularDiscount" required="required" data-parsley-type="integer" data-parsley-range="[1,100]"}}
+                    </div>
+                  </div>
+
+                   <div class="col-md-4">
+                    <div class="form-group">
+                      <label>הנחת אשראי:</label>
+                      {{input type="text" class="form-control" valueBinding="creditDiscount" required="required" data-parsley-type="integer" data-parsley-range="[1,100]"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>עמלת מועדון:</label>
+                      {{input type="text" class="form-control" valueBinding="clubCommission" required="required" data-parsley-type="integer" data-parsley-range="[1,100]"}}
+                    </div>
+                  </div>
+                  
+              </div>
 
           </div>
+            
+          <div class="col-xs-6">
 
+              <label class="title">פרטי איש קשר</label>
+
+              <div class="row">
+
+                 <div class="col-md-6">
+                    <div class="form-group">
+                      <label>שם פרטי:</label>
+                      {{input type="text" class="form-control" valueBinding="contactFirstName" required="required" }}
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>שם משפחה:</label>
+                      {{input type="text" class="form-control" valueBinding="contactLastName" required="required" }}
+                    </div>
+                  </div> 
+
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                      <label>טלפון:</label>
+                      {{input type="text" class="form-control" valueBinding="contactPhone" required="required" }}
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>דוא"ל:</label>
+                      {{input type="text" class="form-control" valueBinding="contactEmail" required="required" data-parsley-type="email"}}
+                    </div>
+                  </div>
+
+              </div>
+
+               <div class="row">
+
+                 <div class="col-md-6">
+                    <div class="form-group">
+                      <label>שם משתמש:</label>
+                      {{input type="text" class="form-control" valueBinding="clubId" required="required" }}
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>סיסמא:</label>
+                      {{input type="text" class="form-control" valueBinding="password" required="required" }}
+                    </div>
+                  </div>
+
+              </div>
+
+              <label class="title"></label>
+
+              <div class="row">
+
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>לוגו:</label>
+                      <div class="imgwraper" style="height:170px; max-height:170px;">
+                            <label class="imageUpload">
+                                <img {{bind-attr src=logoUrl}} class="previewImage">
+                                {{file-upload url=uploadUrl linkBinding="logoUrl" errorBinding="error" name="fileUpload"}}
+                            </label>
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+            
+          </div>
         </form>
       </div>
       <div class="modal-footer">

@@ -18,7 +18,6 @@ class SiteDetails extends Eloquent {
 		'suppliers_id',
 		'altHeadline',
 		'phone3',
-		'city',
 		'workingHours',
 		'ageDevision',
 		'miniSiteContext',

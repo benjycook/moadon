@@ -16,18 +16,7 @@ class AdminSuppliersController extends BaseController
 			);
 		return $rules;
 	}
-	protected function validateCaregoriesAndRegions($data)
-	{
-		if(!count($data['categories']))
-			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
-		if(!count($data['regions']))
-			return array('error'=>'יש לבחור לפחות אזור אחת');
-		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
-			return array('error'=>'אחת הקטגוריות לא נמצא במערכת');
-		if(Region::whereIn('id',$data['regions'])->count()!=count($data['regions']))
-			return array('error'=>'אחת האזורים לא נמצא במערכת');
-		return false;
-	}
+	
 	public function create()
 	{
 		
@@ -73,12 +62,9 @@ class AdminSuppliersController extends BaseController
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
     	if(Supplier::whereRaw('idNumber = ?',array($data['idNumber']))->count())
     		return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
-    	$res = $this->validateCaregoriesAndRegions($data);
-    	if(isset($res['error']))
-    		return Response::json(array('error'=>$res['error']),501);
+
     	$supplier = $supplier->create($data);
-    	$supplier->categories()->attach($data['categories']);
-    	$supplier->regions()->attach($data['regions']);
+    	
     	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id));
     	$gallery = Gallery::create(array('type'=>'ראשית'));
 		$siteDetails->galleries()->attach($gallery->id);
@@ -89,7 +75,17 @@ class AdminSuppliersController extends BaseController
 		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
     	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
 	}
-
+	public $branchIds = array();
+	protected function idSet($region)
+	{
+		$this->branchIds[] = $region->id;
+		if(count($region->parents))
+		{
+			foreach ($region->parents as $temp) {
+				$this->idSet($temp);
+			}
+		}
+	}
 	public function show($id)
 	{
 		$supplier = Supplier::with('sitedetails')->with('items')->with('regions')->with('categories')->find($id);
@@ -98,11 +94,16 @@ class AdminSuppliersController extends BaseController
 		$supplier = $supplier->toArray();
 		$regions = Collection::make($supplier['regions'])->lists('id');
 		$categories = Collection::make($supplier['categories'])->lists('id');
-		$supplier['regions'] = $regions;
-		$supplier['categories'] = $categories;
 		$sitedetails = $supplier['sitedetails'];
+		$sitedetails['regions'] = $regions;
+		$sitedetails['categories'] = $categories;
+		$test = Region::where('id','=',$sitedetails['regions_id'])->with('parents')->first();
+		$this->idSet($test);
+		
 		$galleries = $supplier['sitedetails']['galleries'];
 		$items = $supplier['items'];
+		unset($supplier['regions']);
+		unset($supplier['categories']);
 		unset($supplier['sitedetails']);
 		unset($supplier['items']);
 		$supplier    = $supplier;
@@ -122,7 +123,7 @@ class AdminSuppliersController extends BaseController
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
 		}
-		return Response::json(array('supplier'=>$supplier,'items'=>$items,'sitedetails'=>$sitedetails),200);
+		return Response::json(array('supplier'=>$supplier,'items'=>$items,'sitedetails'=>$sitedetails,'mainRegion'=>$this->branchIds[2],'secondaryRegion'=>$this->branchIds[1]),200);
 	}
 	public function update($id)
 	{
@@ -138,11 +139,11 @@ class AdminSuppliersController extends BaseController
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
     	if(Supplier::whereRaw('idNumber = ? AND id != ?',array($data['idNumber'],$supplier->id))->count())
     		return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
-    	$res = $this->validateCaregoriesAndRegions($data);
-    	if(isset($res['error']))
-    		return Response::json(array('error'=>$res['error']),501);
-    	$supplier->categories()->sync($data['categories']);
-    	$supplier->regions()->sync($data['regions']);
+    	// $res = $this->validateCaregoriesAndRegions($data);
+    	// if(isset($res['error']))
+    	// 	return Response::json(array('error'=>$res['error']),501);
+    	// $supplier->categories()->sync($data['categories']);
+    	// $supplier->regions()->sync($data['regions']);
     	$supplier->fill($data);
     	$supplier->save();
     	return Response::json(array('supplier'=>$supplier),201);

@@ -13,6 +13,9 @@ class AdminClubsController extends BaseController
 		{
 			if(array_search("$value",$nonrequired,true)===false)
 				$rules["$value"] ='required';
+			if($value=="urlName")
+				$rules["$value"] = $rules["$value"].'|alphanum';
+
 		}
 		$validator = Validator::make($data, $rules);
 		if($validator->fails()) 

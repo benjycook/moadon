@@ -20,6 +20,36 @@ App.SuppliersEditController = Em.ObjectController.extend({
 			item.num = items.indexOf(item)+1;
 		});
 	}.observes('items.length'),
+
+	
+	sortedLevel1:function()
+	{
+		return App.get('regions').filterBy('parent_id',0);
+	}.property('content'),
+
+	sortedLevel2:function()
+	{
+		var mainRegion = this.get('mainRegion');
+		var secondaryRegion = this.get('secondaryRegion');
+		secondaryRegion = App.get('regions').findBy('id',secondaryRegion);
+		if(secondaryRegion&&mainRegion!=secondaryRegion.parent_id)
+			this.set('secondaryRegion',0);
+		if(mainRegion)
+			return App.get('regions').filterBy('parent_id',mainRegion);
+		return [];
+	}.property('mainRegion'),
+
+	sortedLevel3:function()
+	{
+		var secondaryRegion = this.get('secondaryRegion');
+		if(secondaryRegion)
+			return App.get('regions').filterBy('parent_id',secondaryRegion);
+		this.set('sitedetails.regions_id',0);
+		return [];
+	}.property('secondaryRegion'),
+
+	
+
 });
 
 App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
@@ -35,6 +65,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 	setupController: function(ctrl, model)
 	{
 		ctrl.set('model',model);
+		console.log(ctrl);
 	},
 	actions:
 	{

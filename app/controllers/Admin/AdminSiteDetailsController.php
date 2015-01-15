@@ -5,18 +5,24 @@ class AdminSiteDetailsController extends BaseController
 	protected function rules()
 	{
 		$rules = array(
-			"supplierName" 	=> "required",
-			"description" 	=> "required",
-			"phone1" 		=> "required",
-			"phone2"		=> "required",
-			"email" 		=> "required|email",
-			'site'			=> "required",
-			'address'		=> "required",
-			'suppliers_id'	=> "required",
+			'supplierName'=> "required",'description'=> "required",'miniSiteContext'=> "required",'workingHours'=> "required",
+			'ageDevision'=> "required",'phone2'=> "required"
 			);
+
 		return $rules;
 	}
-
+	protected function validateCaregoriesAndRegions($data)
+	{
+		if(!count($data['categories']))
+			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
+		if(!count($data['regions']))
+			return array('error'=>'יש לבחור לפחות אזור אחת');
+		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
+			return array('error'=>'אחת הקטגוריות לא נמצא במערכת');
+		if(Region::whereIn('id',$data['regions'])->count()!=count($data['regions']))
+			return array('error'=>'אחת האזורים לא נמצא במערכת');
+		return false;
+	}
 	protected function galleriesImages($images,$galleryId)
 	{
 		$ids = array(0);
@@ -128,6 +134,14 @@ class AdminSiteDetailsController extends BaseController
     	$siteDetails->save();
     	$siteDetails = SiteDetails::with('galleries')->find($id)->toArray();
     	$siteDetails['linkId'] = $siteDetails['id'];
+    	$supplier = Supplier::find($siteDetails['suppliers_id']);
+    	$res = $this->validateCaregoriesAndRegions($data);
+    	if(isset($res['error']))
+    		return Response::json(array('error'=>$res['error']),501);
+    	// $supplier->categories()->attach($data['categories']);
+    	// $supplier->regions()->attach($data['regions']);
+    	$supplier->categories()->sync($data['categories']);
+    	$supplier->regions()->sync($data['regions']);
 		$temp = array();
 		$temp['main'] = isset($siteDetails['galleries'][0]) ? $siteDetails['galleries'][0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";

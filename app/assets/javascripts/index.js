@@ -105,6 +105,7 @@ App.ModalView = Em.View.extend({
 	
 	keyPress:function(event,view)
 	{
+
 		if(event.keyCode == 13&&this.$('.sendEnter'))
 		{
 		  this.$('.sendEnter').trigger('click');
@@ -133,7 +134,8 @@ App.FormView = Em.View.extend({
 	},
 	keyPress:function(event,view)
 	{
-		if(event.keyCode == 13&&this.$('.sendEnter'))
+		var localName = 'textarea';
+		if(event.keyCode == 13&&this.$('.sendEnter')&&event.target.localName.toLowerCase()!=localName)
 		{
 		  this.$('.sendEnter').trigger('click');
 		}
