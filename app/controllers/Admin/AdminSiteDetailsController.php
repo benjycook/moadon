@@ -15,7 +15,7 @@ class AdminSiteDetailsController extends BaseController
 	{
 		if(!isset($data['categories'])||!count($data['categories']))
 			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
-		if(!isset($data['regions'])!count($data['regions']))
+		if(!isset($data['regions'])||!count($data['regions']))
 			return array('error'=>'יש לבחור לפחות אזור אחת');
 		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
 			return array('error'=>'אחת הקטגוריות לא נמצא במערכת');
@@ -147,6 +147,8 @@ class AdminSiteDetailsController extends BaseController
 		$temp['main']['base'] = URL::to('/')."/galleries/";
 		$siteDetails['galleries'] = $temp;
 		$siteDetails['uploadUrl'] = '/uploadImage';
+		$siteDetails['regions'] = $data['regions'];
+		$siteDetails['categories'] = $data['categories'];
     	return Response::json($siteDetails,201);
 	}
 
