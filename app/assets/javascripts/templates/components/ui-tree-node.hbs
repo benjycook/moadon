@@ -25,6 +25,8 @@
 
 {{#if isExpanded}}
   {{ui-tree node=node}}
-  <span class="tree-add"><i class="fa fa-plus-circle" {{action 'addChild'}}></i>הוסף</span>
+  {{#if allowAdd}}
+ 	 <span class="tree-add" {{action 'addChild'}}><i class="fa fa-plus-circle"></i>הוסף</span>
+ 	{{/if}}
 {{/if}}
 
