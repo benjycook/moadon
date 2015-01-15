@@ -169,7 +169,7 @@ body
 	font-size: 16px;
 	height: 40px;
 	letter-spacing: 1px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 	padding-bottom: 2px;
 	width: 100%;
 }
@@ -324,7 +324,7 @@ ul.tree {
 	background: #fff;
 	border: 1px solid #e7e7ec;
 	border-radius: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 ul.tree > li > div {
@@ -340,6 +340,11 @@ ul.tree > li > div {
 	cursor: pointer;
 	font-weight: bold;
 	position: relative;
+}
+
+ul.tree > li:last-child > div.right-arrow {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 ul.tree > li > div[class*="-arrow"]:after {
@@ -374,9 +379,11 @@ ul.tree > li ul {
 	font-weight: bold;
 }
 
+
+
 div.tree-row[class*="-arrow"]:after {
 	content: '\0025C4';
-		position: absolute;
+	position: absolute;
 	display: block;
 	height: 30px;
 	right: 0;
@@ -385,12 +392,66 @@ div.tree-row[class*="-arrow"]:after {
 	transition: 0.6s ease-in-out;
 }
 
+div.tree-row.leaf:after {
+	content: '*';
+	position: absolute;
+	display: block;
+	height: 30px;
+	right: 0;
+	top: 0;
+	line-height: 27px;
+	transform: none;
+}
+
 div.tree-row.down-arrow:after {
 
 	transform: rotate(-90deg);
 	right: -2px;
 }
 
+
+.tree-row + ul div.tree-row.leaf {
+	cursor: pointer;
+}
+
+.tree-row + ul div.tree-row.leaf:after {
+    border: 1px solid #999;
+    border-radius: 2px;
+    content: "";
+    cursor: pointer;
+    display: block;
+    height: 10px;
+    line-height: 27px;
+    position: absolute;
+    right: 0;
+    top: 8px;
+    transform: none;
+    width: 10px;
+    background-image: linear-gradient(to top, #d3dee2 0%, #fff 50%);
+}
+
+.tree-row + ul div.tree-row.selected:after {
+  background-image: linear-gradient(to top, #d3dee2 0%, #fff 50%);
+  border: 1px solid #999;
+  border-radius: 2px;
+  content: "✓";
+  cursor: pointer;
+  display: block;
+  font-size: 13px;
+  font-weight: bold;
+  height: 10px;
+  line-height: 10px;
+  position: absolute;
+  right: 0;
+  top: 8px;
+  transform: none;
+  width: 10px;
+  transition: none;
+}
+
+.tree-row + ul div.tree-row.selected {
+	color: #000;
+}
 
 .mini-site .header {
 	height: 280px;

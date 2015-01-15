@@ -1,5 +1,5 @@
-<div {{bind-attr class=":tree-row isExpanded:down-arrow:right-arrow"}}  {{action 'toggle'}} >
-	<span {{bind-attr class=":toggle-icon node.children.length::leaf"}}>
+<div {{bind-attr class=":tree-row isExpanded:down-arrow:right-arrow isLeaf:leaf isSelected:selected"}}  {{action 'toggle'}} >
+	<span class=":toggle-icon">
 		{{node.name}}
 	</span>
 

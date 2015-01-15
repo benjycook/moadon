@@ -7,7 +7,11 @@ App.ApplicationRoute = Em.Route.extend({
 	setupController: function(ctrl, model){
 		
 		model.categories = {children: model.categories};
-		model.regions = {children: model.regions};
+		
+		model.regions = {
+			children: [
+				{name: "חיפוש לפי אזור", children: model.regions}
+		]};
 
 		ctrl.set('model', model);
 	},

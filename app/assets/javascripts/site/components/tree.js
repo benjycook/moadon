@@ -11,6 +11,11 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
   isExpanded: false,
   isEditable: false,
+  isSelected: false,
+
+  isLeaf: function() {
+      return !this.get('node.children').length;
+  }.property('node.children', 'node.children.@each'),
 
   isDeletable: function()
   {
@@ -19,6 +24,12 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
   actions: {
       toggle: function() {
+        var isLeaf = this.get('isLeaf')
+        if(isLeaf)
+        {
+          this.toggleProperty('isSelected');
+          return;
+        }
         var expended = this.get('isExpanded');
         if(!expended)
         {
