@@ -19,6 +19,7 @@ span.tree-add {
   display: inline-block;
   margin: 0px 5px 7px;
   color: #31708f;
+  cursor: pointer;
 }
 
 span.tree-add i.fa{
@@ -31,7 +32,6 @@ i.fa.disabled {
 }
 
 .tree-branch .fa {
-  cursor: pointer;
   vertical-align:  middle;
 }
 

@@ -1,6 +1,6 @@
 App.UiTreeComponent = Ember.Component.extend({
+  isTreeComponent: true,
   tagName: 'ul',
-
   classNames: ['tree-branch']
 });
 
@@ -12,15 +12,39 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   isExpanded: false,
   isEditable: false,
 
+  allowAdd: function() {
+    if(this.get('level') < 3)
+      return true;
+    return false;
+  }.property('level'),
+
+  isBranch: function() {
+      return this.get('node.children').length > 0;
+  }.property('node.children', 'node.children.@each'),
+
+  isLeaf: function() {
+      return !this.get('node.children').length;
+  }.property('node.children', 'node.children.@each'),
+
+  level: function() {
+    var parent = this.nearestWithProperty('isTreeComponent');
+    var level = 0;
+    while(parent)
+    {
+      level++;
+      parent = parent.nearestWithProperty('isTreeComponent');
+    }
+    return level;
+  }.property('parent'),
+
   isDeletable: function()
   {
-    return this.get('node.children.length') < 1
-  }.property('node.children.@each'),
+    return !this.get('isBranch');
+  }.property('isBranch'),
 
   actions: {
       toggle: function() {
-        //if(this.get('node.children.length'))
-          this.toggleProperty('isExpanded');
+        this.toggleProperty('isExpanded');
       },
       
       toggleEdit: function() {
@@ -43,7 +67,6 @@ App.UiTreeNodeComponent = Ember.Component.extend({
       },
 
       remChild: function(){
-        console.log(this.get('parent'), this.get('node'));
         this.get('parent.children').removeObject(this.get('node'));
       }
 
