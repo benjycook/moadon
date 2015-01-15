@@ -13,9 +13,9 @@ class AdminSiteDetailsController extends BaseController
 	}
 	protected function validateCaregoriesAndRegions($data)
 	{
-		if(!count($data['categories']))
+		if(!isset($data['categories'])||!count($data['categories']))
 			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
-		if(!count($data['regions']))
+		if(!isset($data['regions'])!count($data['regions']))
 			return array('error'=>'יש לבחור לפחות אזור אחת');
 		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
 			return array('error'=>'אחת הקטגוריות לא נמצא במערכת');
