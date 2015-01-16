@@ -14,5 +14,10 @@ App.SupplierController = Em.ObjectController.extend({
 
 	image: function(){
 		return this.get('images.0');
+	}.property('imagea'),
+
+	galllery: function(){
+		return this.get('images.0');
 	}.property('images')
+
 });

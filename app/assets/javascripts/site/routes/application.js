@@ -17,10 +17,10 @@ App.ApplicationRoute = Em.Route.extend({
 	},
 
 	actions: {
-		'addItem': function()
+		'addItem': function(item)
 		{
 			var cart = this.controllerFor('cart.index');
-			cart.pushObject({id: 1});
+			cart.pushObject(item);
 		}
 	}
 

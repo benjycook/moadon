@@ -34,13 +34,19 @@
 		</div>
 
 		<ul class="items">
-			{{#each item in items}}
+			{{#each item in items itemController="item"}}
 				<li>
 					<div class="name">{{item.name}}<br />{{item.shortDescription}}</div>
 					<div class="description">{{item.description}}</div>
+					{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
+					<div class="price">
+						<label>מחיר לאחר הנחה</label>
+						<span class="discount">₪{{item.clubPrice}}</span>
+						<span class="list">₪{{item.listPrice}}</span>
+					</div>
 					<div class="order">
-						<button class="btn">לקניה</button>
-						<button class="btn">הוסף לסל</button>
+						<button class="btn" {{action 'addItemAndOpenCart'}}>לקניה</button>
+						<button class="btn" {{action 'addItem'}}>הוסף לסל</button>
 					</div>
 				</li>
 			{{/each}}

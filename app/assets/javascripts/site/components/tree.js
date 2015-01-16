@@ -1,6 +1,5 @@
 App.UiTreeComponent = Ember.Component.extend({
   tagName: 'ul',
-
   classNames: ['tree-branch']
 });
 
@@ -11,7 +10,10 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
   isExpanded: false,
   isEditable: false,
-  isSelected: false,
+
+  isSelected: function(){
+    return this.get('node.selected');
+  }.property('node.selected'),
 
   isLeaf: function() {
       return !this.get('node.children').length;
@@ -23,13 +25,13 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   }.property('node.children.@each'),
 
   actions: {
-      toggle: function() {
-        var isLeaf = this.get('isLeaf')
-        if(isLeaf)
-        {
-          this.toggleProperty('isSelected');
-          return;
-        }
+
+      select: function(){
+        var isSelected = this.get('node.selected');
+        this.set('node.selected', !isSelected);
+      },
+
+      expend: function(){
         var expended = this.get('isExpanded');
         if(!expended)
         {
@@ -46,7 +48,15 @@ App.UiTreeNodeComponent = Ember.Component.extend({
               self.set('isExpanded', !expended);
             });
           });
-        
+      },
+
+      toggle: function() {
+        var isLeaf = this.get('isLeaf')
+
+        if(isLeaf)
+          this.send('select');
+        else
+          this.send('expend');
       },
       
       toggleEdit: function() {

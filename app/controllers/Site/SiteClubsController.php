@@ -96,12 +96,15 @@ class SiteClubsController extends BaseController
 		$regions = Region::with('children')->get();
 		$supplier = $supplier->toArray();
 		$supplier['region'] = $supplier['regions_id'] ? $regions[$supplier['regions_id']]['name']:"";
-		$gallery = count($supplier['galleries']) ? $supplier['galleries'][0]:array('images'=>array());
-		$supplier['galleries'] = $this->gallerySetUp($gallery);
-		foreach ($supplier['items'] as &$item) {
-			$gallery = count($item['galleries']) ? $item['galleries'][0]:array('images'=>array());
-			$item['galleries'] = $this->gallerySetUp($gallery);
+	
+		$rawImages = array();
+		$images = $supplier['galleries'][0]['images'];
+		foreach ($images as $image) {
+			$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
 		}
+		unset($supplier['galleries']);
+		$supplier['images'] = $rawImages;
+		
 		unset($supplier['regions_id']);
 		unset($supplier['suppliers_id']);
 		return Response::json($supplier,200);
