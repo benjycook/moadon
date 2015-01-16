@@ -123,8 +123,18 @@ class AdminSuppliersController extends BaseController
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
 		}
-		return Response::json(array('supplier'=>$supplier,'items'=>$items,'sitedetails'=>$sitedetails,'mainRegion'=>$this->branchIds[2],'secondaryRegion'=>$this->branchIds[1]),200);
+
+		$data = array(
+			'supplier'				=>	$supplier,
+			'items'						=>	$items,
+			'sitedetails'			=>	$sitedetails,
+			'mainRegion'			=>	isset($this->branchIds[2]) ? $this->branchIds[2] : 0,
+			'secondaryRegion'	=>	isset($this->branchIds[1]) ? $this->branchIds[1] : 0
+		);
+
+		return Response::json($data,200);
 	}
+
 	public function update($id)
 	{
 		$json=Request::getContent();
