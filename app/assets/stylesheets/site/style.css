@@ -624,13 +624,17 @@ div.tree-row.down-arrow:after {
 	list-style: none;
 	margin: 0;
 	padding: 0;
+	white-space: nowrap;
+	font-size: 0;
 }
 
 .mini-site .gallery-images li {
-	width: 170px;
-	height: 135px;
-	overflow: hidden;
-	display: inline-block;
+  display: inline-block;
+  height: 135px;
+  margin-left: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 171px;
 }
 
 .mini-site .gallery-images li img {
