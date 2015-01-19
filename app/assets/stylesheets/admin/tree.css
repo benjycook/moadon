@@ -48,6 +48,10 @@ i.fa.disabled {
   background-color: #ddd;
 }
 
+.form-group .tree-branch li {
+  background-color: transparent !important;
+}
+
 .tree-row .badge {
   position: relative;
   top: -2px;
@@ -55,5 +59,9 @@ i.fa.disabled {
 }
 
 .panel-body > .tree-branch {
+  padding: 0;
+}
+
+.form-group > ul.tree-branch {
   padding: 0;
 }

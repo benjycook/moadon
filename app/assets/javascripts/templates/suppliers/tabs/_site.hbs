@@ -167,35 +167,17 @@
         </div>
         <div class="row">
           
-            <div class="col-md-12">
+            <div class="col-xs-6">
                 <div class="form-group">
                   <label>אזורים:</label>
-                    {{view Ember.ChosenSelectView
-                        classNames="form-control chosen-select chosen-rtl form-group" 
-                        multiple="true"
-                        placeholder_text_multiple = "בחר..."
-                        contentBinding="App.regions"
-                        selected=sitedetails.regions
-                        required='required'
-                      }}
+                  {{ui-tree node=regions editable=false selected=sitedetails.regions}}
                 </div>
               </div>
-
-         </div>
-
-         <div class="row">
           
-            <div class="col-md-12">
+            <div class="col-xs-6">
                 <div class="form-group">
                   <label>קטגוריות:</label>
-                    {{view Ember.ChosenSelectView
-                        classNames="form-control chosen-select chosen-rtl form-group" 
-                        multiple="true"
-                        placeholder_text_multiple = "בחר..."
-                        contentBinding="App.categories"
-                        selected=sitedetails.categories
-                        required='required'
-                      }}
+                  {{ui-tree node=categories editable=false selected=sitedetails.categories}}
                 </div>
               </div>
 

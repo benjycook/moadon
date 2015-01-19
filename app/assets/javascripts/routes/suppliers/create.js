@@ -54,7 +54,9 @@ App.SuppliersEditController = Em.ObjectController.extend({
 
 App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 	controllerName:'suppliersEdit',
+	
 	templateName: 'suppliers/create',
+	
 	model: function(params)
 	{
 		if(params.suppliers_id)
@@ -64,9 +66,20 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	setupController: function(ctrl, model)
 	{
+		model.categories = {
+			name: 'root element',
+			children: model.categories
+		};
+
+		model.regions = {
+			name: 'root element',
+			children: model.regions
+		};
+
 		ctrl.set('model',model);
-		console.log(ctrl);
 	},
+
+
 	actions:
 	{
 

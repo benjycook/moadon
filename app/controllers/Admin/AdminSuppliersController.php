@@ -95,8 +95,10 @@ class AdminSuppliersController extends BaseController
 		$regions = Collection::make($supplier['regions'])->lists('id');
 		$categories = Collection::make($supplier['categories'])->lists('id');
 		$sitedetails = $supplier['sitedetails'];
+		
 		$sitedetails['regions'] = $regions;
 		$sitedetails['categories'] = $categories;
+		
 		$test = Region::where('id','=',$sitedetails['regions_id'])->with('parents')->first();
 		$this->idSet($test);
 		
@@ -125,6 +127,8 @@ class AdminSuppliersController extends BaseController
 		}
 
 		$data = array(
+			'regions'					=> 	Region::with('children')->where('parent_id','=',0)->get(),
+			'categories'					=> 	Category::with('children')->where('parent_id','=',0)->get(),
 			'supplier'				=>	$supplier,
 			'items'						=>	$items,
 			'sitedetails'			=>	$sitedetails,
