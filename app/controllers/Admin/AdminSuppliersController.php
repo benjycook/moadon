@@ -26,8 +26,14 @@ class AdminSuppliersController extends BaseController
 		$temp->sitedetails->linkId = md5(rand(1,10000).'templink'.rand(1,10000));
 		$temp->sitedetails->uploadUrl = '/uploadImage';
 		$temp->sitedetails->galleries['main'] = array('id'=>0,'type'=>'ראשי','images'=>array(),'base'=>$base);
+		$temp->sitedetails->categories = array();
+		$temp->sitedetails->regions = array();
 		$temp->items = array();
 		$temp->supplier = new stdClass;
+
+		$temp->regions = Region::with('children')->where('parent_id','=',0)->get();
+		$temp->categories = Category::with('children')->where('parent_id','=',0)->get();
+			
 		return Response::json($temp,201);
 	}
 
@@ -126,9 +132,10 @@ class AdminSuppliersController extends BaseController
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
 		}
 
+		//refactor code
 		$data = array(
 			'regions'					=> 	Region::with('children')->where('parent_id','=',0)->get(),
-			'categories'					=> 	Category::with('children')->where('parent_id','=',0)->get(),
+			'categories'			=> 	Category::with('children')->where('parent_id','=',0)->get(),
 			'supplier'				=>	$supplier,
 			'items'						=>	$items,
 			'sitedetails'			=>	$sitedetails,
