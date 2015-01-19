@@ -106,7 +106,8 @@ class AdminSuppliersController extends BaseController
 		$sitedetails['categories'] = $categories;
 		
 		$test = Region::where('id','=',$sitedetails['regions_id'])->with('parents')->first();
-		$this->idSet($test);
+		if($test)
+			$this->idSet($test);
 		
 		$galleries = $supplier['sitedetails']['galleries'];
 		$items = $supplier['items'];
