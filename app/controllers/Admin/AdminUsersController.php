@@ -41,7 +41,7 @@ class AdminUsersController extends BaseController
     	$user 	= new User;
 		$validator = Validator::make($data,$this->rules());
 		if($validator->fails()) 
-			return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+			return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(User::whereRaw('username = ?',array($data['username']))->count())
     		return Response::json(array('error'=>"שם משתמש זה קיים במערכת אנא בחר אחר"),501);
     	if(User::whereRaw('email = ?',array($data['email']))->count())
@@ -69,7 +69,7 @@ class AdminUsersController extends BaseController
 			return Response::json(array('error'=>'משתמש זה לא נמצא במערכת'),501);
 		$validator = Validator::make($data,$this->rules());
 		if($validator->fails()) 
-			return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+			return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(User::whereRaw('username = ? AND id != ?',array($data['username'],$user->id))->count())
     		return Response::json(array('error'=>"שם משתמש זה קיים במערכת אנא בחר אחר"),501);
     	if(User::whereRaw('email = ? AND id != ?',array($data['email'],$user->id))->count())
