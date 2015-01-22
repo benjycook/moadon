@@ -6,20 +6,46 @@
     <form autocomplete="off">
       	<div class="row">
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                   <div class="form-group">
                       <label>שם ספק:</label>
                       {{input type="text" class="form-control" valueBinding="sitedetails.supplierName" required="required"}}
                   </div>
               </div>
 
-               <div class="col-md-6">
+               <div class="col-md-4">
                   <div class="form-group">
                       <label>כותרת משנה:</label>
                       {{input type="text" class="form-control" valueBinding="sitedetails.altHeadline" }}
                   </div>
               </div>
+               <div class="col-md-2">
+                  <div class="form-group">
+                      <label>מוצג בדף ראשי:</label>
+                       {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group" 
+                          contentBinding="Options.yesNo"
+                          valueBinding="sitedetails.visibleOnSite"
+                          prompt = "בחר"
+                          required="required"
+                        }}
+                  </div>
+              </div>
 
+               <div class="col-md-2">
+                  <div class="form-group">
+                      <label>סטאטוס:</label>
+                       {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group" 
+                          contentBinding="App.states"
+                          valueBinding="sitedetails.states_id"
+                          prompt = "בחר"
+                          required="required"
+                        }}
+                  </div>
+              </div>
+
+             
         </div>
       
         <div class="row">

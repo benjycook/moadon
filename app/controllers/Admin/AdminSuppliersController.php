@@ -71,13 +71,14 @@ class AdminSuppliersController extends BaseController
 
     	$supplier = $supplier->create($data);
     	
-    	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id));
+    	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id,'states_id'=>2));
     	$gallery = Gallery::create(array('type'=>'ראשית'));
 		$siteDetails->galleries()->attach($gallery->id);
 		$base = URL::to('/')."/galleries/";
 		$newSite = new stdClass;
 		$newSite->linkId = $newSite->id = $siteDetails->id;
 		$newSite->uploadUrl = '/uploadImage';
+		$newSite->states_id = 2;
 		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
     	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
 	}

@@ -21,7 +21,9 @@ class SiteDetails extends Eloquent {
 		'workingHours',
 		'ageDevision',
 		'miniSiteContext',
-		'regions_id'
+		'regions_id',
+		'states_id',
+		'visibleOnSite'
 	);
 
 
