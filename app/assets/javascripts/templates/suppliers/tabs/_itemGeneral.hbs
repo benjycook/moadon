@@ -109,28 +109,30 @@
 
            
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="form-group">
                       <label>שם מוצר (שורה ראשונה באתר):</label>
-                      {{input type="text" class="form-control" valueBinding="name" required="required" data-parsley-maxlength="14"}}
+                      {{input type="text" class="form-control" valueBinding="name" required="required" data-parsley-maxlength="16"}}
                     </div>
                 </div>
 
-                 <div class="col-md-4">
+                 <div class="col-md-6">
                     <div class="form-group">
                       <label>תיאור מקוצר (שורה שנייה באתר):</label>
                       {{input class="form-control" valueBinding="shortDescription" required="required" data-parsley-maxlength="14" }}
                     </div>
                   </div>
 
-                  <div class="col-md-4">
+                  
+            </div>
+            <div class="row">
+                <div class="col-md-12">
                     <div class="form-group">
                       <label>תיאור:</label>
                       {{input class="form-control" valueBinding="description" required="required" data-parsley-maxlength="60"}}
                     </div>
                   </div>
             </div>
-
              <div class="row">
                  <div class="col-md-12">
                     <div class="form-group">
