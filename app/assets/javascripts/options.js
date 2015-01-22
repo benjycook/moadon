@@ -18,7 +18,12 @@ Options.displayTypes.set('content', [
 	{id: "1",  name: "all"},
 	{id: "2",  name: "personal"},
 ]);
+Options.yesNo = Em.ArrayController.create();
 
+Options.yesNo.set('content', [
+	{id: 1,  name: "כן"},
+	{id: 0,  name: 'לא'},
+]);
 
 /*info@segs.co.il
 123456*/
