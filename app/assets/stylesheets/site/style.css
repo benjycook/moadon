@@ -334,6 +334,14 @@ body
 	margin-left: 20px;
 }
 
+.box.search .right {
+    float: left;
+    height: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 220px;
+  }
+
 .box.search .inner .info {
 	border: none;
 	right: 255px;
