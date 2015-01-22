@@ -36,9 +36,9 @@
         <div id="sidebar">
             <button class="cart">סל הקניות שלי [ {{cart.length}} ]</button>
 
-            {{ui-tree node=regions class="tree"}}
+            {{ui-tree node=regions selected=search.qregions class="tree"}}
 
-            {{ui-tree node=categories class="tree"}}
+            {{ui-tree node=categories selected=search.qcategories class="tree"}}
 
         </div>
 

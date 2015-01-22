@@ -1,4 +1,5 @@
 App.UiTreeComponent = Ember.Component.extend({
+
   isTreeComponent: true,
 
   root: function() {
@@ -48,7 +49,6 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   isEditable: false,
 
   hasSelections: function(){
-    console.log(this);
     return this.get('node.children').filter(function(item){
       if(item.selected)
         return true;

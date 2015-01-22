@@ -143,7 +143,19 @@ class SiteClubsController extends BaseController
 			$supplier->whereRaw($sql,array($name));
 		}
 		$suppliers = $supplier->get();
+
 		$regions = Region::with('children')->get();
+		
+		foreach ($suppliers as &$supplier) {
+			$rawImages = array();
+			$images = $supplier['galleries'][0]['images'];
+			foreach ($images as $image) {
+				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
+			}
+			unset($supplier['galleries']);
+			$supplier['images'] = $rawImages;
+		}
+
 		foreach ($suppliers as &$supplier) {
 			$supplier['region'] = $supplier['regions_id'] ? $regions[$supplier['regions_id']]['name']:"";
 			$gallery = count($supplier['galleries']) ? $supplier['galleries'][0]:array('images'=>array());
