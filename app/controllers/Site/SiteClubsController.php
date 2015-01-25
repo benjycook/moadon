@@ -35,7 +35,11 @@ class SiteClubsController extends BaseController
 		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();
 
 
-		$suppliers = SiteDetails::forPage(1,9)->with('galleries')->get()->toArray();
+		$suppliers = SiteDetails::where('visibleOnSite', '=', '1')
+														->where('states_id', '=', '2')
+														->has('items', '>=', '1')
+														->with('galleries')
+														->get()->toArray();
 		
 		foreach ($suppliers as &$supplier) {
 			$rawImages = array();

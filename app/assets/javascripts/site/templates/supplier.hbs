@@ -41,8 +41,8 @@
 					{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
 					<div class="price">
 						<label>מחיר לאחר הנחה</label>
-						<span class="discount">₪{{item.clubPrice}}</span>
-						<span class="list">₪{{item.listPrice}}</span>
+						<span class="discount">₪{{item.clubPriceTotal}}</span>
+						<span class="list">₪{{item.listPriceTotal}}</span>
 					</div>
 					<div class="order">
 						<button class="btn" {{action 'addItemAndOpenCart'}}>לקניה</button>

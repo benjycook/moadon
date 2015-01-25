@@ -45,7 +45,6 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
   classNames: ['tree-node'],
 
-  isExpanded: false,
   isEditable: false,
 
   hasSelections: function(){
@@ -93,6 +92,10 @@ App.UiTreeNodeComponent = Ember.Component.extend({
     return this.get('node.selected');
   }.property('node.selected'),
 
+  isExpanded: function(){
+    return this.get('node.expended');
+  }.property('node.expended'),
+
   isDeletable: function()
   {
     return !this.get('isBranch') && this.get('allowEdit');
@@ -119,22 +122,36 @@ App.UiTreeNodeComponent = Ember.Component.extend({
       },
 
       expend: function(){
-        var expended = this.get('isExpanded');
-        if(!expended)
-        {
-          this.set('isExpanded', !expended);
-          Ember.run.scheduleOnce('afterRender', this, function(){
-            this.$('> ul').hide();
-            this.$('> ul').slideDown();
-          });
-        }
-        else
-          Ember.run.scheduleOnce('afterRender', this, function(){
-            var self = this;
-            this.$('> ul').slideUp(function(){
-              self.set('isExpanded', !expended);
-            });
-          });
+        var root = this.nearestWithProperty('isTreeComponent').root();
+        root.collapseAll();
+        var isExpanded = this.get('node.expended');
+        this.set('node.expended', !isExpanded);
+
+       // var expended = Em.A(root.get('expended'));
+
+        // var id = this.get('node.id');
+        // if(isExpanded)
+        // {
+        //   if(expended.indexOf(id) === -1)
+        //     expended.pushObject(id);
+        // }else{
+        //   expended.removeObject(id);
+        // }
+        // if(!expended)
+        // {
+        //   this.set('isExpanded', !expended);
+        //   Ember.run.scheduleOnce('afterRender', this, function(){
+        //     this.$('> ul').hide();
+        //     this.$('> ul').slideDown();
+        //   });
+        // }
+        // else
+        //   Ember.run.scheduleOnce('afterRender', this, function(){
+        //     var self = this;
+        //     this.$('> ul').slideUp(function(){
+        //       self.set('isExpanded', !expended);
+        //     });
+        //   });
       },
 
       toggle: function() {
