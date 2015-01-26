@@ -109,7 +109,9 @@ class AdminSiteDetailsController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
-
+    	$res = $this->validateCaregories($data);
+    	if(isset($res['error']))
+    		return Response::json(array('error'=>$res['error']),501);
     	foreach ($data['galleries'] as $gallery) 
 		{
 			$counter = 1;
@@ -135,9 +137,7 @@ class AdminSiteDetailsController extends BaseController
     	$siteDetails = SiteDetails::with('galleries')->find($id)->toArray();
     	$siteDetails['linkId'] = $siteDetails['id'];
     	$supplier = Supplier::find($siteDetails['suppliers_id']);
-    	$res = $this->validateCaregories($data);
-    	if(isset($res['error']))
-    		return Response::json(array('error'=>$res['error']),501);
+    	
     	// $supplier->categories()->attach($data['categories']);
     	// $supplier->regions()->attach($data['regions']);
     	$supplier->categories()->sync($data['categories']);

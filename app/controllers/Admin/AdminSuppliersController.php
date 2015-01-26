@@ -76,6 +76,7 @@ class AdminSuppliersController extends BaseController
 		$newSite->uploadUrl = '/uploadImage';
 		$newSite->states_id = 2;
 		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
+		$newSite->categories = array();
     	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
 	}
 

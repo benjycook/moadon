@@ -82,7 +82,7 @@ class AdminRegionsController extends BaseController
 	    $regions = Region::orderBy('name','ASC')->get();
 	    $regionsTree = json_decode($this->index()->getContent(),true);
 	    if(count($names))
-	    	return Response::json(array('error'=>'לא ניתן למחוק אזור "'.implode(',',$names).'" מכיוון שהינו משויך לאחד הספקים','tree'=>$regionsTree),501);
+	    	return Response::json(array('error'=>'לא ניתן למחוק אזור "'.implode(',',$names).'" מכיוון שהינו משויך לאחד הישובים','tree'=>$regionsTree),501);
 	    else
 			return Response::json(array('regions'=>$regions,'tree'=>$regionsTree),200);
 	}

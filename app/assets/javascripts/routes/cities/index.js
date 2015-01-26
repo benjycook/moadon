@@ -19,7 +19,12 @@ App.CitiesRoute = App.ProtectedRoute.extend({
 				type: type,
 				url: url,
 				data: JSON.stringify(model)
-			}).then(function(){
+			}).then(function(data){
+				var cities 	= App.get('cities');
+				var city 	= cities.findBy('id',data.id);
+				if(city)
+					cities.removeObject(city);
+				cities.pushObject(data);
 				self.transitionTo('cities');
 			}).fail(function(data){
 				if(data.status == 500)
