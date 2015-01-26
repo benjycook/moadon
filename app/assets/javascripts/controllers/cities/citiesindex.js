@@ -10,7 +10,7 @@ App.CitiesIndexController = GRID.TableController.extend({
     		Em.View.extend({
     			tagName: 'div',
     			classNames: 'panel-label',
-    			template: Ember.Handlebars.compile('יבושים'),
+    			template: Ember.Handlebars.compile('ישובים'),
     		}),
 
     		Em.View.extend({
