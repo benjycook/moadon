@@ -234,6 +234,7 @@ body
     text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
     top: 18px;
     transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
     width: 150px;
     box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
 }
@@ -383,6 +384,10 @@ ul.tree {
 	margin-bottom: 20px;
 }
 
+.tree-node i.fa {
+	display: none;
+}
+
 ul.tree > li > div, .tree-node > a {
 	display: block;
 	border-radius: 5px 5px 0 0;
@@ -404,12 +409,38 @@ ul.tree > li > div, .tree-node > a {
 	padding: 0 10px;
 }
 
-.tree > .tree-node > a i {
+
+
+.tree > .tree-node > a i.fa {
 	float: left;
 	position: relative;
 	top: 10px;
 }
 
+.tree > .tree-node > a i.fa-chevron-left {
+	display: inline;
+}
+
+.tree > .tree-node.active > a i.fa,
+.tree > .tree-node > a i.fa-caret-left {
+	display: none;
+}
+.tree > .tree-node.active > a i.fa-chevron-down,
+.tree > .tree-node.active > a i.fa-check {
+	display: inline
+}
+
+.tree-node a i.fa-caret-left {
+	display: inline;
+}
+
+.tree-node.active > a i.fa-caret-left {
+	display: none;
+}
+
+.tree-node.active > a i.fa-caret-down {
+	display: inline;
+}
 
 ul.tree > li ul {
 	padding-bottom: 5px;
@@ -460,9 +491,13 @@ ul.tree > li ul {
 	display: block;
 	content: '';
 	border-radius: 5px;
-	font-size: 14px;
 	text-align: center;
 	line-height: 14px;
+	font-size: 0;
+}
+
+.tree-node.leaf.selected > span i.fa {
+	font-size: 14px;
 }
 
 .tree-node ul.tree-branch {
@@ -630,6 +665,7 @@ ul.tree > li ul {
   position: absolute;
   top: 50%;
   transform: rotate(-12deg);
+  -webkit-transform: rotate(-12deg);
   width: 110%;
 }
 

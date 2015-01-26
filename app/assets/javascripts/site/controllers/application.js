@@ -2,8 +2,6 @@ App.ApplicationController = Em.ObjectController.extend({
 
 	needs: ['cartIndex', 'search'],
 
-	search: Em.computed.alias("controllers.search"),
-
 	cart: Ember.computed.alias("controllers.cartIndex"),
 
 	flatRegions: function(){

@@ -22,19 +22,29 @@ App.SearchRoute = Em.Route.extend({
 	model: function(params)
 	{
 		console.log(params);
-		var region = this.get('region');
+		var region = params.region;
 		var category = params.category;
 		// var regions = [];//params.qregions.join(',');
 		// var categories = [];//params.qcategories.join(',');
 		var terms = [];
-		if(region)
+		if(region && region+'' != 'undefined')
 			terms.push('region='+region);
-		if(category)
+		if(category && category+'' != 'undefined')
 			terms.push('category='+category);
 		// terms.push('categories='+categories);
 		// terms.push('regions='+regions);
 		terms = terms.join('&');
 		return $.getJSON('search?'+terms);
+	},
+
+	renderTemplate: function()
+	{
+		this.render('search', {into: 'application'});
+		this.render('search/sidebar', {
+			into: 'application', 
+			outlet: 'search',
+			controller: this.controllerFor('search')
+		});
 	},
 
 	setupController: function(ctrl, model)

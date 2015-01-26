@@ -1,5 +1,10 @@
 App.SearchController = Em.ArrayController.extend({
 
+  needs: ['application'],
+
+  regions: Ember.computed.alias("controllers.application.regions"),
+  categories: Ember.computed.alias("controllers.application.categories"),
+
   queryParams: {
     region: {
       replace: true
@@ -22,12 +27,5 @@ App.SearchController = Em.ArrayController.extend({
   subregions: [],
   category: null,
   subcategories: [],
-
-  // clearSubRegions: function(){
-  //   var self = this;
-  //   Em.run('afterRender', function(){
-  //     self.set('subregions', []);
-  //   });
-  // }.observes('region')
 
 });

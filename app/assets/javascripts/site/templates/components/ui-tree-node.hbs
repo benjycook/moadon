@@ -1,17 +1,44 @@
-{{#unless node.children.length}}
-  <li class="tree-node leaf">
-      <span {{action 'select' node.id}}>
-          <i class="fa fa-check"></i>
-          {{node.name}}
-      </span>
-  </li>
+{{#if selectable}}
+
+  <span {{action 'toggle'}}>
+      <i class="fa fa-check"></i>
+      {{node.name}}
+  </span>
+
 {{else}}
-	<li class="tree-node">
-	  {{#link-to 'search' (query-params region=node.id)}}
-	  		<i class="fa fa-chevron-down"></i>
-	      <i class="fa fa-caret-down"></i>
+
+	{{#if isCategory}}
+	  {{#link-to 'search' (query-params category=node.id)}}
+	  		{{#if node.children.length}}
+		  		<i class="fa fa-chevron-left"></i>
+		  		<i class="fa fa-chevron-down"></i>
+		      <i class="fa fa-caret-left"></i>
+		      <i class="fa fa-caret-down"></i>
+		    {{else}}
+		    	<i class="fa fa-chevron-left"></i>
+		    	<i class="fa fa-caret-left"></i>
+		      <i class="fa fa-check"></i>
+		    {{/if}}
 	      {{node.name}}
 	  {{/link-to}}
-	  {{ui-tree-branch children=node.children}}
-	</li>
-{{/unless}}
+	{{else}}
+		  {{#link-to 'search' (query-params region=node.id)}}
+	  		{{#if node.children.length}}
+		  		<i class="fa fa-chevron-left"></i>
+		  		<i class="fa fa-chevron-down"></i>
+		      <i class="fa fa-caret-left"></i>
+		      <i class="fa fa-caret-down"></i>
+		    {{else}}
+		    	<i class="fa fa-chevron-left"></i>
+		    	<i class="fa fa-caret-left"></i>
+		      <i class="fa fa-check"></i>
+		    {{/if}}
+	      {{node.name}}
+	  {{/link-to}}
+	{{/if}}
+
+{{/if}}
+
+{{#if node.children.length}}
+	{{ui-tree-branch children=node.children}}
+{{/if}}
