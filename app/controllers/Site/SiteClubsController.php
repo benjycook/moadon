@@ -140,6 +140,7 @@ class SiteClubsController extends BaseController
 		{
 			$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
 			$categories = $this->flaten($temp);
+			print_r($categories);die();
 			$supplier->whereHas('supplier',function($q1) use($categories){
 				$q1->whereHas('categories',function($q2) use($categories){
 					$q2->whereIn('categories_id',$categories);

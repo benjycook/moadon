@@ -1,6 +1,6 @@
 App.ApplicationController = Em.ObjectController.extend({
 
-	needs: ['cartIndex', 'search'],
+	needs: ['cartIndex'],
 
 	cart: Ember.computed.alias("controllers.cartIndex"),
 
