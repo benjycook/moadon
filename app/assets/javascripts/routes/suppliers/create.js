@@ -87,9 +87,15 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 		{
 			if(id)
 			{
-				var ctrl = App.ItemsEditController.create({model:items.findBy('id',id)});
-				ctrl.set('target',this);
-				this.render('suppliers/tabs/partials/item', {into: 'application',outlet: 'modal',controller:ctrl});
+				var self =this;
+					new Ember.RSVP.Promise(function(resolve) { 
+								$.getJSON('items/'+id).then(function(data){
+									var ctrl = App.ItemsEditController.create({model:data});
+									ctrl.set('target',self);
+									self.render('suppliers/tabs/partials/item', {into: 'application',outlet: 'modal',controller:ctrl});
+									resolve('resovled');
+							});
+					});
 			}
 			else
 			{

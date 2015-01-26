@@ -66,8 +66,8 @@ class AdminSuppliersController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	if(Supplier::where('username','=',$data['username'])->count())
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
-    	if(Supplier::whereRaw('idNumber = ?',array($data['idNumber']))->count())
-    		return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
+    	// if(Supplier::whereRaw('idNumber = ?',array($data['idNumber']))->count())
+    	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
 
     	$supplier = $supplier->create($data);
     	
@@ -160,8 +160,8 @@ class AdminSuppliersController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	if(Supplier::whereRaw('username = ? AND id != ?',array($data['username'],$supplier->id))->count())
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
-    	if(Supplier::whereRaw('idNumber = ? AND id != ?',array($data['idNumber'],$supplier->id))->count())
-    		return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
+    	// if(Supplier::whereRaw('idNumber = ? AND id != ?',array($data['idNumber'],$supplier->id))->count())
+    	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
     	// $res = $this->validateCaregoriesAndRegions($data);
     	// if(isset($res['error']))
     	// 	return Response::json(array('error'=>$res['error']),501);

@@ -23,6 +23,7 @@ App.ItemsEditController = Em.ObjectController.extend({
 		if(key!='description'&&test.length>14)
 			test = test.substr(0,14);
 		this.set(key,test);
+		this.set('changed',true);
 	}.observes('name','shortDescription','description')
 });
 
