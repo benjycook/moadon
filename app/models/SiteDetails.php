@@ -21,7 +21,7 @@ class SiteDetails extends Eloquent {
 		'workingHours',
 		'ageDevision',
 		'miniSiteContext',
-		'regions_id',
+		'cities_id',
 		'states_id',
 		'visibleOnSite'
 	);
@@ -31,11 +31,6 @@ class SiteDetails extends Eloquent {
 	{
 		return $this->belongsToMany('Category', 'categories_suppliers', 'suppliers_id', 'categories_id');
 	}
-	
-	public function regions()
-  {
-      return $this->belongsToMany('Region','suppliers_regions','suppliers_id','regions_id');
-  }
 
 	public function galleries()
 	{

@@ -58,9 +58,7 @@ class AdminRegionsController extends BaseController
 	    foreach ($data as $region) {
 	    	$this->region($region);
 	    }
-	    $bindings = DB::table('suppliers_regions')->whereNotIn('regions_id',$this->ids)->lists('regions_id');
-	    $supplierMainRegions = SiteDetails::where('regions_id','!=','NULL')->where('regions_id','!=',0)->lists('regions_id');
-	    $bindings = array_unique(array_merge($supplierMainRegions,$bindings));
+	    $bindings = DB::table('cities_regions')->whereNotIn('regions_id',$this->ids)->lists('regions_id');
 	    $regions = Region::whereNotIn('id',$this->ids)->get();
 	    $names = array();
 	    $restricted = array();

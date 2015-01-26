@@ -22,31 +22,31 @@ App.SuppliersEditController = Em.ObjectController.extend({
 	}.observes('items.length'),
 
 	
-	sortedLevel1:function()
-	{
-		return App.get('regions').filterBy('parent_id',0);
-	}.property('content'),
+	// sortedLevel1:function()
+	// {
+	// 	return App.get('regions').filterBy('parent_id',0);
+	// }.property('content'),
 
-	sortedLevel2:function()
-	{
-		var mainRegion = this.get('mainRegion');
-		var secondaryRegion = this.get('secondaryRegion');
-		secondaryRegion = App.get('regions').findBy('id',secondaryRegion);
-		if(secondaryRegion&&mainRegion!=secondaryRegion.parent_id)
-			this.set('secondaryRegion',0);
-		if(mainRegion)
-			return App.get('regions').filterBy('parent_id',mainRegion);
-		return [];
-	}.property('mainRegion'),
+	// sortedLevel2:function()
+	// {
+	// 	var mainRegion = this.get('mainRegion');
+	// 	var secondaryRegion = this.get('secondaryRegion');
+	// 	secondaryRegion = App.get('regions').findBy('id',secondaryRegion);
+	// 	if(secondaryRegion&&mainRegion!=secondaryRegion.parent_id)
+	// 		this.set('secondaryRegion',0);
+	// 	if(mainRegion)
+	// 		return App.get('regions').filterBy('parent_id',mainRegion);
+	// 	return [];
+	// }.property('mainRegion'),
 
-	sortedLevel3:function()
-	{
-		var secondaryRegion = this.get('secondaryRegion');
-		if(secondaryRegion)
-			return App.get('regions').filterBy('parent_id',secondaryRegion);
-		this.set('sitedetails.regions_id',0);
-		return [];
-	}.property('secondaryRegion'),
+	// sortedLevel3:function()
+	// {
+	// 	var secondaryRegion = this.get('secondaryRegion');
+	// 	if(secondaryRegion)
+	// 		return App.get('regions').filterBy('parent_id',secondaryRegion);
+	// 	this.set('sitedetails.regions_id',0);
+	// 	return [];
+	// }.property('secondaryRegion'),
 
 	
 
@@ -69,11 +69,6 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 		model.categories = {
 			name: 'root element',
 			children: model.categories
-		};
-
-		model.regions = {
-			name: 'root element',
-			children: model.regions
 		};
 
 		ctrl.set('model',model);

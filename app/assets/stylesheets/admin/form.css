@@ -37,12 +37,17 @@ td ul.parsley-error-list {
 {
   margin-bottom: 0;
 }
-.alert-danger.error .fa-times,.alert-success.success .fa-times
+.alert-danger.error .fa-times,.alert-success .fa-times
 {
   float: left;
   font-size: 20px;
 }
-.alert-danger.error .fa-times:hover,.alert-success.success .fa-times:hover
+.alert-danger.error .fa-times:hover,.alert-success .fa-times:hover
 {
   cursor:pointer;
+}
+.alert-success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
 }

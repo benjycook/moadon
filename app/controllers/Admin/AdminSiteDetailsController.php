@@ -6,21 +6,21 @@ class AdminSiteDetailsController extends BaseController
 	{
 		$rules = array(
 			'supplierName'=> "required",'description'=> "required",'miniSiteContext'=> "required",'workingHours'=> "required",
-			'ageDevision'=> "required",'phone2'=> "required"
+			'ageDevision'=> "required",'phone2'=> "required",'cities_id'=>"required",
 			);
 
 		return $rules;
 	}
-	protected function validateCaregoriesAndRegions($data)
+	protected function validateCaregories($data)
 	{
 		if(!isset($data['categories'])||!count($data['categories']))
 			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
-		if(!isset($data['regions'])||!count($data['regions']))
-			return array('error'=>'יש לבחור לפחות אזור אחת');
+		// if(!isset($data['regions'])||!count($data['regions']))
+		// 	return array('error'=>'יש לבחור לפחות אזור אחת');
 		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
 			return array('error'=>'אחת הקטגוריות לא נמצא במערכת');
-		if(Region::whereIn('id',$data['regions'])->count()!=count($data['regions']))
-			return array('error'=>'אחת האזורים לא נמצא במערכת');
+		// if(Region::whereIn('id',$data['regions'])->count()!=count($data['regions']))
+		// 	return array('error'=>'אחת האזורים לא נמצא במערכת');
 		return false;
 	}
 	protected function galleriesImages($images,$galleryId)
@@ -135,19 +135,17 @@ class AdminSiteDetailsController extends BaseController
     	$siteDetails = SiteDetails::with('galleries')->find($id)->toArray();
     	$siteDetails['linkId'] = $siteDetails['id'];
     	$supplier = Supplier::find($siteDetails['suppliers_id']);
-    	$res = $this->validateCaregoriesAndRegions($data);
+    	$res = $this->validateCaregories($data);
     	if(isset($res['error']))
     		return Response::json(array('error'=>$res['error']),501);
     	// $supplier->categories()->attach($data['categories']);
     	// $supplier->regions()->attach($data['regions']);
     	$supplier->categories()->sync($data['categories']);
-    	$supplier->regions()->sync($data['regions']);
 		$temp = array();
 		$temp['main'] = isset($siteDetails['galleries'][0]) ? $siteDetails['galleries'][0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";
 		$siteDetails['galleries'] = $temp;
 		$siteDetails['uploadUrl'] = '/uploadImage';
-		$siteDetails['regions'] = $data['regions'];
 		$siteDetails['categories'] = $data['categories'];
     	return Response::json($siteDetails,201);
 	}

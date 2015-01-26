@@ -11,6 +11,7 @@ App.regions = Em.ArrayController.create();
 App.categories = Em.ArrayController.create();
 App.clubs = Em.ArrayController.create();
 App.itemTypes = Em.ArrayController.create();
+App.cities = Em.ArrayController.create();
 Ember.Application.initializer({
   name: "options",
  
@@ -26,6 +27,7 @@ Ember.Application.initializer({
 				App.categories.set('content', data.categories);
 				App.clubs.set('content', data.clubs);
 				App.itemTypes.set('content', data.itemTypes);
+				App.cities.set('content', data.cities);
 				App.set('logedin',data.logedin);
 				application.advanceReadiness();
 			});
@@ -68,6 +70,10 @@ App.Router.map(function(){
 	this.resource('items', function(){
 		this.route('create');
 		this.route('edit', {path: ':items_id/edit'});
+	});
+	this.resource('cities', function(){
+		this.route('create');
+		this.route('edit', {path: ':cities_id/edit'});
 	});
 
 	this.resource('regions', function(){

@@ -27,11 +27,8 @@ class AdminSuppliersController extends BaseController
 		$temp->sitedetails->uploadUrl = '/uploadImage';
 		$temp->sitedetails->galleries['main'] = array('id'=>0,'type'=>'ראשי','images'=>array(),'base'=>$base);
 		$temp->sitedetails->categories = array();
-		$temp->sitedetails->regions = array();
 		$temp->items = array();
 		$temp->supplier = new stdClass;
-
-		$temp->regions = Region::with('children')->where('parent_id','=',0)->get();
 		$temp->categories = Category::with('children')->where('parent_id','=',0)->get();
 			
 		return Response::json($temp,201);
@@ -70,7 +67,6 @@ class AdminSuppliersController extends BaseController
     	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
 
     	$supplier = $supplier->create($data);
-    	
     	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id,'states_id'=>2));
     	$gallery = Gallery::create(array('type'=>'ראשית'));
 		$siteDetails->galleries()->attach($gallery->id);
@@ -82,37 +78,18 @@ class AdminSuppliersController extends BaseController
 		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
     	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
 	}
-	public $branchIds = array();
-	protected function idSet($region)
-	{
-		$this->branchIds[] = $region->id;
-		if(count($region->parents))
-		{
-			foreach ($region->parents as $temp) {
-				$this->idSet($temp);
-			}
-		}
-	}
+
 	public function show($id)
 	{
-		$supplier = Supplier::with('sitedetails')->with('items')->with('regions')->with('categories')->find($id);
+		$supplier = Supplier::with('sitedetails')->with('items')->with('categories')->find($id);
 		if(!$supplier)
 			return Response::json(array('error'=>'ספק זה לא נמצא במערכת'),501);
 		$supplier = $supplier->toArray();
-		$regions = Collection::make($supplier['regions'])->lists('id');
 		$categories = Collection::make($supplier['categories'])->lists('id');
 		$sitedetails = $supplier['sitedetails'];
-		
-		$sitedetails['regions'] = $regions;
 		$sitedetails['categories'] = $categories;
-		
-		$test = Region::where('id','=',$sitedetails['regions_id'])->with('parents')->first();
-		if($test)
-			$this->idSet($test);
-		
 		$galleries = $supplier['sitedetails']['galleries'];
 		$items = $supplier['items'];
-		unset($supplier['regions']);
 		unset($supplier['categories']);
 		unset($supplier['sitedetails']);
 		unset($supplier['items']);
@@ -136,13 +113,10 @@ class AdminSuppliersController extends BaseController
 
 		//refactor code
 		$data = array(
-			'regions'					=> 	Region::with('children')->where('parent_id','=',0)->get(),
 			'categories'			=> 	Category::with('children')->where('parent_id','=',0)->get(),
 			'supplier'				=>	$supplier,
-			'items'						=>	$items,
+			'items'					=>	$items,
 			'sitedetails'			=>	$sitedetails,
-			'mainRegion'			=>	isset($this->branchIds[2]) ? $this->branchIds[2] : 0,
-			'secondaryRegion'	=>	isset($this->branchIds[1]) ? $this->branchIds[1] : 0
 		);
 
 		return Response::json($data,200);

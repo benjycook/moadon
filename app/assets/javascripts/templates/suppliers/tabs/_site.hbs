@@ -90,7 +90,7 @@
         </div>
 
     	<div class="row">
-          <div class="col-md-3">
+          {{!-- <div class="col-md-3">
                 <div class="form-group">
                   <label>אזור ראשי:</label>
                     {{view Ember.ChosenSelectView
@@ -101,9 +101,9 @@
                         required='required'
                       }}
                 </div>
-          </div>
+          </div> --}}
 
-           <div class="col-md-3">
+          {{!--  <div class="col-md-3">
                 <div class="form-group">
                   <label>אזור משני:</label>
                     {{view Ember.ChosenSelectView
@@ -114,7 +114,7 @@
                         required='required'
                       }}
                 </div>
-          </div>
+          </div> --}}
 
            <div class="col-md-3">
                 <div class="form-group">
@@ -122,8 +122,8 @@
                     {{view Ember.ChosenSelectView
                         classNames="form-control chosen-select chosen-rtl form-group" 
                         prompt = "בחר..."
-                        contentBinding="sortedLevel3"
-                        selected=sitedetails.regions_id
+                        contentBinding="App.cities"
+                        selected=sitedetails.cities_id
                         required='required'
                       }}
                 </div>
@@ -192,13 +192,6 @@
             </div>
         </div>
         <div class="row">
-          
-            <div class="col-xs-6">
-                <div class="form-group">
-                  <label>אזורים:</label>
-                  {{ui-tree node=regions editable=false selected=sitedetails.regions}}
-                </div>
-              </div>
           
             <div class="col-xs-6">
                 <div class="form-group">

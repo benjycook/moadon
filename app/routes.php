@@ -42,6 +42,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('suppliers','AdminSuppliersController');
 		Route::resource('items','AdminItemsController');
 		Route::resource('users','AdminUsersController');
+		Route::resource('cities','AdminCitiesController');
 		Route::resource('orders','AdminOrdersController');
 		Route::resource('clients','AdminClientsController');
 		Route::resource('categories','AdminCategoriesController');

@@ -1,0 +1,30 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 30%;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" style="text-align:center;">
+          הודעת מערכת
+        </h4>
+      </div>     
+      <div class="modal-body" style="text-align:center;">        
+
+          {{#if error}}
+              <div class="alert alert-danger error" style="margin: 0;">
+                <strong>שגיאה:</strong> {{error}}
+                <i class="fa fa-times" {{action 'closeWindow' controller}}></i>
+              </div>
+          {{/if}}
+          {{#if success}}
+              <div class="alert alert-success" style="margin: 0;">
+                <strong>{{success}}</strong> 
+                <i class="fa fa-times" {{action 'closeWindow' controller}}></i>
+              </div>
+          {{/if}}
+ 
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}
