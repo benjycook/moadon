@@ -27,8 +27,10 @@ App.SearchRoute = Em.Route.extend({
 		// var regions = [];//params.qregions.join(',');
 		// var categories = [];//params.qcategories.join(',');
 		var terms = [];
-		terms.push('region='+region);
-		terms.push('category='+category);
+		if(region)
+			terms.push('region='+region);
+		if(category)
+			terms.push('category='+category);
 		// terms.push('categories='+categories);
 		// terms.push('regions='+regions);
 		terms = terms.join('&');
