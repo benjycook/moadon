@@ -140,11 +140,8 @@ class SiteClubsController extends BaseController
 		{
 			$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
 			$categories = $this->flaten($temp);
-			print_r($categories);die();
-			$supplier->whereHas('supplier',function($q1) use($categories){
-				$q1->whereHas('categories',function($q2) use($categories){
-					$q2->whereIn('categories_id',$categories);
-				}); 
+			$supplier->whereHas('categories', function($q) use($categories){
+				$q->whereIn('categories_id', $categories);
 			});
 		}
 
@@ -152,30 +149,11 @@ class SiteClubsController extends BaseController
 		{
 			$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
 			$regions = $this->flaten($temp);
-			$supplier->whereHas('supplier',function($q1) use($regions){
-				$q1->whereHas('regions',function($q2) use($regions){
-					$q2->whereIn('regions_id',$regions);
-				}); 
+			$supplier->whereHas('regions',function($q) use($regions){
+				$q->whereIn('regions_id', $regions);
 			});
 		}
-		// if($regions)
-		// {
-		// 	$regions = explode(',',$regions); 
-		// 	$supplier->whereHas('supplier',function($q1) use($regions){
-		// 		$q1->whereHas('regions',function($q2) use($regions){
-		// 			$q2->whereIn('regions_id',$regions);
-		// 		}); 
-		// 	});
-		// }
-		// if($categories)
-		// {
-		// 	$categories = explode(',',$categories); 
-		// 	$supplier->whereHas('supplier',function($q1) use($categories){
-		// 		$q1->whereHas('categories',function($q2) use($categories){
-		// 			$q2->whereIn('categories_id',$categories);
-		// 		}); 
-		// 	});
-		// }
+
 		if($name)
 		{
 			if($name=="")
