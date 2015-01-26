@@ -494,6 +494,11 @@ ul.tree > li ul {
 	text-align: center;
 	line-height: 14px;
 	font-size: 0;
+	background-image: linear-gradient(to top, #ededed 0%, #fafafa 100%);
+}
+
+.tree-node.leaf:hover > span i.fa {
+	background-image: none;
 }
 
 .tree-node.leaf.selected > span i.fa {

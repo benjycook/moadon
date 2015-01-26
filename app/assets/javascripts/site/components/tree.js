@@ -5,9 +5,15 @@ App.UiTreeNodeComponent = Em.Component.extend({
 
   isSelected: false,
 
+  parent: function(){
+    return this.nearestWithProperty('value');
+  }.property().volatile(),
+
   selected: function(){
-    return this.get('isSelected') === true;
-  }.property('isSelected'),
+    if(this.get('parent.value.length') && this.get('parent.value').indexOf(this.get('node.id')) != -1)
+      return true;
+    return false;
+  }.property('parent.value'),
 
   leaf: function(){
     return this.get('level') > 2;
@@ -17,7 +23,6 @@ App.UiTreeNodeComponent = Em.Component.extend({
     return this.get('childViews').anyBy('active');
   }.property('childViews.@each.active'),
 
-  //parent: this.nearestWithProperty()
   selectable: function(){
     if(this.get('level') > 2)
       return true;
@@ -54,7 +59,17 @@ App.UiTreeNodeComponent = Em.Component.extend({
 
   actions: {
     'toggle': function(){
-      this.set('isSelected', !this.get('isSelected'));
+      var id =this.get('node.id');
+      var arr = Em.A(this.get('parent.value'));
+ 
+      if(arr.indexOf(id) === -1)
+      {  
+        arr.pushObject(id);
+      }
+      else
+      {
+        arr.removeObject(id);
+      }
     }
   }
 });

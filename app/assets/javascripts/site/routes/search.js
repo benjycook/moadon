@@ -24,13 +24,22 @@ App.SearchRoute = Em.Route.extend({
 		console.log(params);
 		var region = params.region;
 		var category = params.category;
+		var subregions = params.subregions;
+		var subcategories = params.subcategories;
 		// var regions = [];//params.qregions.join(',');
 		// var categories = [];//params.qcategories.join(',');
 		var terms = [];
 		if(region && region+'' != 'undefined')
 			terms.push('region='+region);
+		
+		if(subregions && subregions.length > 0)
+			terms.push('subregions='+subregions);
+		
 		if(category && category+'' != 'undefined')
 			terms.push('category='+category);
+
+		if(subcategories && subcategories.length > 0)
+			terms.push('subcategories='+subcategories);
 		// terms.push('categories='+categories);
 		// terms.push('regions='+regions);
 		terms = terms.join('&');

@@ -23,6 +23,8 @@ App.SearchController = Em.ArrayController.extend({
     }
   },
 
+
+
   region: null,
   subregions: [],
   category: null,

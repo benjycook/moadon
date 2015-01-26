@@ -131,15 +131,20 @@ class SiteClubsController extends BaseController
 	{
 		$region = Input::get('region', 0);
 		$category = Input::get('category', 0);
-		$regions = Input::get('regions',0);
-		$categories = Input::get('categories',0);
+		$subregions = Input::get('subregions',0);
+		$subcategories = Input::get('subcategories',0);
 		$name = Input::get('supplier',0);
 		//$item = Input::get('item',0);
 		$supplier = SiteDetails::mini();
 		if($category)
 		{
-			$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
-			$categories = $this->flaten($temp);
+			if($subcategories)
+				$categories = explode(',', $subcategories);
+			else{
+				$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
+				$categories = $this->flaten($temp);
+			}
+
 			$supplier->whereHas('categories', function($q) use($categories){
 				$q->whereIn('categories_id', $categories);
 			});
@@ -147,8 +152,13 @@ class SiteClubsController extends BaseController
 
 		if($region > 0)
 		{
-			$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
-			$regions = $this->flaten($temp);
+			if($subregions)
+				$regions = explode(',', $subregions);
+			else{
+				$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
+				$regions = $this->flaten($temp);
+			}
+
 			$supplier->whereHas('regions',function($q) use($regions){
 				$q->whereIn('regions_id', $regions);
 			});
