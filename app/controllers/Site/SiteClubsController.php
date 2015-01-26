@@ -139,11 +139,16 @@ class SiteClubsController extends BaseController
 		if($category)
 		{
 			if($subcategories)
-				$categories = explode(',', $subcategories);
-			else{
-				$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
-				$categories = $this->flaten($temp);
+			{
+				$subcategories = explode(',', $subcategories);
+				$temp = Category::whereIn('id', $subcategories)->with('children')->get()->toArray();
 			}
+			else
+			{
+				$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
+			}
+
+			$categories = $this->flaten($temp);
 
 			$supplier->whereHas('categories', function($q) use($categories){
 				$q->whereIn('categories_id', $categories);
@@ -153,11 +158,15 @@ class SiteClubsController extends BaseController
 		if($region > 0)
 		{
 			if($subregions)
-				$regions = explode(',', $subregions);
+			{
+				$subregions = explode(',', $subregions);
+				$temp = Region::whereIn('id', $subregions)->with('children')->get()->toArray();
+			}
 			else{
 				$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
-				$regions = $this->flaten($temp);
 			}
+			
+			$regions = $this->flaten($temp);
 
 			$supplier->whereHas('regions',function($q) use($regions){
 				$q->whereIn('regions_id', $regions);

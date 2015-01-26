@@ -23,7 +23,15 @@ App.SearchController = Em.ArrayController.extend({
     }
   },
 
+  clearSubRegions: function()
+  {
+    this.set('subregions', []);
+  }.observes('region'),
 
+  clearSubCategories: function()
+  {
+    this.set('subcategories', []);
+  }.observes('category'),
 
   region: null,
   subregions: [],
