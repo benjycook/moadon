@@ -175,17 +175,6 @@ class SiteClubsController extends BaseController
 			$supplier['images'] = $rawImages;
 		}
 
-		foreach ($suppliers as &$supplier) {
-			$supplier['region'] = $supplier['regions_id'] ? $regions[$supplier['regions_id']]['name']:"";
-			$gallery = count($supplier['galleries']) ? $supplier['galleries'][0]:array('images'=>array());
-			$supplier['galleries'] = $this->gallerySetUp($gallery);
-			foreach ($supplier['items'] as &$item) {
-				$gallery = count($item['galleries']) ? $item['galleries'][0]:array('images'=>array());
-				$item['galleries'] = $this->gallerySetUp($gallery);
-			}
-			unset($supplier['regions_id']);
-			unset($supplier['suppliers_id']);
-		}
 		return Response::json($suppliers,200);
 	}
 }
