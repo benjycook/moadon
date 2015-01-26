@@ -43,6 +43,8 @@ App.UiTreeComponent = Ember.Component.extend({
 App.UiTreeNodeComponent = Ember.Component.extend({
   tagName: 'li',
 
+  isTreeNode: true,
+
   classNames: ['tree-node'],
 
   isExpanded: false,
@@ -86,7 +88,7 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   }.property('parent'),
 
   isSelectable: function(){
-    return this.get('level') > 2 && !this.get('allowEdit');
+    return !this.get('allowEdit');
   }.property('level', 'allowEdit'),
 
   isSelected: function(){
@@ -101,6 +103,7 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   actions: {
 
       toggle: function() {
+
         var isLeaf = this.get('isLeaf');
         var level = this.get('level');
 

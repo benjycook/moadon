@@ -1,20 +1,21 @@
 <div class="tree-row">
 
-	<span {{bind-attr class=":toggle-icon node.children.length::leaf"}} {{action 'toggle'}}>
+	<span {{bind-attr class=":toggle-icon node.children.length::leaf"}} >
+			{{#if isBranch}}
+				{{#if isExpanded}}
+		      <i class="fa fa-caret-down" {{action 'expend'}}></i>
+		    {{else}}
+		      <i class="fa fa-caret-left" {{action 'expend'}}></i>
+		    {{/if}}
+		  {{/if}}
+
 			{{#if isSelectable}}
 				{{#if isSelected}}
-		      <i class="fa fa-check-square-o"></i>
+		      <i class="fa fa-check-square-o" {{action 'select'}}></i>
 		    {{else}}
-		      <i class="fa fa-square-o"></i>
-		    {{/if}}
-			{{else}}
-				{{#if isExpanded}}
-		      <i class="fa fa-minus-square-o"></i>
-		    {{else}}
-		      <i class="fa fa-plus-square-o"></i>
+		      <i class="fa fa-square-o" {{action 'select'}}></i>
 		    {{/if}}
 			{{/if}}
-
 	</span>
 
 	{{#if isEditable}}
