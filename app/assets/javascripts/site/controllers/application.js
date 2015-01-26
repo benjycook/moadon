@@ -6,33 +6,6 @@ App.ApplicationController = Em.ObjectController.extend({
 
 	cart: Ember.computed.alias("controllers.cartIndex"),
 
-	queryParams: {
-    eregions: {
-      replace: true
-    },
-
-    ecategories: {
-      replace: true
-    },
-
-    qregions: {
-      replace: true
-    },
-
-    qcategories: {
-      replace: true
-    }
-  },
-
-  eregions: [],
-  ecategories: '',
-  qregions: '',
-  qcategories: '',
-
-  updateExpended: function(){
-  	console.log(this.get('eregions'));
-  }.observes('eregions'),
-
 	flatRegions: function(){
 		var regions = this.get('regions.children');
 		var flatRegions = [];

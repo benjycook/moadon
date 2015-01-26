@@ -35,10 +35,9 @@
        
         <div id="sidebar">
             <button class="cart">סל הקניות שלי [ {{cart.length}} ]</button>
-
-            {{ui-tree node=regions selected=qregions expended=eregions class="tree"}}
-
-            {{ui-tree node=categories selected=qcategories expended=ecategories class="tree"}}
+            
+            {{ui-tree-branch children=regions.children class="tree"}}
+            {{ui-tree-branch children=categories.children class="tree"}}
 
         </div>
 

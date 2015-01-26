@@ -1,21 +1,36 @@
 App.SearchRoute = Em.Route.extend({
 
-  queryParams: {
-    qcategories: {
+	 queryParams: {
+
+    region: {
       refreshModel: true
     },
-    qregions: {
+    
+    subregions: {
       refreshModel: true
-    },    
+    },
+
+    category: {
+      refreshModel: true
+    },
+
+    subcategories: {
+      refreshModel: true
+    }
   },
 
 	model: function(params)
 	{
-		var regions = params.qregions.join(',');
-		var categories = params.qcategories.join(',');
+		console.log(params);
+		var region = this.get('region');
+		var category = params.category;
+		// var regions = [];//params.qregions.join(',');
+		// var categories = [];//params.qcategories.join(',');
 		var terms = [];
-		terms.push('categories='+categories);
-		terms.push('regions='+regions);
+		terms.push('region='+region);
+		terms.push('category='+category);
+		// terms.push('categories='+categories);
+		// terms.push('regions='+regions);
 		terms = terms.join('&');
 		return $.getJSON('search?'+terms);
 	},

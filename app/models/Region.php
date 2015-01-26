@@ -22,6 +22,7 @@ class Region extends Eloquent {
     {
         return $this->hasMany('Region','id','parent_id')->with('parents');
     }
+    
     public static function boot()
     {
         parent::boot();

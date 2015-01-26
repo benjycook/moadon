@@ -1,24 +1,33 @@
 App.SearchController = Em.ArrayController.extend({
 
-	needs: ['application'],
-
-	queryParams: {
-    qregions: {
+  queryParams: {
+    region: {
       replace: true
     },
 
-    qcategories: {
+    subregions: {
+      replace: true
+    },
+
+    category: {
+      replace: true
+    },
+
+    subcategories: {
       replace: true
     }
   },
 
-  qregions: [],
-  qcategories: [],
+  region: null,
+  subregions: [],
+  category: null,
+  subcategories: [],
 
-	//app: Ember.computed.alias("controllers.application"),
-
-	// updateSearch: function(){
-	// 	console.log('update search');
-	// }.observes('app.qcategories', 'app.qregions')
+  // clearSubRegions: function(){
+  //   var self = this;
+  //   Em.run('afterRender', function(){
+  //     self.set('subregions', []);
+  //   });
+  // }.observes('region')
 
 });

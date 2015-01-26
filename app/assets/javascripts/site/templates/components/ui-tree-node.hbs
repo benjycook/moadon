@@ -1,11 +1,17 @@
-<div {{bind-attr class=":tree-row isExpanded:down-arrow:right-arrow isLeaf:leaf isSelected:selected"}}  {{action 'toggle'}} >
-	<span class=":toggle-icon">
-		{{node.name}}
-	</span>
-
-</div>
-
-{{#if isExpanded}}
-  {{ui-tree node=node}}
-{{/if}}
-
+{{#unless node.children.length}}
+  <li class="tree-node leaf">
+      <span {{action 'select' node.id}}>
+          <i class="fa fa-check"></i>
+          {{node.name}}
+      </span>
+  </li>
+{{else}}
+	<li class="tree-node">
+	  {{#link-to 'search' (query-params region=node.id)}}
+	  		<i class="fa fa-chevron-down"></i>
+	      <i class="fa fa-caret-down"></i>
+	      {{node.name}}
+	  {{/link-to}}
+	  {{ui-tree-branch children=node.children}}
+	</li>
+{{/unless}}

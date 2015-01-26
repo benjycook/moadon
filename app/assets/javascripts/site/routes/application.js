@@ -12,7 +12,7 @@ App.ApplicationRoute = Em.Route.extend({
 		
 		model.regions = {
 			children: [
-				{name: "חיפוש לפי אזור", children: model.regions}
+				{name: "חיפוש לפי אזור", children: model.regions, id: 0}
 		]};
 
 		ctrl.set('model', model);

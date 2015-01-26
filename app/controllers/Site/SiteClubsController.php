@@ -2,6 +2,19 @@
 
 class SiteClubsController extends BaseController 
 {
+
+	protected function flaten($array)
+	{
+		$ids = array();
+		$res  = array();
+		foreach ($array as $key => $value) {
+			$ids[] = $value['id'];
+			$res = array_merge($res, $this->flaten($value['children']));
+		}
+
+		return array_merge($res, $ids);
+	}
+
 	protected function setUp($subjects,$regions)
 	{
 		foreach ($subjects as $subject) {
@@ -116,29 +129,52 @@ class SiteClubsController extends BaseController
 
 	public function search()
 	{
+		$region = Input::get('region', 0);
+		$category = Input::get('category', 0);
 		$regions = Input::get('regions',0);
 		$categories = Input::get('categories',0);
 		$name = Input::get('supplier',0);
 		//$item = Input::get('item',0);
 		$supplier = SiteDetails::mini();
-		if($regions)
+		if($category)
 		{
-			$regions = explode(',',$regions); 
-			$supplier->whereHas('supplier',function($q1) use($regions){
-				$q1->whereHas('regions',function($q2) use($regions){
-					$q2->whereIn('regions_id',$regions);
-				}); 
-			});
-		}
-		if($categories)
-		{
-			$categories = explode(',',$categories); 
+			$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
+			$categories = $this->flaten($temp);
 			$supplier->whereHas('supplier',function($q1) use($categories){
 				$q1->whereHas('categories',function($q2) use($categories){
 					$q2->whereIn('categories_id',$categories);
 				}); 
 			});
 		}
+
+		if($region > 0)
+		{
+			$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
+			$regions = $this->flaten($temp);
+			$supplier->whereHas('supplier',function($q1) use($regions){
+				$q1->whereHas('regions',function($q2) use($regions){
+					$q2->whereIn('regions_id',$regions);
+				}); 
+			});
+		}
+		// if($regions)
+		// {
+		// 	$regions = explode(',',$regions); 
+		// 	$supplier->whereHas('supplier',function($q1) use($regions){
+		// 		$q1->whereHas('regions',function($q2) use($regions){
+		// 			$q2->whereIn('regions_id',$regions);
+		// 		}); 
+		// 	});
+		// }
+		// if($categories)
+		// {
+		// 	$categories = explode(',',$categories); 
+		// 	$supplier->whereHas('supplier',function($q1) use($categories){
+		// 		$q1->whereHas('categories',function($q2) use($categories){
+		// 			$q2->whereIn('categories_id',$categories);
+		// 		}); 
+		// 	});
+		// }
 		if($name)
 		{
 			if($name=="")
