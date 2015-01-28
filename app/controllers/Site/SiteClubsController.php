@@ -112,7 +112,7 @@ class SiteClubsController extends BaseController
 			return Response::json('ספק זה לא נמצאה במערכת',404);
 		$regions = Region::with('children')->get();
 		$supplier = $supplier->toArray();
-		$supplier['region'] = $supplier['regions_id'] ? $regions[$supplier['regions_id']]['name']:"";
+		//$supplier['region'] = $supplier['regions_id'] ? $regions[$supplier['regions_id']]['name']:"";
 	
 		$rawImages = array();
 		$images = $supplier['galleries'][0]['images'];
@@ -122,7 +122,7 @@ class SiteClubsController extends BaseController
 		unset($supplier['galleries']);
 		$supplier['images'] = $rawImages;
 		
-		unset($supplier['regions_id']);
+		//unset($supplier['regions_id']);
 		unset($supplier['suppliers_id']);
 		return Response::json($supplier,200);
 	}
@@ -165,12 +165,18 @@ class SiteClubsController extends BaseController
 			else{
 				$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
 			}
-			
+
+			//get all regions
 			$regions = $this->flaten($temp);
 
-			$supplier->whereHas('regions',function($q) use($regions){
+			//get all cities for region
+			$cities = City::whereHas('regions', function($q) use ($regions){
 				$q->whereIn('regions_id', $regions);
-			});
+			})->lists('id');
+
+			$cities[] = -1;
+
+			$supplier->whereIn('cities_id', $cities);
 		}
 
 		if($name)
