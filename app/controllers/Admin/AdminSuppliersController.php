@@ -94,8 +94,9 @@ class AdminSuppliersController extends BaseController
 		unset($supplier['categories']);
 		unset($supplier['sitedetails']);
 		unset($supplier['items']);
-		$supplier    = $supplier;
-		$sitedetails['linkId'] = $sitedetails['id'];
+		
+
+		$sitedetails['linkId'] = $supplier->id;//$sitedetails['id'];
 		$temp = array();
 		$temp['main'] = isset($galleries[0]) ? $galleries[0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";
