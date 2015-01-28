@@ -16,7 +16,8 @@ App.UiTreeNodeComponent = Em.Component.extend({
   }.property('parent.value'),
 
   leaf: function(){
-    return this.get('level') > 2;
+    //return this.get('level') > 2;
+    return this.get('selectable');
   }.property('level'),
 
   active: function() {
@@ -24,7 +25,8 @@ App.UiTreeNodeComponent = Em.Component.extend({
   }.property('childViews.@each.active'),
 
   selectable: function(){
-    if(this.get('level') > 2)
+    //if(this.get('level') > 2)
+    if(!this.get('node.children.length') && this.get('level') > 1)
       return true;
     return false;
   }.property('level'),
