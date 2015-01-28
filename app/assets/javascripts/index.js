@@ -8,10 +8,10 @@ App = Ember.Application.create({
 App.identificationTypes = Em.ArrayController.create();
 App.states = Em.ArrayController.create();
 App.regions = Em.ArrayController.create();
+App.cities = Em.ArrayController.create();
 App.categories = Em.ArrayController.create();
 App.clubs = Em.ArrayController.create();
 App.itemTypes = Em.ArrayController.create();
-App.cities = Em.ArrayController.create();
 Ember.Application.initializer({
   name: "options",
  

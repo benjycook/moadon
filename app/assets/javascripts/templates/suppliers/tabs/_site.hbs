@@ -61,7 +61,7 @@
            <div class="col-md-12">
               <div class="form-group">
                 <label>תוכן למיני סייט:</label>
-                {{textarea type="text" class="form-control" valueBinding="sitedetails.miniSiteContext" required="required"}}
+                {{ui-rte html=sitedetails.miniSiteContext}}
               </div>
            </div>
         </div>
@@ -90,31 +90,6 @@
         </div>
 
     	<div class="row">
-          {{!-- <div class="col-md-3">
-                <div class="form-group">
-                  <label>אזור ראשי:</label>
-                    {{view Ember.ChosenSelectView
-                        classNames="form-control chosen-select chosen-rtl form-group" 
-                        prompt = "בחר..."
-                        contentBinding="sortedLevel1"
-                        selected=mainRegion
-                        required='required'
-                      }}
-                </div>
-          </div> --}}
-
-          {{!--  <div class="col-md-3">
-                <div class="form-group">
-                  <label>אזור משני:</label>
-                    {{view Ember.ChosenSelectView
-                        classNames="form-control chosen-select chosen-rtl form-group" 
-                        prompt = "בחר..."
-                        contentBinding="sortedLevel2"
-                        selected=secondaryRegion
-                        required='required'
-                      }}
-                </div>
-          </div> --}}
 
            <div class="col-md-3">
                 <div class="form-group">
@@ -138,31 +113,32 @@
           </div>
          
     	</div>
+      
       <div class="row">
         <div class="col-md-3">
           <div class="form-group">
             <label>טלפון ראשי:</label>
-            {{input type="text" class="form-control" valueBinding="sitedetails.phone2" required="required"}}
+            {{input type="text" class="form-control" value=sitedetails.phone2 required="required"}}
           </div>
         </div>
 
         <div class="col-md-3">
           <div class="form-group">
             <label>טלפון משני:</label>
-            {{input type="text" class="form-control" valueBinding="sitedetails.phone3" }}
+            {{input type="text" class="form-control" value=sitedetails.phone3 }}
           </div>
         </div>
 
         <div class="col-md-3">
           <div class="form-group">
             <label>נייד:</label>
-              {{input type="text" class="form-control" valueBinding="sitedetails.phone1"  }}
+              {{input type="text" class="form-control" value=sitedetails.phone1  }}
           </div>
         </div>
         <div class="col-md-3">
           <div class="form-group">
             <label>פקס:</label>
-            {{input type="text" class="form-control" valueBinding="sitedetails.fax" }}
+            {{input type="text" class="form-control" value=sitedetails.fax }}
           </div>
         </div>        
             

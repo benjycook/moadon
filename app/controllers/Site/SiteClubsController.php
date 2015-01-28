@@ -46,7 +46,14 @@ class SiteClubsController extends BaseController
 
 		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
 		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();
+		$cities = City::with('regions')->get();
 
+		foreach ($cities as &$city) {
+			$city['regions_id'] = $city['regions'][0]['id'];
+			unset($city['regions']);
+		}
+
+		$data['cities'] = $cities;
 
 		$suppliers = SiteDetails::where('visibleOnSite', '=', '1')
 														->where('states_id', '=', '2')
