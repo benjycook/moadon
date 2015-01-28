@@ -69,8 +69,10 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   }.property('level', 'allowEdit'),
 
   isBranch: function() {
-      return this.get('node.children').length > 0;
-  }.property('node.children', 'node.children.@each'),
+      return this.get('node.children').length > 0 || (this.get('allowEdit') && this.get('allowAdd'));
+  }.property('node.children', 'node.children.@each', 'allowEdit', 'allowAdd'),
+
+
 
   isLeaf: function() {
       return !this.get('node.children').length;
