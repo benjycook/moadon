@@ -35,40 +35,42 @@ App.CitiesRoute = App.ProtectedRoute.extend({
 			});
 		},
 
-		'closeMsg':function(controller)
+		'confirm':function(controller,id)
 		{
-			controller.set('error',null);
-			controller.set('success',null);
+			controller.set('deleteID',id);
+			this.render('delete/confirm', {
+				controller:controller,
+			  into: 'application',
+			  outlet: 'modal',
+			});
 		},
 
-		'closeWindow':function(controller)
-		{
-			this.send('closeMsg',controller);
-			this.render('empty',{into:'application',outlet:'modal'});
-			controller.refresh();
-		},
-
-		'delete':function(controller,id)
+		'delete':function(controller)
 		{
 			var self = this;
-			this.send('closeMsg',controller);
 			$.ajax({
 				type: "DELETE",
-				url: "cities/"+id,
+				url: 'cities/'+controller.get('deleteID'),
 			}).then(function(data){
+				var object = controller.get('rows').findBy('id',controller.get('deleteID'));
+				controller.get('rows').removeObject(object);
 				var cities = App.get('cities');
-				var city = cities.findBy('id',id);
+				var city = cities.findBy('id',controller.get('deleteID'));
 				cities.removeObject(city);
-				controller.set('success',data.success);
+				controller.set('deleteID',null);
+				self.render('empty', {into: 'application',outlet: 'modal'});
 			}).fail(function(data){
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else
 					var error = data.responseJSON.error;
 					controller.set('error',error);
-			}).always(function(){
-				self.render('notice',{into:'application',outlet:'modal',controller:controller});
 			});
+		},
+		'cancel':function(controller)
+		{
+			controller.set('deleteID',null);
+			this.render('empty', {into: 'application',outlet: 'modal'});
 		},
 
 		'close':function(controller)
