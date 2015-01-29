@@ -26,21 +26,22 @@
                   <ul class="nav nav-pills nav-stacked">
                     <li class="active"><a href="#supplier" data-toggle="tab">פרטי ספק</a></li>
                    {{#if disableTabs}}
-                   		<li class="disabled"><a  data-toggle="tab" >פרטים באתר</a></li>
+                   		<li class="disabled"><a  data-toggle="tab">פרטים באתר</a></li>
+                   		<li class="disabled"><a  data-toggle="tab">מיני סייט</a></li>
 	                    <li class="disabled"><a  data-toggle="tab">מוצרים</a></li>
                    {{else}}
 	                    <li ><a href="#site" data-toggle="tab" >פרטים באתר</a></li>
+	                    <li ><a href="#minisite" data-toggle="tab" >מיני סייט</a></li>
 	                    <li ><a href="#items" data-toggle="tab">מוצרים</a></li>
                    {{/if}}
                   </ul>
                 </div>
 
                 <div class="col-xs-10 tab-content">
-	                {{partial "suppliers/tabs/supplier"}}
-
-					{{partial "suppliers/tabs/site"}}
-
-					{{partial "suppliers/tabs/items"}}
+									{{partial "suppliers/tabs/supplier"}}
+									{{partial "suppliers/tabs/site"}}
+									{{partial "suppliers/tabs/minisite"}}
+									{{partial "suppliers/tabs/items"}}
                 </div>
         </div> 
 </div>

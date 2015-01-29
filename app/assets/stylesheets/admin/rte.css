@@ -1,0 +1,17 @@
+.ui-rte {
+	background: none repeat scroll 0 0 #fff;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.ui-rte .content{
+	outline: none;
+	height: 400px;
+	overflow: auto;
+}
+
+.ui-rte .content p {
+	margin: 0;
+	padding: 0;
+}

@@ -99,8 +99,8 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
   isDeletable: function()
   {
-    return !this.get('isBranch') && this.get('allowEdit');
-  }.property('isBranch', 'allowEdit'),
+    return this.get('isLeaf') && this.get('allowEdit');
+  }.property('isLeaf', 'allowEdit'),
 
   actions: {
 

@@ -3,6 +3,6 @@
  *= require bootstrap
  *= require font-awesome
  *= require libs/editor/editor.css
- *= require libs/editor/themes/webtech.css
+ *= require libs/editor/themes/bootstrap.css
  *= require_tree .
  */
