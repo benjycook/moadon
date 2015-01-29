@@ -50,6 +50,11 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   isExpanded: false,
   isEditable: false,
 
+
+  nodeHasSelectoin: function(){
+
+  },
+  
   hasSelections: function(){
     return this.get('node.children').filter(function(item){
       if(item.selected)
@@ -71,8 +76,6 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   isBranch: function() {
       return this.get('node.children').length > 0 || (this.get('allowEdit') && this.get('allowAdd'));
   }.property('node.children', 'node.children.@each', 'allowEdit', 'allowAdd'),
-
-
 
   isLeaf: function() {
       return !this.get('node.children').length;
@@ -96,6 +99,12 @@ App.UiTreeNodeComponent = Ember.Component.extend({
   isSelected: function(){
     return this.get('node.selected');
   }.property('node.selected'),
+
+  isOpen: function(){
+    if(this.get('isExpanded') || this.get('hasSelections'))
+      return true;
+    return false;
+  }.property('isExpanded', 'hasSelections'),
 
   isDeletable: function()
   {

@@ -2,7 +2,7 @@
 
 	<span {{bind-attr class=":toggle-icon node.children.length::leaf"}} >
 			{{#if isBranch}}
-				{{#if isExpanded}}
+				{{#if isOpen}}
 		      <i class="fa fa-caret-down" {{action 'expend'}}></i>
 		    {{else}}
 		      <i class="fa fa-caret-left" {{action 'expend'}}></i>
@@ -36,7 +36,7 @@
 	{{/if}}
 </div>
 
-{{#if isExpanded}}
+{{#if isOpen}}
   {{ui-tree node=node}}
   {{#if allowAdd}}
  	 <span class="tree-add" {{action 'addChild'}}><i class="fa fa-plus-circle"></i>הוסף</span>

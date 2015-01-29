@@ -16,8 +16,8 @@ App.UiTreeNodeComponent = Em.Component.extend({
   }.property('parent.value'),
 
   leaf: function(){
-    //return this.get('level') > 2;
-    return this.get('selectable');
+    return this.get('level') > 2;
+    //return this.get('selectable');
   }.property('level'),
 
   active: function() {
