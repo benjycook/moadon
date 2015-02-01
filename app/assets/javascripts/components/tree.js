@@ -52,7 +52,11 @@ App.UiTreeNodeComponent = Ember.Component.extend({
 
 
   nodeHasSelectoin: function(){
-
+    return this.get('node.children').filter(function(item){
+      if(item.selected)
+        return true;
+      return false;
+    }).length > 0;
   },
   
   hasSelections: function(){

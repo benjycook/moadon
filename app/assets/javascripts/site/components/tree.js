@@ -24,9 +24,13 @@ App.UiTreeNodeComponent = Em.Component.extend({
     return this.get('childViews').anyBy('active');
   }.property('childViews.@each.active'),
 
+  isOpen: function(){
+    return this.get('active');
+  }.property('active'),
+
   selectable: function(){
     //if(this.get('level') > 2)
-    if(!this.get('node.children.length') && this.get('level') > 1)
+    if(!this.get('node.children.length') && this.get('level') > 2)
       return true;
     return false;
   }.property('level'),
