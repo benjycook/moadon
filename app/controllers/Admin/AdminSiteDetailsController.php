@@ -5,7 +5,7 @@ class AdminSiteDetailsController extends BaseController
 	protected function rules()
 	{
 		$rules = array(
-			'supplierName'=> "required",'description'=> "required",'miniSiteContext'=> "required",'workingHours'=> "required",
+			'supplierName'=> "required",'description'=> "required",'workingHours'=> "required",//'miniSiteContext'=> "required"
 			'ageDevision'=> "required",'phone2'=> "required",'cities_id'=>"required",
 			);
 
