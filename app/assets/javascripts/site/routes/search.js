@@ -21,7 +21,7 @@ App.SearchRoute = Em.Route.extend({
 
 	model: function(params)
 	{
-		console.log(params);
+		//console.log(params);
 		var region = params.region;
 		var category = params.category;
 		var subregions = params.subregions;
@@ -62,7 +62,6 @@ App.SearchRoute = Em.Route.extend({
 			suppliers: model
 		};
 
-		console.log(model);
 		ctrl.set('model', model);
 	}
 

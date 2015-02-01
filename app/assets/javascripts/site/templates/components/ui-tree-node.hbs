@@ -7,36 +7,7 @@
 
 {{else}}
 
-	{{#if isCategory}}
-
-	  {{#link-to 'search' (query-params category=node.id)}}
-	  		{{#if node.children.length}}
-		  		<i class="fa fa-chevron-left"></i>
-		  		<i class="fa fa-chevron-down"></i>
-		      <i class="fa fa-caret-left"></i>
-		      <i class="fa fa-caret-down"></i>
-		    {{else}}
-		    	<i class="fa fa-chevron-left"></i>
-		    	<i class="fa fa-caret-left"></i>
-		      <i class="fa fa-check"></i>
-		    {{/if}}
-	      {{node.name}}
-	  {{/link-to}}
-	{{else}}
-		  {{#link-to 'search' (query-params region=node.id)}}
-	  		{{#if node.children.length}}
-		  		<i class="fa fa-chevron-left"></i>
-		  		<i class="fa fa-chevron-down"></i>
-		      <i class="fa fa-caret-left"></i>
-		      <i class="fa fa-caret-down"></i>
-		    {{else}}
-		    	<i class="fa fa-chevron-left"></i>
-		    	<i class="fa fa-caret-left"></i>
-		      <i class="fa fa-check"></i>
-		    {{/if}}
-	      {{node.name}}
-	  {{/link-to}}
-	{{/if}}
+	{{ui-tree-link item=node base=type}}
 
 {{/if}}
 
