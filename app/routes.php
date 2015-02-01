@@ -14,10 +14,15 @@
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: token');
 
+$domain = getenv('ROOTDOMAIN');
+if(empty($domain))
+	$domain = 'moadonofesh.co.il';
 
-Route::group(array(), function(){
+Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
-	Route::get('options', 'SiteIndexController@options');
+	Route::get('options', 'SiteClubsController@options');
+	Route::get('supplier/{id}','SiteClubsController@supplier');
+	Route::get('search', 'SiteClubsController@search');
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -29,7 +34,7 @@ Route::group(array('prefix' => 'admin'), function()
 	Route::get('logout',	'AdminLoginController@logout');
 	Route::post('restore',	'AdminLoginController@restore');
 	Route::get('options','AdminOptionsController@index');
-	
+
 	Route::group(array('before' => 'auth'), function() 
 	{
 		Route::resource('clubs','AdminClubsController');
@@ -37,6 +42,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('suppliers','AdminSuppliersController');
 		Route::resource('items','AdminItemsController');
 		Route::resource('users','AdminUsersController');
+		Route::resource('cities','AdminCitiesController');
 		Route::resource('orders','AdminOrdersController');
 		Route::resource('clients','AdminClientsController');
 		Route::resource('categories','AdminCategoriesController');
@@ -50,7 +56,7 @@ Route::group(array('prefix' => 'admin'), function()
 Route::group(array('prefix' => 'clubs'), function()
 {
 	//temp 
-	Route::get('supplier/{id}','ClubsController@supplier');
+	
 	Route::get('search','ClubsController@search');
 	Route::group(array('before' => 'club_auth'), function() 
 	{

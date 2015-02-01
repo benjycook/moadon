@@ -16,18 +16,7 @@ class AdminSuppliersController extends BaseController
 			);
 		return $rules;
 	}
-	protected function validateCaregoriesAndRegions($data)
-	{
-		if(!count($data['categories']))
-			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
-		if(!count($data['regions']))
-			return array('error'=>'יש לבחור לפחות אזור אחת');
-		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
-			return array('error'=>'אחת הקטגוריות לא נמצא במערכת');
-		if(Region::whereIn('id',$data['regions'])->count()!=count($data['regions']))
-			return array('error'=>'אחת האזורים לא נמצא במערכת');
-		return false;
-	}
+	
 	public function create()
 	{
 		
@@ -37,8 +26,11 @@ class AdminSuppliersController extends BaseController
 		$temp->sitedetails->linkId = md5(rand(1,10000).'templink'.rand(1,10000));
 		$temp->sitedetails->uploadUrl = '/uploadImage';
 		$temp->sitedetails->galleries['main'] = array('id'=>0,'type'=>'ראשי','images'=>array(),'base'=>$base);
+		$temp->sitedetails->categories = array();
 		$temp->items = array();
 		$temp->supplier = new stdClass;
+		$temp->categories = Category::with('children')->where('parent_id','=',0)->get();
+			
 		return Response::json($temp,201);
 	}
 
@@ -71,34 +63,40 @@ class AdminSuppliersController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	if(Supplier::where('username','=',$data['username'])->count())
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
-    	if(Supplier::whereRaw('idNumber = ?',array($data['idNumber']))->count())
-    		return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
-    	$res = $this->validateCaregoriesAndRegions($data);
-    	if(isset($res['error']))
-    		return Response::json(array('error'=>$res['error']),501);
+    	// if(Supplier::whereRaw('idNumber = ?',array($data['idNumber']))->count())
+    	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
+
     	$supplier = $supplier->create($data);
-    	$supplier->categories()->attach($data['categories']);
-    	$supplier->regions()->attach($data['regions']);
-    	return Response::json($supplier,201);
+    	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id,'states_id'=>2));
+    	$gallery = Gallery::create(array('type'=>'ראשית'));
+		$siteDetails->galleries()->attach($gallery->id);
+		$base = URL::to('/')."/galleries/";
+		$newSite = new stdClass;
+		$newSite->linkId = $newSite->id = $siteDetails->id;
+		$newSite->uploadUrl = '/uploadImage';
+		$newSite->states_id = 2;
+		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
+		$newSite->categories = array();
+    	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
 	}
 
 	public function show($id)
 	{
-		$supplier = Supplier::with('sitedetails')->with('items')->with('regions')->with('categories')->find($id);
+		$supplier = Supplier::with('sitedetails')->with('items')->with('categories')->find($id);
 		if(!$supplier)
 			return Response::json(array('error'=>'ספק זה לא נמצא במערכת'),501);
 		$supplier = $supplier->toArray();
-		$regions = Collection::make($supplier['regions'])->lists('id');
 		$categories = Collection::make($supplier['categories'])->lists('id');
-		$supplier['regions'] = $regions;
-		$supplier['categories'] = $categories;
 		$sitedetails = $supplier['sitedetails'];
+		$sitedetails['categories'] = $categories;
 		$galleries = $supplier['sitedetails']['galleries'];
 		$items = $supplier['items'];
+		unset($supplier['categories']);
 		unset($supplier['sitedetails']);
 		unset($supplier['items']);
-		$supplier    = $supplier;
-		$sitedetails['linkId'] = $sitedetails['id'];
+		
+
+		$sitedetails['linkId'] = $supplier['id'];
 		$temp = array();
 		$temp['main'] = isset($galleries[0]) ? $galleries[0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";
@@ -114,8 +112,18 @@ class AdminSuppliersController extends BaseController
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
 		}
-		return Response::json(array('supplier'=>$supplier,'items'=>$items,'sitedetails'=>$sitedetails),200);
+
+		//refactor code
+		$data = array(
+			'categories'			=> 	Category::with('children')->where('parent_id','=',0)->get(),
+			'supplier'				=>	$supplier,
+			'items'					=>	$items,
+			'sitedetails'			=>	$sitedetails,
+		);
+
+		return Response::json($data,200);
 	}
+
 	public function update($id)
 	{
 		$json=Request::getContent();
@@ -128,16 +136,16 @@ class AdminSuppliersController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	if(Supplier::whereRaw('username = ? AND id != ?',array($data['username'],$supplier->id))->count())
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
-    	if(Supplier::whereRaw('idNumber = ? AND id != ?',array($data['idNumber'],$supplier->id))->count())
-    		return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
-    	$res = $this->validateCaregoriesAndRegions($data);
-    	if(isset($res['error']))
-    		return Response::json(array('error'=>$res['error']),501);
-    	$supplier->categories()->sync($data['categories']);
-    	$supplier->regions()->sync($data['regions']);
+    	// if(Supplier::whereRaw('idNumber = ? AND id != ?',array($data['idNumber'],$supplier->id))->count())
+    	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
+    	// $res = $this->validateCaregoriesAndRegions($data);
+    	// if(isset($res['error']))
+    	// 	return Response::json(array('error'=>$res['error']),501);
+    	// $supplier->categories()->sync($data['categories']);
+    	// $supplier->regions()->sync($data['regions']);
     	$supplier->fill($data);
     	$supplier->save();
-    	return Response::json($supplier,201);
+    	return Response::json(array('supplier'=>$supplier),201);
 	}
 
 }

@@ -74,41 +74,7 @@
                 </div>
               </div>
           </div>
-          <div class="row">
           
-            <div class="col-md-12">
-                <div class="form-group">
-                  <label>אזורים:</label>
-                    {{view Ember.ChosenSelectView
-                        classNames="form-control chosen-select chosen-rtl form-group" 
-                        multiple="true"
-                        placeholder_text_multiple = "בחר..."
-                        contentBinding="App.regions"
-                        selected=supplier.regions
-                        required='required'
-                      }}
-                </div>
-              </div>
-
-         </div>
-
-         <div class="row">
-          
-            <div class="col-md-12">
-                <div class="form-group">
-                  <label>קטגוריות:</label>
-                    {{view Ember.ChosenSelectView
-                        classNames="form-control chosen-select chosen-rtl form-group" 
-                        multiple="true"
-                        placeholder_text_multiple = "בחר..."
-                        contentBinding="App.categories"
-                        selected=supplier.categories
-                        required='required'
-                      }}
-                </div>
-              </div>
-
-         </div>
 
           <div class="modal-footer">
             <div class="pull-left">

@@ -5,7 +5,7 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
-//putenv('ENV=development');
+
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

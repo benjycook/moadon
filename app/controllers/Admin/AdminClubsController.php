@@ -13,6 +13,9 @@ class AdminClubsController extends BaseController
 		{
 			if(array_search("$value",$nonrequired,true)===false)
 				$rules["$value"] ='required';
+			if($value=="urlName")
+				$rules["$value"] = $rules["$value"].'|alphanum';
+
 		}
 		$validator = Validator::make($data, $rules);
 		if($validator->fails()) 
@@ -46,10 +49,17 @@ class AdminClubsController extends BaseController
     	$res 	= $this->clubValidation($data,$club);
     	if($res==false)
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    	$discount = $data['regularDiscount']+$data['creditDiscount'];
+		if($discount<=0)
+			return Response::json(array('error'=>'שדה הנחה רגילה או שדה הנחת אשראי (אחד משניהם) צריך להיות גדול מאפס'),501);
+		if($discount>100)
+			return Response::json(array('error'=>'סכום הנחה רגילה והנחת אשראי לא יעלה על 100'),501);
     	if(!IdentificationType::where('id','=',$data['identificationtypes_id'])->count())
 			return Response::json(array('error'=>'צורת הזדהות לא נמצא במערכת'),501);
 		if(Club::where('name','=',$data['name'])->count())
 			return Response::json(array('error'=>'שם מועדון זה כבר נמצא במערכת'),501);
+		if(Club::where('urlName','=',$data['urlName'])->count())
+			return Response::json(array('error'=>'תת דומיין זה קיים במערכת'),501);
     	$logo = $data['logo'];
     	unset($data['logo']);
     	$path = public_path()."/galleries/tempimages/";
@@ -84,10 +94,17 @@ class AdminClubsController extends BaseController
 		$res 	= $this->clubValidation($data,$club);
 		if($res==false)
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    	$discount = $data['regularDiscount']+$data['creditDiscount'];
+		if($discount<=0)
+			return Response::json(array('error'=>'שדה הנחה רגילה או שדה הנחת אשראי (אחד משניהם) צריך להיות גדול מאפס'),501);
+		if($discount>100)
+			return Response::json(array('error'=>'סכום הנחה רגילה והנחת אשראי לא יעלה על 100'),501);
     	if(!IdentificationType::where('id','=',$data['identificationtypes_id'])->count())
 			return Response::json(array('error'=>'צורת הזדהות לא נמצא במערכת'),501);
 		if(Club::where('id','!=',$data['id'])->where('name','=',$data['name'])->count())
 			return Response::json(array('error'=>'שם מועדון זה כבר נמצא במערכת'),501);
+		if(Club::where('id','!=',$data['id'])->where('urlName','=',$data['urlName'])->count())
+			return Response::json(array('error'=>'תת דומיין זה קיים במערכת'),501);
     	$path = public_path()."/galleries/tempimages/";
     	if($data['logo']!=""&&File::exists($path."".$data['logo']))
     	{

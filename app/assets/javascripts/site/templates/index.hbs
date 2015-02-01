@@ -1,0 +1,20 @@
+{{#each supplier in suppliers itemController="supplier"}}
+
+    <div class="box">
+        <div class="inner">
+            <label>אטרקציות</label>
+            <img {{bind-attr src="supplier.image"}} />
+            <h2>{{supplier.supplierName}}</h2>
+            <address>
+                {{supplier.regionName}}, {{supplier.cityName}}
+                <br />
+                {{supplier.phone1}}
+            </address>
+            <div class="info">
+                <span>25% הנחה</span>
+                {{#link-to 'supplier' supplier.id class="button"}}לפרטים{{/link-to}}
+            </div>
+        </div>
+    </div>
+
+{{/each}}

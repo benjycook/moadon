@@ -1,42 +1,63 @@
 <div class="row tab-pane" id="site">
   <div class="col-md-12">
     {{#view App.FormView}}
+
+
     <form autocomplete="off">
       	<div class="row">
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                   <div class="form-group">
                       <label>שם ספק:</label>
                       {{input type="text" class="form-control" valueBinding="sitedetails.supplierName" required="required"}}
                   </div>
               </div>
 
-               <div class="col-md-6">
+               <div class="col-md-4">
                   <div class="form-group">
-                      <label>כותרת משנית:</label>
-                      {{input type="text" class="form-control" valueBinding="sitedetails.altHeadline" required="required"}}
+                      <label>כותרת משנה:</label>
+                      {{input type="text" class="form-control" valueBinding="sitedetails.altHeadline" }}
+                  </div>
+              </div>
+               <div class="col-md-2">
+                  <div class="form-group">
+                      <label>מוצג בדף ראשי:</label>
+                       {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group" 
+                          contentBinding="Options.yesNo"
+                          valueBinding="sitedetails.visibleOnSite"
+                          prompt = "בחר"
+                          required="required"
+                        }}
                   </div>
               </div>
 
+               <div class="col-md-2">
+                  <div class="form-group">
+                      <label>סטאטוס:</label>
+                       {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group" 
+                          contentBinding="App.states"
+                          valueBinding="sitedetails.states_id"
+                          prompt = "בחר"
+                          required="required"
+                        }}
+                  </div>
+              </div>
+
+             
         </div>
       
         <div class="row">
 
     	    <div class="col-md-12">
     	        <div class="form-group">
-    	          <label>תיאור:</label>
+    	          <label>תיאור מקוצר:</label>
     	          {{textarea type="text" class="form-control" valueBinding="sitedetails.description" required="required"}}
     	        </div>
     	     </div>
         </div>
-        <div class="row">
-           <div class="col-md-12">
-              <div class="form-group">
-                <label>תוכן למיני סייט:</label>
-                {{textarea type="text" class="form-control" valueBinding="sitedetails.miniSiteContext" required="required"}}
-              </div>
-           </div>
-        </div>
+
         <div class="row">
 
           <div class="col-md-6">
@@ -63,87 +84,97 @@
 
     	<div class="row">
 
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>עיר:</label>
-                {{input type="text" class="form-control" valueBinding="sitedetails.city" required="required"}}
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>כתובת:</label>
-                {{input type="text" class="form-control" valueBinding="sitedetails.address" required="required"}}
-              </div>
-            </div>
-
-            <div class="col-md-4">
+           <div class="col-md-3">
                 <div class="form-group">
-                  <label>אזור ראשי:</label>
+                  <label>ישוב:</label>
                     {{view Ember.ChosenSelectView
                         classNames="form-control chosen-select chosen-rtl form-group" 
                         prompt = "בחר..."
-                        contentBinding="App.regions"
-                        selected=sitedetails.regions_id
+                        contentBinding="App.cities"
+                        selected=sitedetails.cities_id
                         required='required'
                       }}
                 </div>
-              </div>
-         
-    	</div>
-      <div class="row">
-         <div class="col-md-4">
-              <div class="form-group">
-                <label>נייד:</label>
-                  {{input type="text" class="form-control" valueBinding="sitedetails.phone1" required="required" }}
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="form-group">
-                <label>טלפון ראשי:</label>
-                {{input type="text" class="form-control" valueBinding="sitedetails.phone2" required="required"}}
-              </div>
-            </div>
-
-             <div class="col-md-4">
-              <div class="form-group">
-                <label>טלפון משני:</label>
-                {{input type="text" class="form-control" valueBinding="sitedetails.phone3" required="required"}}
-              </div>
-            </div>
-      </div>
-      	<div class="row">
-
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>פקס:</label>
-                {{input type="text" class="form-control" valueBinding="sitedetails.fax" required="required" }}
-            </div>
           </div>
 
-          <div class="col-md-4">
-    	        <div class="form-group">
-    	          <label>דוא"ל:</label>
-    	            {{input type="text" class="form-control" valueBinding="sitedetails.email" required="required" data-parsley-type="email"}}
-    	        </div>
-    	    </div>
 
-    	    <div class="col-md-4">
-    	        <div class="form-group">
-    	          <label>אתר:</label>
-    	            {{input type="text" class="form-control" valueBinding="sitedetails.site" required="required" data-parsley-type="url"}}
-    	        </div>
-    	    </div>
-          
-      	</div>
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>כתובת:</label>
+              {{input type="text" class="form-control" valueBinding="sitedetails.address"}}
+            </div>
+          </div>
+         
+    	</div>
+
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>טלפון ראשי:</label>
+            {{input type="text" class="form-control" value=sitedetails.phone2 required="required"}}
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>טלפון משני:</label>
+            {{input type="text" class="form-control" value=sitedetails.phone3 }}
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>נייד:</label>
+              {{input type="text" class="form-control" value=sitedetails.phone1  }}
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="form-group">
+            <label>פקס:</label>
+            {{input type="text" class="form-control" value=sitedetails.fax }}
+          </div>
+        </div>        
+            
+      </div>
+    	<div class="row">
+
+         <div class="col-md-4">
+            <div class="form-group">
+              <label>אתר:</label>
+                {{input type="text" class="form-control" valueBinding="sitedetails.site"  data-parsley-type="url"}}
+            </div>
+        </div>
+        
+
+        <div class="col-md-4">
+  	        <div class="form-group">
+  	          <label>דוא"ל:</label>
+  	            {{input type="text" class="form-control" valueBinding="sitedetails.email" data-parsley-type="email"}}
+  	        </div>
+  	    </div>
+
+    	</div>
 
       	<div class="row">
+            <div class="col-md-12">
+                <label class="title">שיוכים:</label>
+            </div>
+        </div>
+        <div class="row">
+          
+            <div class="col-xs-6">
+                <div class="form-group">
+                  <label>קטגוריות:</label>
+                  {{ui-tree node=categories editable=false selected=sitedetails.categories}}
+                </div>
+              </div>
+
+         </div>
+         <div class="row">
             <div class="col-md-12">
                 <label class="title">גלריה:</label>
             </div>
         </div>
-
         <div class="row tab-pane" id="gallery">
           <div class="col-md-12">
             {{ui-gallery data=sitedetails.galleries.main uploadUrl=sitedetails.uploadUrl error=error}}

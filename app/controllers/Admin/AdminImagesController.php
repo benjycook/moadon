@@ -37,6 +37,8 @@ class AdminImagesController extends BaseController
 		foreach ($images as $img) {
 			$img['galleries_id'] = $galleryId;
 			$ext  = explode($img['id'],$img['fullSrc']);
+			if(count($ext)!=2)
+				continue;
 			$ext  = substr($ext[1],0,strpos($ext[1],"?"));
 			$img['src'] = $img['id']."".$ext;
 			if(!$galleryimage = GalleryImage::find($img['id']))

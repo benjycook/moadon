@@ -8,6 +8,7 @@ App = Ember.Application.create({
 App.identificationTypes = Em.ArrayController.create();
 App.states = Em.ArrayController.create();
 App.regions = Em.ArrayController.create();
+App.cities = Em.ArrayController.create();
 App.categories = Em.ArrayController.create();
 App.clubs = Em.ArrayController.create();
 App.itemTypes = Em.ArrayController.create();
@@ -26,6 +27,7 @@ Ember.Application.initializer({
 				App.categories.set('content', data.categories);
 				App.clubs.set('content', data.clubs);
 				App.itemTypes.set('content', data.itemTypes);
+				App.cities.set('content', data.cities);
 				App.set('logedin',data.logedin);
 				application.advanceReadiness();
 			});
@@ -69,6 +71,10 @@ App.Router.map(function(){
 		this.route('create');
 		this.route('edit', {path: ':items_id/edit'});
 	});
+	this.resource('cities', function(){
+		this.route('create');
+		this.route('edit', {path: ':cities_id/edit'});
+	});
 
 	this.resource('regions', function(){
 		// this.route('create');
@@ -82,7 +88,7 @@ App.Router.map(function(){
 });
 
 Em.TextField.reopen({
-  attributeBindings: ['data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
+  attributeBindings: ['size','data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
 });
 Em.TextArea.reopen({
   attributeBindings: ['data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
@@ -105,6 +111,7 @@ App.ModalView = Em.View.extend({
 	
 	keyPress:function(event,view)
 	{
+
 		if(event.keyCode == 13&&this.$('.sendEnter'))
 		{
 		  this.$('.sendEnter').trigger('click');
@@ -133,7 +140,8 @@ App.FormView = Em.View.extend({
 	},
 	keyPress:function(event,view)
 	{
-		if(event.keyCode == 13&&this.$('.sendEnter'))
+		var localName = 'textarea';
+		if(event.keyCode == 13&&this.$('.sendEnter')&&event.target.localName.toLowerCase()!=localName)
 		{
 		  this.$('.sendEnter').trigger('click');
 		}

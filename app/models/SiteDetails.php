@@ -3,9 +3,34 @@
 class SiteDetails extends Eloquent {
 
 	protected $table = 'sitedetails';
+	
 	public $timestamps = false;
-	protected $fillable = array('supplierName','description','phone1','phone2','fax','address','site','email',
-		'suppliers_id','altHeadline','phone3','city','workingHours','ageDevision','miniSiteContext','regions_id');
+
+	protected $fillable = array(
+		'supplierName',
+		'description',
+		'phone1',
+		'phone2',
+		'fax',
+		'address',
+		'site',
+		'email',
+		'suppliers_id',
+		'altHeadline',
+		'phone3',
+		'workingHours',
+		'ageDevision',
+		'miniSiteContext',
+		'cities_id',
+		'states_id',
+		'visibleOnSite'
+	);
+
+
+	public function categories()
+	{
+		return $this->belongsToMany('Category', 'categories_suppliers', 'suppliers_id', 'categories_id');
+	}
 
 	public function galleries()
 	{
@@ -18,17 +43,17 @@ class SiteDetails extends Eloquent {
 	}
 
 	public function scopeSite($query)
-    {
-    	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
-    }
+  {
+  	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
+  }
 
-   	public function items()
+  public function items()
 	{
 		return $this->hasMany('Item','suppliers_id','suppliers_id')->with('galleries');
 	}
 
-    public function scopeMini($query)
-    {
-    	return $query->with('galleries')->with('items');
-    }
+  public function scopeMini($query)
+  {
+  	return $query->with('galleries')->with('items');
+  }
 }

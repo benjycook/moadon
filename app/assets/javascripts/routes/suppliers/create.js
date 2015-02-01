@@ -20,11 +20,43 @@ App.SuppliersEditController = Em.ObjectController.extend({
 			item.num = items.indexOf(item)+1;
 		});
 	}.observes('items.length'),
+
+	
+	// sortedLevel1:function()
+	// {
+	// 	return App.get('regions').filterBy('parent_id',0);
+	// }.property('content'),
+
+	// sortedLevel2:function()
+	// {
+	// 	var mainRegion = this.get('mainRegion');
+	// 	var secondaryRegion = this.get('secondaryRegion');
+	// 	secondaryRegion = App.get('regions').findBy('id',secondaryRegion);
+	// 	if(secondaryRegion&&mainRegion!=secondaryRegion.parent_id)
+	// 		this.set('secondaryRegion',0);
+	// 	if(mainRegion)
+	// 		return App.get('regions').filterBy('parent_id',mainRegion);
+	// 	return [];
+	// }.property('mainRegion'),
+
+	// sortedLevel3:function()
+	// {
+	// 	var secondaryRegion = this.get('secondaryRegion');
+	// 	if(secondaryRegion)
+	// 		return App.get('regions').filterBy('parent_id',secondaryRegion);
+	// 	this.set('sitedetails.regions_id',0);
+	// 	return [];
+	// }.property('secondaryRegion'),
+
+	
+
 });
 
 App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 	controllerName:'suppliersEdit',
+	
 	templateName: 'suppliers/create',
+	
 	model: function(params)
 	{
 		if(params.suppliers_id)
@@ -34,8 +66,15 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	setupController: function(ctrl, model)
 	{
+		model.categories = {
+			name: 'root element',
+			children: model.categories
+		};
+
 		ctrl.set('model',model);
 	},
+
+
 	actions:
 	{
 
@@ -43,9 +82,15 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 		{
 			if(id)
 			{
-				var ctrl = App.ItemsEditController.create({model:items.findBy('id',id)});
-				ctrl.set('target',this);
-				this.render('suppliers/tabs/partials/item', {into: 'application',outlet: 'modal',controller:ctrl});
+				var self =this;
+					new Ember.RSVP.Promise(function(resolve) { 
+								$.getJSON('items/'+id).then(function(data){
+									var ctrl = App.ItemsEditController.create({model:data});
+									ctrl.set('target',self);
+									self.render('suppliers/tabs/partials/item', {into: 'application',outlet: 'modal',controller:ctrl});
+									resolve('resovled');
+							});
+					});
 			}
 			else
 			{
@@ -97,6 +142,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');
 			}).fail(function(data){
+				controller.set('success',null);
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else
@@ -130,6 +176,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				controller.set('success',"נשמר בהצלחה.");
 				form.parsley().reset();
 			}).fail(function(data){
+				controller.set('success',null);
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else
@@ -157,11 +204,14 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: url,
 				data: JSON.stringify(model)
 			}).then(function(data){
-				controller.set('supplier',data);
+				controller.set('supplier',data.supplier);
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				form.parsley().reset();
+				if(!model.id)
+					controller.set('sitedetails',data.siteDetails);
 			}).fail(function(data){
+				controller.set('success',null);
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else

@@ -10,7 +10,8 @@ class AdminOptionsController extends BaseController {
 			$data['clubs']       = Club::orderBy('name', 'ASC')->get()->toArray();
 			$data['regions']     = Region::orderBy('name', 'ASC')->get()->toArray();
 			$data['categories']  = Category::orderBy('name', 'ASC')->get()->toArray();
-			$data['itemTypes']  = ItemType::orderBy('name', 'ASC')->get()->toArray();		
+			$data['itemTypes']  = ItemType::orderBy('name', 'ASC')->get()->toArray();	
+			$data['cities']  = City::orderBy('name', 'ASC')->get()->toArray();	
 			if($user = Auth::user())
 				$data['logedin'] = true;
 			else

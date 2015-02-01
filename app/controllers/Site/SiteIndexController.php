@@ -2,25 +2,13 @@
 
 	class SiteIndexController extends BaseController {
 
-		public function index()
+		public function index($slug)
 		{
-			return View::make('site.index');
-		}
+			$club = Club::site()->where('urlName','=',$slug)->first();
 
-		public function options()
-		{
-			$data = array();
-			$data['identificationTypes'] = IdentificationType::orderBy('name', 'ASC')->get()->toArray();
-			$data['states']       = State::orderBy('name', 'ASC')->get()->toArray();
-			$data['clubs']       = Club::orderBy('name', 'ASC')->get()->toArray();
-			$data['regions']     = Region::orderBy('name', 'ASC')->get()->toArray();
-			$data['categories']  = Category::orderBy('name', 'ASC')->get()->toArray();
-			$data['itemTypes']  = ItemType::orderBy('name', 'ASC')->get()->toArray();		
-			if($user = Auth::user())
-				$data['logedin'] = true;
-			else
-				$data['logedin'] = false;
-			return Response::json($data,200);
+			if(!$club)
+				return "מועדון זה לא קיים";
+			return View::make('site.index');
 		}
 
 	}

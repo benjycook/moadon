@@ -19,6 +19,7 @@ span.tree-add {
   display: inline-block;
   margin: 0px 5px 7px;
   color: #31708f;
+  cursor: pointer;
 }
 
 span.tree-add i.fa{
@@ -31,7 +32,6 @@ i.fa.disabled {
 }
 
 .tree-branch .fa {
-  cursor: pointer;
   vertical-align:  middle;
 }
 
@@ -48,6 +48,10 @@ i.fa.disabled {
   background-color: #ddd;
 }
 
+.form-group .tree-branch li {
+  background-color: transparent !important;
+}
+
 .tree-row .badge {
   position: relative;
   top: -2px;
@@ -55,5 +59,9 @@ i.fa.disabled {
 }
 
 .panel-body > .tree-branch {
+  padding: 0;
+}
+
+.form-group > ul.tree-branch {
   padding: 0;
 }

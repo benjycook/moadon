@@ -1,0 +1,16 @@
+{{#if selectable}}
+
+  <span {{action 'toggle'}} class="selectable">
+      <i class="fa fa-check"></i>
+      {{node.name}}
+  </span>
+
+{{else}}
+
+	{{ui-tree-link item=node base=type}}
+
+{{/if}}
+
+{{#if node.children.length}}
+	{{ui-tree-branch children=node.children}}
+{{/if}}

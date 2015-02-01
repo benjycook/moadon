@@ -14,6 +14,17 @@ App.ItemsEditController = Em.ObjectController.extend({
 			return true;
 		return false;
 	}.property('itemtypes_id'),
+
+	lengthTest:function(obj,key)
+	{
+		var test = this.get(key);
+		if(key=='description'&&test.length>60)
+			test = test.substr(0,60);
+		if(key!='description'&&test.length>14)
+			test = test.substr(0,14);
+		this.set(key,test);
+		this.set('changed',true);
+	}.observes('name','shortDescription','description')
 });
 
 

@@ -1,29 +1,159 @@
 App.UiTreeComponent = Ember.Component.extend({
-  tagName: 'ul',
 
+  isTreeComponent: true,
+
+  root: function() {
+    var parent = this;
+    var last = this;
+    
+    while(parent)
+    {
+      last = parent;
+      parent = parent.nearestWithProperty('isTreeComponent');
+    }
+    return last;
+  },
+
+  updateSelected: function(){
+    var selected = this.get('selected');
+
+    var visitor = function(arr, func)
+    {
+      for(var i = 0; i < arr.length; i++)
+      {
+        func(arr[i]);
+        visitor(arr[i]['children'], func);
+      }
+    };
+
+    var setSelected = function(item)
+    {
+      if(selected && selected.indexOf(item.id) !== -1)
+        item.selected = true;
+    };
+
+    visitor(this.get('node.children'), setSelected);
+
+  }.on('init'),
+
+  tagName: 'ul',
   classNames: ['tree-branch']
 });
 
 App.UiTreeNodeComponent = Ember.Component.extend({
   tagName: 'li',
 
+  isTreeNode: true,
+
   classNames: ['tree-node'],
 
   isExpanded: false,
   isEditable: false,
 
+
+  nodeHasSelectoin: function(){
+    return this.get('node.children').filter(function(item){
+      if(item.selected)
+        return true;
+      return false;
+    }).length > 0;
+  },
+  
+  hasSelections: function(){
+    return this.get('node.children').filter(function(item){
+      if(item.selected)
+        return true;
+      return false;
+    }).length > 0;
+  }.property('node.children', 'node.children.@each'),
+
+  allowEdit: function(){
+    return this.nearestWithProperty('editable').get('editable');
+  }.property(),
+
+  allowAdd: function() {
+    if(this.get('level') < 3 && this.get('allowEdit'))
+      return true;
+    return false;
+  }.property('level', 'allowEdit'),
+
+  isBranch: function() {
+      return this.get('node.children').length > 0 || (this.get('allowEdit') && this.get('allowAdd'));
+  }.property('node.children', 'node.children.@each', 'allowEdit', 'allowAdd'),
+
+  isLeaf: function() {
+      return !this.get('node.children').length;
+  }.property('node.children', 'node.children.@each'),
+
+  level: function() {
+    var parent = this.nearestWithProperty('isTreeComponent');
+    var level = 0;
+    while(parent)
+    {
+      level++;
+      parent = parent.nearestWithProperty('isTreeComponent');
+    }
+    return level;
+  }.property('parent'),
+
+  isSelectable: function(){
+    return !this.get('allowEdit');
+  }.property('level', 'allowEdit'),
+
+  isSelected: function(){
+    return this.get('node.selected');
+  }.property('node.selected'),
+
+  isOpen: function(){
+    if(this.get('isExpanded') || this.get('hasSelections'))
+      return true;
+    return false;
+  }.property('isExpanded', 'hasSelections'),
+
   isDeletable: function()
   {
-    return this.get('node.children.length') < 1
-  }.property('node.children.@each'),
+    return this.get('isLeaf') && this.get('allowEdit');
+  }.property('isLeaf', 'allowEdit'),
 
   actions: {
+
       toggle: function() {
-        //if(this.get('node.children.length'))
-          this.toggleProperty('isExpanded');
+
+        var isLeaf = this.get('isLeaf');
+        var level = this.get('level');
+
+        if(isLeaf && level > 2)
+          this.send('select');
+        else
+          this.send('expend');
+      },
+
+      select: function(){
+        var root = this.nearestWithProperty('isTreeComponent').root();
+
+        var isSelected = !this.get('node.selected');
+        this.set('node.selected', isSelected);
+
+        var selected = Em.A(root.get('selected'));
+        
+        var id = this.get('node.id');
+        if(isSelected)
+        {
+          if(selected.indexOf(id) === -1)
+            selected.pushObject(id);
+        }else{
+          selected.removeObject(id);
+        }
+      },
+
+      expend: function() {
+        this.toggleProperty('isExpanded');
       },
       
       toggleEdit: function() {
+        if(!this.get('allowEdit'))
+          return;
+
         this.toggleProperty('isEditable');
         var self = this;
 
@@ -43,7 +173,6 @@ App.UiTreeNodeComponent = Ember.Component.extend({
       },
 
       remChild: function(){
-        console.log(this.get('parent'), this.get('node'));
         this.get('parent.children').removeObject(this.get('node'));
       }
 

@@ -61,13 +61,25 @@ label.title
 }
 .form-control.chosen-container-multi .chosen-choices
 {
-  max-height: none;
+  max-height: none !important;
 }
 .form-control.chosen-rtl .chosen-choices li.search-choice
 {
-  margin-bottom: 5px;
+  margin-bottom: 5px !important;
 }
 .search-field input
 {
   height: auto !important;
+}
+:-ms-input-placeholder {  
+    color: black;
+}
+label.title {
+  color: #428bca;
+  border-bottom: 1px solid #428bca;
+  display: block;
+}
+.textarea
+{
+  min-height: 60px;
 }
