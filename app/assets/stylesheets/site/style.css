@@ -455,6 +455,7 @@ ul.tree > li > div, .tree-node > a {
 
 .tree-node.active > a i.fa-caret-down {
 	display: inline;
+	color: #22BDF1;
 }
 
 ul.tree > li ul {
