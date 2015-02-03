@@ -15,14 +15,14 @@ class Item extends Eloquent {
 		'clubPrice',
 		'netPrice',
 		'states_id',
-    'shortDescription',
-    'sku',
-    'notes',
-    'listPriceGroup',
-    'netPriceGroup',
-    'minParticipants',
-    'maxParticipants',
-    'itemtypes_id',
+	    'shortDescription',
+	    'sku',
+	    'notes',
+	    'listPriceGroup',
+	    'netPriceGroup',
+	    'minParticipants',
+	    'maxParticipants',
+	    'itemtypes_id',
   );
 
 	//"(clubPrice / 100) * (100 - clubDicount) / 100 * 1"

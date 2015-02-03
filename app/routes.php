@@ -23,6 +23,7 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('options', 'SiteClubsController@options');
 	Route::get('supplier/{id}','SiteClubsController@supplier');
 	Route::get('search', 'SiteClubsController@search');
+	Route::post('cart','SiteCartController@cart');
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -48,6 +49,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('categories','AdminCategoriesController');
 		Route::resource('regions','AdminRegionsController');
 		Route::resource('sitedetails','AdminSiteDetailsController');
+		Route::post('sitedetails/minisite/{id}','AdminSiteDetailsController@miniSite');
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 
 	});
@@ -58,6 +60,7 @@ Route::group(array('prefix' => 'clubs'), function()
 	//temp 
 	
 	Route::get('search','ClubsController@search');
+
 	Route::group(array('before' => 'club_auth'), function() 
 	{
 

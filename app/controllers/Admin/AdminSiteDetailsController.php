@@ -152,4 +152,15 @@ class AdminSiteDetailsController extends BaseController
     	return Response::json($siteDetails,201);
 	}
 
+	public function miniSite($id)
+	{
+		$json=Request::getContent();
+	    $data=json_decode($json,true);
+		$siteDetails = SiteDetails::find($id);
+		if(!$siteDetails)
+			return Response::json(array('error'=>'פרטי אתר זה לא נמצא במערכת'),501);
+		$siteDetails->miniSiteContext = $data['miniSiteContext'];
+		$siteDetails->save();
+		return Response::json('success',201);
+	}
 }

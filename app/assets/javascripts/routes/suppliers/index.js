@@ -15,6 +15,7 @@ App.SuppliersRoute = App.ProtectedRoute.extend({
 			
 			var url = "suppliers";
 			var type = "POST";
+			this.send('close',controller);
 			if(model.id)
 			{
 				url  = "suppliers/"+model.id;
