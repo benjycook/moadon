@@ -137,13 +137,15 @@ class AdminSiteDetailsController extends BaseController
     	$siteDetails = SiteDetails::with('galleries')->find($id)->toArray();
     	$siteDetails['linkId'] = $siteDetails['id'];
     	$supplier = Supplier::find($siteDetails['suppliers_id']);
-    	
     	// $supplier->categories()->attach($data['categories']);
     	// $supplier->regions()->attach($data['regions']);
     	$supplier->categories()->sync($data['categories']);
 		$temp = array();
 		$temp['main'] = isset($siteDetails['galleries'][0]) ? $siteDetails['galleries'][0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";
+		foreach ($temp['main']['images'] as &$image) {
+			$image['pos'] = intval($image['pos']);
+		}
 		$siteDetails['galleries'] = $temp;
 		$siteDetails['uploadUrl'] = '/uploadImage';
 		$siteDetails['categories'] = $data['categories'];
