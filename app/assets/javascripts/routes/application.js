@@ -133,6 +133,10 @@ App.ApplicationRoute = Em.Route.extend({
 	{
 		var self = this;
 		 $.ajaxSetup({
+		 	complete: function(xhr, stat) {
+		 		$('.modal').scrollTop(0);
+       			window.scrollTo(0,0);
+   			},
 	        error: function (x, status, error) {
 	            if (x.status == 401) {
 	                self.transitionTo('login');
