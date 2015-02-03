@@ -1,11 +1,5 @@
 App.SuppliersEditController = Em.ObjectController.extend({
-	errorExists:function()
-	{
-		var error = this.get('error');
-		if(error)
-			window.scrollTo(0,0);
-	}.observes('error'),
-
+	
 	disableTabs:function()
 	{
 		if(this.get('supplier.id'))
