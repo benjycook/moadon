@@ -103,6 +103,9 @@ App.ModalView = Em.View.extend({
 		this.$('.modal').show().addClass('in');
 		//document.ontouchmove = function(e){ e.preventDefault(); };
 		this.$('form').parsley();
+		this.$('form').on('submit',function(event){
+			event.preventDefault();
+		});
 		window.scrollTo(0,0);
 		$(document.body).addClass('lockscroll');
 		//document.body.style.overflow="hidden";
@@ -136,7 +139,9 @@ App.ModalView = Em.View.extend({
 App.FormView = Em.View.extend({
 	didInsertElement: function(){
 		this.$('form').parsley();
-
+		this.$('form').on('submit',function(event){
+			event.preventDefault();
+		});
 	},
 	keyPress:function(event,view)
 	{

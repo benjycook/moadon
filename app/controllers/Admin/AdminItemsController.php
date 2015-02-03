@@ -100,6 +100,9 @@ class AdminItemsController extends BaseController
 		$temp = array();
 		$temp['main'] = isset($item['galleries'][0]) ? $item['galleries'][0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";
+		foreach ($temp['main']['images'] as &$image) {
+			$image['pos'] = intval($image['pos']);
+		}
 		$item['galleries'] = $temp;
 		$item['uploadUrl'] = '/uploadImage';
 		$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));
