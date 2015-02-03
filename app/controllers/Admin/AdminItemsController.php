@@ -63,7 +63,6 @@ class AdminItemsController extends BaseController
     	if(!isset($data['itemtypes_id'])||!ItemType::where('id','=',$data['itemtypes_id'])->count())
     		return Response::json(array('error'=>"סוג מוצר זה לא נמצא במערכת"),501);
     	$validator = Validator::make($data, $this->rules($data['itemtypes_id']));
-
     	if($validator->fails())
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	$data['expirationDate'] = implode('-',array_reverse(explode('/',$data['expirationDate'])));

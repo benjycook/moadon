@@ -25,6 +25,14 @@ App.SuppliersEditController = Em.ObjectController.extend({
 				this.set('error',null);
 		}
 	}.observes('success','error'),
+
+	lengthTest:function(obj,key)
+	{
+		var description = this.get('sitedetails.description');
+		if(description.length>49)
+			this.set('sitedetails.description',description.substr(0,49));
+	}.observes('sitedetails.description')
+
 	// sortedLevel1:function()
 	// {
 	// 	return App.get('regions').filterBy('parent_id',0);

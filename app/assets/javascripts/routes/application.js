@@ -135,7 +135,7 @@ App.ApplicationRoute = Em.Route.extend({
 		 $.ajaxSetup({
 		 	complete: function(xhr, stat) {
 		 		var states = [400,500,501];
-		 		if(xhr.responseJSON.fileUpload&&states.indexOf(xhr.status)==-1)
+		 		if(xhr.responseJSON!=undefined&&xhr.responseJSON.fileUpload&&states.indexOf(xhr.status)==-1)
 		 			return;
        			$('.modal').scrollTop(0);
        				window.scrollTo(0,0);
