@@ -1,78 +1,80 @@
-<div id="header">
-    
-    <div class="container">
+<div id="body">
+    <div id="header">
+        
+        <div class="container">
 
-        <a id="logo" href="#">
-            <img src="img/site/logo.png" />
-        </a>
+            <a id="logo" href="#">
+                <img src="img/site/logo.png" />
+            </a>
 
-        <p class="right">
-            ישראל ישראלי, חבר מועדון “{{club.name}}” ברוך הבא
-            <a href="#">יציאה</a>
-        </p>
+            <p class="right">
+                ישראל ישראלי, חבר מועדון “{{club.name}}” ברוך הבא
+                <a href="#">יציאה</a>
+            </p>
 
-        <p class="left">
-            <strong>שרות לקוחות 1-700-700-400</strong>
-            {{#link-to contact}}צור קשר{{/link-to}}
-            {{#link-to account}}החשבון שלי{{/link-to}}
-        </p>
+            <p class="left">
+                <strong>שרות לקוחות 1-700-700-400</strong>
+                {{#link-to contact}}צור קשר{{/link-to}}
+                {{#link-to account}}החשבון שלי{{/link-to}}
+            </p>
 
-        <div id="search">
-            <label>החברים שלנו משלמים פחות</label>
-            <div class="search-field">
-                {{input type="text" placeholder="חיפוש חופשי באתר" value=search}}
-                <button type="button" {{action 'search'}}>&gt;</button>
+            <div id="search">
+                <label>החברים שלנו משלמים פחות</label>
+                <div class="search-field">
+                    {{input type="text" placeholder="חיפוש חופשי באתר" value=search}}
+                    <button type="button" {{action 'search'}}>&gt;</button>
+                </div>
             </div>
+
         </div>
 
     </div>
 
-</div>
+    <div id="main">
 
-<div id="main">
+        <div class="container">
+           
+            <div id="sidebar">
+                <button class="cart">סל הקניות שלי [ {{cart.length}} ]</button>
 
-    <div class="container">
-       
-        <div id="sidebar">
-            <button class="cart">סל הקניות שלי [ {{cart.length}} ]</button>
+                {{outlet 'search'}}
 
-            {{outlet 'search'}}
-
-        </div>
+            </div>
 
 
-        <div id="content">
-            {{outlet}}
+            <div id="content">
+                {{outlet}}
+            </div>
+
         </div>
 
     </div>
 
-</div>
+    <div id="footer">
+        
+        <div class="container">
 
-<div id="footer">
-    
-    <div class="container">
+            <ul class="navigation">
+                
+                <li>
+                    <a href="">ראשי</a>
+                </li>
+                
+                <li>
+                    <a href="">תקנון האתר</a>
+                </li>
+                
+                <li>
+                    <a href="">אודות</a>
+                </li>
+                
+                <li>
+                    <a href="">צור קשר</a>
+                </li>
 
-        <ul class="navigation">
-            
-            <li>
-                <a href="">ראשי</a>
-            </li>
-            
-            <li>
-                <a href="">תקנון האתר</a>
-            </li>
-            
-            <li>
-                <a href="">אודות</a>
-            </li>
-            
-            <li>
-                <a href="">צור קשר</a>
-            </li>
+            </ul>
+     
+        </div>
 
-        </ul>
- 
     </div>
-
 </div>

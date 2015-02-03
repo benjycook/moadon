@@ -6,6 +6,21 @@ body
 	font-family: arial;
 }
 
+/*#body {
+	filter: blur(5px); 
+	-webkit-filter: blur(5px); 
+	-moz-filter: blur(5px);
+	-o-filter: blur(5px);
+	-ms-filter: blur(5px);
+	filter: url(../../img/blur.svg#blur);
+	filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='5');
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	top:	0;
+}*/
+
 #header, 
 #footer {
 	height: 100px;
@@ -440,6 +455,7 @@ ul.tree > li > div, .tree-node > a {
 
 .tree-node.active > a i.fa-caret-down {
 	display: inline;
+	color: #1b79ba;
 }
 
 ul.tree > li ul {

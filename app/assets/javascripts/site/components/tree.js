@@ -1,3 +1,36 @@
+App.UiTreeLinkComponent = Em.LinkView.extend({
+  params: ['search'],
+
+  computeQueryParamsObject: function(){
+    var type = this.get('base');
+    var item = this.get('item');
+    var values = {};
+    values[type] = item.id;
+    this.queryParamsObject = {};
+    this.queryParamsObject['values'] = values;
+  }.on('init'),
+
+  _invoke: function(evt){
+    if(this.get('active'))
+    {
+      var queryParams =  this.get('loadedParams.queryParams');
+      var type = this.get('base');
+      var item = this.get('item');
+
+      queryParams[type] = item.parent_id;
+
+
+      // var values = {};
+      // values[type] = 0;
+      // this.queryParamsObject = {};
+      // this.queryParamsObject['values'] = values;
+      // console.log('active', this.get('item'), this.get('loadedParams'));
+    }
+    this._super(evt);
+  },
+
+});
+
 App.UiTreeNodeComponent = Em.Component.extend({
   tagName: 'li',
   classNames: ['tree-node'],
@@ -26,7 +59,7 @@ App.UiTreeNodeComponent = Em.Component.extend({
 
   selectable: function(){
     //if(this.get('level') > 2)
-    if(!this.get('node.children.length') && this.get('level') > 1)
+    if(!this.get('node.children.length') && this.get('level') > 2)
       return true;
     return false;
   }.property('level'),
