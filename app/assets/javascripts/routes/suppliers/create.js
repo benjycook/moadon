@@ -29,7 +29,7 @@ App.SuppliersEditController = Em.ObjectController.extend({
 	lengthTest:function(obj,key)
 	{
 		var description = this.get('sitedetails.description');
-		if(description.length>49)
+		if(description&&description.length>49)
 			this.set('sitedetails.description',description.substr(0,49));
 	}.observes('sitedetails.description')
 
