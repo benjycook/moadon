@@ -123,7 +123,7 @@ GRID.PaginatedMixin = Ember.Mixin.create({
     pages: function()
     {
         return Math.ceil(this.get('meta.count') / this.get('limit'));
-    }.property('meta'),
+    }.property('meta','meta.count'),
 
     actions: {
         'firstPage': function () {

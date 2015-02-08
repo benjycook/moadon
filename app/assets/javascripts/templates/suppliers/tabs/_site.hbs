@@ -48,26 +48,24 @@
              
         </div>
       
-        <div class="row">
-
-    	    <div class="col-md-12">
-    	        <div class="form-group">
-    	          <label>תיאור מקוצר:</label>
-    	          {{textarea type="text" class="form-control" valueBinding="sitedetails.description" required="required"}}
-    	        </div>
-    	     </div>
-        </div>
 
         <div class="row">
 
-          <div class="col-md-6">
+          <div class="col-md-4">
+              <div class="form-group">
+                <label>תיאור מקוצר:</label>
+                {{textarea type="text" class="form-control" valueBinding="sitedetails.description" required="required" data-parsley-maxlength="49"}}
+              </div>
+           </div>
+
+          <div class="col-md-4">
               <div class="form-group">
                 <label>שעות פעילות:</label>
                 {{textarea type="text" class="form-control" valueBinding="sitedetails.workingHours" required="required"}}
               </div>
            </div>
 
-           <div class="col-md-6">
+           <div class="col-md-4">
               <div class="form-group">
                 <label>מתאים לגילאים:</label>
                 {{textarea type="text" class="form-control" valueBinding="sitedetails.ageDevision" required="required"}}

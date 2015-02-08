@@ -25,7 +25,7 @@ class AdminImagesController extends BaseController
 			$fileName = "$id.jpg";
     		$file = Input::file('file')->move($path,$fileName);
     		$fileUrl = URL::to('/')."/galleries/tempimages/$fileName";
-			return Response::json(array('link'=>$fileUrl), 200);
+			return Response::json(array('link'=>$fileUrl,'fileUpload'=>true), 200);
 		}
 	}
 
