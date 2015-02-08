@@ -57,19 +57,8 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 
 	});
-<<<<<<< HEAD
-=======
-});
-
-Route::group(array('prefix' => 'clubs'), function()
-{
-	//temp 
-	
-	Route::get('search','ClubsController@search');
-
-	Route::group(array('before' => 'club_auth'), function() 
-	{
->>>>>>> d617108301e0b5d60700c5c5749414ee14d291e3
 
 });
+
+
 
