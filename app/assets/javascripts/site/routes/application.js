@@ -1,4 +1,4 @@
-App.ApplicationRoute = Em.Route.extend({
+App.ApplicationRoute = App.ProtectedRoute.extend({
 
 
 

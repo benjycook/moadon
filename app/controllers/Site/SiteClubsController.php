@@ -33,6 +33,34 @@ class SiteClubsController extends BaseController
 		return $subjects;
 	}
 
+	public function login($slug)
+	{
+		$json =	Request::getContent();
+	  $data	=	json_decode($json);
+
+		$club = Club::where('urlName', '=', $slug)
+								->where('clubCode', '=', $data->clubident)
+								->first();
+
+		if(!$club)
+		{
+			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
+		}
+
+		$session = array(
+			'token' => '123',
+			'club'	=> $club->id,
+			'user'	=> null
+		);
+
+		return Response::json($session, 201);
+	}
+
+	public function logout($slug)
+	{
+		return Response::json(array('status' => 'ok'), 200);
+	}
+
 	public function options($slug)
 	{
 		$club = Club::site()->where('urlName','=',$slug)->first();
@@ -42,7 +70,7 @@ class SiteClubsController extends BaseController
 
 		$data = array();
 		$data['club'] = $club->toArray();
-		$data['club']['logo'] = URL::to('/')."/".$data['club']['logo'];
+		$data['club']['logo'] = URL::to('/')."/galleries/{$data['club']['logo']}";
 
 		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
 		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();

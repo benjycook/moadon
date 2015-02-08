@@ -1,4 +1,4 @@
-App.SearchRoute = Em.Route.extend({
+App.SearchRoute = App.ProtectedRoute.extend({
 
 	 queryParams: {
 

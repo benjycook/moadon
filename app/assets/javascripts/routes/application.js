@@ -25,6 +25,7 @@ App.LoginRoute  = Em.Route.extend({
 		ctrl.set('content',model);
 		App.set('logedin',false);
 	},
+	
 	actions: {
 		'login': function(model, view){
 			var self = this;

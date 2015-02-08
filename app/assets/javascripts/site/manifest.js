@@ -4,6 +4,6 @@
 //= require application.js
 //= require router.js
 //= require_tree components
-//= require_tree routes
+//= require_tree_df routes
 //= require_tree controllers
 //= require_tree templates

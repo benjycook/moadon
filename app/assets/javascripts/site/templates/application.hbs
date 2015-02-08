@@ -1,3 +1,5 @@
+{{outlet 'lightbox'}}
+
 <div id="body">
     <div id="header">
         
@@ -8,8 +10,13 @@
             </a>
 
             <p class="right">
-                ישראל ישראלי, חבר מועדון “{{club.name}}” ברוך הבא
-                <a href="#">יציאה</a>
+                {{#if session.user}}
+                   ברוך הבא, {{session.user.firstName}} {{session.user.lastName}} חבר מועדון “{{club.name}}”
+                {{else}}
+                    ברוך הבא, חבר מועדון “{{club.name}}” 
+                {{/if}}
+               
+                {{#link-to 'logout'}}יציאה{{/link-to}}
             </p>
 
             <p class="left">

@@ -15,6 +15,7 @@
 		"laravel/framework": "4.2.*",
 		"igorgoroshit/l4ember": "dev-master"
 	},
+	
 	"autoload": {
 		"classmap": [
 			"app/commands",

@@ -23,6 +23,8 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('options', 'SiteClubsController@options');
 	Route::get('supplier/{id}','SiteClubsController@supplier');
 	Route::get('search', 'SiteClubsController@search');
+	Route::post('login', 'SiteClubsController@login');
+	Route::get('logout', 'SiteClubsController@logout');
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -51,19 +53,6 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 
 	});
-});
 
-Route::group(array('prefix' => 'clubs'), function()
-{
-	//temp 
-	
-	Route::get('search','ClubsController@search');
-	Route::group(array('before' => 'club_auth'), function() 
-	{
-
-	});
-	Route::get('options','ClubsController@options');
-	Route::post('login','LoginController@dologin');
-	Route::post('restore','LoginController@restorePassword');
 });
 
