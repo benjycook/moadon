@@ -1,6 +1,6 @@
 {{#each supplier in model itemController="supplier"}}
 
-    <div class="search box">
+    {{#link-to 'supplier' supplier.id tagName="div" class="search box"}}
         <div class="inner">
             <div class="left">
                 <img {{bind-attr src="supplier.image"}} />
@@ -21,6 +21,6 @@
                 {{{supplier.miniSiteContext}}}
             </div>
         </div>
-    </div>
+    {{/link-to}}
 
 {{/each}}
