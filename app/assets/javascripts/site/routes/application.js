@@ -1,7 +1,5 @@
 App.ApplicationRoute = App.ProtectedRoute.extend({
 
-
-
 	model: function(){
 		return $.getJSON('options');
 	},
@@ -21,8 +19,29 @@ App.ApplicationRoute = App.ProtectedRoute.extend({
 	actions: {
 		'addItem': function(item)
 		{
-			var cart = this.controllerFor('cart.index');
-			cart.pushObject(item);
+			var cartCtrl = this.controllerFor('cart');
+			var found = cartCtrl.findBy('id', item.get('id'));
+			if(!found)
+				cartCtrl.pushObject(Em.copy(item.get('model'), true));
+			
+		},
+
+		'openCart': function()
+		{
+			var cartCtrl = this.controllerFor('cart');
+			this.render('cart/index', {
+				into: 'application',
+				outlet: 'lightbox',
+				controller: this.controller
+			});
+		},
+
+		'closeCart': function()
+		{
+	    this.disconnectOutlet({
+	      outlet: 'lightbox',
+	      parentView: 'application'
+	    });
 		}
 	}
 

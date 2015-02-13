@@ -2,7 +2,7 @@
     <div class="lightbox">
         <div class="right">
             <img src="img/site/logo.png" />
-            <div class="box">
+            <form class="box" {{action 'login' on='submit'}}>
                 <h2>{{club.pageHeadline}}</h2>
                 <p>{{club.altHeadline}}</p>
                 {{input type="text" placeholder="הקלד קוד כניסה" value=clubident}}
@@ -11,7 +11,7 @@
                 {{/if}}
                 <button {{action 'login'}}>כניסה <i class="fa fa-arrow-circle-o-left "></i></button>
                 <img {{bind-attr src=club.logo}} />
-            </div>
+            </form>
         </div>
 
         <div class="left">

@@ -1,0 +1,44 @@
+<div class="overlay">
+    <div class="lightbox">
+        <div class="close" {{action 'closeCart'}}>&times;</div>
+        <h2>סל הקניות שלי</h2>
+        <ul class="steps">
+            <li>
+                <div class="number">1</div>
+                <div class="desc">
+
+                </div>
+            </li>
+            <li>
+                <div class="number">2</div>
+                <div class="desc">
+                
+                </div>
+            </li>
+            <li>
+                <div class="number">3<div>
+                <div class="desc">
+                
+                </div>
+            </li>
+        </ul>
+        <ul class="items">
+
+            {{#each item in cart itemController="item"}}
+                <li>
+                    <div class="name">{{item.name}}<br />{{item.shortDescription}}</div>
+                    <div class="description">{{item.description}}</div>
+                    {{#ui-qty count=item.count class="count"}}{{/ui-qty}}
+                    <div class="price">
+                        <label>מחיר לאחר הנחה</label>
+                        <span class="discount">₪{{item.clubPriceTotal}}</span>
+                        <span class="list">₪{{item.listPriceTotal}}</span>
+                    </div>
+                    <div class="remove" {{action 'remove' item.id}}>&times;</div>
+                </li>
+            {{/each}}
+        </ul>
+
+        <h5>Total {{cart.total}}</h5>
+    </div>
+</div>

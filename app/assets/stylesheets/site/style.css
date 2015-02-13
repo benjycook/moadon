@@ -715,7 +715,7 @@ ul.tree > li ul {
 }
 
 
-.mini-site ul.items {
+ul.items {
 	list-style: none;
 	padding: 0;
 	margin: 0;
@@ -723,19 +723,19 @@ ul.tree > li ul {
 	border-bottom: 1px solid #cbcbcc;
 }
 
-.mini-site ul.items li {
+ul.items li {
 	height: 65px;
 	border-top: 1px solid #cbcbcc;
 }
 
-.mini-site ul.items li > div {
+ul.items li > div {
     display: inline-block;
     height: 50px;
     margin: 7px 0;
     vertical-align: top;
 }
 
-.mini-site ul.items li .name{
+ul.items li .name{
 	color: #07609d;
 	font-size: 16px;
 	overflow: hidden;
@@ -745,7 +745,7 @@ ul.tree > li ul {
 	padding-top: 5px;
 }
 
-.mini-site ul.items li .description{
+ul.items li .description{
 	width: 200px;
 	font-size: 14px;
 	color: #454547;
@@ -777,27 +777,27 @@ ul.tree > li ul {
 	background-color: #1b79ba;
 }
 
-.mini-site .items .count {
+.items .count {
 	margin-top: 7px;
 	margin-left: 10px;
 }
 
-.mini-site .items .price {
+.items .price {
 	color: #0872bb;
 	line-height: 18px;
 	margin-top: 13px;
 }
 
-.mini-site .items .price label{
+.items .price label{
 	display: block;
 	font-size: 18px;
 }
 
-.mini-site .items .price .discount {
+.items .price .discount {
 	font-size: 18px;
 }
 
-.mini-site .items .price .list {
+.items .price .list {
 	color: black;
 	position: relative;
 	display: block;
@@ -805,7 +805,7 @@ ul.tree > li ul {
 	top: 2px;
 }
 
-.mini-site .items .price .list:after {
+.items .price .list:after {
   background: none repeat scroll 0 0 #000;
   content: "";
   display: block;
@@ -885,4 +885,25 @@ ul.tree > li ul {
 .qty .down {
 	bottom: 5px;
 	border-top: 10px solid black;
+}
+
+.lightbox .close {
+	background-color: #c8c8cb;
+	border-radius: 50%;
+	color: #fff;
+	font-size: 24px;
+	height: 27px;
+	left: 10px;
+	line-height: 27px;
+	position: absolute;
+	text-align: center;
+	top: 10px;
+	width: 27px;
+	cursor: pointer;
+}
+
+.lightbox .close:hover {
+	border: 1px solid #666;
+	width: 25px;
+	height: 25px;
 }

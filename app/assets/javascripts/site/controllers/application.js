@@ -1,8 +1,8 @@
 App.ApplicationController = Em.ObjectController.extend({
 
-	needs: ['cartIndex'],
+	needs: ['cart'],
 
-	cart: Ember.computed.alias("controllers.cartIndex"),
+	cart: Ember.computed.alias('this.controllers.cart'),
 
 	flatRegions: function(){
 		var regions = this.get('regions.children');
@@ -30,7 +30,5 @@ App.ApplicationController = Em.ObjectController.extend({
 		return flatRegions;
 
 	}.property('regions'),
-
-
 
 });

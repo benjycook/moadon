@@ -45,8 +45,8 @@
 						<span class="list">₪{{item.listPriceTotal}}</span>
 					</div>
 					<div class="order">
-						<button class="btn" {{action 'addItemAndOpenCart'}}>לקניה</button>
-						<button class="btn" {{action 'addItem'}}>הוסף לסל</button>
+						<button class="btn" {{action 'addItemAndOpenCart' controller}}>לקניה</button>
+						<button class="btn" {{action 'addItem' controller}}>הוסף לסל</button>
 					</div>
 				</li>
 			{{/each}}

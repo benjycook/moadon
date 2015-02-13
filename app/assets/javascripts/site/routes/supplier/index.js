@@ -6,6 +6,14 @@ App.SupplierRoute = Em.Route.extend({
 		return $.getJSON('supplier/'+params.id);
 	},
 
+	setupController: function(ctrl, model){
+		for(var i = 0; i < model.items.length; i++)
+		{
+			model.items[i]['count'] = 1;
+		}
+		ctrl.set('model', model);
+	},
+
 	renderTemplate: function()
 	{
 		this._super();

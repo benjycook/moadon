@@ -1,0 +1,1 @@
+App.CartRoute = App.ProtectedRoute.extend({});

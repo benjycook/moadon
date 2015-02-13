@@ -2,6 +2,7 @@ App.Router.map(function(){
 
 	this.route('login');
 	this.route('logout');
+	this.route('cart');
 
 	this.route('search', {path: 'search'});
 
@@ -15,9 +16,6 @@ App.Router.map(function(){
 		this.route('orders');
 	});
 
-	this.resource('cart', function(){
-
-	});
 
 	this.route('supplier', {path: 'supplier/:id'});
 
