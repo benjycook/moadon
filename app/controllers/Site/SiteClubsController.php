@@ -223,7 +223,7 @@ class SiteClubsController extends BaseController
 		}
 		$suppliers = $supplier->get();
 
-		$regions = Region::with('children')->get();
+		//$regions = Region::with('children')->get();
 		
 		foreach ($suppliers as &$supplier) {
 			$rawImages = array();
