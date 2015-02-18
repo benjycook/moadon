@@ -35,6 +35,13 @@ App.ItemController = Em.ObjectController.extend({
 		return 'display:none';
 	}.property('rowState'),
 
+	// lengthTest:function(obj,key)
+	// {
+	// 	var name = this.get('name');
+	// 	if(name&&name.length>49)
+	// 		this.set('name',name.substr(0,49));
+	// }.observes('name'),
+
 	actions:
 	{
 		'openDetailes':function()

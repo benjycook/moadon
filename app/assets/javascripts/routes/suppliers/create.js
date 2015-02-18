@@ -31,7 +31,9 @@ App.SuppliersEditController = Em.ObjectController.extend({
 		var description = this.get('sitedetails.description');
 		if(description&&description.length>49)
 			this.set('sitedetails.description',description.substr(0,49));
-	}.observes('sitedetails.description')
+	}.observes('sitedetails.description'),
+
+	
 
 	// sortedLevel1:function()
 	// {
