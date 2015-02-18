@@ -56,6 +56,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('sitedetails/minisite/{id}','AdminSiteDetailsController@miniSite');
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 
+		Route::resource('pages','AdminPagesController');
 	});
 
 });

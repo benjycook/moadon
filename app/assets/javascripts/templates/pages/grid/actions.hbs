@@ -1,0 +1,6 @@
+{{#link-to 'terms.edit' view.content.id class="btn btn-primary btn-sm" title="עריכה"}}<i class="fa fa-edit"></i>{{/link-to}}
+{{#if view.content.removable}}
+	<a class="btn btn-danger btn-sm" {{action 'confirm' controller view.content.id }} style="margin-right:5px;" title="מחיקה"><i class="fa fa-trash-o"></i></a>
+{{else}}
+	<a class="btn btn-danger btn-sm disabled" style="margin-right:5px;" title="מחיקה"><i class="fa fa-trash-o"></i></a>
+{{/if}}

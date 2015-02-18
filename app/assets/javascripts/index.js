@@ -84,6 +84,8 @@ App.Router.map(function(){
 		// this.route('create');
 		// this.route('edit', {path: ':categories_id/edit'});
 	});
+	this.resource('pages', function(){
+	});
 
 });
 

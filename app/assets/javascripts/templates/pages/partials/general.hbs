@@ -1,0 +1,29 @@
+<div {{bind-attr class=":row :tab-pane first:active" id=id}} style="margin-top:10px;">
+  <div class="col-md-12">
+
+    {{#view App.FormView}}
+      <form autocomplete="off">
+
+          <div class="row">
+             <div class="col-md-12">
+                <div class="form-group">
+                  <label>{{name}}:</label>
+                  {{ui-rte html=text}}
+                </div>
+             </div>
+          </div>
+
+      </form>
+      
+      <div class="modal-footer">
+            <div class="pull-left">
+               <div class="pull-left">
+                  <button {{action 'save'  model view controller}} type="button" class="btn btn-success sendEnter">שמור</button>
+                </div>
+            </div>
+      </div>
+
+    {{/view}}
+
+  </div>
+</div>
