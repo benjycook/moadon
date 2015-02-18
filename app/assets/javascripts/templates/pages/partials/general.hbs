@@ -1,6 +1,17 @@
 <div {{bind-attr class=":row :tab-pane first:active" id=id}} style="margin-top:10px;">
   <div class="col-md-12">
-
+    {{#if error}}
+      <div class="alert alert-danger error">
+        <strong>שגיאה:</strong> {{error}}
+        <i class="fa fa-times" {{action 'close' controller}}></i>
+      </div>
+    {{/if}}
+    {{#if success}}
+      <div class="alert alert-success success">
+        {{success}} 
+        <i class="fa fa-times" {{action 'close' controller}}></i>
+      </div>
+    {{/if}}
     {{#view App.FormView}}
       <form autocomplete="off">
 
@@ -18,7 +29,7 @@
       <div class="modal-footer">
             <div class="pull-left">
                <div class="pull-left">
-                  <button {{action 'save'  model view controller}} type="button" class="btn btn-success sendEnter">שמור</button>
+                  <button {{action 'save'  model view controller}} type="button" class="btn btn-success">שמור</button>
                 </div>
             </div>
       </div>

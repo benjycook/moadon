@@ -19,6 +19,6 @@ class AdminPagesController extends BaseController
 			return Response::json(array('error'=>'דף זה לא נמצא במערכת.'),501);
 		$page->text = $data->text;
 		$page->save();
-		return Response::json('success',201);
+		return Response::json('נשמר בהצלחה.',201);
 	}
 }	
