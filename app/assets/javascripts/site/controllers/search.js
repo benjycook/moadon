@@ -7,7 +7,7 @@ App.SearchController = Em.ArrayController.extend({
 
   queryParams: {
     page: {
-      replace: true
+      replace: false
     },
 
     items: {

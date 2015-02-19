@@ -8,7 +8,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>קופנופש - מועדון חברים</title>
+    <title>קופונופש - מועדון חברים</title>
     
     <meta name="description" content="">
 

@@ -157,7 +157,20 @@ class SiteClubsController extends BaseController
 		unset($supplier['galleries']);
 		$supplier['images'] = $rawImages;
 		
-		//unset($supplier['regions_id']);
+		foreach ($supplier['items'] as $key => &$item) {
+			$rawImages = array();
+			
+			$images = $supplier['items'][$key]['galleries'][0]['images'];
+			
+			foreach ($images as $image) 
+			{
+				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
+			}
+
+			unset($supplier['items'][$key]['galleries']);
+			$supplier['items'][$key]['images'] = $rawImages;
+		}
+
 		unset($supplier['suppliers_id']);
 		return Response::json($supplier,200);
 	}

@@ -724,8 +724,8 @@ ul.items {
 }
 
 ul.items li {
-	height: 65px;
 	border-top: 1px solid #cbcbcc;
+	overflow: hidden;
 }
 
 ul.items li > div {
@@ -735,42 +735,46 @@ ul.items li > div {
     vertical-align: top;
 }
 
+.mini-site div.item-info {
+	width: 50%;
+	float: right;
+}
+
 ul.items li .name{
 	color: #07609d;
 	font-size: 16px;
-	overflow: hidden;
-	text-overflow: ellipsis;
 	white-space: nowrap;
-	width: 150px;
-	padding-top: 5px;
+	margin: 0;
 }
 
 ul.items li .description{
-	width: 200px;
-	font-size: 14px;
-	color: #454547;
-	overflow: hidden;
-	padding-top: 5px;
+    color: #454547;
+    font-size: 12px;
+    height: 50px;
+    margin: 10px 0 0;
+    overflow: hidden;
 }
 
 .mini-site .items .order {
 	float: left;
+	padding-top: 18px;
+	position: relative;
 }
 
 .mini-site .items .order button {
-  background-color: #06568d;
-  border: medium none;
-  border-radius: 3px;
-  color: #fff;
-  display: inline-block;
-  font-size: 14px;
-  font-weight: bold;
-  line-height: 27px;
-  margin-right: 15px;
-  margin-top: 9px;
-  padding: 3px 10px;
-  text-align: center;
-  text-decoration: none;
+	background-color: #06568d;
+	border: medium none;
+	border-radius: 3px;
+	color: #fff;
+	display: inline-block;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 27px;
+	margin-right: 5px;
+	margin-top: 9px;
+	padding: 3px 20px;
+	text-align: center;
+	text-decoration: none;
 }
 
 .mini-site .items .order button:hover {
@@ -778,31 +782,38 @@ ul.items li .description{
 }
 
 .items .count {
-	margin-top: 7px;
-	margin-left: 10px;
+    display: inline-block;
+    float: left;
 }
 
 .items .price {
-	color: #0872bb;
-	line-height: 18px;
-	margin-top: 13px;
+	display: inline-block;
+	height: 55px;
 }
 
 .items .price label{
-	display: block;
-	font-size: 18px;
+    color: #0872bb;
+    display: block;
+    font-size: 20px;
+    letter-spacing: 2px;
 }
 
 .items .price .discount {
-	font-size: 18px;
+  color: #0872bb;
+  display: inline-block;
+  font-size: 18px;
+  margin-left: 10px;
+  line-height: 55px;
 }
 
 .items .price .list {
-	color: black;
-	position: relative;
-	display: block;
-	float: left;
-	top: 2px;
+  color: #000;
+  margin-left: 10px;
+  position: relative;
+}
+
+.price .discount, .price .list, .price .count {
+	vertical-align: baseline;
 }
 
 .items .price .list:after {
@@ -820,10 +831,10 @@ ul.items li .description{
 }
 
 .mini-site .gallery {
-	padding: 15px 0;
-	border-bottom: 1px solid #cbcbcc;
-	height: 135px;
-	margin-bottom: 15px;
+  height: 135px;
+  padding: 5px 0;
+  width: 50%;
+  float: right;
 }
 
 .mini-site .gallery-images {
@@ -832,6 +843,7 @@ ul.items li .description{
 	padding: 0;
 	white-space: nowrap;
 	font-size: 0;
+	overflow: hidden;
 }
 
 .mini-site .gallery-images li {
@@ -852,39 +864,45 @@ ul.items li .description{
 
 .qty .wrap{
 	position: relative;
+	overflow: hidden;
 }
 
 .qty .count {
-	background-color: #eeeef4;
-	border: 1px solid #dcdcdd;
-	border-radius: 5px;
-	box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1) inset;
-	font-size: 18px;
-	height: 35px;
-	text-align: center;
-	width: 35px;
-	margin-right: 15px;
-	line-height: 35px;
+    background-color: #eeeef4;
+    border: 1px solid #dcdcdd;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1) inset;
+    color: #000;
+    font-size: 18px;
+    height: 35px;
+    line-height: 35px;
+    margin-left: 16px;
+    text-align: center;
+    width: 45px;
 }
 
 .qty .up, .qty .down {
-	position: absolute;
-	right: 0;
-	width: 0;
-	height: 0;
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
+	background-color: #a2a2a6;
+	border-radius: 3px;
+	color: #fff;
 	cursor: pointer;
+	font-size: 16px;
+	font-weight: bold;
+	height: 17px;
+	left: 0;
+	line-height: 15px;
+	position: absolute;
+	text-align: center;
+	width: 15px;
 }
 
 .qty .up {
-	top: 5px;
-	border-bottom: 10px solid black;
+	top: 1px;
 }
 
 .qty .down {
-	bottom: 5px;
-	border-top: 10px solid black;
+	bottom: 1px;
+	/*border-top: 10px solid black;*/
 }
 
 .lightbox .close {
