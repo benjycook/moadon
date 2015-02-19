@@ -6,6 +6,14 @@ App.SearchController = Em.ArrayController.extend({
   categories: Ember.computed.alias("controllers.application.categories"),
 
   queryParams: {
+    page: {
+      replace: true
+    },
+
+    items: {
+      replace: false
+    },
+
     region: {
       replace: true
     },
@@ -33,6 +41,8 @@ App.SearchController = Em.ArrayController.extend({
     this.set('subcategories', []);
   }.observes('category'),
 
+  page: 1,
+  items: 9,
   region: null,
   subregions: [],
   category: null,

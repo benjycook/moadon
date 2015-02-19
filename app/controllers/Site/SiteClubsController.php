@@ -169,6 +169,8 @@ class SiteClubsController extends BaseController
 		$subregions = Input::get('subregions',0);
 		$subcategories = Input::get('subcategories',0);
 		$name = Input::get('supplier',0);
+		$items = Input::get('items', 9);
+		$page = Input::get('page', 1);
 		//$item = Input::get('item',0);
 		$supplier = SiteDetails::mini();
 		if($category)
@@ -221,7 +223,7 @@ class SiteClubsController extends BaseController
 			$sql = $name ? "supplierName LIKE CONCAT('%',?,'%')" :'? = 0';
 			$supplier->whereRaw($sql,array($name));
 		}
-		$suppliers = $supplier->get();
+		$suppliers = $supplier->forPage($page, $items)->get();
 
 		//$regions = Region::with('children')->get();
 		

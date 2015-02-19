@@ -2,6 +2,14 @@ App.SearchRoute = App.ProtectedRoute.extend({
 
 	 queryParams: {
 
+	 	page: {
+	 		refreshModel: false
+	 	},
+
+	 	items: {
+	 		refreshModel: false
+	 	},
+
     region: {
       refreshModel: true
     },
@@ -19,16 +27,20 @@ App.SearchRoute = App.ProtectedRoute.extend({
     }
   },
 
-	model: function(params)
-	{
-		//console.log(params);
+  query: function(params)
+  {
+  	var page = params.page;
+		var items = params.items;
 		var region = params.region;
 		var category = params.category;
 		var subregions = params.subregions;
 		var subcategories = params.subcategories;
-		// var regions = [];//params.qregions.join(',');
-		// var categories = [];//params.qcategories.join(',');
+
 		var terms = [];
+
+		terms.push('page='+page);
+		terms.push('items'+items);
+
 		if(region && region+'' != 'undefined')
 			terms.push('region='+region);
 		
@@ -40,10 +52,22 @@ App.SearchRoute = App.ProtectedRoute.extend({
 
 		if(subcategories && subcategories.length > 0)
 			terms.push('subcategories='+subcategories);
-		// terms.push('categories='+categories);
-		// terms.push('regions='+regions);
-		terms = terms.join('&');
-		return $.getJSON('search?'+terms);
+
+		return 'search?'+terms.join('&');
+  },
+
+	fetchMoreItems: function()
+	{
+		var params = this.paramsFor('search');
+		// console.log(params, this.controller.get('page'));
+		// //this.controller.set('page', params.page+1);
+		params.page = this.controller.get('page');
+		return $.getJSON(this.query(params));
+	},
+
+	model: function(params)
+	{
+		return $.getJSON(this.query(params));
 	},
 
 	renderTemplate: function()
@@ -63,6 +87,18 @@ App.SearchRoute = App.ProtectedRoute.extend({
 		};
 
 		ctrl.set('model', model);
+	},
+
+	actions: {
+		'fetchMore': function(callback) {
+			var ctrl = this.controller;
+			//console.log(ctrl.get('page'));
+			//Em.run('next')
+			ctrl.set('page', ctrl.get('page') + 1);
+			//console.log(ctrl.get('page'));
+		  var promise = this.fetchMoreItems();
+		  callback(promise);
+		},
 	}
 
 });
