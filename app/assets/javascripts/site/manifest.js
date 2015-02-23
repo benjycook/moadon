@@ -1,6 +1,6 @@
 //= require jquery-1.10.2
-//= require handlebars-v2.0.0
-//= require ember-1.9.1
+//= require ember-template-compiler-1.10.0
+//= require ember-1.10.0
 //= require application.js
 //= require router.js
 //= require_tree components
