@@ -23,7 +23,10 @@ class SiteDetails extends Eloquent {
 		'miniSiteContext',
 		'cities_id',
 		'states_id',
-		'visibleOnSite'
+		'visibleOnSite',
+		'newBusiness',
+		'mostViewed',
+		'hotDeal',
 	);
 
 

@@ -182,6 +182,8 @@ class SiteClubsController extends BaseController
 		$category = Input::get('category', 0);
 		$subregions = Input::get('subregions',0);
 		$subcategories = Input::get('subcategories',0);
+		$items = Input::get('items',9);
+		$page  = Input::get('page',1);
 		$name = Input::get('supplier',0);
 		$items = Input::get('items', 9);
 		$page = Input::get('page', 1);
@@ -192,11 +194,11 @@ class SiteClubsController extends BaseController
 			if($subcategories)
 			{
 				$subcategories = explode(',', $subcategories);
-				$temp = Category::whereIn('id', $subcategories)->with('children')->get()->toArray();
+				$temp = Category::whereIn('id', $subcategories)->with('children')->get();
 			}
 			else
 			{
-				$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
+				$temp = Category::where('id', '=', $category)->with('children')->get();
 			}
 
 			$categories = $this->flaten($temp);
@@ -211,10 +213,10 @@ class SiteClubsController extends BaseController
 			if($subregions)
 			{
 				$subregions = explode(',', $subregions);
-				$temp = Region::whereIn('id', $subregions)->with('children')->get()->toArray();
+				$temp = Region::whereIn('id', $subregions)->with('children')->get();
 			}
 			else{
-				$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
+				$temp = Region::where('id', '=', $region)->with('children')->get();
 			}
 
 			//get all regions
@@ -242,7 +244,6 @@ class SiteClubsController extends BaseController
 
 		$suppliers = $supplier->forPage($page, $items)->get();
 
-		//$regions = Region::with('children')->get();
 		
 		foreach ($suppliers as &$supplier) {
 			$rawImages = array();
@@ -256,8 +257,7 @@ class SiteClubsController extends BaseController
 
 		$data = [
 			'meta' => [
-				'pages' => ceil($count / $items),
-				'page'	=> $page
+				'pages' => ceil($count / $items)
 			],
 
 			'data' => $suppliers
