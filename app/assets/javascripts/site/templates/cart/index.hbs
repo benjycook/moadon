@@ -1,44 +1,42 @@
 <div class="overlay">
-    <div class="lightbox">
+    <div class="lightbox cart">
         <div class="close" {{action 'closeCart'}}>&times;</div>
-        <h2>סל הקניות שלי</h2>
-        <ul class="steps">
-            <li>
-                <div class="number">1</div>
-                <div class="desc">
+        
+        <h2 class="lightbox-title">סל הקניות שלי</h2>
 
-                </div>
-            </li>
-            <li>
-                <div class="number">2</div>
-                <div class="desc">
-                
-                </div>
-            </li>
-            <li>
-                <div class="number">3<div>
-                <div class="desc">
-                
-                </div>
-            </li>
-        </ul>
-        <ul class="items">
-
+        <ul class="items cart-items">
             {{#each item in cart itemController="item"}}
                 <li>
-                    <div class="name">{{item.name}}<br />{{item.shortDescription}}</div>
-                    <div class="description">{{item.description}}</div>
+
+                    <div class="info">
+                        <h3 class="name">{{item.name}}</h3>
+                        <p class="description">{{item.description}}</p>
+                    </div>
+
                     {{#ui-qty count=item.count class="count"}}{{/ui-qty}}
+
                     <div class="price">
+                        
                         <label>מחיר לאחר הנחה</label>
                         <span class="discount">₪{{item.clubPriceTotal}}</span>
+                        במקום
                         <span class="list">₪{{item.listPriceTotal}}</span>
                     </div>
-                    <div class="remove" {{action 'remove' item.id}}>&times;</div>
+                    
+                    <span class="remove">&times;</span>
+
                 </li>
             {{/each}}
         </ul>
 
-        <h5>Total {{cart.total}}</h5>
+        <div class="cart-totals">
+            סך הכל לתשלום: ₪{{cart.total}} <br />
+            <strong>סך הכל חיסכון: ₪{{cart.totalDiscount}}</strong>
+        </div>
+
+        <div class="cart-buttons">
+            <button class="btn" {{action 'closeCart'}}>המשך בקניות</button>
+            <button class="btn">עבור לקופה</button>
+        </div>
     </div>
 </div>

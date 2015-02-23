@@ -177,7 +177,7 @@ class SiteClubsController extends BaseController
 
 	public function search()
 	{
-		//sleep(3);
+		//sleep(30);
 		$region = Input::get('region', 0);
 		$category = Input::get('category', 0);
 		$subregions = Input::get('subregions',0);
