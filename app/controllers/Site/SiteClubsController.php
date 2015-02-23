@@ -140,9 +140,14 @@ class SiteClubsController extends BaseController
 
 	public function supplier($slug, $id)
 	{
+		// $supplier = SiteDetails::whereHas('supplier',function($q) use($id){
+		// 	$q->where('id','=',$id);
+		// })->first();
+		
 		$supplier = SiteDetails::whereHas('supplier',function($q) use($id){
 			$q->where('id','=',$id);
 		})->mini()->first();
+		
 		if(!$supplier)
 			return Response::json('ספק זה לא נמצאה במערכת',404);
 		$regions = Region::with('children')->get();
@@ -238,7 +243,7 @@ class SiteClubsController extends BaseController
 			$sql = $name ? "supplierName LIKE CONCAT('%',?,'%')" :'? = 0';
 			$supplier->whereRaw($sql,array($name));
 		}
-		
+
 		$suppliers = $supplier->forPage($page,$items)->get();
 		
 		foreach ($suppliers as &$supplier) {
