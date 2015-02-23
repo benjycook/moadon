@@ -1,14 +1,10 @@
 App.SearchRoute = App.ProtectedRoute.extend({
 
+	 // beforeModel: function(){
+	 // 	this.set('page', 1);
+	 // },
+
 	 queryParams: {
-
-	 	page: {
-	 		refreshModel: false
-	 	},
-
-	 	items: {
-	 		refreshModel: false
-	 	},
 
     region: {
       refreshModel: true
@@ -30,7 +26,7 @@ App.SearchRoute = App.ProtectedRoute.extend({
   query: function(params)
   {
   	var page = params.page;
-		var items = params.items;
+  	var items = params.items;
 		var region = params.region;
 		var category = params.category;
 		var subregions = params.subregions;
@@ -39,7 +35,7 @@ App.SearchRoute = App.ProtectedRoute.extend({
 		var terms = [];
 
 		terms.push('page='+page);
-		terms.push('items'+items);
+		terms.push('items='+items);
 
 		if(region && region+'' != 'undefined')
 			terms.push('region='+region);
@@ -59,14 +55,15 @@ App.SearchRoute = App.ProtectedRoute.extend({
 	fetchMoreItems: function()
 	{
 		var params = this.paramsFor('search');
-		// console.log(params, this.controller.get('page'));
-		// //this.controller.set('page', params.page+1);
 		params.page = this.controller.get('page');
+		params.items = 9;
 		return $.getJSON(this.query(params));
 	},
 
 	model: function(params)
 	{
+		params.page = 1;
+		params.items = 9;
 		return $.getJSON(this.query(params));
 	},
 
@@ -82,20 +79,15 @@ App.SearchRoute = App.ProtectedRoute.extend({
 
 	setupController: function(ctrl, model)
 	{
-		var obj = {
-			suppliers: model
-		};
-
-		ctrl.set('model', model);
+		ctrl.set('page', 1);
+		ctrl.set('meta', model.meta);
+		ctrl.set('model', model.data);
 	},
 
 	actions: {
 		'fetchMore': function(callback) {
 			var ctrl = this.controller;
-			//console.log(ctrl.get('page'));
-			//Em.run('next')
-			ctrl.set('page', ctrl.get('page') + 1);
-			//console.log(ctrl.get('page'));
+			ctrl.incrementProperty('page');
 		  var promise = this.fetchMoreItems();
 		  callback(promise);
 		},

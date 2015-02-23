@@ -164,7 +164,7 @@ class SiteClubsController extends BaseController
 		
 		foreach ($supplier['items'] as $key => &$item) {
 			$rawImages = array();
-			
+
 			$images = $supplier['items'][$key]['galleries'][0]['images'];
 			
 			foreach ($images as $image) 
@@ -182,6 +182,7 @@ class SiteClubsController extends BaseController
 
 	public function search()
 	{
+		//sleep(30);
 		$region = Input::get('region', 0);
 		$category = Input::get('category', 0);
 		$subregions = Input::get('subregions',0);
@@ -244,7 +245,9 @@ class SiteClubsController extends BaseController
 			$supplier->whereRaw($sql,array($name));
 		}
 
-		$suppliers = $supplier->forPage($page,$items)->get();
+		$count = $supplier->count();
+
+		$suppliers = $supplier->forPage($page, $items)->get();
 		
 		foreach ($suppliers as &$supplier) {
 			$rawImages = array();
@@ -256,6 +259,14 @@ class SiteClubsController extends BaseController
 			$supplier['images'] = $rawImages;
 		}
 
-		return Response::json($suppliers,200);
+		$data = [
+			'meta' => [
+				'pages' => ceil($count / $items)
+			],
+
+			'data' => $suppliers
+		];
+
+		return Response::json($data,200);
 	}
 }

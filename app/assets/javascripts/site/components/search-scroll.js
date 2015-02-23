@@ -10,10 +10,16 @@
     isFetching: false,
     hasMore: null,
     content: null,
+    
+
+    printIsFetching: function()
+    {
+      console.log(this.get('isFetching'));
+    }.observes('isFetching'),
 
     setup: function() {
-      console.log('init scroll');
       $window.on('scroll.' + this.elementId, bind(this, this.didScroll));
+      console.log(this.get('isFetching'));
     }.on('didInsertElement'),
 
     teardown: function() {
@@ -22,8 +28,7 @@
 
     didScroll: function() {
       if (!this.get('isFetching') && this.get('hasMore') && this.isNearBottom()) {
-        console.log('fetching...');
-        this.safeSet('isFetching', true);
+        this.set('isFetching', true);
         this.sendAction('action', bind(this, this.handleFetch));
       }
     },
@@ -37,14 +42,14 @@
 
     fetchDidSucceed: function(response) {
       var content = this.get('content'),
-          newContent = Em.getWithDefault(response, 'content', response);
+          newContent = Em.getWithDefault(response, 'data', response);
 
-      this.safeSet('isFetching', false);
+      this.set('isFetching', false);
       if (content) { content.pushObjects(newContent); }
     },
 
     fetchDidFail: function() {
-      this.safeSet('isFetching', false);
+      this.set('isFetching', false);
     },
 
     isNearBottom: function() {
@@ -54,8 +59,8 @@
       return viewPortTop && (bottomTop - viewPortTop) < this.get('epsilon');
     },
 
-    safeSet: function(key, value) {
-      if (!this.isDestroyed && !this.isDestroying) { this.set(key, value); }
-    }
+    // safeSet: function(key, value) {
+    //   if (!this.isDestroyed && !this.isDestroying) { this.set(key, value); }
+    // }
   });
 })();

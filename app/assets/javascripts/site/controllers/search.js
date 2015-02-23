@@ -5,14 +5,8 @@ App.SearchController = Em.ArrayController.extend({
   regions: Ember.computed.alias("controllers.application.regions"),
   categories: Ember.computed.alias("controllers.application.categories"),
 
-  queryParams: {
-    page: {
-      replace: false
-    },
 
-    items: {
-      replace: false
-    },
+  queryParams: {
 
     region: {
       replace: true
@@ -30,6 +24,18 @@ App.SearchController = Em.ArrayController.extend({
       replace: true
     }
   },
+
+  updated: function(){
+    console.log('updated', this.get('page'), this.get('meta'));
+  }.observes('page'),
+
+  hesMore: function()
+  {
+    console.log(this.get('page'), this.get('meta'));
+    if(this.get('page') < this.get('meta.pages'))
+      return true;
+    return false;
+  }.property('meta.pages', 'page'),
 
   clearSubRegions: function()
   {
