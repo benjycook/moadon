@@ -25,7 +25,8 @@ App.ApplicationRoute = Em.Route.extend(
 			var found = cartCtrl.findBy('id', item.get('id'));
 			if(!found)
 				cartCtrl.pushObject(Em.copy(item.get('model'), true));
-			
+
+			this.send('openCart');
 		},
 
 		'openCart': function()

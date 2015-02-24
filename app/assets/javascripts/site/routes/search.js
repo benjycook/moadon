@@ -1,8 +1,16 @@
 App.SearchRoute = App.ProtectedRoute.extend({
 
-	 // beforeModel: function(){
-	 // 	this.set('page', 1);
-	 // },
+	beforeModel: function(transition, queryParams){
+
+		this._super(transition, queryParams);
+
+		if(this.controller)
+		{
+			this.controller.set('loadingCategory', transition.queryParams.category);
+			this.controller.set('loadingRegion', transition.queryParams.region);
+		}
+
+	},
 
 	 queryParams: {
 
@@ -66,6 +74,7 @@ App.SearchRoute = App.ProtectedRoute.extend({
 		console.log(this.get('session'));
 		params.page = 1;
 		params.items = 9;
+
 		return $.getJSON(this.query(params));
 	},
 
@@ -84,6 +93,9 @@ App.SearchRoute = App.ProtectedRoute.extend({
 		ctrl.set('page', 1);
 		ctrl.set('meta', model.meta);
 		ctrl.set('model', model.data);
+		ctrl.set('loadingCategory', null);
+		ctrl.set('loadingRegion', null);
+	
 	},
 
 	actions: {

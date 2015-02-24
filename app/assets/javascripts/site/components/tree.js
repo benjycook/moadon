@@ -38,6 +38,12 @@ App.UiTreeNodeComponent = Em.Component.extend({
 
   isSelected: false,
 
+  spin: function(){
+    if(this.get('node.id') == this.get('loading'))
+      return true;
+    return false;
+  }.property('loading'),
+
   parent: function(){
     return this.nearestWithProperty('value');
   }.property().volatile(),
