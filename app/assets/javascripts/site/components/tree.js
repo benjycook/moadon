@@ -11,13 +11,16 @@ App.UiTreeLinkComponent = Em.LinkView.extend({
   }.on('init'),
 
   _invoke: function(evt){
+    var queryParams =  this.get('loadedParams.queryParams');
+    queryParams[this.nearestWithProperty('subreset').get('subreset')] = [];
     if(this.get('active'))
     {
-      var queryParams =  this.get('loadedParams.queryParams');
+     // var queryParams =  this.get('loadedParams.queryParams');
       var type = this.get('base');
       var item = this.get('item');
 
       queryParams[type] = item.parent_id;
+
 
 
       // var values = {};
