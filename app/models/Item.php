@@ -70,9 +70,14 @@ class Item extends Eloquent {
 		return $this->belongsTo('Supplier','suppliers_id','id');
 	}
 
-  public function galleries()
-  {
+  	public function galleries()
+  	{
       return $this->belongsToMany('Gallery','galleries_items', 'items_id','galleries_id')->with('images');
-  }
+  	}
+  	// public function scopeImages($query)
+  	// {
+  	// 	return 	$query->join('galleries_items','galleries_items.items_id','=','items.id')
+  	// 				  ->join('galleriesimages','galleriesimages.galleries_id','=','galleries_items.galleries_id')->select(DB::raw('galleriesimages.src AS Url'));
+  	// }
 }
 
