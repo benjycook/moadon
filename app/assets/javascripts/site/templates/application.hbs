@@ -16,12 +16,12 @@
                     ברוך הבא, חבר מועדון “{{club.name}}” 
                 {{/if}}
                
-                {{#link-to 'logout'}}יציאה{{/link-to}}
+                <a {{ action 'invalidateSession' }}>יציאה</a>
             </p>
 
             <p class="left">
                 <strong>שרות לקוחות 1-700-700-400</strong>
-                {{#link-to contact}}צור קשר{{/link-to}}
+                {{#link-to account}}צור קשר{{/link-to}}
                 {{#link-to account}}החשבון שלי{{/link-to}}
             </p>
 

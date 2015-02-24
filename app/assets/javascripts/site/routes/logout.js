@@ -1,14 +1,14 @@
-App.LogoutRoute = Em.Route.extend({
+App.LogoutRoute = App.UserProtectedRoute.extend({
 
-	beforeModel: function()
-	{
-		var self = this;
-		var appCtrl = this.controllerFor('application');
+	// beforeModel: function()
+	// {
+	// 	var self = this;
+	// 	var appCtrl = this.controllerFor('application');
 
-		return $.getJSON('logout').then(function(){
-			appCtrl.set('session', false);
-			self.transitionTo('login');
-		});
-	}
+	// 	return $.getJSON('logout').then(function(){
+	// 		appCtrl.set('session', false);
+	// 		self.transitionTo('login');
+	// 	});
+	// }
 
 });

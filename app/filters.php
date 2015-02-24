@@ -45,6 +45,23 @@ App::after(function($request, $response)
 // 		return Response::json('error',401);
 // 	}
 // });
+
+Route::filter('TokenAuth', function ($route, $request, $value = null) {
+	$header =	$request->header('authorization', null);
+	if($header)
+	{
+		list($nop, $token) = explode('Bearer ', $header);
+	}
+
+	$parts = explode('.', $token);
+	if(count($parts) != 3)
+		return Response::json(['error' => 'invalid token parts'], 200);
+	//verify token
+	$data = $parts[0] . $parts[1];
+	if(md5($data) != base64_decode($parts[2]))
+		return Response::json(['error' => 'invalid token signature'], 200);
+});
+
 Route::filter('auth', function()
 {
 	Config::set('auth.model', 'User');

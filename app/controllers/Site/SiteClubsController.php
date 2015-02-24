@@ -47,10 +47,22 @@ class SiteClubsController extends BaseController
 			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
 		}
 
-		$session = array(
-			'token' => '123',
+		$header = array(
+			'typ' => 'JWT'
+		);
+
+		$payload = array(
 			'club'	=> $club->id,
 			'user'	=> null
+		);
+
+		$base64Header = base64_encode(json_encode($header));
+		$base64Payload = base64_encode(json_encode($payload));
+		$signatrue = base64_encode(md5("$base64Header$base64Payload"));
+
+		$session = array(
+			'token' => "$base64Header.$base64Payload.$signatrue",
+			'loginType' => 'club'
 		);
 
 		return Response::json($session, 201);

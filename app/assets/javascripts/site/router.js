@@ -4,6 +4,9 @@ App.Router.map(function(){
 	this.route('logout');
 	this.route('cart');
 
+	this.route('register');
+	//this.route('login');
+
 	this.route('search', {path: 'search'});
 
 	// this.route('search', function(){

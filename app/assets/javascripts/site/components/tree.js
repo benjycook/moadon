@@ -53,6 +53,22 @@ App.UiTreeNodeComponent = Em.Component.extend({
     //return this.get('selectable');
   }.property('level'),
 
+  isExpended: function(){
+    if(this.get('node.id') == this.get('main'))
+      return true;
+    var children = this.get('node.children');
+    var walk = function(children, search)
+    {
+      for(var i = 0; i < children.length; i++)
+      {
+        if ((children[i].id == search) || walk(children[i].children, search))
+          return true;
+      }
+      return false;
+    }
+    return walk(children, this.get('main'));
+  }.property('main'),
+
   active: function() {
     return this.get('childViews').anyBy('active');
   }.property('childViews.@each.active'),
@@ -94,7 +110,7 @@ App.UiTreeNodeComponent = Em.Component.extend({
 
   actions: {
     'toggle': function(){
-      var id =this.get('node.id');
+      var id = this.get('node.id');
       var arr = Em.A(this.get('parent.value'));
  
       if(arr.indexOf(id) === -1)
@@ -116,6 +132,7 @@ App.UiTreeBranchComponent = Em.Component.extend({
   tagName: 'ul',
   classNames: ['tree-branch'],
   classNameBindings: ['active'],
+
   active: function() {
     return this.get('childViews').anyBy('active');
   }.property('childViews.@each.active')  

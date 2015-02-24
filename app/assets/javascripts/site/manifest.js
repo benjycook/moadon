@@ -1,6 +1,13 @@
 //= require jquery-1.10.2
 //= require ember-template-compiler-1.10.0
 //= require ember-1.10.0
+//= require ember-simple-auth-0.7.3
+//= require libs/simple-auth-token/index
+//= require libs/simple-auth-token/config
+//= require libs/simple-auth-token/authenticators/token
+//= require libs/simple-auth-token/authenticators/jwt
+//= require libs/simple-auth-token/authorizers/token
+//= require_tree initializers
 //= require application.js
 //= require router.js
 //= require_tree components

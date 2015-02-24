@@ -1,4 +1,6 @@
-App.ApplicationRoute = App.ProtectedRoute.extend({
+App.ApplicationRoute = Em.Route.extend(
+	SimpleAuth.ApplicationRouteMixin,
+	{
 
 	model: function(){
 		return $.getJSON('options');

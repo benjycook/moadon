@@ -21,12 +21,14 @@ if(empty($domain))
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
 	Route::get('options', 'SiteClubsController@options');
-	Route::get('supplier/{id}','SiteClubsController@supplier');
-	Route::get('search', 'SiteClubsController@search');
-
 	Route::post('login', 'SiteClubsController@login');
 	Route::get('logout', 'SiteClubsController@logout');
-	Route::post('cart','SiteCartController@cart');
+
+	Route::group(array('before' => 'TokenAuth'), function(){
+		Route::get('supplier/{id}','SiteClubsController@supplier');
+		Route::get('search', 'SiteClubsController@search');
+		Route::post('cart','SiteCartController@cart');
+	});
 
 });
 
