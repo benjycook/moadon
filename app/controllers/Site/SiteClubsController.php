@@ -276,7 +276,9 @@ class SiteClubsController extends BaseController
 				'pages' => ceil($count / $items)
 			],
 
-			'data' => $suppliers
+			'data' => $suppliers,
+
+			'query' => DB::getQueryLog()
 		];
 
 		return Response::json($data,200);
