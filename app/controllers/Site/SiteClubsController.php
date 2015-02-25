@@ -36,17 +36,12 @@ class SiteClubsController extends BaseController
 	public function login($slug)
 	{
 		$json =	Request::getContent();
-	  $data	=	json_decode($json);
-
+	  	$data	=	json_decode($json);
 		$club = Club::where('urlName', '=', $slug)
-								->where('clubCode', '=', $data->clubident)
-								->first();
-
+						->where('clubCode', '=', $data->clubident)
+						->first();
 		if(!$club)
-		{
 			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
-		}
-
 		$header = array(
 			'typ' => 'JWT'
 		);
@@ -59,12 +54,10 @@ class SiteClubsController extends BaseController
 		$base64Header = base64_encode(json_encode($header));
 		$base64Payload = base64_encode(json_encode($payload));
 		$signatrue = base64_encode(md5("$base64Header$base64Payload"));
-
 		$session = array(
 			'token' => "$base64Header.$base64Payload.$signatrue",
 			'loginType' => 'club'
 		);
-
 		return Response::json($session, 201);
 	}
 

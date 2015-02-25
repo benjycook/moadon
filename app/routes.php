@@ -24,6 +24,15 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::post('login', 'SiteClubsController@login');
 	Route::get('logout', 'SiteClubsController@logout');
 
+	Route::post('clientlogin', 'SiteClientController@login');
+	Route::get('clientlogout', 'SiteClientController@logout');
+	Route::group(array('before' => 'clientAuth'), function(){
+		Route::post('info/update', 'SiteClientController@updateInfo');
+		Route::get('orders', 'SiteClientController@orders');
+		Route::get('order/{id}', 'SiteClientController@order');
+		Route::post('purchase', 'SiteClientController@purchase');
+	});
+
 	Route::group(array('before' => 'TokenAuth'), function(){
 		Route::get('supplier/{id}','SiteClubsController@supplier');
 		Route::get('search', 'SiteClubsController@search');

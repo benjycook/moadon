@@ -52,7 +52,7 @@ Route::filter('TokenAuth', function ($route, $request, $value = null) {
 	{
 		list($nop, $token) = explode('Bearer ', $header);
 	}
-
+//"token":"eyJ0eXAiOiJKV1QifQ==.eyJjbHViIjoxLCJ1c2VyIjpudWxsfQ==.YmNlNmEwMDY2YjUxMzZkYzAwNzU5MzkyZDU0ZjM5OTc=","loginType":"club"
 	$parts = explode('.', $token);
 	if(count($parts) != 3)
 		return Response::json(['error' => 'invalid token parts'], 200);
@@ -68,12 +68,10 @@ Route::filter('auth', function()
 	if (Auth::guest()) return Response::json('error',401);
 });
 
-Route::filter('club_auth', function($route)
+Route::filter('clientAuth', function($route)
 {
-	//Config::set('auth.model', 'Member');
-	$token 	= Session::get('token',0);
-	$club 	= DB::table('tokens')->whereRaw('token = ?',array($token))->first();
-	if (Auth::guest()&&!$club) return Response::json('error',401);
+	Config::set('auth.model','Client');
+	if (Auth::guest()) return Response::json('error',401);
 });
 
 Route::filter('auth.basic', function()
