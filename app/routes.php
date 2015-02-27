@@ -25,6 +25,7 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('logout', 'SiteClubsController@logout');
 
 	Route::post('clientlogin', 'SiteClientController@login');
+	Route::post('client/register', 'SiteClientController@register');
 	Route::get('clientlogout', 'SiteClientController@logout');
 
 	Route::group(array('before' => 'TokenAuth'), function(){
