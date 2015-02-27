@@ -17,6 +17,13 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 	},
 
 	actions: {
+		'closeModel': function(){
+			this.disconnectOutlet({
+	      outlet: 'lightbox',
+	      parentView: 'application'
+	    });
+		},
+
 		'addItem': function(item)
 		{
 			var cartCtrl = this.controllerFor('cart');
@@ -64,11 +71,32 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 				cart_id: this.get('session.cart_id')
 			});
 
-			this.render('account/register', {
+			this.render('account/modal', {
 				into: 'application',
 				outlet: 'lightbox',
 				controller: ctrl
 			});
+		},
+
+		'checkout': function()
+		{
+			var ctrl = this.controllerFor('checkout');
+			
+				ctrl.set('model', {
+					firstName: 'איגור',
+					lastName: 'גורושיט',
+					email: 'igor@webt.co.il',
+					mobile: '0525001920',
+					password: '123456',
+					cart_id: this.get('session.cart_id')
+				});
+
+				this.render('account/checkout', {
+					into: 'application',
+					outlet: 'lightbox',
+					controller: ctrl
+				});
+
 		},
 
 		'closeCart': function()

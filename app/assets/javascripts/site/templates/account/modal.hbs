@@ -1,0 +1,12 @@
+<div class="overlay">
+    <div class="lightbox register">
+        <div class="close" {{action 'closeModel'}}>&times;</div>
+
+        {{#if showLogin}}
+            {{partial 'account/login'}}
+        {{else}}
+            {{partial 'account/register'}}
+        {{/if}}
+
+    </div>
+</div>

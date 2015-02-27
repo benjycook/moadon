@@ -1072,7 +1072,24 @@ ul.cart-items li > div {
 	width: 100%;
 	padding: 0;
 	margin: 0;
-	padding: 40px 20px;
+	padding: 40px 50px 0;
+}
+
+.lightbox form button {
+	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	border: 2px solid #064d7c;
+	border-radius: 12px;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+	color: #fff;
+	font-size: 16px;
+	height: 40px;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+	width: 120px;
+	margin-top: 20px;
+}
+
+.lightbox form button + button {
+	float: left;
 }
 
 .lightbox form .form-group {
@@ -1098,4 +1115,36 @@ ul.cart-items li > div {
 
 .overlay .lightbox.register {
 	width: 460px;
+	height: auto;
+	background-image: linear-gradient(to top, #dbe2e5 10%, #e6e9eb 20%, #f0f0f0 50%, #f9f9f9 100%);
+}
+
+.overlay .lightbox.checkout h3 {
+	background-color: #ddd;
+	border: 1px solid #999;
+	border-radius: 5px;
+	color: #717171;
+	font-size: 18px;
+	font-weight: normal;
+	margin-top: 0;
+	padding: 10px;
+	text-align: center;
+}
+
+.row  {
+	overflow: hidden;
+	clear: both;
+}
+
+.row .exp, 
+.row .cvv {
+	display: inline-block;
+	float: right;
+	width: calc(70% - 20px);
+	margin-left: 20px;
+}
+
+.row .cvv {
+	margin: 0;
+	width: 30%;
 }

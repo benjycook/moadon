@@ -36,7 +36,7 @@ class SiteClientController extends BaseController
 	}
 	protected function bindCart($cart_id,$client)
 	{
-		$cart = Cart::where('carts_id','=',$cart_id)->where('clients_id','=',0)->first();
+		$cart = Cart::where('id','=',$cart_id)->where('clients_id','=',0)->first();
 		if($cart)
 		{
 			$cart->clients_id = $client;
@@ -48,7 +48,7 @@ class SiteClientController extends BaseController
 		$json =	Request::getContent();
 	  	$data	=	json_decode($json,true);
 	  	$rules = array( 
-            'username'  => 'required|email',
+            'email'  => 'required|email',
             'password'  => 'required'
         );
         $validator = Validator::make($data, $rules);
@@ -56,7 +56,7 @@ class SiteClientController extends BaseController
             return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים"),501);
 	  	$client = CLient::whereHas("club",function($q) use($slug){
 	  							$q->where('urlName', '=', $slug);
-	  						})->where('email','=',$data['username'])->where('password','=',$data['password'])->first();
+	  						})->where('email','=',$data['email'])->where('password','=',$data['password'])->first();
 		if(!$client)
 			return Response::json(array('error' => 'לקוח זה לא נמצא במערכת.'),401);
 		Config::set('auth.model','Client');

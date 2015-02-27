@@ -1,0 +1,32 @@
+<h2 class="lightbox-title">הרשמה</h2>
+
+{{#if error}}
+    <div class="error">{{error}}</div>
+{{/if}}
+
+<form class="box" {{action 'register' on='submit'}}>
+
+    <div class="form-group">
+        {{input type="text" placeholder="שם פרטי" value=firstName}}
+    </div>
+
+    <div class="form-group">
+        {{input type="text" placeholder="שם משפחה" value=lastName}}
+    </div>
+
+    <div class="form-group">
+        {{input type="text" placeholder="דואר אלקטרוני" value=email}}
+    </div>
+
+    <div class="form-group">
+        {{input type="text" placeholder="נייד" value=mobile}}
+    </div>
+
+    <div class="form-group">
+        {{input type="text" placeholder="סיסמא" value=password}}
+    </div>
+
+    <button {{action 'register'}}>הרשם</button>
+    <button {{action 'openLogin'}}>משתמש קיים</button>
+
+</form>
