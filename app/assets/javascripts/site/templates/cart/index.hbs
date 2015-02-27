@@ -2,10 +2,11 @@
     <div class="lightbox cart">
         <div class="close" {{action 'closeCart'}}>&times;</div>
         
-        <h2 class="lightbox-title">סל הקניות שלי</h2>
 
+        <h2 class="lightbox-title">סל הקניות שלי</h2>
+        {{#if cart.hasItems}}
         <ul class="items cart-items">
-            {{#each item in cart itemController="item"}}
+            {{#each item in cart}}
                 <li>
 
                     <div class="info">
@@ -13,7 +14,7 @@
                         <p class="description">{{item.description}}</p>
                     </div>
 
-                    {{#ui-qty count=item.count class="count"}}{{/ui-qty}}
+                    {{ui-qty count=item.count class="count"}}
 
                     <div class="price">
                         
@@ -23,7 +24,7 @@
                         <span class="list">₪{{item.listPriceTotal}}</span>
                     </div>
                     
-                    <span class="remove">&times;</span>
+                    <span class="remove" {{action 'removeItem' item}}>&times;</span>
 
                 </li>
             {{/each}}
@@ -38,5 +39,10 @@
             <button class="btn" {{action 'closeCart'}}>המשך בקניות</button>
             <button class="btn">עבור לקופה</button>
         </div>
+        {{else}}
+            <div class="empty-cart">
+                אין פריטים בסל הקניות שלך.
+            </div>
+        {{/if}}
     </div>
 </div>

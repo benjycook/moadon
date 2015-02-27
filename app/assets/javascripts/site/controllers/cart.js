@@ -1,5 +1,13 @@
 App.CartController = Em.ArrayController.extend({
 
+	itemController: 'item',
+
+	hasItems: function(){
+		if(this.get('length') > 0)
+			return true;
+		return false;
+	}.property('length'),
+
 	updateItems: function(){
 		var data = [];
 		var items = this.get('model');
@@ -10,6 +18,24 @@ App.CartController = Em.ArrayController.extend({
 				qty: items[i].count
 			});
 		}
+
+		var cart = {
+			cart_id: this.get('session.cart_id'),
+			items: data
+		};
+
+		console.log('cart items', cart);
+		
+		var _this = this;
+
+		$.ajax({
+			type: 'POST',
+			url: 'cart',
+			data: JSON.stringify(cart)
+		}).then(function(data){
+			_this.set('cart_id', data.cart_id);
+		});
+
 	}.observes('model.@each.count'),
 
 	total: function(){
@@ -43,5 +69,4 @@ App.CartController = Em.ArrayController.extend({
 		'model.@each.count', 
 		'model.@each.clubPrice', 
 		'model.@each.listPrice')
-
 });

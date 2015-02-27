@@ -1,1 +1,8 @@
-App.CartRoute = App.UserProtectedRoute.extend({});
+App.CartRoute = App.UserProtectedRoute.extend({
+
+	
+
+	// actions: {
+	// 	'removeItem': funct
+	// }
+});

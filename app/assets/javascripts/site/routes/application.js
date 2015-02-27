@@ -1,6 +1,4 @@
-App.ApplicationRoute = Em.Route.extend(
-	SimpleAuth.ApplicationRouteMixin,
-	{
+App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 
 	model: function(){
 		return $.getJSON('options');
@@ -24,9 +22,23 @@ App.ApplicationRoute = Em.Route.extend(
 			var cartCtrl = this.controllerFor('cart');
 			var found = cartCtrl.findBy('id', item.get('id'));
 			if(!found)
+			{
 				cartCtrl.pushObject(Em.copy(item.get('model'), true));
+			}	
+			else
+			{
+				found.incrementProperty('count', item.get('count'));
+			}
 
 			this.send('openCart');
+		},
+
+		'removeItem': function(item)
+		{
+			var cartCtrl = this.controllerFor('cart');
+			var found = cartCtrl.findBy('id', item.id);
+			if(found)
+				cartCtrl.removeObject(found);
 		},
 
 		'openCart': function()
@@ -36,6 +48,25 @@ App.ApplicationRoute = Em.Route.extend(
 				into: 'application',
 				outlet: 'lightbox',
 				controller: this.controller
+			});
+		},
+
+		'openRegister': function()
+		{
+			var ctrl = this.controllerFor('account.register');
+			
+			ctrl.set('model', {
+				firstname: 'איגור',
+				lastname: 'גורושיט',
+				email: 'igor@webt.co.il',
+				mobile: '0525001920',
+				password: '123456'
+			});
+
+			this.render('account/register', {
+				into: 'application',
+				outlet: 'lightbox',
+				controller: ctrl
 			});
 		},
 

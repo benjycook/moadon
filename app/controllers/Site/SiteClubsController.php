@@ -36,19 +36,23 @@ class SiteClubsController extends BaseController
 	public function login($slug)
 	{
 		$json =	Request::getContent();
-	  	$data	=	json_decode($json);
+	  $data	=	json_decode($json);
 		$club = Club::where('urlName', '=', $slug)
 						->where('clubCode', '=', $data->clubident)
 						->first();
 		if(!$club)
 			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
+		
+		$cart = Cart::create(array());
+
 		$header = array(
 			'typ' => 'JWT'
 		);
 
 		$payload = array(
 			'club'	=> $club->id,
-			'user'	=> null
+			'user'	=> null,
+			'cart_id' => $cart->id
 		);
 
 		$base64Header = base64_encode(json_encode($header));
@@ -56,7 +60,8 @@ class SiteClubsController extends BaseController
 		$signatrue = base64_encode(md5("$base64Header$base64Payload"));
 		$session = array(
 			'token' => "$base64Header.$base64Payload.$signatrue",
-			'loginType' => 'club'
+			'loginType' => 'club',
+			'cart_id' => $cart->id
 		);
 		return Response::json($session, 201);
 	}
@@ -68,12 +73,33 @@ class SiteClubsController extends BaseController
 
 	public function options($slug)
 	{
+		// ///star token
+		// $header =	Request::header('authorization', null);
+		// if($header)
+		// {
+		// 	list($nop, $token) = explode('Bearer ', $header);
+		// }
+	
+		// $parts = explode('.', $token);
+		// if(count($parts) != 3)
+		// 	return Response::json(['error' => 'invalid token parts'], 401);
+		
+		// //verify token
+		// $data = $parts[0] . $parts[1];
+		// if(md5($data) != base64_decode($parts[2]))
+		// 	return Response::json(['error' => 'invalid token signature'], 401);
+
+		// $payload = json_decode(base64_decode($parts[1]));
+
+
 		$club = Club::site()->where('urlName','=',$slug)->first();
 
 		if(!$club)
 			return Response::json('מועדון זה לא נמצאה במערכת',404);
 
+
 		$data = array();
+	
 		$data['club'] = $club->toArray();
 		$data['club']['logo'] = URL::to('/')."/galleries/{$data['club']['logo']}";
 
