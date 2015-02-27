@@ -36,7 +36,7 @@ class SiteClientController extends BaseController
 	}
 	protected function bindCart($cart_id,$client)
 	{
-		$cart = Cart::where('carts_id','=',$cart_id)->where('clients_id','=',0)->first();
+		$cart = Cart::where('id','=',$cart_id)->where('clients_id','=',0)->first();
 		if($cart)
 		{
 			$cart->clients_id = $client;
