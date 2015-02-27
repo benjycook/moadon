@@ -25,10 +25,6 @@ App.SearchController = Em.ArrayController.extend({
     }
   },
 
-  updated: function(){
-    console.log('updated', this.get('page'), this.get('meta'));
-  }.observes('page'),
-
   hesMore: function()
   {
     console.log(this.get('page'), this.get('meta'));
@@ -36,16 +32,6 @@ App.SearchController = Em.ArrayController.extend({
       return true;
     return false;
   }.property('meta.pages', 'page'),
-
-  clearSubRegions: function()
-  {
-    this.set('subregions', []);
-  }.observes('region'),
-
-  clearSubCategories: function()
-  {
-    this.set('subcategories', []);
-  }.observes('category'),
 
   page: 1,
   items: 9,
