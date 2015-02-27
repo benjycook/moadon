@@ -32,12 +32,18 @@ class SiteCartController extends BaseController
 		$club = Club::where('urlName','=',$slug)->first();
 		if(!$club)
 			return Response::json('מועדון זה לא נמצאה במערכת',404);
+
 		$data = json_decode(Request::getContent(),true);
+
 		if(!isset($data['cart_id'])||!$cart = Cart::find($data['cart_id']))
+		{
 			$cart = Cart::create(array('clients_id'=>$clients_id));
+		}
+
 		$info = array('cart_id'=>$cart->id,'items'=>array());
 		$ids = array(-1);
-		foreach ($data['items'] as $item) {
+		foreach ($data['items'] as $item) 
+		{
 			$origin = Item::find($item['id']);
 			if(!$origin||in_array($origin->id,$ids))
 				continue;

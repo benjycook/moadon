@@ -52,14 +52,14 @@ Route::filter('TokenAuth', function ($route, $request, $value = null) {
 	{
 		list($nop, $token) = explode('Bearer ', $header);
 	}
-//"token":"eyJ0eXAiOiJKV1QifQ==.eyJjbHViIjoxLCJ1c2VyIjpudWxsfQ==.YmNlNmEwMDY2YjUxMzZkYzAwNzU5MzkyZDU0ZjM5OTc=","loginType":"club"
+
 	$parts = explode('.', $token);
 	if(count($parts) != 3)
-		return Response::json(['error' => 'invalid token parts'], 200);
+		return Response::json(['error' => 'invalid token parts'], 401);
 	//verify token
 	$data = $parts[0] . $parts[1];
 	if(md5($data) != base64_decode($parts[2]))
-		return Response::json(['error' => 'invalid token signature'], 200);
+		return Response::json(['error' => 'invalid token signature'], 401);
 });
 
 Route::filter('auth', function()
