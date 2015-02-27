@@ -32,7 +32,7 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 		Route::get('supplier/{id}','SiteClubsController@supplier');
 		Route::get('search', 'SiteClubsController@search');
 		Route::post('cart','SiteCartController@cart');
-		
+		Route::post('register', 'SiteClientController@register');
 		Route::group(array('before' => 'clientAuth'), function(){
 			Route::post('info/update', 'SiteClientController@updateInfo');
 			Route::get('orders', 'SiteClientController@orders');

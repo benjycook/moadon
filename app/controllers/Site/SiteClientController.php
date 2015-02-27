@@ -109,24 +109,40 @@ class SiteClientController extends BaseController
     	Config::set('auth.model','Client');
     	$json =	Request::getContent();
 	  	$data = json_decode($json,true);
-	  	if(!isset($data['cart_id'])||!Cart::where('carts_id','=',$data['cart_id'])->count())
-	  		return Response::json('סל קניות זה לא נמצא במערכת.',501);
 	  	$client = Auth::user();
-	  	$items = CartItem::whereHas('cart',function($q) use($client,$data){
-	  		$q->where('clients_id','=',$client->id);
-	  		$q->where('carts_id','=',$data['cart_id']);
-	  	})->where('carts_id','=',$data['cart_id'])->get();
+	  	$cart = Cart::where('clients_id','=',$client->id);
+	  	$items = CartItem::where('carts_id','=',$cart->id)->get();
 	  	if(count($items))
 	  	{
 	  		$client->clients_id = $client->id;
 	  		$client->createdOn = date("Y-m-d H:i:s");
 	  		$order = Order::create($client->toArray());
+	  		$total = 0;
 	  		foreach ($items as $item) {
 	  			$orderItem = Item::find($item->items_id);
 	  			$orderItem->qty = $item->qty;
 	  			$orderItem->orders_id = $order->id;
+	  			$total = $orderItem->netPrice*$item->qty;
 	  			OrderItem::create($orderItem->toArray());
 	  		}
+	  		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
+                $data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
+            else
+            {
+                $date = explode('/',$data['cardExp']);
+                $year = date('Y',strtotime($date[1]."-01-01"));
+                $date = date('Y-m-t',strtotime($year."-".$date[0]."-01"));
+                $data['date'] = $date;
+            }
+            if($data['numberOfPayments']>1)
+            	$data['creditDealType'] = 2;
+            else
+            	$data['creditDealType'] = 1;
+            $data['firstPayment'] = $total/$data['numberOfPayments'];
+            $data['total'] = $total;
+            $data['creditCardType'] = 1;
+	  		$data['orders_id'] = $order->id;
+	  		Payment::create($data);
 	  		CartItem::where('carts_id','=',$data['cart_id'])->delete();
 	  		Cart::where('id','=',$data['cart_id'])->delete();
 	  		return Response::json("ההזמנה בוצע בהצלחה.",201);
