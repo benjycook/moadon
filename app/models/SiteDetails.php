@@ -46,17 +46,17 @@ class SiteDetails extends Eloquent {
 	}
 
 	public function scopeSite($query)
-  {
-  	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
-  }
+	{
+	  	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
+	}
 
-  public function items()
+  	public function items()
 	{
 		return $this->hasMany('Item','suppliers_id','suppliers_id')->with('galleries');
 	}
 
-  public function scopeMini($query)
-  {
-  	return $query->with('galleries')->with('items');
-  }
+    public function scopeMini($query)
+    {
+    	return $query->with('galleries')->with('items');
+    }
 }

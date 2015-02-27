@@ -63,6 +63,8 @@ class SiteClubsController extends BaseController
 
 	public function logout($slug)
 	{
+		Config::set('auth.model','Client');
+        Auth::logout();
 		return Response::json(array('status' => 'ok'), 200);
 	}
 

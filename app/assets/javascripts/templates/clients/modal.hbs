@@ -54,41 +54,27 @@
                   <div class="col-md-3">
                     <div class="form-group">
                       <label>ת.ז/ח.פ/ע.מ:</label>
-                      {{input type="text"  class="form-control" valueBinding="taxId" data-parsley-minlength="9" data-parsley-maxlength="9" data-parsley-type="digits" data-parsley-idcheck="idcheck" required="required" }}
+                      {{input type="text"  class="form-control" valueBinding="taxId" data-parsley-minlength="9" data-parsley-maxlength="9" data-parsley-type="digits" data-parsley-idcheck="idcheck" }}
                     </div>
                   </div>
 
-                  <div class="col-md-3">
+                  
+
+            </div> 
+
+            <div class="row">
+              <div class="col-md-4">
                     <div class="form-group">
                       <label>עיר:</label>
                       {{input type="text"  class="form-control" valueBinding="city" required="required"}}
                     </div>
                   </div>
-
-            </div> 
-
-            <div class="row">
-
                <div class="col-md-4">
                   <div class="form-group">
                     <label>נייד:</label>
-                    {{input type="text" class="form-control" valueBinding="phone1" data-parsley-type="digits" required="required"}}
+                    {{input type="text" class="form-control" valueBinding="mobile" data-parsley-type="digits" required="required"}}
                   </div>
                 </div>
-
-               <div class="col-md-4">
-                  <div class="form-group">
-                    <label>טלפון:</label>
-                    {{input type="text" class="form-control" valueBinding="phone2" data-parsley-type="digits"}}
-                  </div>
-                </div>
-
-               {{!--  <div class="col-md-4">
-                  <div class="form-group">
-                    <label>פקס:</label>
-                    {{input type="text" class="form-control" valueBinding="fax" data-parsley-type="digits"}}
-                  </div>
-                </div> --}}
 
                 <div class="col-md-4">
                   <div class="form-group">

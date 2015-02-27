@@ -23,12 +23,18 @@ class SiteCartController extends BaseController
 	}
 	public function cart($slug)
 	{
+		Config::set('auth.model','Client');
+		$client = Auth::user();
+		if($client)
+			$clients_id = $client->id;
+		else
+			$clients_id = 0;
 		$club = Club::where('urlName','=',$slug)->first();
 		if(!$club)
 			return Response::json('מועדון זה לא נמצאה במערכת',404);
 		$data = json_decode(Request::getContent(),true);
 		if(!isset($data['cart_id'])||!$cart = Cart::find($data['cart_id']))
-			$cart = Cart::create(array());
+			$cart = Cart::create(array('clients_id'=>$clients_id));
 		$info = array('cart_id'=>$cart->id,'items'=>array());
 		$ids = array(-1);
 		foreach ($data['items'] as $item) {
@@ -46,6 +52,7 @@ class SiteCartController extends BaseController
 				);
 			
 		}
+		CartItem::where('carts_id','=',$cart->id)->whereNotIn('items_id',$ids)->delete();
 		return Response::json($info,201);
 	}
 }
