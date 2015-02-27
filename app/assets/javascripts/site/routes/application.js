@@ -56,11 +56,12 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			var ctrl = this.controllerFor('account.register');
 			
 			ctrl.set('model', {
-				firstname: 'איגור',
-				lastname: 'גורושיט',
+				firstName: 'איגור',
+				lastName: 'גורושיט',
 				email: 'igor@webt.co.il',
 				mobile: '0525001920',
-				password: '123456'
+				password: '123456',
+				cart_id: this.get('session.cart_id')
 			});
 
 			this.render('account/register', {

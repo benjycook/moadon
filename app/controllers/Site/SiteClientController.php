@@ -13,8 +13,8 @@ class SiteClientController extends BaseController
             'lastName'   	=> 'required',
             'password'   	=> 'required',
             'mobile'     	=> 'required',
-            'recieveNews'  	=> 'required',
-            'taxId'  		=> 'sometimes|id_check',
+           // 'recieveNews'  	=> 'required',
+           // 'taxId'  		=> 'sometimes|id_check',
             'cart_id'		=> 'required'
         );
         $validator = Validator::make($data, $rules);
