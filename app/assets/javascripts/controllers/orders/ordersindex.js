@@ -25,8 +25,13 @@ App.OrdersIndexController = GRID.TableController.extend({
 
     columns: [
         GRID.column('num', 				{title: '#',				style: 'min center', display: 'always'                 }),
-        GRID.column('fullName',             {title: 'שם מלא',     style: ''                                                  }),
+        GRID.column('createdAt',             {title: 'תאריך יצירת ההזמנה',     style: ''                                                  }),
+        GRID.column('id',             {title: 'מספר הזמנה',     style: ''                                                  }),
+        GRID.column('fullName',             {title: 'שם לקוח',     style: ''                                                  }),
+        GRID.column('mobile',            {title: 'נייד',     style: ''                                                  }),
         GRID.column('email',            {title: 'דוא"ל',     style: ''                                                  }),
+        GRID.column('total',            {title: 'סכום',     style: ''                                                  }),
+        GRID.column('clubName',            {title: 'מועדון',     style: ''                                                  }),
         GRID.column('actions',			{title: 'פעולות',			style: 'min center', templateName: 'orders/grid/actions'  })
     ]
 

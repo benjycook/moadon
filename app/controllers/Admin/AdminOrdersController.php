@@ -11,14 +11,26 @@ class AdminOrdersController extends BaseController
 		$sql = $query ? "name LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Order::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
-		$orders = Order::whereRaw($sql,array($query))->forPage($page,$items)->get();
+		$orders = Order::with('club')->whereRaw($sql,array($query))->forPage($page,$items)->get();
 		$orders = $orders->toArray();
+        $newOrders = [];
+        foreach ($orders as $order) {
+            $newOrders[] = array(
+                'createdAt'     =>date('d/m/y',strtotime($order['createdOn'])),
+                'id'            =>$order['id'], 
+                'fullName'      =>$order['firstName']." ".$order['lastName'], 
+                'mobile'        =>$order['mobile'],   
+                'email'         =>$order['email'],    
+                'total'         =>number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*netPrice')),2),    
+                'clubName'      =>$order['club']['name'], 
+                );
+        }
 		$meta = array(
 			'pages' => $pages,
 			'count' => $count,
 			'page'	=> $page
 			);
-		$data = array('collection'=>$orders,'meta'=>$meta,'query'=>DB::getQueryLog());
+		$data = array('collection'=>$newOrders,'meta'=>$meta);
 		return Response::json($data,200);
 	}
 
@@ -62,9 +74,35 @@ class AdminOrdersController extends BaseController
 
 	public function show($id)
 	{
-		$order = Order::with('items')->where('id','=',$id)->first();
+		$order = Order::with(array('items'=>function($q){$q->with('supplier');$q->with('realized');}))->with('payment')->where('id','=',$id)->first();
 		if(!$order)
 			return Response::json(array('error'=>"הזמנה זו לא נמצאה במערכת"),501);
-		return Response::json($order->toArray(),200);
+        $order = $order->toArray();
+        $order['createdOn'] = date('d/m/y',strtotime($order['createdOn']));
+        $order['total'] = $order['payment']['total'];
+        $order['cardNumber'] = substr($order['payment']['cardNumber'],-4);
+        $order['ownerName'] = $order['payment']['ownerName'];
+        $order['ownerId'] = $order['payment']['ownerId'];
+        $order['numberOfPayments'] = $order['payment']['numberOfPayments'];
+        $order['realized'] = [];
+        $suppliers   = array();
+        foreach ($order['items'] as &$item) {
+            $item['supplierName'] = $item['supplier']['supplierName'];
+            $suppliers[$item['supplierName']] = $item['supplier']['id'];
+            unset($item['supplier']);
+        }
+        $relizations = [];
+        foreach ($suppliers as $key=>&$value) {
+            $realized = Realized::join('orders_items','orders_items.id','=','orders_items_id')->where('suppliers_id','=',$value)
+            ->select(DB::raw('name,realizedOn,realizedQty,qty'))->get();
+            foreach ($realized as &$temp) {
+                $temp['realizedOn'] = date('d/m/y H:i:s',strtotime($temp['realizedOn']));
+            }
+            if(count($realized))
+                $relizations[] = array('supplierName'=>$key,'items'=>$realized);
+        }
+        $order['realizations'] = $relizations;
+        unset($order['payment']);
+		return Response::json($order,200);
 	}
 }	

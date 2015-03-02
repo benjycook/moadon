@@ -1,0 +1,50 @@
+<div class="col-md-12">
+  <label class="title">מימושים</label>
+  <div class="row">
+    <div class="col-md-12">
+      {{#each realized in realizations}}
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="form-group">
+              <label>שם ספק</label>
+              {{input class="form-control" value=realized.supplierName disabled="disabled"}}
+            </div>
+          </div>
+        </div>
+        {{#each item in  realized.items}}
+              <div class="row">
+               <div class="col-xs-3">
+                <div class="form-group">
+                  <label>שם מוצר</label>
+                  {{input class="form-control" value=item.name disabled="disabled"}}
+                </div>
+              </div>
+
+              <div class="col-xs-3">
+                <div class="form-group">
+                  <label>תאריך מימוש</label>
+                  {{input class="form-control" value=item.realizedOn disabled="disabled"}}
+                </div>
+              </div>
+
+              <div class="col-xs-3">
+                <div class="form-group">
+                  <label>כמות שהוזמנה</label>
+                  {{input class="form-control" value=item.qty disabled="disabled"}}
+                </div>
+              </div>
+
+               <div class="col-xs-3">
+                <div class="form-group">
+                  <label>כמות מימוש</label>
+                  {{input class="form-control" value=item.realizedQty disabled="disabled"}}
+                </div>
+              </div>
+
+          </div>
+        {{/each}}
+      {{/each}} 
+      </div>
+  </div>
+
+</div>

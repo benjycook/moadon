@@ -1,0 +1,103 @@
+<div class="col-md-12">
+
+      <label class="title">פרטי לקוח</label>
+
+  		<div class="row">
+            <div class="col-md-3">
+              <div class="form-group">
+                <label>מועדון:</label>
+                   {{view Ember.ChosenSelectView
+                        classNames="form-control chosen-select chosen-rtl form-group " 
+                        prompt = "בחר..."
+                        contentBinding="App.clubs"
+                        selected=clubs_id
+                       disabled="disabled"
+                      }}
+              </div>
+            </div>  
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>שם פרטי:</label>
+            {{input type="text" class="form-control" valueBinding="firstName" disabled="disabled"}}
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>שם משפחה:</label>
+            {{input type="text" class="form-control" valueBinding="lastName" disabled="disabled"}}
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>ת.ז/ח.פ/ע.מ:</label>
+            {{input type="text"  class="form-control" valueBinding="taxId" disabled="disabled"}}
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>עיר:</label>
+            {{input type="text"  class="form-control" valueBinding="city" disabled="disabled"}}
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>נייד:</label>
+            {{input type="text" class="form-control" valueBinding="mobile"  disabled="disabled"}}
+          </div>
+        </div>
+
+        <div class="col-md-2">
+          <div class="form-group">
+            <label>דוא״ל:</label>
+            {{input type="text" class="form-control" valueBinding="email"  disabled="disabled" }}
+          </div>
+        </div>       
+
+    </div> 
+    <div class="row">
+
+      <div class="col-md-4">
+        <div class="form-group">
+          <label>רחוב:</label>
+            {{input type="text" class="form-control" valueBinding="street"  disabled="disabled" }}
+        </div> 
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>בית:</label>
+            {{input type="text" class="form-control" valueBinding="house"  disabled="disabled"}}
+        </div>
+      </div>
+      <div class="col-md-2"> 
+        <div class="form-group">
+          <label>כניסה:</label>
+            {{input type="text" class="form-control" valueBinding="entrance" disabled="disabled"}}
+        </div>
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>דירה:</label>
+            {{input type="text" class="form-control" valueBinding="apartment" disabled="disabled"}}
+        </div>  
+      </div>
+
+      <div class="col-md-2">
+        <div class="form-group">
+          <label>מיקוד:</label>
+          {{input type="text" class="form-control" valueBinding="zipcode"  disabled="disabled"}}
+        </div>
+      </div>
+
+    </div>
+
+</div>

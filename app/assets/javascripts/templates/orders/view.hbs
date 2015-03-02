@@ -1,0 +1,33 @@
+<div class="panel panel-default grid">
+  <div class="panel-heading">
+    <div class="panel-label">
+      הזמנה
+    </div>
+    <div class="pull-left actions"> 
+      {{#link-to 'orders' tag="button" type="button" class="btn btn-default"}}<i class="fa fa-times"></i>{{/link-to}}
+    </div>
+  </div>
+</div>
+<div class="panel-body" style="background-color: #f4f4f4;">
+   
+    {{#if error}}
+      <div class="alert alert-danger error">
+        <strong>שגיאה:</strong> {{error}}
+        <i class="fa fa-times" {{action 'close' controller}}></i>
+      </div>
+    {{/if}}
+    {{#if success}}
+          <div class="alert alert-success success">
+            {{success}} 
+            <i class="fa fa-times" {{action 'close' controller}}></i>
+          </div>
+    {{/if}}
+    <div class="row">
+      <div class="col-xs-12 tab-content">
+        {{partial "orders/tabs/client"}}
+        {{partial "orders/tabs/order"}}
+        {{partial "orders/tabs/items"}}
+         {{partial "orders/tabs/realizations"}}
+      </div>
+  </div> 
+</div>

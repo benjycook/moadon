@@ -11,4 +11,13 @@ class Order extends Eloquent {
 	{
 		return $this->hasMany('OrderItem','orders_id','id')->with('realized');
 	}
+
+	public function club()
+	{
+		return $this->belongsTo('Club','clubs_id','id');
+	}
+	public function payment()
+	{
+		return $this->hasOne('Payment','orders_id','id');
+	}
 }
