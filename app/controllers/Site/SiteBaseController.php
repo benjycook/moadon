@@ -31,13 +31,19 @@ class SiteBaseController extends BaseController
 
 	protected function _setPayload()
 	{
-		$token = $this->auth->getToken();
-		if(!$token)
+		try{
+			$token = $this->auth->getToken();
+			if(!$token)
+			{
+				return false;
+			}
+			$token = $token->get();
+			$this->payload = $this->auth->getPayload($token)->toArray();
+		}catch(Exception $e)
 		{
 			return false;
 		}
-		$token = $token->get();
-		$this->payload = $this->auth->getPayload($token)->toArray();
+
 		return true;
 	}
 

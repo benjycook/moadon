@@ -22,6 +22,7 @@ class SiteCartController extends SiteBaseController
 
 		return $cartItem->toArray();
 	}
+
 	public function cart()
 	{
 		$data = json_decode(Request::getContent(),true);
@@ -51,6 +52,7 @@ class SiteCartController extends SiteBaseController
 				);
 			
 		}
+		
 		CartItem::where('carts_id','=',$cart->id)->whereNotIn('items_id',$ids)->delete();
 		return Response::json($info,201);
 	}
