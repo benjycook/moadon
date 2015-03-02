@@ -782,7 +782,6 @@ define("simple-auth/mixins/authentication-controller-mixin",
         */
         authenticate: function(options) {
           var authenticator = this.get('authenticator');
-          console.log('authenticator', authenticator);
           Ember.assert('AuthenticationControllerMixin/LoginControllerMixin require the authenticator property to be set on the controller', !Ember.isEmpty(authenticator));
           return this.get(Configuration.sessionPropertyName).authenticate(authenticator, options);
         }
@@ -841,7 +840,6 @@ define("simple-auth/mixins/login-controller-mixin",
         */
         authenticate: function() {
           var data = this.getProperties('identification', 'password', 'clubident');
-          console.log('data', data);
           this.set('password', null);
           return this._super(data);
         }

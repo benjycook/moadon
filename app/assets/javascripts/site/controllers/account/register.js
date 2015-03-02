@@ -1,41 +1,61 @@
-App.AccountRegisterController = Em.ObjectController.extend({
+App.AccountRegisterController = Em.ObjectController.extend(SimpleAuth.LoginControllerMixin, {
+	
+	authenticator: 'simple-auth-authenticator:jwt',
 
 	actions: {
 		'register': function(){
-
-			var model = this.get('model');
-			
 			var _this = this;
+			var authenticator = this.get('authenticator');
+			var model = this.get('model');
+			var data  = {};
 
 			$.ajax({
 				type: 'POST',
 				url: 'account/register',
 				data: JSON.stringify(model)
 			}).then(function(data){
-				//_this.set('cart_id', data.cart_id);
-				console.log(data);
+				var session = _this.get('session');
+				session.setup(authenticator, data, false);
+				session.set('client', data.client);
+				if(_this.get('transitionTo') == 'checkout')
+				{
+					_this.send('checkout');
+				}else{
+					_this.send('closeModal');
+					_this.transitionToRoute('account.index');
+				}		
 			}).fail(function(data){
 				var data = data.responseJSON;
-				console.log(data);
 				_this.set('error', data.error);
 			});
 		},
 
-		'login': function(){
-			var model = this.get('model');
-			
+		'login': function(data){
 			var _this = this;
+			var authenticator = this.get('authenticator');
+			var model = this.get('model');
+			var data  = {};
+
+			data['email'] = model.email;
+			data['password'] = model.password;
 
 			$.ajax({
 				type: 'POST',
 				url: 'account/login',
 				data: JSON.stringify(model)
 			}).then(function(data){
-				//_this.set('cart_id', data.cart_id);
-				console.log(data);
+				var session = _this.get('session');
+				session.setup(authenticator, data, false);
+				session.set('client', data.client);
+				if(_this.get('transitionTo') == 'checkout')
+				{
+					_this.send('checkout');
+				}else{
+					_this.send('closeModal');
+					_this.transitionToRoute('account.index');
+				}		
 			}).fail(function(data){
 				var data = data.responseJSON;
-				console.log(data);
 				_this.set('error', data.error);
 			});
 		},

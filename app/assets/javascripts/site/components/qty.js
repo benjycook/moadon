@@ -6,8 +6,6 @@ App.UiQtyComponent = Ember.Component.extend({
 
   actions: {
   	up: function(){
-      console.log(this.get('_parentView.controller'));
-  		//this.incrementProperty('count');
       this.set('count', this.get('count') + 1);
   	},
 

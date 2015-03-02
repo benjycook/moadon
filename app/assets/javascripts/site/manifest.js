@@ -10,6 +10,7 @@
 //= require_tree initializers
 //= require application.js
 //= require router.js
+//= require routes/auth/protected
 //= require_tree components
 //= require_tree_df routes
 //= require_tree controllers

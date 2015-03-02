@@ -28,7 +28,7 @@ class Club extends Eloquent {
 
 	public function clients()
 	{
-		return $this->hasMany('Client');
+		return $this->hasMany('Client', 'clubs_id', 'id');
 	}
 
 	public function scopeSite($query)

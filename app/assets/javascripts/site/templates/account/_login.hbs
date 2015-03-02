@@ -1,11 +1,13 @@
 <h2 class="lightbox-title">כניסה</h2>
 
-{{#if error}}
-    <div class="error">{{error}}</div>
-{{/if}}
-
 <form class="box" {{action 'login' on='submit'}}>
 
+    {{#if error}}
+        <div class="alert error">
+            <div class="close">&times;</div>
+            {{error}}
+        </div>
+    {{/if}}
     
     <div class="form-group">
         {{input type="text" placeholder="דואר אלקטרוני" value=email}}

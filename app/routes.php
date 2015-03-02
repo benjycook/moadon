@@ -28,17 +28,24 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::post('account/register', 'SiteClientController@register');
 	Route::get('account/logout', 'SiteClientController@logout');
 
-	Route::group(array('before' => 'TokenAuth'), function(){
+	Route::group(array('before' => 'ClubAuth'), function(){
+
 		Route::get('supplier/{id}','SiteClubsController@supplier');
 		Route::get('search', 'SiteClubsController@search');
 		Route::post('cart','SiteCartController@cart');
 		Route::post('register', 'SiteClientController@register');
-		Route::group(array('before' => 'clientAuth'), function(){
+
+
+		Route::group(array('before' => 'ClubClientAuth'), function(){
+
+			Route::resource('orders', 'SiteOrdersController');
 			Route::post('info/update', 'SiteClientController@updateInfo');
-			Route::get('orders', 'SiteClientController@orders');
-			Route::get('order/{id}', 'SiteClientController@order');
-			Route::post('purchase', 'SiteClientController@purchase');
+			//Route::get('orders', 'SiteClientController@orders');
+			//Route::get('order/{id}', 'SiteClientController@order');
+			//Route::post('purchase', 'SiteClientController@purchase');
+
 		});
+		
 	});
 
 });

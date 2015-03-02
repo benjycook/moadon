@@ -108,6 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Igorgoroshit\L4ember\L4emberServiceProvider',
+		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
 	),
 
 	/*
@@ -174,6 +175,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Collection'      => 'Illuminate\Database\Eloquent\Collection',
+		'JWTAuth' 				=> 'Tymon\JWTAuth\Facades\JWTAuth'
 	),
 
 );

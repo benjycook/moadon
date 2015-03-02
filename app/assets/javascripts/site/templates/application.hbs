@@ -10,8 +10,8 @@
             </a>
 
             <p class="right">
-                {{#if session.user}}
-                   ברוך הבא, {{session.user.firstName}} {{session.user.lastName}} חבר מועדון “{{club.name}}”
+                {{#if session.client}}
+                   ברוך הבא, {{session.client.firstName}} {{session.client.lastName}} חבר מועדון “{{club.name}}”
                 {{else}}
                     ברוך הבא, חבר מועדון “{{club.name}}” 
                 {{/if}}
@@ -22,7 +22,7 @@
             <p class="left">
                 <strong>שרות לקוחות 1-700-700-400</strong>
                 {{#link-to account}}צור קשר{{/link-to}}
-                <a {{action 'openRegister'}}>החשבון שלי</a>
+                {{#link-to 'account.index'}}החשבון שלי{{/link-to}}
             </p>
 
             <div id="search">

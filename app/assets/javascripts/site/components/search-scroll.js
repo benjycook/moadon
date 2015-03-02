@@ -10,16 +10,9 @@
     isFetching: false,
     hasMore: null,
     content: null,
-    
-
-    printIsFetching: function()
-    {
-      console.log(this.get('isFetching'));
-    }.observes('isFetching'),
 
     setup: function() {
       $window.on('scroll.' + this.elementId, bind(this, this.didScroll));
-      console.log(this.get('isFetching'));
     }.on('didInsertElement'),
 
     teardown: function() {

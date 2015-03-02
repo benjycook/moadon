@@ -23,8 +23,6 @@ App.CartController = Em.ArrayController.extend({
 			cart_id: this.get('session.cart_id'),
 			items: data
 		};
-
-		console.log('cart items', cart);
 		
 		var _this = this;
 

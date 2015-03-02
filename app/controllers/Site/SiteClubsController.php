@@ -1,6 +1,6 @@
 <?php
 
-class SiteClubsController extends BaseController 
+class SiteClubsController extends SiteBaseController 
 {
 
 	protected function flaten($array)
@@ -33,47 +33,33 @@ class SiteClubsController extends BaseController
 		return $subjects;
 	}
 
-	public function login($slug)
+	public function login()
 	{
 		$json =	Request::getContent();
 	  $data	=	json_decode($json);
-		$club = Club::where('urlName', '=', $slug)
-						->where('clubCode', '=', $data->clubident)
-						->first();
-		if(!$club)
+
+	  //print_r($this->club->clubCode);die($data->clubident);
+						
+		if($data->clubident != $this->club->clubCode)
 			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
 		
 		$cart = Cart::create(array());
 
-		$header = array(
-			'typ' => 'JWT'
+		$claims = array(
+			'club_id'		=> $this->club->id,
+			'user'				=> null,
+			'cart_id' 		=> $cart->id,
+			'loginType' 	=> 'club'
 		);
 
-		$payload = array(
-			'club'	=> $club->id,
-			'user'	=> null,
-			'cart_id' => $cart->id
-		);
+		$payload = $this->auth->makePayload('club', $claims);
+		$token =  $this->auth->encode($payload)->get();
 
-		$base64Header = base64_encode(json_encode($header));
-		$base64Payload = base64_encode(json_encode($payload));
-		$signatrue = base64_encode(md5("$base64Header$base64Payload"));
-		$session = array(
-			'token' => "$base64Header.$base64Payload.$signatrue",
-			'loginType' => 'club',
-			'cart_id' => $cart->id
-		);
-		return Response::json($session, 201);
+		return Response::json(compact('token', 'claims'), 200);
 	}
 
-	public function logout($slug)
-	{
-		Config::set('auth.model','Client');
-        Auth::logout();
-		return Response::json(array('status' => 'ok'), 200);
-	}
 
-	public function options($slug)
+	public function options()
 	{
 		// ///star token
 		// $header =	Request::header('authorization', null);
@@ -94,15 +80,15 @@ class SiteClubsController extends BaseController
 		// $payload = json_decode(base64_decode($parts[1]));
 
 
-		$club = Club::site()->where('urlName','=',$slug)->first();
+		// $club = Club::site()->where('urlName','=',$slug)->first();
 
-		if(!$club)
-			return Response::json('מועדון זה לא נמצאה במערכת',404);
+		// if(!$club)
+		// 	return Response::json('מועדון זה לא נמצאה במערכת',404);
 
 
 		$data = array();
 	
-		$data['club'] = $club->toArray();
+		$data['club'] = $this->club->toArray();
 		$data['club']['logo'] = URL::to('/')."/galleries/{$data['club']['logo']}";
 
 		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
@@ -171,7 +157,7 @@ class SiteClubsController extends BaseController
 		return $gallery;
 	}
 
-	public function supplier($slug, $id)
+	public function supplier($id)
 	{
 		// $supplier = SiteDetails::whereHas('supplier',function($q) use($id){
 		// 	$q->where('id','=',$id);

@@ -138,7 +138,6 @@ SimpleAuthToken.JWTAuthenticator = SimpleAuthToken.TokenAuthenticator.extend({
                                  otherwise
   */
   authenticate: function(credentials) {
-    console.log('credentials', credentials);
     var _this = this;
 
     return new Ember.RSVP.Promise(function(resolve, reject) {

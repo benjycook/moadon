@@ -27,7 +27,6 @@ App.UiTreeLinkComponent = Em.LinkView.extend({
       // values[type] = 0;
       // this.queryParamsObject = {};
       // this.queryParamsObject['values'] = values;
-      // console.log('active', this.get('item'), this.get('loadedParams'));
     }
     this._super(evt);
   },

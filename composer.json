@@ -13,7 +13,8 @@
 
 	"require": {
 		"laravel/framework": "4.2.*",
-		"igorgoroshit/l4ember": "dev-master"
+		"igorgoroshit/l4ember": "dev-master",
+		"tymon/jwt-auth": "dev-master"
 	},
 	
 	"autoload": {

@@ -1,6 +1,6 @@
 <div class="overlay">
     <div class="lightbox cart">
-        <div class="close" {{action 'closeCart'}}>&times;</div>
+        <div class="close" {{action 'closeModal'}}>&times;</div>
         
 
         <h2 class="lightbox-title">סל הקניות שלי</h2>
@@ -36,9 +36,10 @@
         </div>
 
         <div class="cart-buttons">
-            <button class="btn" {{action 'closeModal'}}>המשך בקניות</button>
-            <button class="btn" {{action 'checkout'}}>עבור לקופה</button>
+            <button {{action 'closeModal'}}>המשך בקניות</button>
+            <button {{action 'checkout'}}>עבור לקופה</button>
         </div>
+        
         {{else}}
             <div class="empty-cart">
                 אין פריטים בסל הקניות שלך.

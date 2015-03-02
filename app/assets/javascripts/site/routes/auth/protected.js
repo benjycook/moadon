@@ -1,8 +1,15 @@
-App.ProtectedRoute = Em.Route.extend(SimpleAuth.AuthenticatedRouteMixin);
+App.ProtectedRoute = Em.Route.extend(SimpleAuth.AuthenticatedRouteMixin, {});
+
 App.UserProtectedRoute = App.ProtectedRoute.extend({
 	beforeModel: function(transition, queryParams){
 		this._super(transition, queryParams);
+		console.log(this.get('session'));
   	var session = this.get('session');
-		console.log('UserProtectedRoute', session.get('loginType'));
+		if(this.get('session.claims.loginType') != 'client')
+		{          
+			transition.abort();
+      this.get('session').set('attemptedTransition', transition);
+      this.send('openRegister');
+		}
   }
 });
