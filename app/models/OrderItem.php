@@ -13,5 +13,10 @@ class OrderItem extends Eloquent {
 	{
 		return $this->hasMany('Realized','orders_items_id','id');
 	}
+
+	public function supplier()
+	{
+		return $this->hasOne('SiteDetails','suppliers_id','suppliers_id');
+	}
 }
 
