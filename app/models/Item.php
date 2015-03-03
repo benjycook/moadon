@@ -23,6 +23,8 @@ class Item extends Eloquent {
 	    'minParticipants',
 	    'maxParticipants',
 	    'itemtypes_id',
+	    'priceSingle',
+	    'priceGroup',
   );
 
 	//"(clubPrice / 100) * (100 - clubDicount) / 100 * 1"
