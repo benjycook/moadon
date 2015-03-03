@@ -8,7 +8,7 @@ class AdminOrdersController extends BaseController
 		$query = Input::get('query',0);
 		if($query=="")
 			$query = 0;
-		$sql = $query ? "name LIKE CONCAT('%',?,'%')" :'? = 0';
+		$sql = $query ? "CONCAT_WS(' ',lastName,firstName,id) LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Order::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
 		$orders = Order::with('club')->whereRaw($sql,array($query))->forPage($page,$items)->get();
@@ -95,8 +95,11 @@ class AdminOrdersController extends BaseController
         foreach ($suppliers as $key=>&$value) {
             $realized = Realized::join('orders_items','orders_items.id','=','orders_items_id')->where('suppliers_id','=',$value)
             ->select(DB::raw('name,realizedOn,realizedQty,qty'))->get();
+            $previous = 0;
             foreach ($realized as &$temp) {
                 $temp['realizedOn'] = date('d/m/y H:i:s',strtotime($temp['realizedOn']));
+                $temp['left'] = $temp['qty']-$temp['realizedQty']-$previous;
+                $previous = $temp['realizedQty'];
             }
             if(count($realized))
                 $relizations[] = array('supplierName'=>$key,'items'=>$realized);
