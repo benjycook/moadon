@@ -6,6 +6,5 @@
 //= require ../supplier/application
 //= require ../supplier/router
 //= require_tree ../supplier/components
-//= require_tree ../supplier/controllers
 //= require_tree ../supplier/routes
 //= require_tree ../supplier/templates
