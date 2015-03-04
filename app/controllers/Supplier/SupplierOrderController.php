@@ -7,7 +7,8 @@ class SupplierOrderController extends BaseController
 	{
 		$orderItems = OrderItem::where('orders_id','=',$id)->where('suppliers_id','=',Auth::id())->where('fullyRealized','=',0)
 						->leftjoin('items_realizations','items_realizations.orders_items_id','=','orders_items.id')
-						->select(DB::raw('sum(realizedQty) AS realized,name,qty,orders_items_id AS id,orders_id'))->groupBy('orders_items_id')->get();
+						->select(DB::raw('sum(realizedQty) AS realized,name,qty,orders_items.id AS id,orders_id'))->groupBy('orders_items.id')->get();
+		//return Response::json(DB::getQueryLog(),501);
 		if(count($orderItems))
 		{
 			$data = array('items'=>$orderItems);
