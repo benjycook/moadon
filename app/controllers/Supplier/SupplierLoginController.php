@@ -15,7 +15,7 @@ class SupplierLoginController extends BaseController {
         }
         else 
         {
-            $result = Client::whereRaw('email = ?',array($data['email']))->first();
+            $result = Supplier::whereRaw('email = ?',array($data['email']))->first();
             if(!$result)
                 return Response::json(array('error'=>'דוא"ל זה לא נמצא במערכת'), 401);
             elseif($result->states_id == 1)
@@ -50,6 +50,8 @@ class SupplierLoginController extends BaseController {
             $data = array('username'=>$data['username'],'password'=>$data['password'],'states_id'=>2);
             if($test = Auth::attempt($data,true))
                 return Response::json(array("logged"=>true), 200);
+             if(Supplier::whereRaw('username = ? AND password = ? AND states_id = 1',array($data['username'],$data['password']))->count())
+                return Response::json(array('error'=>'המשתמש אינו פעיל אנא פנה למנהל מערכת'), 403);
             return Response::json(array('error'=>'שם משתמש או סיסמא אינם נכונים'), 401);
         }
     }
