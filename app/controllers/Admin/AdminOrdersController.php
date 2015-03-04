@@ -92,8 +92,8 @@ class AdminOrdersController extends BaseController
             unset($item['supplier']);
         }
         $relizations = [];
-        foreach ($suppliers as $key=>&$value) {
-            $realized = Realized::join('orders_items','orders_items.id','=','orders_items_id')->where('suppliers_id','=',$value)
+        foreach ($suppliers as $supKey=>&$value) {
+            $realized = Realized::join('orders_items','orders_items.id','=','orders_items_id')->where('suppliers_id','=',$value)->where('orders_items.orders_id','=',$id)
             ->select(DB::raw('name,realizedOn,realizedQty,qty,orders_items.id AS id'))->get();
             $temp = $realized->lists('id');
             $temp = array_unique($temp);
@@ -107,7 +107,7 @@ class AdminOrdersController extends BaseController
                 $previous[$temp['id']] += $temp['realizedQty'];
             }
             if(count($realized))
-                $relizations[] = array('supplierName'=>$key,'items'=>$realized);
+                $relizations[] = array('supplierName'=>$supKey,'items'=>$realized);
         }
         $order['realizations'] = $relizations;
         unset($order['payment']);
