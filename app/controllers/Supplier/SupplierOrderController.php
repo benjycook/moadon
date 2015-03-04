@@ -6,7 +6,7 @@ class SupplierOrderController extends BaseController
 	public function order($id)
 	{
 		$orderItems = OrderItem::where('orders_id','=',$id)->where('suppliers_id','=',Auth::id())->where('fullyRealized','=',0)
-						->join('items_realizations','items_realizations.orders_items_id','=','orders_items.id')
+						->leftjoin('items_realizations','items_realizations.orders_items_id','=','orders_items.id')
 						->select(DB::raw('sum(realizedQty) AS realized,name,qty,orders_items_id AS id,orders_id'))->groupBy('orders_items_id')->get();
 		if(count($orderItems))
 		{
