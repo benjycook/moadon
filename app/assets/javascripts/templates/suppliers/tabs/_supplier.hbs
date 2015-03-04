@@ -23,19 +23,32 @@
 
           <div class="row">
 
-             <div class="col-md-6">
+             <div class="col-md-4">
                 <div class="form-group">
                   <label>שם משתמש:</label>
                   {{input type="text" class="form-control" valueBinding="supplier.username" required="required"}}
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>סיסמא:</label>
                   {{input type="text" class="form-control" valueBinding="supplier.password" required="required"}}
                 </div>
               </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>סטאטוס:</label>
+                    {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group chosen-multi" 
+                          prompt = "בחר..."
+                          contentBinding="App.states"
+                          selected=states_id
+                          required="required"
+                       }}
+                </div>
+            </div>
 
           </div>
 

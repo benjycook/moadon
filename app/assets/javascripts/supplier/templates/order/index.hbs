@@ -1,0 +1,45 @@
+<div class="panel panel-default grid">
+  <div class="panel-heading">
+    <div class="panel-label">מימושים</div>
+    <div class="search">
+      {{input type="text" value=id class="search-query input-medium search" placeholder="הכנס מס' הזמנה"}}
+    </div>
+    <div class="pull-left actions">
+      <button class="btn btn-default" {{action 'load' id}}><i class="fa fa-search"></i></button>
+    </div>
+  </div>
+    {{#if items.length}}
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th >שם פריט</th>
+            <th class="min center">נרכש</th>
+            <th class="min center">מומש</th>
+            <th class="min center">פעולות</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          
+            {{#each item in items}}
+                <tr>
+                  <td >{{item.name}}</td>
+                  <td class="min center">{{item.qty}}</td>
+                  <td class="min center">{{item.realized}}</td>
+                  <td class="min center"><i class="fa fa-shopping-cart btn btn-primary btn-sm" {{action 'selectQty' item}}></i></td>
+                </tr>
+            {{/each}}
+                        
+        </tbody>
+      </table> 
+    {{else}}
+      {{#if msg}}
+          <div class="panel-body" style="background-color: #f4f4f4;text-align:center;">
+            <h2 >{{msg}}</h2>
+          </div>
+      {{/if}}
+    {{/if}}
+</div>
+
+
+

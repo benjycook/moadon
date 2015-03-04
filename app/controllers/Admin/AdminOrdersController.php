@@ -34,43 +34,43 @@ class AdminOrdersController extends BaseController
 		return Response::json($data,200);
 	}
 
-	public function store()
-	{
-		$json   = Request::getContent();
-    	$data   = json_decode($json,true);
-    	$rules = array(
-    		'clients_id' => 'required',
-    		);
-    	$validator = Validator::make($data,$rules);
-    	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
-    	if(!$client = Client::where('id','=',$data['clients_id'])->first())
-    		return Response::json(array('error'=>"לקוח זה לא קיים במערכת"),501);
-    	if(!count($data['items']))
-    		return Response::json(array('error'=>"יש לבחור לפחות מוצר אחד"),501);
-    	foreach ($data['items'] as &$item) {
-    		if(!isset($item['qty'])||intval($item['qty'])<1)
-    			return Response::json(array('error'=>"הכמות של מוצר לא יכולה להיות קטנה מ-1"),501);
-    		$qty = $item['qty'];
-    		if(!isset($item['id'])||!$item = Item::where('id','=',$item['id'])->first())
-    			return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
-    		$item = $item->toArray();
-    		$item['qty'] = $qty;
-    		$item['items_id'] = $item['id'];
-    	}
+	// public function store()
+	// {
+	// 	$json   = Request::getContent();
+ //    	$data   = json_decode($json,true);
+ //    	$rules = array(
+ //    		'clients_id' => 'required',
+ //    		);
+ //    	$validator = Validator::make($data,$rules);
+ //    	if($validator->fails())
+ //    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    	if(!$client = Client::where('id','=',$data['clients_id'])->first())
+ //    		return Response::json(array('error'=>"לקוח זה לא קיים במערכת"),501);
+ //    	if(!count($data['items']))
+ //    		return Response::json(array('error'=>"יש לבחור לפחות מוצר אחד"),501);
+ //    	foreach ($data['items'] as &$item) {
+ //    		if(!isset($item['qty'])||intval($item['qty'])<1)
+ //    			return Response::json(array('error'=>"הכמות של מוצר לא יכולה להיות קטנה מ-1"),501);
+ //    		$qty = $item['qty'];
+ //    		if(!isset($item['id'])||!$item = Item::where('id','=',$item['id'])->first())
+ //    			return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    		$item = $item->toArray();
+ //    		$item['qty'] = $qty;
+ //    		$item['items_id'] = $item['id'];
+ //    	}
     	
-    	$client = $client->toArray();
-    	$client['createdOn'] = date('Y-m-d H:i:s');
-    	$client['clients_id'] = $client['id'];
-    	$client['invoiceFor'] = isset($data['invoiceFor']) ? $data['invoiceFor']:"";
-    	$order = new Order;
-    	$order = $order->create($client);
-    	foreach ($data['items'] as $item) {
-    		$orderItem = new OrderItem;
-    		$item['orders_id'] = $order->id;
-    		$orderItem->create($item);
-    	}
-	}
+ //    	$client = $client->toArray();
+ //    	$client['createdOn'] = date('Y-m-d H:i:s');
+ //    	$client['clients_id'] = $client['id'];
+ //    	$client['invoiceFor'] = isset($data['invoiceFor']) ? $data['invoiceFor']:"";
+ //    	$order = new Order;
+ //    	$order = $order->create($client);
+ //    	foreach ($data['items'] as $item) {
+ //    		$orderItem = new OrderItem;
+ //    		$item['orders_id'] = $order->id;
+ //    		$orderItem->create($item);
+ //    	}
+	// }
 
 	public function show($id)
 	{
@@ -94,12 +94,17 @@ class AdminOrdersController extends BaseController
         $relizations = [];
         foreach ($suppliers as $key=>&$value) {
             $realized = Realized::join('orders_items','orders_items.id','=','orders_items_id')->where('suppliers_id','=',$value)
-            ->select(DB::raw('name,realizedOn,realizedQty,qty'))->get();
-            $previous = 0;
+            ->select(DB::raw('name,realizedOn,realizedQty,qty,orders_items.id AS id'))->get();
+            $temp = $realized->lists('id');
+            $temp = array_unique($temp);
+            $previous = [];
+            foreach ($temp as $key => $value) {
+               $previous[$value] = 0;
+            }
             foreach ($realized as &$temp) {
                 $temp['realizedOn'] = date('d/m/y H:i:s',strtotime($temp['realizedOn']));
-                $temp['left'] = $temp['qty']-$temp['realizedQty']-$previous;
-                $previous = $temp['realizedQty'];
+                $temp['left'] = $temp['qty']-$temp['realizedQty']-$previous[$temp['id']];
+                $previous[$temp['id']] += $temp['realizedQty'];
             }
             if(count($realized))
                 $relizations[] = array('supplierName'=>$key,'items'=>$realized);

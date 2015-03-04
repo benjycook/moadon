@@ -56,6 +56,11 @@ Route::filter('auth', function()
 });
 
 
+Route::filter('auth_supplier', function()
+{
+	Config::set('auth.model', 'Supplier');
+	if (Auth::guest()) return Response::json('error',401);
+});
 
 Route::filter('auth.basic', function()
 {
