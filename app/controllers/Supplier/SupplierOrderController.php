@@ -15,7 +15,7 @@ class SupplierOrderController extends BaseController
 		}
 		else
 		{
-			if(!Order::where('id','=',$id)->count())
+			if(!OrderItem::where('orders_id','=',$id)->where('suppliers_id','=',Auth::id())->count())
 				$data = array('msg'=>'הזמנה זו לא נמצאה במערכת');
 			else
 				$data = array('msg'=>'כל הפריטים מומשו.');
