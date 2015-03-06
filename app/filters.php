@@ -13,13 +13,13 @@ App::after(function($request, $response)
 
 Route::filter('ClubAuth', function(){
 	try{
-		$token = JWTAuth::getToken();
+		$token = TokenAuth::getToken();
 		if(!$token)
 			return Response::json('token_invalid', 401);
 
 		$token = $token->get();
 
-		$payload = JWTAuth::getPayload($token);
+		$payload = TokenAuth::getPayload($token);
 	}
 	catch(Exception $e)
 	{
@@ -30,13 +30,13 @@ Route::filter('ClubAuth', function(){
 
 Route::filter('ClubClientAuth', function(){
 	try{
-		$token = JWTAuth::getToken();
+		$token = TokenAuth::getToken();
 		if(!$token)
 			return Response::json('token_invalid', 401);
 
 		$token = $token->get();
 
-		$payload = JWTAuth::getPayload($token);
+		$payload = TokenAuth::getPayload($token);
 		$payloadArray = $payload->toArray();
 		if(!($payloadArray['user'] > 0))
 			return Response::json('token_invalid_user', 401);

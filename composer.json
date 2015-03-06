@@ -3,20 +3,25 @@
 	"description": "The Laravel Framework.",
 	"keywords": ["framework", "laravel"],
 	"license": "MIT",
-
+	
 	"repositories": [
       {
           "type": "git",
           "url": "https://github.com/igorgoroshit/l4ember"
+      },
+      {
+          "type": "git",
+          "url": "https://github.com/igorgoroshit/token-auth"
       }
   ],
 
 	"require": {
 		"laravel/framework": "4.2.*",
 		"igorgoroshit/l4ember": "dev-master",
-		"tymon/jwt-auth": "dev-master"
+		"igorgoroshit/token-auth": "dev-master",
+		"intervention/image": "~2.0"
 	},
-	
+
 	"autoload": {
 		"classmap": [
 			"app/commands",

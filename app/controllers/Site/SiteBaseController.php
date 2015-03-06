@@ -18,7 +18,7 @@ class SiteBaseController extends BaseController
 	}
 
 
-	public function __construct(Tymon\JWTAuth\JWTAuth $auth)
+	public function __construct(Igorgoroshit\TokenAuth\TokenAuth $auth)
 	{
 		$this->auth = $auth;
 		if($this->_setPayload())

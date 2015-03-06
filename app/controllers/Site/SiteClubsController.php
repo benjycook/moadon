@@ -52,8 +52,7 @@ class SiteClubsController extends SiteBaseController
 			'loginType' 	=> 'club'
 		);
 
-		$payload = $this->auth->makePayload('club', $claims);
-		$token =  $this->auth->encode($payload)->get();
+		$token = TokenAuth::make('club', $claims);
 
 		return Response::json(compact('token', 'claims'), 200);
 	}

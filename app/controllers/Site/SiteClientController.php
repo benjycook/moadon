@@ -40,9 +40,8 @@ class SiteClientController extends SiteBaseController
             'user'          => $client->id,
             'loginType'     => 'client'
         );
-
-        $payload = $this->auth->makePayload('client', $claims);
-        $token =  $this->auth->encode($payload)->get();
+        
+        $token = TokenAuth::make('client', $claims);
 
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}
@@ -83,8 +82,7 @@ class SiteClientController extends SiteBaseController
             'loginType'     => 'client'
         );
 
-        $payload = $this->auth->makePayload('client', $claims);
-        $token =  $this->auth->encode($payload)->get();
+        $token = TokenAuth::make('client', $claims);
 
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}
