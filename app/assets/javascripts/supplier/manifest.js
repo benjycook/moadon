@@ -1,0 +1,10 @@
+//= require jquery-1.10.2
+//= require handlebars-v1.3.0
+//= require ember-1.7.0
+//= require bootstrap
+//= require_tree ../supplier/libs
+//= require ../supplier/application
+//= require ../supplier/router
+//= require_tree ../supplier/components
+//= require_tree ../supplier/routes
+//= require_tree ../supplier/templates

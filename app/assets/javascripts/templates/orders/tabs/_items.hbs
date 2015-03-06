@@ -38,29 +38,35 @@
 	            </div>
 
 		            <div class="row">
-			              
-			                <div class="col-md-3">
+
+			              	<div class="col-md-2">
+			                  <div class="form-group">
+			                    <label>מחיר מועדון לבודד:</label>
+			                    {{input type="text" class="form-control" valueBinding="priceSingle" disabled="disabled"}}
+			                  </div>
+			                </div>
+			                <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר מחירון:</label>
 			                    {{input type="text" class="form-control" valueBinding="item.listPrice" disabled="disabled"}}
 			                  </div>
 			                </div>
 
-			                <div class="col-md-3">
+			                <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר נט:</label>
 			                    {{input type="text" class="form-control" valueBinding="item.netPrice" disabled="disabled"}}
 			                  </div>
 			                </div>
 
-			                 <div class="col-md-3">
+			                 <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>כמות:</label>
 			                    {{input type="text" class="form-control" valueBinding="item.qty" disabled="disabled"}}
 			                  </div>
 			                </div>
 
-			                <div class="col-md-3">
+			                <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר ששולם:</label>
 			                    {{input type="text" class="form-control" valueBinding="item.total" disabled="disabled"}}

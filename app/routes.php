@@ -82,4 +82,21 @@ Route::group(array('prefix' => 'admin'), function()
 });
 
 
+Route::group(array('prefix' => 'supplier'), function()
+{
+
+	Route::get('/', function(){ return View::make('supplier.index'); });
+	
+	Route::post('login',	'SupplierLoginController@login');
+	Route::get('logout',	'SupplierLoginController@logout');
+	Route::post('restore',	'SupplierLoginController@restore');
+	Route::get('options','SupplierOptionsController@index');
+
+	Route::group(array('before' => 'auth_supplier'), function() 
+	{
+		Route::get('order/{id}','SupplierOrderController@order');
+		Route::post('realize','SupplierOrderController@realize');
+	});
+
+});
 
