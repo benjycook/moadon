@@ -31,6 +31,7 @@ class SiteOrdersController extends SiteBaseController
 
 		foreach ($items as $item) {
 			$orderItem = Item::find($item->items_id);
+			$orderItem->items_id = $item->items_id;
 			$orderItem->qty = $item->qty;
 			$orderItem->orders_id = $order->id;
 			$total += $orderItem->netPrice*$item->qty;

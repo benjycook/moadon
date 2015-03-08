@@ -263,5 +263,43 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 					controller.set('error',error);
 			});
 		},
+
+		'confirm':function(id)
+		{
+			var controller = this.controllerFor('suppliersEdit');
+			controller.set('deleteID',id);
+			this.render('suppliers/deleteConfirm', {
+				controller:controller,
+			  into: 'application',
+			  outlet: 'modal',
+			});
+		},
+		'delete':function(controller)
+		{
+			var self = this;
+			$.ajax({
+				type: "DELETE",
+				url: 'items/'+controller.get('deleteID'),
+			}).then(function(data){
+				var items = controller.get('items');
+				var item = items.findBy('id',controller.get('deleteID'));
+				items.removeObject(item);
+				self.render('empty', {into: 'application',outlet: 'modal'});
+				controller.set('deleteID',null);
+				controller.set('error',null);
+			}).fail(function(data){
+				if(data.status == 500)
+					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
+				else
+					var error = data.responseJSON.error;
+					controller.set('error',error);
+			});
+		},
+		'cancel':function(controller)
+		{
+			controller.set('deleteID',null);
+			controller.set('error',null);
+			this.render('empty', {into: 'application',outlet: 'modal'});
+		},
 	}
 });

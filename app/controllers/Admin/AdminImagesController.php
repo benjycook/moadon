@@ -9,7 +9,7 @@ class AdminImagesController extends BaseController
 			$file = Input::file('file');
 			$data = array('image'=>$file);
 			$rules = array( 
-    			'image' => 'mimes:jpg,png,jpeg'
+    			'image' => 'mimes:jpg,png,jpeg,gif'
 				);
 			$validator = Validator::make($data, $rules);
 			if ($validator->fails()) 

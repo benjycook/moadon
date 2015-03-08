@@ -66,7 +66,10 @@ class Item extends Eloquent {
 		(100 / 17.848) * 7.848 = 43.97
 
 	*/
-
+	public function orders()
+	{
+		return $this->hasMany('OrderItem','items_id','id');
+	}
 	public function supplier()
 	{
 		return $this->belongsTo('Supplier','suppliers_id','id');
