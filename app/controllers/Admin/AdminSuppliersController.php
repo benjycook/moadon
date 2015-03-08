@@ -82,7 +82,8 @@ class AdminSuppliersController extends BaseController
 
 	public function show($id)
 	{
-		$supplier = Supplier::with('sitedetails')->with('items')->with('categories')->find($id);
+		$supplier = Supplier::with('sitedetails','items.orders','categories')->find($id);
+		
 		if(!$supplier)
 			return Response::json(array('error'=>'ספק זה לא נמצא במערכת'),501);
 		$supplier = $supplier->toArray();
@@ -104,6 +105,10 @@ class AdminSuppliersController extends BaseController
 		$sitedetails['galleries'] = $temp;
 		$sitedetails['uploadUrl'] = '/uploadImage';
 		foreach ($items as &$item) {
+			if(count($item['orders']))
+				$item['removable'] = false;
+			else
+				$item['removable'] = true;
 			$galleries = $item['galleries'];
 			$item['linkId'] = $item['id'];
 			$temp = array();
