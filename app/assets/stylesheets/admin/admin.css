@@ -92,3 +92,11 @@ label.title {
 .email-input {
   direction: ltr;
 }
+.removeBtn {
+   color: #ED5565;
+  font-size: 3rem;
+  left: 20px;
+  position: absolute;
+  top: 27px;
+  cursor: pointer;
+}
