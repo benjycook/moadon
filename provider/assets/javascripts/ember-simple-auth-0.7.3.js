@@ -1327,6 +1327,7 @@ define("simple-auth/setup",
       var session = container.lookup(Configuration.session);
       session.setProperties({ store: store, container: container });
       Ember.A(['controller', 'route', 'component']).forEach(function(component) {
+        console.log(component, Configuration.sessionPropertyName, Configuration.session);
         container.injection(component, Configuration.sessionPropertyName, Configuration.session);
       });
 

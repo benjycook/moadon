@@ -2,9 +2,9 @@
 //= require handlebars-v1.3.0
 //= require ember-1.7.0
 //= require bootstrap
-//= require_tree ../supplier/libs
-//= require ../supplier/application
-//= require ../supplier/router
-//= require_tree ../supplier/components
-//= require_tree ../supplier/routes
-//= require_tree ../supplier/templates
+//= require_tree libs
+//= require application
+//= require router
+//= require_tree components
+//= require_tree routes
+//= require_tree templates
