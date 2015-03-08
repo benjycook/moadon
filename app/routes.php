@@ -82,7 +82,7 @@ Route::group(array('prefix' => 'admin'), function()
 });
 
 
-Route::group(array('prefix' => 'supplier'), function()
+Route::group(array('prefix' => 'suppliers'), function()
 {
 
 	Route::get('/', function(){ return View::make('supplier.index'); });

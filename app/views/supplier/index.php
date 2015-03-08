@@ -10,7 +10,7 @@
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" type="text/css" href="css/ie9.css">
 		<![endif]-->
-		<base href='<?php echo URL::to('supplier'); ?>/' />
+		<base href='<?php echo URL::to('suppliers'); ?>/' />
 		<?php echo stylesheet_link_tag("supplier/application.css"); ?>
 		
 	</head>
