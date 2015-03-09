@@ -24,13 +24,15 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 	    });
 		},
 
-		'addItem': function(item)
+		'addItem': function(item, supplierName)
 		{
 			var cartCtrl = this.controllerFor('cart');
 			var found = cartCtrl.findBy('id', item.get('id'));
 			if(!found)
 			{
-				cartCtrl.pushObject(Em.copy(item.get('model'), true));
+				var newItem = Em.copy(item.get('model'));
+				newItem.supplierName = supplierName;
+				cartCtrl.pushObject(newItem, true);
 			}	
 			else
 			{

@@ -17,13 +17,13 @@
 				<div class="center">
 					<p>
 						<strong>שעות פעילות:</strong><br />
-						{{workingHours}}
+						{{{workingHoursLines}}}
 					</p>
 				</div>
 				<div class="bottom">
 					<p>
 						<strong>מתאים לגילאים:</strong><br />
-						{{ageDevision}}
+						{{{ageDevisionLines}}}
 					</p>
 				</div>
 
@@ -48,17 +48,14 @@
 						<h3 class="name">{{item.name}}</h3>
 						<p class="description">{{item.description}}</p>
 
-						<div class="price">
-							<label>מחיר לאחר הנחה</label>
-							<span class="discount">₪{{item.clubPriceTotal}}</span>
-							<span class="list">₪{{item.listPriceTotal}}</span>
-
-							{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
-						</div>
-
 						<div class="order">
-							<button class="btn" {{action 'addItem' controller}}>הוסף לסל</button>
-							<button class="btn" {{action 'addItemAndOpenCart' controller}}>לקניה</button>
+							<div class="price">
+								{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
+								<span class="discount">₪{{item.clubPriceTotal}}</span>
+								<span class="discount">30% הנחה</span>
+							</div>
+
+							<button class="btn" {{action 'addItem' controller supplierName}}>הוסף לסל</button>
 						</div>
 
 					</div>

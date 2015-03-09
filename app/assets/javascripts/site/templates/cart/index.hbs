@@ -10,18 +10,14 @@
                 <li>
 
                     <div class="info">
-                        <h3 class="name">{{item.name}}</h3>
+                        <h3 class="name">{{item.supplierName}} - {{item.name}}</h3>
                         <p class="description">{{item.description}}</p>
                     </div>
 
                     {{ui-qty count=item.count class="count"}}
 
-                    <div class="price">
-                        
-                        <label>מחיר לאחר הנחה</label>
+                    <div class="price">    
                         <span class="discount">₪{{item.clubPriceTotal}}</span>
-                        במקום
-                        <span class="list">₪{{item.listPriceTotal}}</span>
                     </div>
                     
                     <span class="remove" {{action 'removeItem' item}}>&times;</span>
@@ -31,8 +27,7 @@
         </ul>
 
         <div class="cart-totals">
-            סך הכל לתשלום: ₪{{cart.total}} <br />
-            <strong>סך הכל חיסכון: ₪{{cart.totalDiscount}}</strong>
+            סך הכל לתשלום: ₪{{cart.total}}
         </div>
 
         <div class="cart-buttons">

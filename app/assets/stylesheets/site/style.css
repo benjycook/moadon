@@ -464,6 +464,7 @@ body
 	width: 100%;
 	float: none;
 	margin-bottom: 15px;
+	cursor: pointer;
 }
 
 .box.search .inner {
@@ -739,6 +740,8 @@ ul.items li > div {
 .mini-site div.item-info {
 	width: 50%;
 	float: right;
+	height: 100%;
+	overflow: hidden;
 }
 
 ul.items li .name{
@@ -752,30 +755,27 @@ ul.items li .description{
     color: #454547;
     font-size: 12px;
     height: 60px;
-    margin: 0;
+    margin: 0 0 30px;
     overflow: hidden;
 }
 
 .mini-site .items .order {
-	float: left;
-	padding-top: 18px;
 	position: relative;
 }
 
 .mini-site .items .order button {
 	background-color: #06568d;
-	border: medium none;
+	border: none;
 	border-radius: 3px;
 	color: #fff;
 	display: inline-block;
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 27px;
-	margin-right: 5px;
-	margin-top: 9px;
-	padding: 3px 20px;
+	padding: 5px 20px;
 	text-align: center;
 	text-decoration: none;
+	float: left;
 }
 
 .mini-site .items .order button:hover {
@@ -784,12 +784,10 @@ ul.items li .description{
 
 .items .count {
     display: inline-block;
-    float: left;
 }
 
 .items .price {
 	display: inline-block;
-	height: 55px;
 }
 
 .items .price label{
@@ -803,8 +801,9 @@ ul.items li .description{
   color: #0872bb;
   display: inline-block;
   font-size: 18px;
-  margin-left: 10px;
-  line-height: 55px;
+  margin-right: 20px;
+  vertical-align: middle;
+
 }
 
 .items .price .list {
@@ -814,7 +813,7 @@ ul.items li .description{
 }
 
 .price .discount, .price .list, .price .count {
-	vertical-align: baseline;
+	vertical-align: middle;
 }
 
 .items .price .list:after {
@@ -999,6 +998,7 @@ ul.cart-items li > div {
 
 .items.cart-items li > .price {
 	height: auto;
+	margin-left: 20px;
 }
 
 .items.cart-items li > .price .discount {

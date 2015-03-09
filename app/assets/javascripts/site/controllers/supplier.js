@@ -4,6 +4,14 @@ App.SupplierController = Em.ObjectController.extend({
 
 	application: Ember.computed.alias("controllers.application"),
 
+	workingHoursLines: function(){
+		return this.get('workingHours').split("\n").join('<br />');
+	}.property('workingHours'),
+
+	ageDevisionLines: function(){
+		return this.get('ageDevision').split("\n").join('<br />');
+	}.property('ageDevision'),
+
 	city: function()
 	{
 		var city = this.get('application.cities').findBy('id', this.get('cities_id'));
