@@ -309,10 +309,16 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 		'addContact':function(contacts)
 		{
 			contacts.pushObject({id:0,firstName:"",lastName:"",mobile:"",email:""});
+			contacts = contacts.setEach('removable',true);
 		},
 		'removeContact':function(contacts,contact)
 		{
-			contacts.removeObject(contact);
+			if(contacts.length>1)
+			{
+				contacts.removeObject(contact);
+				if(contacts.length==1)
+					contacts.setEach('removable',false);
+			}
 		}
 	}
 });

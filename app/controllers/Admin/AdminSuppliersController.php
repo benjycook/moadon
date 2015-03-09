@@ -27,6 +27,7 @@ class AdminSuppliersController extends BaseController
 		$temp->supplier = new stdClass;
 		$temp->categories = Category::with('children')->where('parent_id','=',0)->get();
 		$temp->contacts = [];
+		$temp->contacts[] = array('firsName'=>"",'lastName'=>"",'email'=>"",'mobile'=>"",'removable'=>false);
 		return Response::json($temp,201);
 	}
 
@@ -123,7 +124,14 @@ class AdminSuppliersController extends BaseController
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
 		}
-
+		if(count($contacts)>1)
+		{
+			foreach ($contacts as $contact) {
+				$contact['removable'] = true;
+			}
+		}
+		else
+			$contacts[0]['removable'] = false;
 		//refactor code
 		$data = array(
 			'categories'			=> 	Category::with('children')->where('parent_id','=',0)->get(),

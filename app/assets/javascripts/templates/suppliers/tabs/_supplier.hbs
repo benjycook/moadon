@@ -87,11 +87,13 @@
                 </div>
               </div>
 
-              <div class="col-md-1" style="width:5%;">
-                <div class="form-group">
-                  <label><i class="removeBtn fa fa-times" {{action 'removeContact' contacts contact}}></i></label>
+              {{#if contact.removable}}
+                <div class="col-md-1" style="width:5%;">
+                  <div class="form-group">
+                    <label><i class="removeBtn fa fa-times" {{action 'removeContact' contacts contact}}></i></label>
+                  </div>
                 </div>
-              </div>
+              {{/if}}
 
           </div>
           
