@@ -190,6 +190,15 @@ class SiteClubsController extends SiteBaseController
 				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
 			}
 
+			if(!empty($item['priceSingle']))
+			{	
+				$item['discount'] = 100 - floor(100 / $item['listPrice'] * $item['priceSingle']);
+			}
+			else
+			{
+				$item['discount'] = 100;
+				$item['priceSingle'] = 0;
+			}
 			unset($supplier['items'][$key]['galleries']);
 			$supplier['items'][$key]['images'] = $rawImages;
 		}

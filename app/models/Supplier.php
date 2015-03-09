@@ -34,12 +34,12 @@ class Supplier extends Eloquent implements UserInterface {
 	    return $this->belongsToMany('Region','suppliers_regions','suppliers_id','regions_id');
 	}
 
-  	public function categories()
-  	{
-      return $this->belongsToMany('Category','categories_suppliers', 'suppliers_id','categories_id');
-  	}
+	public function categories()
+	{
+    return $this->belongsToMany('Category','categories_suppliers', 'suppliers_id','categories_id');
+	}
   	
-  	public function getId()
+  public function getId()
 	{
 	  return $this->id;
 	}

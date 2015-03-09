@@ -51,8 +51,8 @@
 						<div class="order">
 							<div class="price">
 								{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
-								<span class="discount">₪{{item.clubPriceTotal}}</span>
-								<span class="discount">30% הנחה</span>
+								<span class="discount">₪{{item.priceSingle}}</span>
+								<span class="discount">{{item.discount}}% הנחה</span>
 							</div>
 
 							<button class="btn" {{action 'addItem' controller supplierName}}>הוסף לסל</button>
