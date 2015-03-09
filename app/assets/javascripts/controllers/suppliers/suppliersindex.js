@@ -27,7 +27,7 @@ App.SuppliersIndexController = GRID.TableController.extend({
         GRID.column('num', 				{title: '#',				style: 'min center', display: 'always'                 }),
         GRID.column('name',             {title: 'שם',     style: ''                                                  }),
         GRID.column('contactFullName',           {title: 'איש קשר',     style: ''                                                  }),
-        GRID.column('contactEmail',            {title: 'דוא"ל איש קשר',     style: 'email-input'  }),
+        GRID.column('contact.email',            {title: 'דוא"ל איש קשר',     style: 'email-input'  }),
         GRID.column('actions',			{title: 'פעולות',			style: 'min center', templateName: 'suppliers/grid/actions'  })
     ]
 

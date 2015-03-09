@@ -9,10 +9,6 @@ class AdminSuppliersController extends BaseController
 			"idNumber" 	=> "required",
 			"username" 		=> "required",
 			"password"		=> "required",
-			'contactFirstName'	=> "required",
-			"contactEmail" 		=> "required|email",
-			'contactLastName'=> "required",
-			'contactPhone'=> "required",
 			);
 		return $rules;
 	}
@@ -30,7 +26,8 @@ class AdminSuppliersController extends BaseController
 		$temp->items = array();
 		$temp->supplier = new stdClass;
 		$temp->categories = Category::with('children')->where('parent_id','=',0)->get();
-			
+		$temp->contacts = [];
+		$temp->contacts[] = array('firsName'=>"",'lastName'=>"",'email'=>"",'mobile'=>"",'removable'=>false);
 		return Response::json($temp,201);
 	}
 
@@ -42,14 +39,17 @@ class AdminSuppliersController extends BaseController
 		$sql = $query ? "name LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Supplier::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
-		$supplier = Supplier::whereRaw($sql,array($query))->skip($page*$items-$items)->take($items)->get();
-		$supplier = $supplier->toArray();
+		$suppliers = Supplier::whereRaw($sql,array($query))->forPage($page,$items)->get();
+		foreach ($suppliers as $supplier) {
+			$supplier->contact = $supplier->contacts()->first();
+		}
+		$suppliers = $suppliers->toArray();
 		$meta = array(
 			'pages' => $pages,
 			'count' => $count,
 			'page'	=> $page
 			);
-		$data = array('collection'=>$supplier,'meta'=>$meta);
+		$data = array('collection'=>$suppliers,'meta'=>$meta);
 		return Response::json($data,200);
 	}
 
@@ -61,12 +61,18 @@ class AdminSuppliersController extends BaseController
     	$validator = Validator::make($data,$this->rules());
     	if($validator->fails())
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    	if(!isset($data['contacts'])||!count($data['contacts']))
+    		return Response::json(array('error'=>"יש לציין לפחות איש קשר אחד."),501);
     	if(Supplier::where('username','=',$data['username'])->count())
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
     	// if(Supplier::whereRaw('idNumber = ?',array($data['idNumber']))->count())
     	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
 
     	$supplier = $supplier->create($data);
+    	foreach ($data['contacts'] as $contact) {
+    		$contact['suppliers_id'] = $supplier->id;
+    		SupplierContact::create($contact);
+    	}
     	$siteDetails = SiteDetails::create(array('suppliers_id'=>$supplier->id,'states_id'=>2));
     	$gallery = Gallery::create(array('type'=>'ראשית'));
 		$siteDetails->galleries()->attach($gallery->id);
@@ -77,17 +83,17 @@ class AdminSuppliersController extends BaseController
 		$newSite->states_id = 2;
 		$newSite->galleries['main'] = array('id'=>$gallery->id,'type'=>'ראשי','images'=>array(),'base'=>$base);
 		$newSite->categories = array();
-    	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite),201);
+    	return Response::json(array('supplier'=>$supplier,'siteDetails'=>$newSite,'contacts'=>$supplier->contacts()->get()),201);
 	}
 
 	public function show($id)
 	{
-		$supplier = Supplier::with('sitedetails','items.orders','categories')->find($id);
-		
+		$supplier = Supplier::with('sitedetails','items.orders','categories','contacts')->find($id);
 		if(!$supplier)
 			return Response::json(array('error'=>'ספק זה לא נמצא במערכת'),501);
 		$supplier = $supplier->toArray();
 		$categories = Collection::make($supplier['categories'])->lists('id');
+		$contacts = $supplier['contacts'];
 		$sitedetails = $supplier['sitedetails'];
 		$sitedetails['categories'] = $categories;
 		$galleries = $supplier['sitedetails']['galleries'];
@@ -118,13 +124,21 @@ class AdminSuppliersController extends BaseController
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
 		}
-
+		if(count($contacts)>1)
+		{
+			foreach ($contacts as $contact) {
+				$contact['removable'] = true;
+			}
+		}
+		else
+			$contacts[0]['removable'] = false;
 		//refactor code
 		$data = array(
 			'categories'			=> 	Category::with('children')->where('parent_id','=',0)->get(),
 			'supplier'				=>	$supplier,
 			'items'					=>	$items,
 			'sitedetails'			=>	$sitedetails,
+			'contacts'				=>  $contacts,
 		);
 
 		return Response::json($data,200);
@@ -140,8 +154,29 @@ class AdminSuppliersController extends BaseController
     	$validator = Validator::make($data,$this->rules());
     	if($validator->fails())
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    	if(!isset($data['contacts'])||!count($data['contacts']))
+    		return Response::json(array('error'=>"יש לציין לפחות איש קשר אחד."),501);
     	if(Supplier::whereRaw('username = ? AND id != ?',array($data['username'],$supplier->id))->count())
     		return Response::json(array('error'=>"שם משתמש זה כבר קיים במערכת אנא בחר אחר"),501);
+    	$ids = array(-1);
+    	foreach ($data['contacts'] as $contact) {
+    		
+    		if(isset($contact['id'])&&$contact['id']&&$con = SupplierContact::where('id','=',$contact['id'])->where('suppliers_id','=',$id)->first())
+    		{
+    			
+    			unset($contact['suppliers_id']);
+    			$con->fill($contact);
+    			$con->save();
+    		}
+    		else
+    		{	
+    			
+    			$contact['suppliers_id'] = $id;
+    			$con = SupplierContact::create($contact);
+    		}
+    		$ids[] = $con->id;
+    	}
+    	SupplierContact::where('suppliers_id','=',$supplier->id)->whereNotIn('id',$ids)->delete();
     	// if(Supplier::whereRaw('idNumber = ? AND id != ?',array($data['idNumber'],$supplier->id))->count())
     	// 	return Response::json(array('error'=>"ע.מ/ח.פ זה כבר קיים במערכת אנא בחר אחר"),501);
     	// $res = $this->validateCaregoriesAndRegions($data);
@@ -151,7 +186,7 @@ class AdminSuppliersController extends BaseController
     	// $supplier->regions()->sync($data['regions']);
     	$supplier->fill($data);
     	$supplier->save();
-    	return Response::json(array('supplier'=>$supplier),201);
+    	return Response::json(array('supplier'=>$supplier,'contacts'=>$supplier->contacts()->get()),201);
 	}
 
 }

@@ -25,6 +25,7 @@ class Item extends Eloquent {
 	    'itemtypes_id',
 	    'priceSingle',
 	    'priceGroup',
+	    'adminNotes',
   );
 
 	//"(clubPrice / 100) * (100 - clubDicount) / 100 * 1"

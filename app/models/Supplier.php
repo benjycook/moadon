@@ -11,16 +11,17 @@ class Supplier extends Eloquent implements UserInterface {
 		'idNumber',
 		'username',
 		'password',
-		'contactFirstName',
-		'contactLastName',
-		'contactPhone',
-		'contactEmail',
 		'states_id',
 	);
 	
 	public function items()
 	{
 		return $this->hasMany('Item','suppliers_id','id')->with('galleries');
+	}
+
+	public function contacts()
+	{
+		return $this->hasMany('SupplierContact','suppliers_id','id');
 	}
 
 	public function sitedetails()
@@ -47,4 +48,5 @@ class Supplier extends Eloquent implements UserInterface {
 	{
 		return Hash::make($this->password);
 	}
+
 }

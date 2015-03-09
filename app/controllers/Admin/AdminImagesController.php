@@ -16,7 +16,7 @@ class AdminImagesController extends BaseController
 			{
 				$messages=$validator->messages()->toArray();
 				$message =$messages['image'];
-				return Response::json(array('error'=>'באפשרותך לעלות רק קבצים מסוג: jpg, png.'), 400);
+				return Response::json(array('error'=>'באפשרותך לעלות רק קבצים מסוג: jpg,gif,png.'), 400);
 			}
 			$image_info = getimagesize($file);
 			// if(filesize($file)>1048576)//

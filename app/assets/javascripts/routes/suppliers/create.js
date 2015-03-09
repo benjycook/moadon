@@ -203,6 +203,8 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	    'saveSupplier': function(model,view,controller)
 		{
+			model.supplier.contacts = model.contacts;
+			model = model.supplier;
 			var self = this;
 			var form = view.$('form');
 			var valid = form.parsley().validate();
@@ -222,11 +224,13 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				data: JSON.stringify(model)
 			}).then(function(data){
 				controller.set('supplier',data.supplier);
+				controller.set('contacts',data.contacts);
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				form.parsley().reset();
 				if(!model.id)
-					controller.set('sitedetails',data.siteDetails);
+					self.transitionTo('suppliers.edit',data.supplier.id);
+					//controller.set('sitedetails',data.siteDetails);
 			}).fail(function(data){
 				controller.set('success',null);
 				if(data.status == 500)
@@ -301,5 +305,20 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			controller.set('error',null);
 			this.render('empty', {into: 'application',outlet: 'modal'});
 		},
+
+		'addContact':function(contacts)
+		{
+			contacts.pushObject({id:0,firstName:"",lastName:"",mobile:"",email:""});
+			contacts = contacts.setEach('removable',true);
+		},
+		'removeContact':function(contacts,contact)
+		{
+			if(contacts.length>1)
+			{
+				contacts.removeObject(contact);
+				if(contacts.length==1)
+					contacts.setEach('removable',false);
+			}
+		}
 	}
 });
