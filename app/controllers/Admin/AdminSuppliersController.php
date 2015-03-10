@@ -41,6 +41,10 @@ class AdminSuppliersController extends BaseController
 		$pages = ceil($count/$items);
 		$suppliers = Supplier::whereRaw($sql,array($query))->forPage($page,$items)->get();
 		foreach ($suppliers as $supplier) {
+			if($supplier->orders()->count())
+				$supplier->removable = false;
+			else
+				$supplier->removable = true;
 			$supplier->contact = $supplier->contacts()->first();
 		}
 		$suppliers = $suppliers->toArray();
@@ -189,4 +193,40 @@ class AdminSuppliersController extends BaseController
     	return Response::json(array('supplier'=>$supplier,'contacts'=>$supplier->contacts()->get()),201);
 	}
 
+	public function destroy($id)
+	{
+		$supplier = Supplier::with('items','sitedetails.galleries')->find($id);
+		if(!$supplier)
+			return Response::json(array('error'=>'ספק זה לא נמצא במערכת.'),501);
+		if($supplier->orders()->count())
+			return Response::json(array('error'=>'לא ניתן למחוק ספק אשר בוצעו אליו הזמנות.'),501);
+		
+		$supplier->contacts()->delete();
+		DB::table('categories_suppliers')->where('suppliers_id','=',$id)->delete();
+		DB::table('galleries_sitedetails')->where('sitedetails_id','=',$supplier->sitedetails->id)->delete();
+		foreach ($supplier->sitedetails->galleries as $gallery) {
+			foreach ($gallery->images as $image) {
+				if(File::exists(public_path()."/galleries/".$image->src))
+					File::delete(public_path()."/galleries/".$image->src);
+				$image->delete();
+			}
+			$gallery->delete();
+		}
+		$supplier->sitedetails()->delete();
+		
+		foreach ($supplier->items as $item) {
+			ItemGallery::where('items_id','=',$item->id)->delete();
+			foreach ($item->galleries as $gallery) {
+				foreach ($gallery->images as $image) {
+					if(File::exists(public_path()."/galleries/".$image->src))
+						File::delete(public_path()."/galleries/".$image->src);
+					$image->delete();
+				}
+				$gallery->delete();
+			}
+			$item->delete();
+		}
+		$supplier->delete();
+		return Response::json('הספק נמחק בהצלחה.',200);
+	}
 }

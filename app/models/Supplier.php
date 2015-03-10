@@ -13,7 +13,10 @@ class Supplier extends Eloquent implements UserInterface {
 		'password',
 		'states_id',
 	);
-	
+	public function orders()
+	{
+		return $this->hasMany('OrderItem','suppliers_id','id');
+	}
 	public function items()
 	{
 		return $this->hasMany('Item','suppliers_id','id')->with('galleries');
