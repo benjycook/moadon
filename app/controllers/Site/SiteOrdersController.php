@@ -19,7 +19,7 @@ class SiteOrdersController extends SiteBaseController
 	{
 		$data = json_decode(Request::getContent(),true);
 		$items = $this->cart->items()->get();
-
+		$info = [];
 		if(count($items) < 1)
 			return Response::json('לא נמצאו פריטים בסל קניות זה.',501);
 
@@ -35,32 +35,40 @@ class SiteOrdersController extends SiteBaseController
 			$orderItem->qty = $item->qty;
 			$orderItem->orders_id = $order->id;
 			$total += $orderItem->netPrice*$item->qty;
+			$orderItem->supplierName = $orderItem->supplier->name;
+			$info['items'][] = $orderItem;
 			OrderItem::create($orderItem->toArray());
 		}
 
 		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
-      $data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
-    else
-    {
-      $date = explode('/',$data['cardExp']);
-      $year = date('Y',strtotime($date[1]."-01-01"));
-      $date = date('Y-m-t',strtotime($year."-".$date[0]."-01"));
-      $data['date'] = $date;
-    }
+	      $data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
+	    else
+	    {
+	      $date = explode('/',$data['cardExp']);
+	      $year = date('Y',strtotime($date[1]."-01-01"));
+	      $date = date('Y-m-t',strtotime($year."-".$date[0]."-01"));
+	      $data['date'] = $date;
+	    }
 
-    if($data['numberOfPayments'] > 1)
-    	$data['creditDealType'] = 2;
-    else
-    	$data['creditDealType'] = 1;
+	    if($data['numberOfPayments'] > 1)
+	    	$data['creditDealType'] = 2;
+	    else
+	    	$data['creditDealType'] = 1;
 
-    $data['firstPayment'] = $total/$data['numberOfPayments'];
-    $data['total'] = $total;
-    $data['creditCardType'] = 1;
+	    $data['firstPayment'] = $total/$data['numberOfPayments'];
+	    $data['total'] = $total;
+	    $data['creditCardType'] = 1;
 		$data['orders_id'] = $order->id;
 
 		Payment::create($data);
 
 		$this->cart->items()->delete();
+		$info['orderNum'] = $order->id;
+		$info['client'] = $client;
+		Mail::send('mail.order',$info,function($message) use($info){
+            $message->to($info['client']['email'])->subject("מועדונופש - הזמנה מס' ".$info['orderNum']);
+        }); 
+
 		return Response::json([
 			'success' => "הזמנתך בוצע בהצלחה.<br />מספר ההזמנה שלך הוא: $order->id"
 			],201);

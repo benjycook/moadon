@@ -34,8 +34,7 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 		Route::get('search', 'SiteClubsController@search');
 		Route::post('cart','SiteCartController@cart');
 		Route::post('register', 'SiteClientController@register');
-
-
+		Route::post('remined/password', 'SiteClientController@passReminder');
 		Route::group(array('before' => 'ClubClientAuth'), function(){
 
 			Route::resource('orders', 'SiteOrdersController');
