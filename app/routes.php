@@ -18,7 +18,6 @@ $domain = getenv('ROOTDOMAIN');
 if(empty($domain))
 	$domain = 'moadonofesh.co.il';
 
-Route::get('v{key}','SiteOrdersController@viewOrder');
 
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
@@ -101,3 +100,5 @@ Route::group(array('prefix' => 'suppliers'), function()
 
 });
 
+
+Route::get('v{key}','SiteOrdersController@viewOrder');

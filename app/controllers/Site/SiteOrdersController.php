@@ -90,7 +90,7 @@ class SiteOrdersController extends SiteBaseController
 	    $sms = new stdClass;
 	    $sms->msg = $msg;
 	    $sms->key = $projectKey;
-	    $sms->senderNumber  = "0545837766";
+	    $sms->senderNumber  = "1700700400";
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $postUrl);
