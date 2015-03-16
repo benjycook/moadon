@@ -3,6 +3,12 @@
 class SiteOrdersController extends SiteBaseController 
 {
 
+	protected function generateKey($length)
+    {
+        $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        return substr(str_shuffle($charset), 0, $length);
+    }
+
 	public function index()
 	{
 		$orders = $this->client->orders()->with('items')->get()->toArray();
@@ -26,6 +32,12 @@ class SiteOrdersController extends SiteBaseController
 		$client = $this->client->toArray();
 		$client['clients_id'] = $this->client->id;
 		$client['createdOn'] = date("Y-m-d H:i:s");
+		$key = $this->generateKey(5);
+    	while(Order::where('key','=',$key)->count()) 
+    	{
+    	 	$key = $this->generateKey(5);
+    	} 
+    	$client['key'] = $key;
 		$order = Order::create($client);
 		$total = 0;
 
@@ -61,10 +73,31 @@ class SiteOrdersController extends SiteBaseController
 		$data['orders_id'] = $order->id;
 
 		Payment::create($data);
-
+		
+    	$url = URL::to("v".$key);
 		$this->cart->items()->delete();
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
+		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
+		$msg[]	= "תודה שרכשת במועדונופש!".PHP_EOL;
+		$msg[]	= "מספר הזמנתך היא: ".$order->id."".PHP_EOL;
+		$msg[]	= "לפרטי ההזמנה:".PHP_EOL;
+		$msg[]	= "$url".PHP_EOL;
+		// $msg[]  = "מועדונופש, מועדון חברים";
+		$msg = implode('',$msg);
+		$postUrl = Config::get('smsapi.url');
+	    $projectKey = Config::get('smsapi.key');
+	    $sms = new stdClass;
+	    $sms->msg = $msg;
+	    $sms->key = $projectKey;
+	    $sms->senderNumber  = "0545837766";
+		$sms->resiverNumber = $client['mobile'];
+		$ch = curl_init();
+		curl_setopt($ch,CURLOPT_URL, $postUrl);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($sms));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$result = json_decode(curl_exec($ch),true);
+		curl_close($ch);
 		Mail::send('mail.order',$info,function($message) use($info){
             $message->to($info['client']['email'])->subject("מועדונופש - הזמנה מס' ".$info['orderNum']);
         }); 
@@ -74,6 +107,5 @@ class SiteOrdersController extends SiteBaseController
 			],201);
   		
 	}
-
 
 }

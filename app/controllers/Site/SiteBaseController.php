@@ -3,15 +3,27 @@
 class SiteBaseController extends BaseController 
 {
 
-	public function callAction($method, $parameters)
+	public function callAction($method,$parameters)
 	{
 		$subdomain = array_shift($parameters);
 
 		$club = Club::where('urlName','=',$subdomain)->first();
-
 		if(!$club)
-			return "מועדון זה לא קיים";
-
+		{
+			$key = str_replace(URL::to('/')."/v","",Request::url());
+			$order = Order::with('items')->where('key','=',$key)->first();
+			if(!$order)
+				return "מועדון זה לא קיים";
+			$data = [];
+			foreach ($order->items as &$item) {
+				$item->supplierName = $item->supplier->name;
+				$data['items'][] = $item;
+			}
+			$data['orderNum'] = $order->id;
+			$data['client']['firstName'] = $order->firstName;
+			$data['client']['lastName']  = $order->lastName;
+			return View::make('mail.order',$data);
+		}
 		$this->club = $club;
 		
 		return parent::callAction($method, $parameters);

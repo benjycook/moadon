@@ -1,10 +1,11 @@
 <?php
 
-	class SiteIndexController extends SiteBaseController {
+class SiteIndexController extends SiteBaseController {
 
-		public function index()
-		{
-			return View::make('site.index');
-		}
-
+	public function index()
+	{
+		return View::make('site.index');
 	}
+
+	
+}
