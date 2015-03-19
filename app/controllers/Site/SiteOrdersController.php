@@ -62,12 +62,12 @@ class SiteOrdersController extends SiteBaseController
 	      $data['date'] = $date;
 	    }
 
-	    if($data['numberOfPayments'] > 1)
-	    	$data['creditDealType'] = 2;
-	    else
+	    // if($data['numberOfPayments'] > 1)
+	    // 	$data['creditDealType'] = 2;
+	    // else
 	    	$data['creditDealType'] = 1;
 
-	    $data['firstPayment'] = $total/$data['numberOfPayments'];
+	    $data['firstPayment'] = $total;//$total/$data['numberOfPayments'];
 	    $data['total'] = $total;
 	    $data['creditCardType'] = 1;
 		$data['orders_id'] = $order->id;
