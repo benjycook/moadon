@@ -106,9 +106,9 @@ class SiteClubsController extends SiteBaseController
 														->where('sitedetails.states_id', '=', '2')
 														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
 														->select(DB::raw(
-															'sitedetails.*, 100 - FLOOR(items.priceSingle / items.listPrice * 100) AS discount'
+															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
 														))
-														->orderBy('discount', 'DESC')
+														//->orderBy('discount', 'DESC')
 														->groupBy('sitedetails.suppliers_id')
 														->with('galleries')
 														->get()->toArray();
@@ -231,7 +231,7 @@ class SiteClubsController extends SiteBaseController
 														->where('sitedetails.states_id', '=', '2')
 														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
 														->select(DB::raw(
-															'sitedetails.*, 100 - FLOOR(items.priceSingle / items.listPrice * 100) AS discount'
+															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
 														))
 														//->orderBy(DB::raw('(100 - FLOOR(items.priceSingle / items.listPrice * 100)'), 'DESC')
 														->groupBy('sitedetails.suppliers_id')
