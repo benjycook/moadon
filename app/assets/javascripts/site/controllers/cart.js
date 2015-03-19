@@ -42,15 +42,15 @@ App.CartController = Em.ArrayController.extend({
 
 		for(var i = 0; i < items.length; i++)
 		{
-			total += (items[i]['clubPrice'] * items[i]['count']);
+			total += (items[i]['priceSingle'] * items[i]['count']);
 		}
 
 		return total;
 
 	}.property(
-		'model.@each.count', 
-		'model.@each.clubPrice', 
-		'model.@each.listPrice'),
+		'model.@each.count',
+		'model.@each.priceSingle'
+	),
 
 	totalDiscount: function(){
 		var items = this.get('model');
