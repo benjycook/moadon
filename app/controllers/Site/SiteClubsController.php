@@ -227,7 +227,6 @@ class SiteClubsController extends SiteBaseController
 		$page = Input::get('page', 1);
 		//$item = Input::get('item',0);
 		$supplier  = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
-														->where('visibleOnSite', '=', '1')
 														->where('sitedetails.states_id', '=', '2')
 														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
 														->select(DB::raw(
