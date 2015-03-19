@@ -101,9 +101,15 @@ class SiteClubsController extends SiteBaseController
 
 		$data['cities'] = $cities;
 
-		$suppliers = SiteDetails::where('visibleOnSite', '=', '1')
-														->where('states_id', '=', '2')
-														->has('items', '>=', '1')
+		$suppliers = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
+														->where('visibleOnSite', '=', '1')
+														->where('sitedetails.states_id', '=', '2')
+														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
+														->select(DB::raw(
+															'sitedetails.*, 100 - FLOOR(items.priceSingle / items.listPrice * 100) AS discount'
+														))
+														->orderBy('discount', 'DESC')
+														->groupBy('sitedetails.suppliers_id')
 														->with('galleries')
 														->get()->toArray();
 		
@@ -220,7 +226,17 @@ class SiteClubsController extends SiteBaseController
 		$items = Input::get('items', 9);
 		$page = Input::get('page', 1);
 		//$item = Input::get('item',0);
-		$supplier = SiteDetails::mini();
+		$supplier  = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
+														->where('visibleOnSite', '=', '1')
+														->where('sitedetails.states_id', '=', '2')
+														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
+														->select(DB::raw(
+															'sitedetails.*, 100 - FLOOR(items.priceSingle / items.listPrice * 100) AS discount'
+														))
+														//->orderBy(DB::raw('(100 - FLOOR(items.priceSingle / items.listPrice * 100)'), 'DESC')
+														->groupBy('sitedetails.suppliers_id')
+														->with('galleries');
+														//->get()->toArray();
 		if($category)
 		{
 			if($subcategories)
