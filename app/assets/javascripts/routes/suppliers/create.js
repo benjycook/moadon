@@ -1,11 +1,5 @@
 App.SuppliersEditController = Em.ObjectController.extend({
-	errorExists:function()
-	{
-		var error = this.get('error');
-		if(error)
-			window.scrollTo(0,0);
-	}.observes('error'),
-
+	
 	disableTabs:function()
 	{
 		if(this.get('supplier.id'))
@@ -21,7 +15,26 @@ App.SuppliersEditController = Em.ObjectController.extend({
 		});
 	}.observes('items.length'),
 
+	messagesReset:function(sender,field)
+	{
+		if(this.get(""+field)!=null)
+		{
+			if(field=='error')
+				this.set('success',null);
+			else
+				this.set('error',null);
+		}
+	}.observes('success','error'),
+
+	lengthTest:function(obj,key)
+	{
+		var description = this.get('sitedetails.description');
+		if(description&&description.length>49)
+			this.set('sitedetails.description',description.substr(0,49));
+	}.observes('sitedetails.description'),
+
 	
+
 	// sortedLevel1:function()
 	// {
 	// 	return App.get('regions').filterBy('parent_id',0);
@@ -128,6 +141,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url  = 'items/'+model.id;
 				type = "PUT";
 			}
+			this.send('close',controller);
 			$.ajax({
 				type: type,
 				url: url,
@@ -153,6 +167,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	    'saveSiteDetails':function(model,view,controller)
 	    {
+	    	console.log(view);
 			var form = view.$('form');
 			var valid = form.parsley().validate();
 			model.suppliers_id = this.controllerFor('suppliersEdit').get('supplier.id');
@@ -166,6 +181,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url  = 'sitedetails/'+model.id;
 				type = "PUT";
 			}
+			this.send('close',controller);
 			$.ajax({
 				type: type,
 				url: url,
@@ -187,6 +203,8 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	    'saveSupplier': function(model,view,controller)
 		{
+			model.supplier.contacts = model.contacts;
+			model = model.supplier;
 			var self = this;
 			var form = view.$('form');
 			var valid = form.parsley().validate();
@@ -199,17 +217,47 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url  = "suppliers/"+model.id;
 				type = "PUT"; 
 			}
+			this.send('close',controller);
 			$.ajax({
 				type: type,
 				url: url,
 				data: JSON.stringify(model)
 			}).then(function(data){
 				controller.set('supplier',data.supplier);
+				controller.set('contacts',data.contacts);
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				form.parsley().reset();
 				if(!model.id)
-					controller.set('sitedetails',data.siteDetails);
+					self.transitionTo('suppliers.edit',data.supplier.id);
+					//controller.set('sitedetails',data.siteDetails);
+			}).fail(function(data){
+				controller.set('success',null);
+				if(data.status == 500)
+					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
+				else
+					var error = data.responseJSON.error;
+					controller.set('error',error);
+			});
+		},
+		'saveMiniSite':function(model,view,controller)
+		{
+			var self = this;
+			var form = view.$('form');
+			var valid = form.parsley().validate();
+			if(!valid)
+	            return;
+			url  = "sitedetails/minisite/"+model.id;
+			type = "POST"; 
+			this.send('close',controller);
+			$.ajax({
+				type: type,
+				url: url,
+				data: JSON.stringify(model)
+			}).then(function(data){
+				controller.set('error',null);
+				controller.set('success',"נשמר בהצלחה.");
+				form.parsley().reset();
 			}).fail(function(data){
 				controller.set('success',null);
 				if(data.status == 500)
@@ -220,5 +268,57 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			});
 		},
 
+		'confirm':function(id)
+		{
+			var controller = this.controllerFor('suppliersEdit');
+			controller.set('deleteID',id);
+			this.render('suppliers/deleteConfirm', {
+				controller:controller,
+			  into: 'application',
+			  outlet: 'modal',
+			});
+		},
+		'delete':function(controller)
+		{
+			var self = this;
+			$.ajax({
+				type: "DELETE",
+				url: 'items/'+controller.get('deleteID'),
+			}).then(function(data){
+				var items = controller.get('items');
+				var item = items.findBy('id',controller.get('deleteID'));
+				items.removeObject(item);
+				self.render('empty', {into: 'application',outlet: 'modal'});
+				controller.set('deleteID',null);
+				controller.set('error',null);
+			}).fail(function(data){
+				if(data.status == 500)
+					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
+				else
+					var error = data.responseJSON.error;
+					controller.set('error',error);
+			});
+		},
+		'cancel':function(controller)
+		{
+			controller.set('deleteID',null);
+			controller.set('error',null);
+			this.render('empty', {into: 'application',outlet: 'modal'});
+		},
+
+		'addContact':function(contacts)
+		{
+			contacts.pushObject({id:0,firstName:"",lastName:"",mobile:"",email:""});
+			contacts = contacts.setEach('removable',true);
+		},
+		'removeContact':function(contacts,contact)
+		{
+			if(contacts.length>1)
+			{
+				contacts.removeObject(contact);
+				if(contacts.length==1)
+					contacts.setEach('removable',false);
+			}
+		}
 	}
 });

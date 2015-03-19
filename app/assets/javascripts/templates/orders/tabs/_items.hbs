@@ -1,23 +1,20 @@
-<div class="row tab-pane" id="items">
-  	<div class="col-md-12">
+<div class="col-md-12">
+	<label class="title">פריטים</label>
 
     {{#each item in items itemController="Item"}}
     	<div class="row">
-    		{{#if item.rowState}}
-    			<div class="col-md-1">
-	    			<i class="btn btn-primary fa fa-minus" style="margin-top: 27px; float: left;" title="פרטים" {{action 'openDetailes'}}></i>
-	    		</div>
-    		{{else}}
-    			<div class="col-md-1">
-	    			<i class="btn btn-primary fa fa-plus" style="margin-top: 27px; float: left;" title="פרטים" {{action 'openDetailes'}}></i>
-	    		</div>
-    		{{/if}}
-    		
-    		<div class="col-md-11">
+    		<div class="col-md-12">
 
 	    		<div class="row">
 
-	                <div class="col-md-6">
+	    			 <div class="col-md-4">
+	                    <div class="form-group">
+	                      <label>שם ספק:</label>
+	                      {{input type="text" class="form-control" valueBinding="item.supplierName" disabled="disabled"}}
+	                    </div>
+	                </div>
+
+	                <div class="col-md-4">
 	                    <div class="form-group">
 	                      <label>שם המוצר:</label>
 	                      {{input type="text" class="form-control" valueBinding="item.name" disabled="disabled"}}
@@ -37,100 +34,46 @@
 	                      {{input-date-time picker="date" class="form-control" valueBinding="item.displayDate" disabled="disabled" }}
 	                    </div>
 	                </div>
-	               	{{#if item.realized.length}}            
-		                <div class="col-md-2">
-		                	<div class="form-group">
-		    					<a class="btn btn-warning" {{action 'realized' item}} style="margin-top: 25px;">מומשו</a>
-		    				</div>
-		    			</div>
-		    		{{/if}}
+	            
 	            </div>
 
-	        	<span {{bind-attr style=item.openClose}}>
 		            <div class="row">
 
-			               	<div class="col-md-3">
-			                	<div class="form-group">
-				                  	<label>סוג מוצר:</label>
-				                    {{view Ember.ChosenSelectView
-				                          classNames="form-control chosen-select chosen-rtl form-group" 
-				                          prompt = "בחר..."
-				                          contentBinding="App.itemTypes"
-				                          selected=item.itemtypes_id
-				                          disabled="disabled"
-				                    }}
-				                </div>
-			              	</div>
-
-			              {{#if item.single}}
-			                <div class="col-md-3">
+			              	<div class="col-md-2">
 			                  <div class="form-group">
-			                    <label>מחיר מחירון לבודד:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.listPrice" disabled="disabled" data-parsley-type="number" data-parsley-min="1"}}
+			                    <label>מחיר מועדון לבודד:</label>
+			                    {{input type="text" class="form-control" valueBinding="priceSingle" disabled="disabled"}}
+			                  </div>
+			                </div>
+			                <div class="col-md-2">
+			                  <div class="form-group">
+			                    <label>מחיר מחירון:</label>
+			                    {{input type="text" class="form-control" valueBinding="item.listPrice" disabled="disabled"}}
 			                  </div>
 			                </div>
 
-			                <div class="col-md-3">
+			                <div class="col-md-2">
 			                  <div class="form-group">
-			                    <label>מחיר קופונופש לבודד:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.clubPrice" disabled="disabled" data-parsley-type="number" data-parsley-min="1"}}
+			                    <label>מחיר נט:</label>
+			                    {{input type="text" class="form-control" valueBinding="item.netPrice" disabled="disabled"}}
 			                  </div>
 			                </div>
 
-			                <div class="col-md-3">
+			                 <div class="col-md-2">
 			                  <div class="form-group">
-			                    <label>מחיר נט לבודד:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.netPrice" disabled="disabled" data-parsley-type="number" data-parsley-min="1"}}
+			                    <label>כמות:</label>
+			                    {{input type="text" class="form-control" valueBinding="item.qty" disabled="disabled"}}
 			                  </div>
 			                </div>
-			              {{/if}}
-		            </div>
 
-		            {{#if item.group}}
-		              <div class="row">
-		                
-		                  <div class="col-md-3">
-		                    <div class="form-group">
-		                      <label>מינימום משתתפים:</label>
-		                      {{input type="text" class="form-control" valueBinding="item.minParticipants" disabled="disabled" data-parsley-type="integer" data-parsley-min="1"}}
-		                    </div>
-		                  </div>
+			                <div class="col-md-2">
+			                  <div class="form-group">
+			                    <label>מחיר ששולם:</label>
+			                    {{input type="text" class="form-control" valueBinding="item.total" disabled="disabled"}}
+			                  </div>
+			                </div>
 
-
-		                  <div class="col-md-3">
-		                    <div class="form-group">
-		                      <label>מקסימום משתתפים:</label>
-		                      {{input type="text" class="form-control" valueBinding="item.maxParticipants" disabled="disabled" data-parsley-type="integer" data-parsley-min="1"}}
-		                    </div>
-		                  </div>
-
-		                  <div class="col-md-3">
-		                    <div class="form-group">
-		                      <label>מחיר מחירון לאדם בקבוצה:</label>
-		                      {{input type="text" class="form-control" valueBinding="item.listPriceGroup" disabled="disabled" data-parsley-type="number" data-parsley-min="1"}}
-		                    </div>
-		                  </div>
-
-		                 
-
-		                  <div class="col-md-3">
-		                    <div class="form-group">
-		                      <label>מחיר נט לאדם בקבוצה:</label>
-		                      {{input type="text" class="form-control" valueBinding="item.netPriceGroup" disabled="disabled" data-parsley-type="number" data-parsley-min="1"}}
-		                    </div>
-		                  </div>
-
-		              </div>
-		            {{/if}}
-
-	           
-		            <div class="row">
-		                 <div class="col-md-12">
-		                    <div class="form-group">
-		                      <label>תיאור מקוצר:</label>
-		                      {{input class="form-control" valueBinding="item.shortDescription" disabled="disabled"}}
-		                    </div>
-		                  </div>
+			               
 		            </div>
 
 		            <div class="row">
@@ -146,17 +89,14 @@
 		                 <div class="col-md-12">
 		                    <div class="form-group">
 		                      <label>הערות:</label>
-		                      {{textarea class="form-control" valueBinding="item.notes" }}
+		                      {{textarea class="form-control" valueBinding="item.notes" disabled="disabled"}}
 		                    </div>
 		                  </div>
 		            </div>
-
-	           </span>
 
 
     		</div>
     	</div>
     	
     {{/each}}
-  	</div>
 </div>

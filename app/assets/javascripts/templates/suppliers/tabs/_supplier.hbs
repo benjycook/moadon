@@ -23,67 +23,96 @@
 
           <div class="row">
 
-             <div class="col-md-6">
+             <div class="col-md-4">
                 <div class="form-group">
                   <label>שם משתמש:</label>
                   {{input type="text" class="form-control" valueBinding="supplier.username" required="required"}}
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>סיסמא:</label>
                   {{input type="text" class="form-control" valueBinding="supplier.password" required="required"}}
                 </div>
               </div>
 
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>סטאטוס:</label>
+                    {{view Ember.ChosenSelectView
+                          classNames="form-control chosen-select chosen-rtl form-group chosen-multi" 
+                          prompt = "בחר..."
+                          contentBinding="App.states"
+                          selected=supplier.states_id
+                          required="required"
+                       }}
+                </div>
+            </div>
+
           </div>
 
           <div class="row">
                 <div class="col-md-12">
-                    <label class="title">איש קשר</label>
+                    <label class="title">אנשי קשר</label>
                 </div>
           </div>
 
-          <div class="row">
-                <div class="col-md-6">
+           {{#each contact in contacts}}
+            <div class="row">
+                <div class="col-md-2" style="width:22%;">
                   <div class="form-group">
                     <label>שם פרטי:</label>
-                    {{input type="text" class="form-control" valueBinding="supplier.contactFirstName" required="required"}}
+                    {{input type="text" class="form-control" valueBinding="contact.firstName" required="required"}}
                   </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-2" style="width:22%;">
                   <div class="form-group">
                     <label>שם משפחה:</label>
-                    {{input type="text" class="form-control" valueBinding="supplier.contactLastName" required="required"}}
+                    {{input type="text" class="form-control" valueBinding="contact.lastName" required="required"}}
                   </div>
                 </div>
-          </div>
-          <div class="row">
-              <div class="col-md-6">
+
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>נייד:</label>
-                    {{input type="text" class="form-control" valueBinding="supplier.contactPhone" required="required" }}
+                    {{input type="text" class="form-control" valueBinding="contact.mobile" required="required" }}
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>דוא"ל:</label>
-                    {{input type="text" class="form-control" valueBinding="supplier.contactEmail" required="required" data-parsley-type="email"}}
+                    {{input type="text" class="form-control" valueBinding="contact.email" required="required" data-parsley-type="email"}}
                 </div>
               </div>
+
+              {{#if contact.removable}}
+                <div class="col-md-1" style="width:5%;">
+                  <div class="form-group">
+                    <label><i class="removeBtn fa fa-times" {{action 'removeContact' contacts contact}}></i></label>
+                  </div>
+                </div>
+              {{/if}}
+
           </div>
           
+          {{/each}}
+       </form>
+          <div class="row">
+            <div class="col-xs-3 pull-right">
+              <button class="btn btn-primary" {{action 'addContact' contacts}}>הוסף +</button>
+            </div>
+          </div>
 
           <div class="modal-footer">
             <div class="pull-left">
                <div class="pull-left">
-                  <button {{action "saveSupplier" model.supplier view controller }} type="button" class="btn btn-success sendEnter">שמור</button>
+                  <button {{action "saveSupplier" model view controller }} type="button" class="btn btn-success sendEnter">שמור</button>
                 </div>
             </div>
           </div>
-      </form>
+     
       {{/view}}
   </div>
 </div>

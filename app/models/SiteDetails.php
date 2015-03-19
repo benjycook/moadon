@@ -23,7 +23,10 @@ class SiteDetails extends Eloquent {
 		'miniSiteContext',
 		'cities_id',
 		'states_id',
-		'visibleOnSite'
+		'visibleOnSite',
+		'newBusiness',
+		'mostViewed',
+		'hotDeal',
 	);
 
 
@@ -43,9 +46,9 @@ class SiteDetails extends Eloquent {
 	}
 
 	public function scopeSite($query)
-  {
-  	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
-  }
+	{
+	  	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
+	}
 
   public function items()
 	{

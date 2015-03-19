@@ -1,3 +1,5 @@
+{{outlet 'lightbox'}}
+
 <div id="body">
     <div id="header">
         
@@ -8,14 +10,19 @@
             </a>
 
             <p class="right">
-                ישראל ישראלי, חבר מועדון “{{club.name}}” ברוך הבא
-                <a href="#">יציאה</a>
+                {{#if session.client}}
+                   ברוך הבא, {{session.client.firstName}} {{session.client.lastName}} חבר מועדון “{{club.name}}”
+                {{else}}
+                    ברוך הבא, חבר מועדון “{{club.name}}” 
+                {{/if}}
+               
+                <a {{ action 'invalidateSession' }}>יציאה</a>
             </p>
 
             <p class="left">
                 <strong>שרות לקוחות 1-700-700-400</strong>
-                {{#link-to contact}}צור קשר{{/link-to}}
-                {{#link-to account}}החשבון שלי{{/link-to}}
+                {{#link-to account}}צור קשר{{/link-to}}
+                {{#link-to 'account.index'}}החשבון שלי{{/link-to}}
             </p>
 
             <div id="search">
@@ -35,7 +42,7 @@
         <div class="container">
            
             <div id="sidebar">
-                <button class="cart">סל הקניות שלי [ {{cart.length}} ]</button>
+                <button class="cart" {{action 'openCart'}}>סל הקניות שלי [ {{cart.length}} ]</button>
 
                 {{outlet 'search'}}
 
@@ -72,6 +79,9 @@
                     <a href="">צור קשר</a>
                 </li>
 
+                <li>
+                    <a href="/suppliers">כניסה לספקים</a>
+                </li>
             </ul>
      
         </div>

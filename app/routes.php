@@ -18,11 +18,36 @@ $domain = getenv('ROOTDOMAIN');
 if(empty($domain))
 	$domain = 'moadonofesh.co.il';
 
+
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
 	Route::get('options', 'SiteClubsController@options');
-	Route::get('supplier/{id}','SiteClubsController@supplier');
-	Route::get('search', 'SiteClubsController@search');
+	Route::post('login', 'SiteClubsController@login');
+	Route::get('logout', 'SiteClubsController@logout');
+
+	Route::post('account/login', 'SiteClientController@login');
+	Route::post('account/register', 'SiteClientController@register');
+	Route::get('account/logout', 'SiteClientController@logout');
+
+	Route::group(array('before' => 'ClubAuth'), function(){
+
+		Route::get('supplier/{id}','SiteClubsController@supplier');
+		Route::get('search', 'SiteClubsController@search');
+		Route::post('cart','SiteCartController@cart');
+		Route::post('register', 'SiteClientController@register');
+		Route::post('remined/password', 'SiteClientController@passReminder');
+		Route::group(array('before' => 'ClubClientAuth'), function(){
+
+			Route::resource('orders', 'SiteOrdersController');
+			Route::post('info/update', 'SiteClientController@updateInfo');
+			//Route::get('orders', 'SiteClientController@orders');
+			//Route::get('order/{id}', 'SiteClientController@order');
+			//Route::post('purchase', 'SiteClientController@purchase');
+
+		});
+		
+	});
+
 });
 
 Route::group(array('prefix' => 'admin'), function()
@@ -48,22 +73,32 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('categories','AdminCategoriesController');
 		Route::resource('regions','AdminRegionsController');
 		Route::resource('sitedetails','AdminSiteDetailsController');
+		Route::post('sitedetails/minisite/{id}','AdminSiteDetailsController@miniSite');
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 
+		Route::resource('pages','AdminPagesController');
 	});
+
 });
 
-Route::group(array('prefix' => 'clubs'), function()
+
+Route::group(array('prefix' => 'suppliers'), function()
 {
-	//temp 
-	
-	Route::get('search','ClubsController@search');
-	Route::group(array('before' => 'club_auth'), function() 
-	{
 
+	Route::get('/', function(){ return View::make('supplier.index'); });
+	
+	Route::post('login',	'SupplierLoginController@login');
+	Route::get('logout',	'SupplierLoginController@logout');
+	Route::post('restore',	'SupplierLoginController@restore');
+	Route::get('options','SupplierOptionsController@index');
+
+	Route::group(array('before' => 'auth_supplier'), function() 
+	{
+		Route::get('order/{id}','SupplierOrderController@order');
+		Route::post('realize','SupplierOrderController@realize');
 	});
-	Route::get('options','ClubsController@options');
-	Route::post('login','LoginController@dologin');
-	Route::post('restore','LoginController@restorePassword');
+
 });
 
+
+Route::get('v{key}','SiteOrdersController@viewOrder');

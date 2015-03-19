@@ -45,14 +45,20 @@ class AdminItemsController extends BaseController
 		$sql = $query ? "name LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Item::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
-		$item = Item::with('supplier')->whereRaw($sql,array($query))->skip($page*$items-$items)->take($items)->get();
-		$item = $item->toArray();
+		$subjects = Item::with('supplier')->whereRaw($sql,array($query))->forPage($page,$items)->get();
+		foreach ($subjects as $item) {
+			if($item->orders()->count())
+				$item->removable = false;
+			else
+				$item->removable = true;
+		}
+		$subjects = $item->toArray();
 		$meta = array(
 			'pages' => $pages,
 			'count' => $count,
 			'page'	=> $page
 			);
-		$data = array('collection'=>$item,'meta'=>$meta);
+		$data = array('collection'=>$subjects,'meta'=>$meta);
 		return Response::json($data,200);
 	}
 
@@ -63,7 +69,6 @@ class AdminItemsController extends BaseController
     	if(!isset($data['itemtypes_id'])||!ItemType::where('id','=',$data['itemtypes_id'])->count())
     		return Response::json(array('error'=>"סוג מוצר זה לא נמצא במערכת"),501);
     	$validator = Validator::make($data, $this->rules($data['itemtypes_id']));
-
     	if($validator->fails())
     		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
     	$data['expirationDate'] = implode('-',array_reverse(explode('/',$data['expirationDate'])));
@@ -96,10 +101,17 @@ class AdminItemsController extends BaseController
 		$item = Item::with('galleries')->find($id);
 		if(!$item)
 			return Response::json(array('error'=>'מוצר זה לא נמצא במערכת'),501);
+		if($item->orders()->count())
+			$item->removable = false;
+		else
+			$item->removable = true;
 		$item = $item->toArray();
 		$temp = array();
 		$temp['main'] = isset($item['galleries'][0]) ? $item['galleries'][0]:array('images'=>array());
 		$temp['main']['base'] = URL::to('/')."/galleries/";
+		foreach ($temp['main']['images'] as &$image) {
+			$image['pos'] = intval($image['pos']);
+		}
 		$item['galleries'] = $temp;
 		$item['uploadUrl'] = '/uploadImage';
 		$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));
@@ -153,9 +165,21 @@ class AdminItemsController extends BaseController
 
 	public function destroy($id)
 	{
-		$item = Item::find($id);
+		$item = Item::with('galleries')->find($id);
 		if(!$item)
 			return Response::json(array('error'=>'מוצר זה לא נמצא במערכת'),501);
+		if($item->orders()->count())
+			return Response::json(array('error'=>'לא ניתן למחוק מוצר אשר בומע עליו הזמנה.'),501);
+		ItemGallery::where('items_id','=',$item->id)->delete();
+		foreach ($item->galleries as $gallery) {
+			foreach ($gallery->images as $image) {
+				if(File::exists(public_path()."/galleries/".$image->src))
+					File::delete(public_path()."/galleries/".$image->src);
+				$image->delete();
+			}
+			$gallery->delete();
+		}
 		$item->delete();
+		return Response::json('success',201);
 	}
 }

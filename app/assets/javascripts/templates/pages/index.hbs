@@ -1,0 +1,33 @@
+<div class="panel panel-default grid" style="margin-bottom:0;">
+    <div class="panel-heading">
+        <div class="panel-label">דפים באתר</div>
+    </div>
+</div>
+<div class="panel-body">
+
+    <div class="row">
+
+        <div class="col-xs-2 pagesSideBar" >
+          <ul class="nav nav-pills nav-stacked">
+            {{#each page in pages}}
+                <li {{bind-attr class="page.first:active"}}><a {{bind-attr href=page.link}} data-toggle="tab" >{{page.name}}</a></li>
+                {{!-- <li ><a href="#terms" data-toggle="tab" >תקנון</a></li>
+                <li ><a href="#contact" data-toggle="tab">צור קשר</a></li> --}}
+            {{/each}}
+          </ul>
+        </div>
+
+        <div class="col-xs-10 " style="padding-left: 0;">
+            
+            <div class="col-xs-12 tab-content" style="background-color: #f4f4f4;">
+                {{#each page in pages itemController="Page"}}
+                    {{render "pages/partials/general" page}} 
+                {{/each}}
+                
+               {{!--  {{partial "pages/partials/terms"}}
+                {{partial "pages/partials/contact"}} --}}
+            </div>
+        </div>
+
+    </div>
+</div>

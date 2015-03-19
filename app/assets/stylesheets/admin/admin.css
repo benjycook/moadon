@@ -83,3 +83,20 @@ label.title {
 {
   min-height: 60px;
 }
+.pagesSideBar
+{
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 10px;
+}
+.email-input {
+  direction: ltr;
+}
+.removeBtn {
+   color: #ED5565;
+  font-size: 3rem;
+  left: 20px;
+  position: absolute;
+  top: 27px;
+  cursor: pointer;
+}

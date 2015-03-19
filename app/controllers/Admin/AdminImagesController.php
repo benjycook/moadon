@@ -9,14 +9,14 @@ class AdminImagesController extends BaseController
 			$file = Input::file('file');
 			$data = array('image'=>$file);
 			$rules = array( 
-    			'image' => 'mimes:jpg,png,jpeg'
+    			'image' => 'mimes:jpg,png,jpeg,gif'
 				);
 			$validator = Validator::make($data, $rules);
 			if ($validator->fails()) 
 			{
 				$messages=$validator->messages()->toArray();
 				$message =$messages['image'];
-				return Response::json(array('error'=>'באפשרותך לעלות רק קבצים מסוג: jpg, png.'), 400);
+				return Response::json(array('error'=>'באפשרותך לעלות רק קבצים מסוג: jpg,gif,png.'), 400);
 			}
 			$image_info = getimagesize($file);
 			// if(filesize($file)>1048576)//
@@ -25,7 +25,7 @@ class AdminImagesController extends BaseController
 			$fileName = "$id.jpg";
     		$file = Input::file('file')->move($path,$fileName);
     		$fileUrl = URL::to('/')."/galleries/tempimages/$fileName";
-			return Response::json(array('link'=>$fileUrl), 200);
+			return Response::json(array('link'=>$fileUrl,'fileUpload'=>true), 200);
 		}
 	}
 

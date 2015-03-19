@@ -1,0 +1,45 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 20%;">
+    <div class="modal-content">
+      <div class="modal-header"><h4>{{item.name}}</h4></div>     
+      <div class="modal-body">
+        <form>
+          
+        {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+        {{/if}}
+
+        <div class="row">
+          <div class="col-xs-6 col-xs-pull-3">
+            <label>בחר כמות למימוש:</label>
+            {{view Ember.ChosenSelectView
+                classNames="form-control chosen-select chosen-rtl form-group" 
+                contentBinding="options"
+                valueBinding="realizedQty"
+                prompt = "בחר"
+                required="required"
+              }}
+          </div>
+        </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-right">
+          <button {{action "closeWindow" }} type="button" class="btn btn-defualt active">סגור</button>
+        
+        </div>
+        <div class="pull-left">
+           <button {{action "realize" model view controller}} type="button" class="btn btn-success sendEnter">ממש</button>
+        </div>
+      </div>
+       
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

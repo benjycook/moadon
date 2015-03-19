@@ -1,5 +1,12 @@
 App.Router.map(function(){
 
+	this.route('login');
+	this.route('logout');
+	this.route('cart');
+
+	// this.route('account/register');
+	//this.route('login');
+
 	this.route('search', {path: 'search'});
 
 	// this.route('search', function(){
@@ -10,11 +17,9 @@ App.Router.map(function(){
 
 	this.resource('account', function(){
 		this.route('orders');
+		this.route('register');
 	});
 
-	this.resource('cart', function(){
-
-	});
 
 	this.route('supplier', {path: 'supplier/:id'});
 

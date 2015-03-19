@@ -7,10 +7,17 @@
 
 {{else}}
 
-	{{ui-tree-link item=node base=type}}
+	{{ui-tree-link item=node base=type main=this.main spin=this.spin}}
 
 {{/if}}
 
-{{#if node.children.length}}
-	{{ui-tree-branch children=node.children}}
+{{#if isExpended}}
+	{{#if node.children.length}}
+		{{ui-tree-branch children=node.children main=this.main loading=this.loading}}
+	{{/if}}
 {{/if}}
+
+
+
+
+

@@ -1,0 +1,22 @@
+{{outlet modal}}
+{{#if App.logedin}}
+		<div class="container-fluid"></div>
+			<div id="header" class="hidden-xs">
+				<div class="navbar navbar-default">
+
+					<ul class="nav navbar-nav">
+							<li>{{#link-to 'order' (query-params order="")}}מימושים{{/link-to}}</li>
+					</ul>
+
+					
+					<ul class="nav navbar-nav pull-left">
+						<li class="last icon">{{#link-to 'logout' title="יציאה"}}<i class="fa fa-power-off"></i>{{/link-to}}</li>
+					</ul>
+
+				</div>
+			</div>
+			<div id="content">
+				{{outlet}}
+			</div>
+		</div>	
+{{/if}}

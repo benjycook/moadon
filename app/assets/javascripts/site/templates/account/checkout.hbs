@@ -1,0 +1,57 @@
+<div class="overlay">
+    <div class="lightbox checkout">
+        <div class="close" {{action 'closeModal'}}>&times;</div>
+
+				<h2 class="lightbox-title">קופה</h2>
+
+				<form class="box" {{action 'checkout' on='submit'}}>
+
+						{{#if success}}
+						  <div class="alert success">
+						      <div class="close">&times;</div>
+						      {{{success}}}
+						  </div>
+						{{/if}}
+
+						{{#if error}}
+						  <div class="alert error">
+						      <div class="close">&times;</div>
+						      {{error}}
+						  </div>
+						{{/if}}
+
+						{{#unless success}}
+							<h3>
+								כרטיס האשראי שלך יחוייב בסכום כולל של ‎{{cart.total}}&rlm;₪
+							</h3>
+
+					    <div class="form-group">
+					        {{input type="text" placeholder="מספר כרטיס" value=cardNumber}}
+					    </div>
+
+					    <div class="row">
+
+						    <div class="form-group exp">
+						        {{input type="text" placeholder="תוקף" value=cardExp}}
+						    </div>
+
+						    <div class="form-group cvv">
+						        {{input type="text" placeholder="cvv" value=cvv}}
+						    </div>
+						  
+						  </div>
+
+
+					    <div class="form-group">
+					        {{input type="text" placeholder="תעודת זהות של בעל הכרטיס" value=ownerId}}
+					    </div>
+
+							<button {{action 'openCart'}}>חזור לסל</button>
+					    <button {{action 'pay'}}>שלם</button>
+				    {{else}}
+				    	<button {{action 'closeModal'}}>סגור</button>
+				    {{/unless}}
+				</form>
+
+    </div>
+</div>

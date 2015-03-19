@@ -1,0 +1,48 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 400px;">
+    <div class="modal-content">
+      <div class="modal-header"><h4>כניסה למערכת</h4></div>     
+      <div class="modal-body">
+        <form>
+          
+        {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+        {{/if}}
+
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>שם משתמש:</label>
+                {{input type="text" class="form-control" value=model.username required="required"}}
+              </div>
+            </div>
+
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label>סיסמא:</label>
+                {{input type="text" class="form-control" value=model.password required="required"}}
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="pull-right">
+         <button {{action "login" model view}} type="button" class="btn btn-success sendEnter">כניסה</button>
+        </div>
+        <div class="pull-left">
+          <button {{action "restore" controller}} type="button" class="btn btn-success">שכחת סיסמא?</button>
+        </div>
+      </div>
+       
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

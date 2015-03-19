@@ -4,8 +4,24 @@ use Illuminate\Auth\UserInterface;
 class Client extends Eloquent implements UserInterface {
 	use UserTrait;
 	protected $table = 'clients';
-	protected $fillable = array('taxId','invoiceFor','city','street','house','entrance','apartment',
-		'zipcode','phone1','phone2','fax','email','recieveNews','clubs_id','firstName','lastName','username','password');
+	
+	protected $fillable = array('taxId',
+		'city',
+		'street',
+		'house',
+		'entrance',
+		'apartment',
+		'zipcode',
+		'mobile',
+		'email',
+		'recieveNews',
+		'clubs_id',
+		'firstName',
+		'lastName',
+		'password'
+	);
+	
+	public $timestamps = false;
 	
 	public function getId()
 	{
@@ -15,5 +31,20 @@ class Client extends Eloquent implements UserInterface {
 	public function getAuthPassword()
 	{
 		return Hash::make($this->password);
+	}
+
+	public function club()
+	{
+		return $this->belongsTo('Club','clubs_id','id');
+	}
+
+	public function orders()
+	{
+		return $this->hasMany('Order','clients_id','id');
+	}
+
+	public function cart()
+	{
+		return $this->hasOne('Cart', 'clients_id', 'id');
 	}
 }

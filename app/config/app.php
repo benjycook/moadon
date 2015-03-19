@@ -108,6 +108,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Codesleeve\AssetPipeline\AssetPipelineServiceProvider',
 		'Igorgoroshit\L4ember\L4emberServiceProvider',
+		'Igorgoroshit\TokenAuth\Providers\TokenAuthServiceProvider'
 	),
 
 	/*
@@ -174,6 +175,7 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
 		'Collection'      => 'Illuminate\Database\Eloquent\Collection',
+		'TokenAuth' 			=> 'Igorgoroshit\TokenAuth\Facades\TokenAuth'
 	),
 
 );

@@ -7,7 +7,7 @@ class Gallery extends Eloquent {
 
   public function images()
   {
-      return $this->hasMany('GalleryImage','galleries_id','id');
+      return $this->hasMany('GalleryImage','galleries_id','id')->orderBy('pos','ASC');
   }
 
 }

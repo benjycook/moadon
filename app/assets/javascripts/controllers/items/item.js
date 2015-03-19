@@ -11,40 +11,15 @@ App.ItemController = Em.ObjectController.extend({
 		return App.states.findBy('id',states_id).name;
 	}.property('states_id'),
 
-	single:function()
+	total:function()
 	{
-		var itemtypes_id = this.get('itemtypes_id');
-		if(itemtypes_id&&itemtypes_id!=2)
-			return true;
-		return false;
-	}.property('itemtypes_id'),
+		return number_format(this.get('netPrice')*this.get('qty'),2);
+	}.property('content'),
+	// lengthTest:function(obj,key)
+	// {
+	// 	var name = this.get('name');
+	// 	if(name&&name.length>49)
+	// 		this.set('name',name.substr(0,49));
+	// }.observes('name'),
 
-	group:function()
-	{
-		var itemtypes_id = this.get('itemtypes_id');
-		if(itemtypes_id&&itemtypes_id!=1)
-			return true;
-		return false;
-	}.property('itemtypes_id'),
-
-	openClose:function()
-	{
-		var rowState = this.get('rowState');
-		if(rowState==true)
-			return 'display:block;';
-		return 'display:none';
-	}.property('rowState'),
-
-	actions:
-	{
-		'openDetailes':function()
-		{
-			var rowState = this.get('rowState');
-			if(rowState)
-				this.set('rowState',false);
-			else
-				this.set('rowState',true);
-		},
-
-	}
 });

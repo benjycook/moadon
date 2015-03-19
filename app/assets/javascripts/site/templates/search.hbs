@@ -1,6 +1,6 @@
 {{#each supplier in model itemController="supplier"}}
 
-    <div class="search box">
+    {{#link-to 'supplier' supplier.id tagName="div" class="search box"}}
         <div class="inner">
             <div class="left">
                 <img {{bind-attr src="supplier.image"}} />
@@ -11,16 +11,29 @@
                     {{supplier.phone1}}
                 </address>
                 <div class="info">
-                    <span>25% הנחה</span>
+                    <span>{{supplier.discount}}% הנחה</span>
                     {{#link-to 'supplier' supplier.id class="button"}}לפרטים{{/link-to}}
                 </div>
             </div>
 
             <div class="right">
-                <strong>{{supplier.description}}</strong><br />
-                {{{supplier.miniSiteContext}}}
+                <strong>שעות פעילות:</strong><br />
+                {{{supplier.workingHoursLines}}}<br /><br />
+                <strong>מתאים לגילאים:</strong><br />
+                {{{supplier.ageDevisionLines}}}
             </div>
         </div>
-    </div>
+    {{/link-to}}
 
 {{/each}}
+
+{{#search-scroll content=model hasMore=hesMore}}
+    <div class="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+    </div>
+{{/search-scroll}}
+

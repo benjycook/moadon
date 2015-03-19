@@ -77,15 +77,20 @@ App.UiGalleryComponent = Em.Component.extend({
 			image.id = (Math.floor((Math.random()*10000000)+1)+Math.floor((Math.random()*10000000)+1))+"temp";
 			image.url = image.id+this.get('uploadUrl');
 			image.src = null;
-			image.pos = (images.get('content.length')+1)+"";
+			image.pos = (images.get('content.length')+1);
 			image.fullSrc = this.get('base')+this.get('defualt');
 			images.pushObject(Em.Object.create(image));
+
 		},
 		'remove':function(id)
 		{
 			var images = this.get('images');
 			image = images.findBy('id',id);
 			images.removeObject(image);
+			images.forEach(function(item){
+				if(item.pos>image.pos)
+					item.pos = item.pos-1;
+			});
 		}
   	}
 });

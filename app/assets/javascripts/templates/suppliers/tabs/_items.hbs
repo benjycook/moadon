@@ -22,7 +22,14 @@
                       <td class="min center">{{item.displayDate}}</td>
                       <td class="min center">{{item.clubPrice}}</td>
                       <td class="min center">{{item.state}}</td>
-                      <td class="min center"><i class="fa fa-edit btn btn-primary btn-sm" {{action 'editItem' item.id items}}></i></td>
+                      <td class="min center">
+                        <i class="fa fa-edit btn btn-primary btn-sm" {{action 'editItem' item.id items}}></i>
+                        {{#if item.removable}}
+                          <i  {{action 'confirm' item.id }} class="btn btn-danger btn-sm fa fa-trash-o" style="margin-right:5px;" title="מחיקה"></i>
+                        {{else}}
+                          <i class="btn btn-danger btn-sm disabled fa fa-trash-o"  style="margin-right:5px;" title="מחיקה" ></i>
+                        {{/if}}
+                      </td>
                     </tr>
                 {{/each}}
               {{/if}}               

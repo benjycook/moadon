@@ -1,6 +1,6 @@
 <?php
 
-class SiteClubsController extends BaseController 
+class SiteClubsController extends SiteBaseController 
 {
 
 	protected function flaten($array)
@@ -33,16 +33,62 @@ class SiteClubsController extends BaseController
 		return $subjects;
 	}
 
-	public function options($slug)
+	public function login()
 	{
-		$club = Club::site()->where('urlName','=',$slug)->first();
+		$json =	Request::getContent();
+	  $data	=	json_decode($json);
 
-		if(!$club)
-			return Response::json('מועדון זה לא נמצאה במערכת',404);
+	  //print_r($this->club->clubCode);die($data->clubident);
+						
+		if($data->clubident != $this->club->clubCode)
+			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
+		
+		$cart = Cart::create(array());
+
+		$claims = array(
+			'club_id'		=> $this->club->id,
+			'user'				=> null,
+			'cart_id' 		=> $cart->id,
+			'loginType' 	=> 'club'
+		);
+
+		$token = TokenAuth::make('club', $claims);
+
+		return Response::json(compact('token', 'claims'), 200);
+	}
+
+
+	public function options()
+	{
+		// ///star token
+		// $header =	Request::header('authorization', null);
+		// if($header)
+		// {
+		// 	list($nop, $token) = explode('Bearer ', $header);
+		// }
+	
+		// $parts = explode('.', $token);
+		// if(count($parts) != 3)
+		// 	return Response::json(['error' => 'invalid token parts'], 401);
+		
+		// //verify token
+		// $data = $parts[0] . $parts[1];
+		// if(md5($data) != base64_decode($parts[2]))
+		// 	return Response::json(['error' => 'invalid token signature'], 401);
+
+		// $payload = json_decode(base64_decode($parts[1]));
+
+
+		// $club = Club::site()->where('urlName','=',$slug)->first();
+
+		// if(!$club)
+		// 	return Response::json('מועדון זה לא נמצאה במערכת',404);
+
 
 		$data = array();
-		$data['club'] = $club->toArray();
-		$data['club']['logo'] = URL::to('/')."/".$data['club']['logo'];
+	
+		$data['club'] = $this->club->toArray();
+		$data['club']['logo'] = URL::to('/')."/galleries/{$data['club']['logo']}";
 
 		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
 		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();
@@ -55,9 +101,15 @@ class SiteClubsController extends BaseController
 
 		$data['cities'] = $cities;
 
-		$suppliers = SiteDetails::where('visibleOnSite', '=', '1')
-														->where('states_id', '=', '2')
-														->has('items', '>=', '1')
+		$suppliers = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
+														->where('visibleOnSite', '=', '1')
+														->where('sitedetails.states_id', '=', '2')
+														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
+														->select(DB::raw(
+															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
+														))
+														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
+														->groupBy('sitedetails.suppliers_id')
 														->with('galleries')
 														->get()->toArray();
 		
@@ -110,11 +162,16 @@ class SiteClubsController extends BaseController
 		return $gallery;
 	}
 
-	public function supplier($slug, $id)
+	public function supplier($id)
 	{
+		// $supplier = SiteDetails::whereHas('supplier',function($q) use($id){
+		// 	$q->where('id','=',$id);
+		// })->first();
+		
 		$supplier = SiteDetails::whereHas('supplier',function($q) use($id){
 			$q->where('id','=',$id);
 		})->mini()->first();
+		
 		if(!$supplier)
 			return Response::json('ספק זה לא נמצאה במערכת',404);
 		$regions = Region::with('children')->get();
@@ -129,30 +186,67 @@ class SiteClubsController extends BaseController
 		unset($supplier['galleries']);
 		$supplier['images'] = $rawImages;
 		
-		//unset($supplier['regions_id']);
+		foreach ($supplier['items'] as $key => &$item) {
+			$rawImages = array();
+
+			$images = $supplier['items'][$key]['galleries'][0]['images'];
+			
+			foreach ($images as $image) 
+			{
+				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
+			}
+
+			if(!empty($item['priceSingle']))
+			{	
+				$item['discount'] = 100 - floor(100 / $item['listPrice'] * $item['priceSingle']);
+			}
+			else
+			{
+				$item['discount'] = 100;
+				$item['priceSingle'] = 0;
+			}
+			unset($supplier['items'][$key]['galleries']);
+			$supplier['items'][$key]['images'] = $rawImages;
+		}
+
 		unset($supplier['suppliers_id']);
 		return Response::json($supplier,200);
 	}
 
 	public function search()
 	{
+		//sleep(3);
 		$region = Input::get('region', 0);
 		$category = Input::get('category', 0);
 		$subregions = Input::get('subregions',0);
 		$subcategories = Input::get('subcategories',0);
+		$items = Input::get('items',9);
+		$page  = Input::get('page',1);
 		$name = Input::get('supplier',0);
+		$items = Input::get('items', 9);
+		$page = Input::get('page', 1);
 		//$item = Input::get('item',0);
-		$supplier = SiteDetails::mini();
+		$supplier  = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
+														->where('visibleOnSite', '=', '1')
+														->where('sitedetails.states_id', '=', '2')
+														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
+														->select(DB::raw(
+															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
+														))
+														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
+														->groupBy('sitedetails.suppliers_id')
+														->with('galleries');
+														//->get()->toArray();
 		if($category)
 		{
 			if($subcategories)
 			{
 				$subcategories = explode(',', $subcategories);
-				$temp = Category::whereIn('id', $subcategories)->with('children')->get()->toArray();
+				$temp = Category::whereIn('id', $subcategories)->with('children')->get();
 			}
 			else
 			{
-				$temp = Category::where('id', '=', $category)->with('children')->get()->toArray();
+				$temp = Category::where('id', '=', $category)->with('children')->get();
 			}
 
 			$categories = $this->flaten($temp);
@@ -167,10 +261,10 @@ class SiteClubsController extends BaseController
 			if($subregions)
 			{
 				$subregions = explode(',', $subregions);
-				$temp = Region::whereIn('id', $subregions)->with('children')->get()->toArray();
+				$temp = Region::whereIn('id', $subregions)->with('children')->get();
 			}
 			else{
-				$temp = Region::where('id', '=', $region)->with('children')->get()->toArray();
+				$temp = Region::where('id', '=', $region)->with('children')->get();
 			}
 
 			//get all regions
@@ -193,9 +287,10 @@ class SiteClubsController extends BaseController
 			$sql = $name ? "supplierName LIKE CONCAT('%',?,'%')" :'? = 0';
 			$supplier->whereRaw($sql,array($name));
 		}
-		$suppliers = $supplier->get();
 
-		$regions = Region::with('children')->get();
+		$count = $supplier->count();
+
+		$suppliers = $supplier->forPage($page, $items)->get();
 		
 		foreach ($suppliers as &$supplier) {
 			$rawImages = array();
@@ -207,6 +302,16 @@ class SiteClubsController extends BaseController
 			$supplier['images'] = $rawImages;
 		}
 
-		return Response::json($suppliers,200);
+		$data = [
+			'meta' => [
+				'pages' => ceil($count / $items)
+			],
+
+			'data' => $suppliers,
+
+			'query' => DB::getQueryLog()
+		];
+
+		return Response::json($data,200);
 	}
 }

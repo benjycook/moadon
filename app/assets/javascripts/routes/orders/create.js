@@ -4,7 +4,7 @@ App.OrdersEditController = Em.ObjectController.extend({
 
 App.OrdersCreateRoute = App.OrdersEditRoute = App.ProtectedRoute.extend({
 	controllerName:'ordersEdit',
-
+	templateName:"orders/view",
 	model: function(params)
 	{
 		if(params.orders_id)
@@ -17,30 +17,23 @@ App.OrdersCreateRoute = App.OrdersEditRoute = App.ProtectedRoute.extend({
 		ctrl.set('model', model);
 	},
 
+	// actions:
+	// {
+	// 	'realized':function(item)
+	// 	{
+	// 		item.realized.forEach(function(item){
+	// 			var dateTime = item.realizedOn.split(' ');
+	// 			item.realizedDate = dateTime[0].split('-').reverse().join('/');
+	// 			item.realizedTime = dateTime[1];
+	// 		});
+	// 		var ctrl = App.ItemController.create({model:item});
+	// 		ctrl.set('target',this);//.controllerFor('ordersEdit')
+	// 		this.render('orders/realized', {into: 'application', outlet: 'modal',controller:ctrl});
+	// 	},
 
-	renderTemplate: function()
-	{		
-		this.render('orders/index');
-		this.render('orders/modal', {into: 'application', outlet: 'modal'});
-	},
-
-	actions:
-	{
-		'realized':function(item)
-		{
-			item.realized.forEach(function(item){
-				var dateTime = item.realizedOn.split(' ');
-				item.realizedDate = dateTime[0].split('-').reverse().join('/');
-				item.realizedTime = dateTime[1];
-			});
-			var ctrl = App.ItemController.create({model:item});
-			ctrl.set('target',this);//.controllerFor('ordersEdit')
-			this.render('orders/realized', {into: 'application', outlet: 'modal',controller:ctrl});
-		},
-
-		'back':function()
-		{
-			this.render('orders/modal', {into: 'application', outlet: 'modal'});
-		},
-	}
+	// 	'back':function()
+	// 	{
+	// 		this.render('empty', {into: 'application', outlet: 'modal'});
+	// 	},
+	// }
 });

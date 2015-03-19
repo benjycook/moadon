@@ -1,0 +1,44 @@
+<div class="overlay">
+    <div class="lightbox cart">
+        <div class="close" {{action 'closeModal'}}>&times;</div>
+        
+
+        <h2 class="lightbox-title">סל הקניות שלי</h2>
+        {{#if cart.hasItems}}
+        <ul class="items cart-items">
+            {{#each item in cart}}
+                <li>
+
+                    <div class="info">
+                        <h3 class="name">{{item.supplierName}} - {{item.name}}</h3>
+                        <p class="description">{{item.description}}</p>
+                    </div>
+
+                    {{ui-qty count=item.count class="count"}}
+
+                    <div class="price">    
+                        <span class="discount">₪{{item.total}}</span>
+                    </div>
+                    
+                    <span class="remove" {{action 'removeItem' item}}>&times;</span>
+
+                </li>
+            {{/each}}
+        </ul>
+
+        <div class="cart-totals">
+            סך הכל לתשלום: ₪{{cart.total}}
+        </div>
+
+        <div class="cart-buttons">
+            <button {{action 'closeModal'}}>המשך בקניות</button>
+            <button {{action 'checkout'}}>עבור לקופה</button>
+        </div>
+        
+        {{else}}
+            <div class="empty-cart">
+                אין פריטים בסל הקניות שלך.
+            </div>
+        {{/if}}
+    </div>
+</div>
