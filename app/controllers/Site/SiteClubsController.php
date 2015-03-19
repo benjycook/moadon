@@ -104,7 +104,7 @@ class SiteClubsController extends SiteBaseController
 		$suppliers = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
 														->where('visibleOnSite', '=', '1')
 														->where('sitedetails.states_id', '=', '2')
-														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
+														->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100))')
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
 														))
@@ -228,7 +228,7 @@ class SiteClubsController extends SiteBaseController
 		//$item = Input::get('item',0);
 		$supplier  = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
 														->where('sitedetails.states_id', '=', '2')
-														->whereRaw('100 - FLOOR(items.priceSingle / items.listPrice * 100) > 1')
+														//->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100)) > 1')
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
 														))
@@ -287,7 +287,10 @@ class SiteClubsController extends SiteBaseController
 			$supplier->whereRaw($sql,array($name));
 		}
 
-		$count = $supplier->count();
+		$count = DB::select(DB::raw("
+			SELECT COUNT(*) AS aggregate FROM ({$supplier->toSql()}) AS t1
+		"), $supplier->getBindings())[0]->aggregate;
+
 
 		$suppliers = $supplier->forPage($page, $items)->get();
 		
