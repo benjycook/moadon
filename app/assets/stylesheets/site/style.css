@@ -527,7 +527,7 @@ ul.tree {
 	background: #fff;
 	border: 1px solid #e7e7ec;
 	border-radius: 5px;
-	margin-bottom: 20px;
+	/*margin-bottom: 20px;*/
 }
 
 .tree-node i.fa {
