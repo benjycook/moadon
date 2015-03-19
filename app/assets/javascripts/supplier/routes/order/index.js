@@ -32,9 +32,10 @@ App.OrderRoute = App.ProtectedRoute.extend({
 		{
 			var left = item.qty-item.realized;
 			var options = [];
-			for (var i = 1; i <=left ; i++) {
-				options.pushObject({id:i,name:i});
-			};
+			options.pushObject({id:left,name:left});
+			// for (var i = 1; i <=left ; i++) {
+			// 	options.pushObject({id:i,name:i});
+			// };
 			var ctrl = Em.ObjectController.create({model:{realizedQty:0,options:options,item:item}});
 			ctrl.set('target',this);
 			this.render('order/realize',{into: 'application',outlet: 'modal',controller:ctrl});

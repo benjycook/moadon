@@ -18,6 +18,7 @@ $domain = getenv('ROOTDOMAIN');
 if(empty($domain))
 	$domain = 'moadonofesh.co.il';
 
+
 Route::group(array('domain' => "{subdomain}.$domain"), function(){
 	Route::get('/', 'SiteIndexController@index');
 	Route::get('options', 'SiteClubsController@options');
@@ -34,8 +35,7 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 		Route::get('search', 'SiteClubsController@search');
 		Route::post('cart','SiteCartController@cart');
 		Route::post('register', 'SiteClientController@register');
-
-
+		Route::post('remined/password', 'SiteClientController@passReminder');
 		Route::group(array('before' => 'ClubClientAuth'), function(){
 
 			Route::resource('orders', 'SiteOrdersController');
@@ -100,3 +100,5 @@ Route::group(array('prefix' => 'suppliers'), function()
 
 });
 
+
+Route::get('v{key}','SiteOrdersController@viewOrder');

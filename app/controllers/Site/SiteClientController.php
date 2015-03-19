@@ -6,7 +6,6 @@ class SiteClientController extends SiteBaseController
 	public function register()
 	{
         $club = $this->club;
-
 		$json   = Request::getContent();
     	$data   = json_decode($json,true);
     	$rules = array( 
@@ -42,7 +41,10 @@ class SiteClientController extends SiteBaseController
         );
         
         $token = TokenAuth::make('client', $claims);
-
+        $data['clubUrl'] = URL::to('/');
+        Mail::send('mail.clientReg',$data,function($message) use($data){
+            $message->to($data['email'])->subject('תודה שנרשמת למועדונופש!');
+        }); 
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}
 	
@@ -101,5 +103,29 @@ class SiteClientController extends SiteBaseController
     	$client->fill($data);
     	$client->save();
     	return Response::json($client,200);
+    }
+
+
+    public function passReminder()
+    {
+        $club = $this->club;
+        $json = Request::getContent();
+        $data   =   json_decode($json,true);
+        $rules = array( 
+            'email'  => 'required|email',
+        );
+        $validator = Validator::make($data, $rules);
+        if($validator->fails()) 
+            return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים"),501);
+        
+        $client = $club->clients()->where('email','=',$data['email'])->select('id', 'firstName', 'lastName','password','email')->first();
+        if(!$client)
+            return Response::json(array('error' => 'לקוח זה לא נמצא במערכת.'),403);
+        $client = $client->toArray();
+        $client['clubUrl'] = URL::to('/');
+        Mail::send('mail.passReminder',$client,function($message) use($client){
+            $message->to($client['email'])->subject("מועדונופש- תזכורת סיסמא");
+        }); 
+        return Response::json('הסיסמא נשלחה לדו"אל שלך.',200);
     }
 }
