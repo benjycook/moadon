@@ -233,7 +233,7 @@ class SiteClubsController extends SiteBaseController
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
 														))
-														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)'), 'DESC')
+														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
 														->groupBy('sitedetails.suppliers_id')
 														->with('galleries');
 														//->get()->toArray();
