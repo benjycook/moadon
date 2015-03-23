@@ -1,4 +1,4 @@
-App.SearchController = Em.ArrayController.extend({
+App.SearchController = Em.Controller.extend({
 
   needs: ['application'],
 

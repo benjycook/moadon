@@ -20,6 +20,10 @@ App.Router.map(function(){
 		this.route('register');
 	});
 
+	this.route('newsuppliers', {path: 'בתי-עסק-חדשים'});
+	this.route('mostviewed', {path: 'הנצפים-ביותר'});
+	this.route('hotdeals', {path: 'מבצעים-חמים'});
+
 
 	this.route('supplier', {path: 'supplier/:id'});
 

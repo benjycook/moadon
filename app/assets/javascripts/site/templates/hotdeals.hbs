@@ -1,0 +1,29 @@
+{{#each supplier in model.hotdeals itemController="supplier"}}
+
+    {{#link-to 'supplier' supplier.id tagName="div" class="search box"}}
+        <div class="inner">
+            <div class="left">
+                <img {{bind-attr src="supplier.image"}} />
+                <h2>{{supplier.supplierName}}</h2>
+                <address>
+                    {{supplier.regionName}}, {{supplier.cityName}}
+                    <br />
+                    {{supplier.phone1}}
+                </address>
+                <div class="info">
+                    <span>{{supplier.discount}}% הנחה</span>
+                    {{#link-to 'supplier' supplier.id class="button"}}לפרטים{{/link-to}}
+                </div>
+            </div>
+
+            <div class="right">
+                <strong>שעות פעילות:</strong><br />
+                {{{supplier.workingHoursLines}}}<br /><br />
+                <strong>מתאים לגילאים:</strong><br />
+                {{{supplier.ageDevisionLines}}}
+            </div>
+        </div>
+    {{/link-to}}
+
+{{/each}}
+

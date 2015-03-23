@@ -4,6 +4,30 @@ App.ApplicationController = Em.ObjectController.extend({
 
 	cart: Ember.computed.alias('this.controllers.cart'),
 
+  regions: Ember.computed.alias("model.regions"),
+  categories: Ember.computed.alias("model.categories"),
+
+	newsuppliers: function(){
+		var data =  this.get('model.newsuppliers').map(function(item){
+			return item.images[0];
+		});
+		return data;
+	}.property('model.newsuppliers'),
+
+	mostviewed: function(){
+		var data =  this.get('model.mostviewed').map(function(item){
+			return item.images[0];
+		});
+		return data;
+	}.property('model.mostviewed'),
+
+	hotdeals: function(){
+		var data =  this.get('model.hotdeals').map(function(item){
+			return item.images[0];
+		});
+		return data;
+	}.property('model.hotdeals'),
+
 	flatRegions: function(){
 		var regions = this.get('regions.children');
 		var flatRegions = [];
@@ -29,6 +53,6 @@ App.ApplicationController = Em.ObjectController.extend({
 
 		return flatRegions;
 
-	}.property('regions'),
+	}.property('model.regions'),
 
 });

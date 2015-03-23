@@ -57,33 +57,24 @@ class SiteClubsController extends SiteBaseController
 		return Response::json(compact('token', 'claims'), 200);
 	}
 
+	public function images($suppliers)
+	{
+		foreach ($suppliers as &$supplier) {
+			$rawImages = array();
+			$images = $supplier['galleries'][0]['images'];
+			foreach ($images as $image) {
+				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
+			}
+			unset($supplier['galleries']);
+			$supplier['images'] = $rawImages;
+		}
+
+		return $suppliers;
+	}
+
 
 	public function options()
 	{
-		// ///star token
-		// $header =	Request::header('authorization', null);
-		// if($header)
-		// {
-		// 	list($nop, $token) = explode('Bearer ', $header);
-		// }
-	
-		// $parts = explode('.', $token);
-		// if(count($parts) != 3)
-		// 	return Response::json(['error' => 'invalid token parts'], 401);
-		
-		// //verify token
-		// $data = $parts[0] . $parts[1];
-		// if(md5($data) != base64_decode($parts[2]))
-		// 	return Response::json(['error' => 'invalid token signature'], 401);
-
-		// $payload = json_decode(base64_decode($parts[1]));
-
-
-		// $club = Club::site()->where('urlName','=',$slug)->first();
-
-		// if(!$club)
-		// 	return Response::json('מועדון זה לא נמצאה במערכת',404);
-
 
 		$data = array();
 	
@@ -101,51 +92,17 @@ class SiteClubsController extends SiteBaseController
 
 		$data['cities'] = $cities;
 
-		$suppliers = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
-														->where('visibleOnSite', '=', '1')
-														->where('sitedetails.states_id', '=', '2')
-														->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100))')
-														->select(DB::raw(
-															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
-														))
-														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
-														->groupBy('sitedetails.suppliers_id')
-														->with('galleries')
-														->get()->toArray();
-		
-		foreach ($suppliers as &$supplier) {
-			$rawImages = array();
-			$images = $supplier['galleries'][0]['images'];
-			foreach ($images as $image) {
-				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
-			}
-			unset($supplier['galleries']);
-			$supplier['images'] = $rawImages;
-		}
-		$data['suppliers'] = $suppliers;
-		// $data['mostViewed'] = SiteDetails::site()->whereHas('supplier',function($q){
-		// 	$q->where('views','>',0);
-		// 	$q->orderBy('views','DESC');
+		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
+		$data['suppliers'] = $this->images($suppliers);
 
-		// })->take(10)->get();
-
-		// $ids = Collection::make($data['mostViewed'])->lists('id');
-		// if(!count($ids))
-		// 	array_push($ids,0);
-
-		// $data['newSuppliers'] = SiteDetails::site()->whereNotIn('id',$ids)->whereHas('supplier',function($q){
-		// 	$q->orderBy('created_at','DESC');
-		// })->take(10)->get();
-
-		//$ids = array_merge($ids,Collection::make($data['newSuppliers'])->lists('id'));
+		$newsuppliers = SiteDetails::homePage('newBusiness')->forPage(1, 5)->get()->toArray();
+		$data['newsuppliers'] = $this->images($newsuppliers);
 		
-		//$suppliers = SiteDetails::site()->whereNotIn('id',$ids)->get();
+		$mostviewed = SiteDetails::homePage('mostViewed')->forPage(1, 5)->get()->toArray();
+		$data['mostviewed'] = $this->images($mostviewed);
 		
-		//$data['suppliers'] = $this->setUp($suppliers,$data['regions']);
-		
-		//$data['mostViewed'] = $this->setUp($data['mostViewed'],$data['regions']);
-		
-		//$data['newSuppliers'] = $this->setUp($data['newSuppliers'],$data['regions']);
+		$hotdeals = SiteDetails::homePage('hotDeal')->forPage(1, 5)->get()->toArray();
+		$data['hotdeals'] = $this->images($hotdeals);
 
 		return Response::json($data,200);
 	}
@@ -211,6 +168,30 @@ class SiteClubsController extends SiteBaseController
 
 		unset($supplier['suppliers_id']);
 		return Response::json($supplier,200);
+	}
+
+	public function newsuppliers()
+	{
+		$newsuppliers = SiteDetails::homePage('newBusiness')->get()->toArray();
+		$data['newsuppliers'] = $this->images($newsuppliers);		
+	
+		return Response::json($data, 200);
+	}
+
+	public function mostviewed()
+	{
+		$mostviewed = SiteDetails::homePage('mostViewed')->get()->toArray();
+		$data['mostviewed'] = $this->images($mostviewed);		
+	
+		return Response::json($data, 200);
+	}
+
+	public function hotdeals()
+	{
+		$hotdeals = SiteDetails::homePage('hotDeal')->get()->toArray();
+		$data['hotdeals'] = $this->images($hotdeals);		
+	
+		return Response::json($data, 200);
 	}
 
 	public function search()

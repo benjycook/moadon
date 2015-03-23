@@ -1,4 +1,34 @@
-{{#each supplier in suppliers itemController="supplier"}}
+<div id="top-categories">
+    <div class="box newsuppliers">
+        <div class="inner">
+
+            {{ui-slider images=newsuppliers}}
+            
+            {{#link-to 'newsuppliers'}}בתי עסק חדשים <i class="fa fa-chevron-left"></i>{{/link-to}}
+        </div>
+    </div>
+
+    <div class="box mostviewed">
+        <div class="inner">
+
+            {{ui-slider images=mostviewed}}
+
+            {{#link-to 'mostviewed'}}הנצפים ביותר <i class="fa fa-chevron-left"></i>{{/link-to}}
+        </div>
+        
+    </div>
+
+    <div class="box hotdeals">
+        <div class="inner">
+
+            {{ui-slider images=hotdeals}}
+
+            {{#link-to 'hotdeals'}}מבצעים חמים <i class="fa fa-chevron-left"></i>{{/link-to}}
+        </div>
+    </div>
+</div>
+
+{{#each supplier in model.suppliers itemController="supplier"}}
 
     <div class="box">
         <div class="inner">

@@ -1,6 +1,6 @@
 App.SupplierController = Em.ObjectController.extend({
 	
-	needs: ['application'],
+	needs: ['application', 'search'],
 
 	application: Ember.computed.alias("controllers.application"),
 

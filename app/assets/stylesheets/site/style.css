@@ -1191,3 +1191,88 @@ ul.cart-items li > div {
 	border: 1px solid #3c763d;
 	color: #3c763d;
 }
+
+#top-categories .box a {
+	display: block;
+	color: #fff;
+	height: 40px;
+	font-size: 18px;
+	text-decoration: none;
+	line-height: 36px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+#top-categories .box a .fa{
+	left: 10px;
+	position: absolute;
+	top: 11px;
+}
+
+#top-categories .newsuppliers a {
+	background-color: #06568d;
+}
+
+#top-categories .mostviewed a {
+	background-color: #0a7bbe;
+}
+
+#top-categories .hotdeals a {
+	background-color: #f9bb00;
+}
+
+#top-categories .box ul.slides {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 40px;
+	font-size: 0;
+	white-space: nowrap;
+	transition: all 0.6s ease 0s;
+}
+
+#top-categories .box ul.slides li {
+	width: 239px;
+	height: 100%;
+	display: inline-block;
+	overflow: hidden;
+}
+
+#top-categories .box ul.slides li img{
+  position: relative;
+  height: 100%;
+  width: auto;
+  right: 50%;
+  transform: translateX(50%);
+  -webkit-transform: translateX(50%);
+}
+
+#top-categories .dots {
+    bottom: 50px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+}
+
+#top-categories .dots .dot {
+	background-color: #06568D;
+	border: 1px solid #fff;
+	border-radius: 50%;
+	display: inline-block;
+	height: 10px;
+	width: 10px;
+	cursor: pointer;
+	transition: all 0.6s ease 0s;
+}
+
+#top-categories .dots .dot.active {
+	background-color: #ccc;
+	border-color: #fff;
+}
