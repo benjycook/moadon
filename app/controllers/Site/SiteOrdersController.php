@@ -79,11 +79,11 @@ class SiteOrdersController extends SiteBaseController
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
 		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
-		$msg[]	= "תודה שרכשת במועדונופש!".PHP_EOL;
+		$msg[]	= "תודה שרכשת בקופונופש!".PHP_EOL;
 		$msg[]	= "מספר הזמנתך היא: ".$order->id."".PHP_EOL;
 		$msg[]	= "לפרטי ההזמנה:".PHP_EOL;
 		$msg[]	= "$url".PHP_EOL;
-		// $msg[]  = "מועדונופש, מועדון חברים";
+		// $msg[]  = "קופונופש, מועדון חברים";
 		$msg = implode('',$msg);
 		$postUrl = Config::get('smsapi.url');
 	    $projectKey = Config::get('smsapi.key');
@@ -99,7 +99,7 @@ class SiteOrdersController extends SiteBaseController
 		$result = json_decode(curl_exec($ch),true);
 		curl_close($ch);
 		Mail::send('mail.order',$info,function($message) use($info){
-            $message->to($info['client']['email'])->subject("מועדונופש - הזמנה מס' ".$info['orderNum']);
+            $message->to($info['client']['email'])->subject("קופונופש - הזמנה מס' ".$info['orderNum']);
         }); 
 
 		return Response::json([

@@ -27,7 +27,7 @@ App.ItemsIndexController = GRID.TableController.extend({
         GRID.column('num', 				{title: '#',				style: 'min center', display: 'always'                 }),
         GRID.column('name',             {title: 'שם המוצר',     style: ''                                                  }),
         GRID.column('supplier.name',     {title: 'ספק',     style: ''                                                  }),
-        GRID.column('clubPrice', 			{title: 'מחיר מועדונופש',		style: ''												   }),
+        GRID.column('clubPrice', 			{title: 'מחיר קופונופש',		style: ''												   }),
         GRID.column('displayDate',            {title: 'בתוקף עד',     style: ''                                                  }),     
         GRID.column('actions',			{title: 'פעולות',			style: 'min center', templateName: 'items/grid/actions'  })
     ]

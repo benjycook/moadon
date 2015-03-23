@@ -4,7 +4,7 @@
 	<head>
 
 		<meta charset="utf-8">
-		<title>מועדונופש</title>
+		<title>קופונופש</title>
 		<base href='<?php echo URL::to('/'); ?>/' />
 		<?php echo stylesheet_link_tag(); ?>
 
