@@ -124,7 +124,7 @@ class SiteClientController extends SiteBaseController
         $client = $client->toArray();
         $client['clubUrl'] = URL::to('/');
         Mail::send('mail.passReminder',$client,function($message) use($client){
-            $message->to($client['email'])->subject("קופונופש - מועדון החברים: תזכורת סיסמא");
+            $message->to($client['email'])->subject("קופונופש - מועדון חברים: תזכורת סיסמא");
         }); 
         return Response::json('הסיסמא נשלחה לדו"אל שלך.',200);
     }
