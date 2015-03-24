@@ -1,0 +1,37 @@
+<div class="panel panel-default grid">
+  <div class="panel-heading">
+      <div class="panel-label">דוח מימושים</div>
+      <ul class="pull-left inlineList" >
+        <li>מ:</li>
+        <li>{{input-date-time picker="date" class="form-control" valueBinding="startDate" }}</li>
+        <li>עד:</li>
+        <li>{{input-date-time picker="date" class="form-control" valueBinding="endDate" }}</li>
+      </ul>
+  </div>
+      <table class="table table-striped table-bordered reports">
+        <thead>
+          <tr>
+            <th class="min center">תאריך</th>
+            <th class="min center">מספר הזמנה</th>
+            <th >שם פריט</th>
+            <th class="min center">כמות</th>
+            <th class="min center">תשלום</th>
+          </tr>
+        </thead>
+
+        <tbody >
+            {{#each item in model.reports}}
+                <tr>
+                  <td class="min center">{{item.realizedOn}}</td>
+                  <td class="min center">{{item.orderId}}</td>
+                  <td >{{item.name}}</td>
+                  <td class="min center">{{item.qty}}</td>
+                  <td class="min center">{{item.total}}</td>
+                </tr>
+            {{/each}}
+        </tbody>
+      </table> 
+</div>
+
+
+

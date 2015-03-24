@@ -90,10 +90,10 @@ App.Router.map(function(){
 });
 
 Em.TextField.reopen({
-  attributeBindings: ['size','data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
+  attributeBindings: ['style','size','data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
 });
 Em.TextArea.reopen({
-  attributeBindings: ['data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
+  attributeBindings: ['style','data-parsley-range','required','data-parsley-type','data-parsley-minlength','data-parsley-maxlength','readonly',"data-parsley-equalto","data-parsley-min",'data-parsley-idcheck']
 });
 Em.Select.reopen({
 	attributeBindings: ['required','pattern']

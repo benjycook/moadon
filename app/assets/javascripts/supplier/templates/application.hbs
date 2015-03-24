@@ -5,7 +5,13 @@
 				<div class="navbar navbar-default">
 
 					<ul class="nav navbar-nav">
-							<li>{{#link-to 'order' (query-params order="")}}מימושים{{/link-to}}</li>
+						<li>{{#link-to 'order' (query-params order="")}}מימושים{{/link-to}}</li>
+						<li class="dropdown">
+					      	<a href="javascript:void" class="dropdown-toggle" data-toggle="dropdown">דוחות</a>
+					      	<ul class="dropdown-menu">
+					      		<li>{{#link-to 'realizations' }}מימושים{{/link-to}}</li>
+					      	</ul>
+					    </li>
 					</ul>
 
 					

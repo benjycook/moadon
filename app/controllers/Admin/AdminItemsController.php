@@ -35,6 +35,7 @@ class AdminItemsController extends BaseController
 		$temp['main']['base'] = URL::to('/')."/galleries/";
 		$item['galleries'] = $temp;
 		$item['uploadUrl'] = '/uploadImage';
+		$item['clubCommission'] = Club::max('clubCommission');
 		return Response::json($item,200);
 	}
 	public function index()
@@ -115,6 +116,7 @@ class AdminItemsController extends BaseController
 		$item['galleries'] = $temp;
 		$item['uploadUrl'] = '/uploadImage';
 		$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));
+		$item['clubCommission'] = Club::max('clubCommission');
 		return Response::json($item,200);
 	}
 
