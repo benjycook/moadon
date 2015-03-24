@@ -1,5 +1,3 @@
-App.OrderController = Em.ObjectController.extend({
-});
 App.OrderRoute = App.ProtectedRoute.extend({
 	templateName:"order/index",
 	

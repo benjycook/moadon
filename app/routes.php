@@ -101,6 +101,7 @@ Route::group(array('prefix' => 'suppliers'), function()
 	{
 		Route::get('order/{id}','SupplierOrderController@order');
 		Route::post('realize','SupplierOrderController@realize');
+		Route::get('realizations','SupplierReportsController@realizations');
 	});
 
 });
