@@ -13,7 +13,7 @@ class SupplierReportsController extends BaseController
 		if($endDate)
 			$query->whereRaw('DATE(realizedOn) <= ?',[date('Y-m-d',strtotime(str_replace('/','-',$endDate)))]);
 		$data = [];
-		$data['reports'] = $query->get()->toArray();
+		$data['reports'] = $query->orderBy(DB::raw('DATE(realizedOn)'),'ASC')->get()->toArray();
 		$total = ['realizedOn'=>'סיכום','total'=>0]; 
 		foreach ($data['reports'] as $rep) {
 			$total['total']+= $rep['total'];
