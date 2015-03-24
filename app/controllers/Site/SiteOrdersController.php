@@ -51,7 +51,7 @@ class SiteOrdersController extends SiteBaseController
 			$info['items'][] = $orderItem;
 			OrderItem::create($orderItem->toArray());
 		}
-
+		$data['cardExp'] = $data['cardMonth']."/".$data['cardYear'];
 		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
 	      $data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
 	    else
