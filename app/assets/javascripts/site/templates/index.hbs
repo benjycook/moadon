@@ -31,20 +31,20 @@
 {{#each supplier in model.suppliers itemController="supplier"}}
 
     <div class="box">
-        <div class="inner">
+        {{#link-to 'supplier' supplier.id class='inner'}}
             <label>אטרקציות</label>
             <img {{bind-attr src="supplier.image"}} />
             <h2>{{supplier.supplierName}}</h2>
+            
             <address>
                 {{supplier.regionName}}, {{supplier.cityName}}
-                <br />
-                {{supplier.phone1}}
             </address>
+
+            <span class="info-discount">{{supplier.discount}}% הנחה</span>
             <div class="info">
-                <span>{{supplier.discount}}% הנחה</span>
-                {{#link-to 'supplier' supplier.id class="button"}}לפרטים{{/link-to}}
+                <button class="button">לרכישה ופרטים נוספים</button>
             </div>
-        </div>
+        {{/link-to}}
     </div>
 
 {{/each}}

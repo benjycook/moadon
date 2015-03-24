@@ -362,6 +362,9 @@ body
 	position: relative;
 	overflow: hidden;
 	text-align: center;
+	display: block;
+	color: #000;
+	text-decoration: none;
 }
 
 .box .inner > label{
@@ -394,18 +397,20 @@ body
 .box .inner h2 {
 	color: #06568d;
 	font-size: 18px;
-	margin: 0;
-	padding: 0;
-	line-height: 18px;
-	margin-top: 10px;
-	margin-bottom: 10px;
 	font-style: normal;
+	height: 18px;
+	line-height: 18px;
+	margin: 5px 0 10px;
+	overflow: hidden;
+	padding: 0;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 .box .inner address {
 	color: #454547;
-	font-style: normal;
 	font-size: 14px;
+	font-style: normal;
 	line-height: 16px;
 }	
 
@@ -420,16 +425,19 @@ body
   right: 2px;
 }
 
-.box .inner .info span {
+.box .inner .info span,
+.box .inner span.info-discount {
 	color: #454545;
+	display: block;
 	font-size: 18px;
 	font-weight: bold;
 	line-height: 27px;
+	padding-top: 7px;
 }
 
 
-.box .inner .info a.button {
-	width: 80px;
+.box .inner .info .button {
+	width: 100%;
 	height: 30px;
 	border-radius: 3px;
 	background-color: #1b79ba;
@@ -437,7 +445,6 @@ body
 	font-size: 14px;
 	font-weight: bold;
 	border: none;
-	float: left;
 	padding: 0;
 	text-decoration: none;
 	display: inline-block;
@@ -445,7 +452,7 @@ body
 	line-height: 27px;
 }
 
-.box .inner .info a.button:hover {
+.box .inner:hover .info .button {
 	background-color: #2192e0;
 }
 
@@ -754,8 +761,8 @@ ul.items li .name{
 ul.items li .description{
     color: #454547;
     font-size: 12px;
-    height: 60px;
-    margin: 0 0 30px;
+    height: 45px;
+    margin: 0 0 45px;
     overflow: hidden;
 }
 
@@ -782,6 +789,15 @@ ul.items li .description{
 	background-color: #1b79ba;
 }
 
+.mini-site .items .order .info-discount {
+    position: absolute;
+    text-align: center;
+    top: -40px;
+    width: 96px;
+    left: 0;
+    font-size: 20px;
+}
+
 .items .count {
     display: inline-block;
 }
@@ -798,12 +814,11 @@ ul.items li .description{
 }
 
 .items .price .discount {
-  color: #0872bb;
+  color: #000;
   display: inline-block;
-  font-size: 18px;
+  font-size: 20px;
   margin-right: 20px;
   vertical-align: middle;
-
 }
 
 .items .price .list {
@@ -876,7 +891,7 @@ ul.items li .description{
     font-size: 18px;
     height: 35px;
     line-height: 35px;
-    margin-left: 16px;
+    margin-left: 18px;
     text-align: center;
     width: 45px;
 }
@@ -1098,11 +1113,32 @@ ul.cart-items li > div {
 	margin-bottom: 15px;
 }
 
+.lightbox form .row {
+	font-size: 0;
+	margin-bottom: 15px;
+	overflow: visible;
+}
+
+.lightbox form .row .ember-chosenselect {
+	width: calc(35% - 5px) !important;
+	margin-left: 10px;
+	vertical-align: top;
+}
+
+/*.lightbox form .form-group.exp .ember-chosenselect.months {
+	margin-left: 0;
+}*/
+
+.form-control.chosen-container-single .chosen-single {
+	box-sizing: border-box;
+}
+
 .lightbox form .form-group label {
 	display: block;
 }
 
-.lightbox form .form-group input {
+.lightbox form .form-group input,
+.lightbox form .row input {
 	border: 1px solid #f4f4f4;
 	border-radius: 7px;
 	box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.7) inset;
@@ -1115,23 +1151,46 @@ ul.cart-items li > div {
 	width: 100%;
 }
 
-.overlay .lightbox.register,
-.overlay .lightbox.checkout {
-	width: 460px;
+.lightbox form .row input {
+	display: inline;
+	vertical-align: top;
+	width: calc(30% - 10px);
+}
+
+.overlay .lightbox.small,
+.overlay .lightbox.small {
+	width: 400px;
+	padding-top: 0;
 	height: auto;
 	background-image: linear-gradient(to top, #dbe2e5 10%, #e6e9eb 20%, #f0f0f0 50%, #f9f9f9 100%);
 }
 
-.overlay .lightbox.checkout h3 {
-	background-color: #ddd;
-	border: 1px solid #999;
-	border-radius: 5px;
-	color: #717171;
-	font-size: 18px;
+.overlay .lightbox.small  form {
+	margin: 0;
+	padding: 0 10px;
+	width: 100%;
+}
+
+.overlay .lightbox.small h2 {
+	margin-top: 10px;
+	color: #004D83;
+}
+
+.overlay .lightbox.small h3,
+.overlay .lightbox.small h4 {
 	font-weight: normal;
-	margin-top: 0;
-	padding: 10px;
-	text-align: center;
+	color: #666;
+	margin: 0;
+	font-size: 16.33px;
+}
+
+.overlay .lightbox.small h4 {
+	margin-bottom: 10px;
+}
+
+.overlay .lightbox.small h4 span {
+	color: #000;
+	font-weight: bold;
 }
 
 .row  {
