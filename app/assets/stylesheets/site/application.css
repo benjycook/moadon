@@ -1,5 +1,6 @@
 /**
  *= require normalize
  *= require libs/font-awesome
+ *= require chosen
  *= require_tree .
  */

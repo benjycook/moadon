@@ -7,6 +7,7 @@
 //= require libs/simple-auth-token/authenticators/token
 //= require libs/simple-auth-token/authenticators/jwt
 //= require libs/simple-auth-token/authorizers/token
+//= require libs/chosen.jquery.js
 //= require_tree initializers
 //= require application.js
 //= require router.js

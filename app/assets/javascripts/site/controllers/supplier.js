@@ -42,6 +42,22 @@ App.SupplierController = Em.ObjectController.extend({
 
 	galllery: function(){
 		return this.get('images.0');
-	}.property('images')
+	}.property('images'),
+
+	phoneNumbers: function(){
+		var parts = [];
+		var phone1 = this.get('phone1');
+		var phone2 = this.get('phone2');
+		var phone3 = this.get('phone3');
+
+		if(phone2)
+			parts.push(phone2);
+		if(phone1)
+			parts.push(phone1);
+		if(phone3)
+			parts.push(phone3);
+
+		return parts.join(', ');
+	}.property('phone1', 'phone2', 'phone3')
 
 });

@@ -103,7 +103,7 @@ class SiteOrdersController extends SiteBaseController
         }); 
 
 		return Response::json([
-			'success' => "הזמנתך בוצע בהצלחה.<br />מספר ההזמנה שלך הוא: $order->id"
+			'success' => $order->id
 			],201);
   		
 	}

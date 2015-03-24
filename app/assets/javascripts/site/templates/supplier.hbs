@@ -11,7 +11,7 @@
 					<address>
 						{{regionName}}, {{cityName}}
 						<br />
-						{{phone1}}, {{phone2}}, {{phone3}}
+						{{phoneNumbers}}
 					</address>
 				</div>
 				<div class="center">
@@ -51,10 +51,12 @@
 						<div class="order">
 							<div class="price">
 								{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
+								<span class="discount list">₪{{item.totalListPrice}}</span>
 								<span class="discount">₪{{item.total}}</span>
-								<span class="discount">{{item.discount}}% הנחה</span>
+								
 							</div>
 
+							<span class="info-discount">{{item.discount}}% הנחה</span>
 							<button class="btn" {{action 'addItem' controller supplierName}}>הוסף לסל</button>
 						</div>
 
