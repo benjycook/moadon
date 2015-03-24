@@ -33,7 +33,12 @@ App.SuppliersEditController = Em.ObjectController.extend({
 			this.set('sitedetails.description',description.substr(0,49));
 	}.observes('sitedetails.description'),
 
-	
+	supplierName:function()
+	{
+		var supplierName = this.get('sitedetails.supplierName');
+		if(supplierName&&supplierName.length>18)
+			this.set('sitedetails.supplierName',supplierName.substr(0,18));
+	}.observes('sitedetails.supplierName'),
 
 	// sortedLevel1:function()
 	// {

@@ -4,6 +4,6 @@
 	<li>פרטי הכניסה לחשבונך:</li>
 	<li>שם המשתמש: <?=$email?></li>
 	<li style="margin-bottom:10px;">סיסמא: <?=$password?></li>
-	<li>קופונופש - מועדון החברים</li>
+	<li>קופונופש - מועדון חברים</li>
 	<li><?=$clubUrl?></li>
 </ul>
