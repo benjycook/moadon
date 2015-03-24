@@ -5,17 +5,23 @@
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
 
-		  	<li>{{#link-to 'clubs'}}מועדונים{{/link-to}}</li>
-		  	<li>{{#link-to 'suppliers'}}ספקים{{/link-to}}</li>
-		  	{{!-- <li>{{#link-to 'members'}}חברי מועדון{{/link-to}}</li> --}}
-		  	{{!-- <li>{{#link-to 'items'}}מוצרים{{/link-to}}</li> --}}
+			  	<li>{{#link-to 'clubs'}}מועדונים{{/link-to}}</li>
+			  	<li>{{#link-to 'suppliers'}}ספקים{{/link-to}}</li>
+			  	{{!-- <li>{{#link-to 'members'}}חברי מועדון{{/link-to}}</li> --}}
+			  	{{!-- <li>{{#link-to 'items'}}מוצרים{{/link-to}}</li> --}}
 
-		  	<li>{{#link-to 'regions'}}אזורים{{/link-to}}</li>
-		  	<li>{{#link-to 'cities'}}ישובים{{/link-to}}</li>
-		  	<li>{{#link-to 'categories'}}קטגוריות{{/link-to}}</li>
-		  	<li>{{#link-to 'pages'}}דפים{{/link-to}}</li>
-		  	<li>{{#link-to 'clients'}}לקוחות{{/link-to}}</li>
-		  	<li>{{#link-to 'orders'}}הזמנות{{/link-to}}</li>
+			  	<li>{{#link-to 'regions'}}אזורים{{/link-to}}</li>
+			  	<li>{{#link-to 'cities'}}ישובים{{/link-to}}</li>
+			  	<li>{{#link-to 'categories'}}קטגוריות{{/link-to}}</li>
+			  	<li>{{#link-to 'pages'}}דפים{{/link-to}}</li>
+			  	<li>{{#link-to 'clients'}}לקוחות{{/link-to}}</li>
+			  	<li>{{#link-to 'orders'}}הזמנות{{/link-to}}</li>
+			  	<li class="dropdown">
+			      	<a href="javascript:void" class="dropdown-toggle" data-toggle="dropdown">דוחות</a>
+			      	<ul class="dropdown-menu">
+			      		<li>{{#link-to 'suppliersReport' }}ספקים{{/link-to}}</li>
+			      	</ul>
+			    </li>
 			</ul>
 			
 			<ul class="nav navbar-nav pull-left">

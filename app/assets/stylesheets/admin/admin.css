@@ -100,3 +100,24 @@ label.title {
   top: 27px;
   cursor: pointer;
 }
+.inlineList li
+{
+  display: inline-block;
+}
+.panel-heading ul
+{
+  margin-left: 15px;
+}
+.panel-heading .inlineList li
+{
+    padding-top: 15px;
+    vertical-align: middle;
+}
+.panel-heading .inlineList li input
+{
+  width: 100px;
+}
+table.reports tbody tr:last-of-type td
+{
+  font-weight: bold;
+}

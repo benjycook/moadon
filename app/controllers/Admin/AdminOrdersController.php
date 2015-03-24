@@ -21,7 +21,7 @@ class AdminOrdersController extends BaseController
                 'fullName'      =>$order['firstName']." ".$order['lastName'], 
                 'mobile'        =>$order['mobile'],   
                 'email'         =>$order['email'],    
-                'total'         =>number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*netPrice')),2),    
+                'total'         =>number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*priceSingle')),2),    
                 'clubName'      =>$order['club']['name'], 
                 );
         }
@@ -87,7 +87,8 @@ class AdminOrdersController extends BaseController
         $order['realized'] = [];
         $suppliers   = array();
         foreach ($order['items'] as &$item) {
-            $item['supplierName'] = $item['supplier']['supplierName'];
+            $item['supplierName'] = $item['supplier']['name'];
+            $item['total'] = $item['qty']*$item['priceSingle'];
             $suppliers[$item['supplierName']] = $item['supplier']['id'];
             unset($item['supplier']);
         }

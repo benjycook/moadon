@@ -46,7 +46,7 @@ class SiteOrdersController extends SiteBaseController
 			$orderItem->items_id = $item->items_id;
 			$orderItem->qty = $item->qty;
 			$orderItem->orders_id = $order->id;
-			$total += $orderItem->netPrice*$item->qty;
+			$total += $orderItem->priceSingle*$item->qty;
 			$orderItem->supplierName = $orderItem->supplier->name;
 			$info['items'][] = $orderItem;
 			OrderItem::create($orderItem->toArray());
