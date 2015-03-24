@@ -44,46 +44,71 @@
                     }}
                 </div>
               </div>
-
-              {{#if single}}
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>מחיר מחירון לבודד:</label>
-                    {{input type="text" class="form-control" valueBinding="listPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>מחיר קופונופש לבודד:</label>
-                    {{input type="text" class="form-control" valueBinding="clubPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>מחיר מועדון לבודד:</label>
-                    {{input type="text" class="form-control" valueBinding="priceSingle" required="required" data-parsley-type="number" data-parsley-min="1"}}
-                  </div>
-                </div>
-
-                <div class="col-md-2">
-                  <div class="form-group">
-                    <label>מחיר נט לבודד:</label>
-                    {{input type="text" class="form-control" valueBinding="netPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
-                  </div>
-                </div>
-
-              {{/if}}
             </div>
+            
+            {{#if single}}
 
+              <div class="row">
+                <div class="col-xs-12">
+                 <label class="title">בודד</label>
+                </div>
+              </div>
+
+              <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>מחיר מחירון:</label>
+                      {{input type="text" class="form-control" valueBinding="listPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>מחיר קופונופש:</label>
+                      {{input type="text" class="form-control" valueBinding="clubPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>מחיר מועדון:</label>
+                      {{input type="text" class="form-control" valueBinding="priceSingle" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>מחיר נט:</label>
+                      {{input type="text" class="form-control" valueBinding="netPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label>רווחיות:</label>
+                      {{input type="text" class="form-control" valueBinding="profitPrecent" disabled="disabled" style="direction: ltr;text-align: right;"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label>הנחה:</label>
+                      {{input type="text" class="form-control" valueBinding="discountPrecent" disabled="disabled" style="direction: ltr;text-align: right;"}}
+                    </div>
+                  </div>
+              </div>
+            {{/if}}
             {{#if group}}
+            <div class="row">
+              <div class="col-xs-12">
+               <label class="title">קבוצות</label>
+              </div>
+            </div>
               <div class="row">
                   
                    <div class="col-md-2">
                     <div class="form-group">
-                      <label>מחיר מחירון לאדם בקבוצה:</label>
+                      <label>מחיר מחירון לאדם:</label>
                       {{input type="text" class="form-control" valueBinding="listPriceGroup" required="required" data-parsley-type="number" data-parsley-min="1"}}
                     </div>
                   </div>
@@ -91,14 +116,14 @@
 
                   <div class="col-md-2">
                     <div class="form-group">
-                      <label>מחיר מועדון לקבוצה:</label>
+                      <label>מחיר מועדון:</label>
                       {{input type="text" class="form-control" valueBinding="priceGroup" required="required" data-parsley-type="number" data-parsley-min="1"}}
                     </div>
                   </div>
 
                   <div class="col-md-2">
                     <div class="form-group">
-                      <label>מחיר נט לאדם בקבוצה:</label>
+                      <label>מחיר נט לאדם:</label>
                       {{input type="text" class="form-control" valueBinding="netPriceGroup" required="required" data-parsley-type="number" data-parsley-min="1"}}
                     </div>
                   </div>
