@@ -46,12 +46,12 @@ class SiteOrdersController extends SiteBaseController
 			$orderItem->items_id = $item->items_id;
 			$orderItem->qty = $item->qty;
 			$orderItem->orders_id = $order->id;
-			$total += $orderItem->netPrice*$item->qty;
+			$total += $orderItem->priceSingle*$item->qty;
 			$orderItem->supplierName = $orderItem->supplier->name;
 			$info['items'][] = $orderItem;
 			OrderItem::create($orderItem->toArray());
 		}
-
+		$data['cardExp'] = $data['cardMonth']."/".$data['cardYear'];
 		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
 	      $data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
 	    else

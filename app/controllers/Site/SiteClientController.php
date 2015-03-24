@@ -43,7 +43,7 @@ class SiteClientController extends SiteBaseController
         $token = TokenAuth::make('client', $claims);
         $data['clubUrl'] = URL::to('/');
         Mail::send('mail.clientReg',$data,function($message) use($data){
-            $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון החברים!');
+            $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
         }); 
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}

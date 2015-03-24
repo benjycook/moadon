@@ -11,7 +11,7 @@ class SiteCartController extends SiteBaseController
 				'carts_id'=>$cart->id,
 				'items_id'=>$item->id,
 				'qty'=>$qty,
-				'price'=>$item->netPrice,
+				'price'=>$item->priceSingle,
 				));
 		}
 		else

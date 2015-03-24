@@ -38,9 +38,9 @@ App.ItemsEditController = Em.ObjectController.extend({
 		if(priceSingle==0)
 			return "0%";
 		var creditComission = priceSingle*(2/100);
-		var clubCommission  = (priceSingle-creditComission)*(clubCommissionPrecent/100);
+		var clubCommission  = (priceSingle-creditComission)*(clubCommissionPrecent/100);	
 		var income 			= priceSingle-creditComission-clubCommission;
-		var profitPrecent = 100-Math.floor(((100/income)*netPrice));
+		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
 		if(profitPrecent==Infinity||profitPrecent==-Infinity)
 			profitPrecent = 0;
 		return profitPrecent+"%";
@@ -50,7 +50,10 @@ App.ItemsEditController = Em.ObjectController.extend({
 	{
 		var priceSingle     = this.get('priceSingle') || 0;
 		var listPrice 		= this.get('listPrice') || 0;
-		return 100-Math.floor(priceSingle/listPrice*100)+"%";
+		var discountPrecent = 100-Math.floor(priceSingle/listPrice*100);
+		if(isNaN(discountPrecent))
+			return "0%";
+		return discountPrecent+"%";
 	}.property('priceSingle','listPrice'),
 });
 

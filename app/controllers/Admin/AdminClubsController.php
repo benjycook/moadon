@@ -27,11 +27,12 @@ class AdminClubsController extends BaseController
 		$items = Input::get('items',10);
 		$page  = Input::get('page',1);
 		$query = Input::get('query',0);
+		$sortOrder = Input::get('sortOrder','ASC');
+		$sortField = Input::get('sortField','id');
 		$sql = $query ? "name LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Club::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
-		$club = Club::whereRaw($sql,array($query))->skip($page*$items-$items)->take($items)->get();
-		$club = $club->toArray();
+		$club = Club::whereRaw($sql,array($query))->orderBy($sortField,$sortOrder)->forPage($page,$items)->get();
 		$meta = array(
 			'pages' => $pages,
 			'count' => $count,
