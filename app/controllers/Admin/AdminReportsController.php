@@ -18,7 +18,7 @@ class AdminReportsController extends BaseController
 							$q->on('orders_items.id','=','orders_items_id');
 							$q->where(DB::raw('DATE(realizedOn)'),'>=',$startDate);
         					$q->where(DB::raw('DATE(realizedOn)'),'<=',$endDate);
-						})->join('suppliers','suppliers.id','=','orders_items.suppliers_id')
+						})->join('suppliers','suppliers.id','=','orders_items.suppliers_id')->where(DB::raw('DATE(createdOn)'),'>=',$startDate)->where(DB::raw('DATE(createdOn)'),'<=',$endDate)
 						->select(DB::raw("suppliers.name AS supplierName,count(orders.id) AS ordersNum,sum(priceSingle*qty) AS ordersPayedTotal,sum(netPrice*qty) AS ordersNetTotal,
 								sum(if((select count(*) from orders_items where orders_id = orders.id AND fullyRealized = 0)= 0,1,0) ) AS realizedNum,sum(if(fullyRealized = 1,priceSingle*qty,0)) AS realizedPayedTotal,sum(if(fullyRealized = 1,netPrice*qty,0)) AS realizedNetTotal"));
 
