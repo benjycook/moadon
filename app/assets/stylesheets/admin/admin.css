@@ -117,7 +117,3 @@ label.title {
 {
   width: 100px;
 }
-table.reports tbody tr:last-of-type td
-{
-  font-weight: bold;
-}

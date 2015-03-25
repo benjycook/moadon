@@ -25,6 +25,16 @@ class SiteOrdersController extends SiteBaseController
 	{
 		$data = json_decode(Request::getContent(),true);
 		$items = $this->cart->items()->get();
+		$data['cardExp'] = date('m',strtotime($data['cardYear']."-".$data['cardMonth']."-01"))."/".date('y',strtotime($data['cardYear']."-01-01"));
+		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
+	     	$data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
+	    else
+	    {
+	      $date = explode('/',$data['cardExp']);
+	      $year = date('Y',strtotime($date[1]."-01-01"));
+	      $date = date('Y-m-t',strtotime($year."-".$date[0]."-01"));
+	      $data['date'] = $date;
+	    }
 		$info = [];
 		if(count($items) < 1)
 			return Response::json('לא נמצאו פריטים בסל קניות זה.',501);
@@ -51,16 +61,8 @@ class SiteOrdersController extends SiteBaseController
 			$info['items'][] = $orderItem;
 			OrderItem::create($orderItem->toArray());
 		}
-		$data['cardExp'] = $data['cardMonth']."/".$data['cardYear'];
-		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
-	      $data['cardExp'] = date("Y-m-t",strtotime('+1 years'));
-	    else
-	    {
-	      $date = explode('/',$data['cardExp']);
-	      $year = date('Y',strtotime($date[1]."-01-01"));
-	      $date = date('Y-m-t',strtotime($year."-".$date[0]."-01"));
-	      $data['date'] = $date;
-	    }
+		//card date here!!!!!!!!!!
+
 
 	    // if($data['numberOfPayments'] > 1)
 	    // 	$data['creditDealType'] = 2;
