@@ -12,18 +12,35 @@ class AdminReportsController extends BaseController
 			$endDate = date('Y-m-d',strtotime(str_replace('/','-',$endDate)));
 		if(!$startDate&&!$endDate)
 			return Response::json(['reports'=>[]],201);
-		//$orderCondition = "DATE(createdOn) >= $startDate AND DATE(createdOn) <= $endDate";
-		//$realizationCondition = "DATE(realizedOn) >= $startDate AND DATE(realizedOn) <= $endDate";
-		$query 		= Order::join('orders_items','orders.id','=','orders_id')->leftjoin('items_realizations',function($q) use($startDate,$endDate){
-							$q->on('orders_items.id','=','orders_items_id');
-							$q->where(DB::raw('DATE(realizedOn)'),'>=',$startDate);
-        					$q->where(DB::raw('DATE(realizedOn)'),'<=',$endDate);
-						})->join('suppliers','suppliers.id','=','orders_items.suppliers_id')->where(DB::raw('DATE(createdOn)'),'>=',$startDate)->where(DB::raw('DATE(createdOn)'),'<=',$endDate)
-						->select(DB::raw("suppliers.name AS supplierName,count(orders.id) AS ordersNum,sum(priceSingle*qty) AS ordersPayedTotal,sum(netPrice*qty) AS ordersNetTotal,
-								sum(if((select count(*) from orders_items where orders_id = orders.id AND fullyRealized = 0)= 0,1,0) ) AS realizedNum,sum(if(fullyRealized = 1,priceSingle*qty,0)) AS realizedPayedTotal,sum(if(fullyRealized = 1,netPrice*qty,0)) AS realizedNetTotal"));
+		$query = "select * from
+					(SELECT suppliers.name            AS supplierName,
+					        suppliers.id              AS supplierId,
+					        count(DISTINCT orders.id) AS ordersNum,
+					        sum(pricesingle * qty)    AS ordersPayedTotal,
+					        sum(netprice * qty)       AS ordersNetTotal
+					 FROM   orders
+					        INNER JOIN orders_items
+					                ON orders.id = orders_id
+					        INNER JOIN suppliers
+					                ON suppliers.id = orders_items.suppliers_id
+					 WHERE  date(createdOn) >= ?
+					        AND date(createdOn) <= ? group by supplierId) AS t1
 
+					left join
+
+					 (SELECT   sum(IF(fullyrealized = 1,1,0)) as realizedNum,
+					           suppliers.id       AS supplierId,
+					           sum(IF(fullyrealized = 1,pricesingle*qty,0)) AS realizedPayedTotal,
+					           sum(IF(fullyrealized = 1,netprice*qty,0)) AS realizedNetTotal 
+					           FROM items_realizations
+					           INNER JOIN orders_items
+					           ON         orders_items.id = orders_items_id
+					           INNER JOIN suppliers
+					           ON         suppliers.id = orders_items.suppliers_id WHERE date(realizedOn) >= ?
+					           AND        date(realizedOn) <= ? group by supplierId) AS t2
+					on t1.supplierId = t2.supplierId";
 		$data = [];
-		$data['reports'] = $query->groupBy('suppliers_id')->get()->toArray();
+		$data['reports'] = DB::select($query,[$startDate,$endDate,$startDate,$endDate]);
 		$data['queries'] = DB::getQueryLog();
 		return Response::json($data,201);
 	}
