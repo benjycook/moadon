@@ -58,7 +58,7 @@ class AccountingController extends BaseController
 			 	$subject->addChild('type',$payment['creditDealType']);
 			 	$subject->addChild('cardtype',$payment['creditCardType']);
 			 	$subject->addChild('cardnumber',substr($payment['cardNumber'],-4));
-			 	$subject->addChild('voucher',0);
+			 	$subject->addChild('voucher',$payment['voucher']);
 			 	$expDate = date('m',strtotime($payment['date']))."/".date('y',strtotime($payment['date']));
 			 	$subject->addChild('cardexp',$expDate);
 			 	$numberOfPayments = $payment['numberOfPayments']==0 ? 1:$payment['numberOfPayments'];
