@@ -51,23 +51,22 @@ class AccountingController extends BaseController
 			 	$subject->addChild('price',$item->priceSingle);
 			 	$subject->addChild('total',$item->qty*$item->priceSingle);
 			 	$subject->addChild('description',$item->description);
-			 } 
-			 $docPayments = $doc->addChild('payments');
-			 foreach ($order->payment as $payment) {
-			 	$subject =  $docPayments->addChild('payment');
-			 	$subject->addChild('type',$payment['creditDealType']);
-			 	$subject->addChild('cardtype',$payment['creditCardType']);
-			 	$subject->addChild('cardnumber',substr($payment['cardNumber'],-4));
-			 	$subject->addChild('voucher',$payment['voucher']);
-			 	$expDate = date('m',strtotime($payment['date']))."/".date('y',strtotime($payment['date']));
-			 	$subject->addChild('cardexp',$expDate);
-			 	$numberOfPayments = $payment['numberOfPayments']==0 ? 1:$payment['numberOfPayments'];
-			 	$subject->addChild('payments',$numberOfPayments);
-			 	$subject->addChild('firstpaymentsum',$payment['firstPayment']);
-			 	$subject->addChild('additionalpaymentsum',0);
-			 	$subject->addChild('total',$payment['total']);
-			 	$subject->addChild('ownerid',$payment['ownerId']);
-			 }
+			} 
+			$docPayments = $doc->addChild('payments');
+		    $temp = $order->payment;
+		 	$subject = $docPayments->addChild('payment');
+		 	$subject->addChild('type',$temp['creditDealType']);
+		 	$subject->addChild('cardtype',$temp['creditCardType']);
+		 	$subject->addChild('cardnumber',substr($temp['cardNumber'],-4));
+		 	$subject->addChild('voucher',$temp['voucher']);
+		 	$expDate = date('m',strtotime($temp['date']))."/".date('y',strtotime($temp['date']));
+		 	$subject->addChild('cardexp',$expDate);
+		 	$numberOfPayments = $temp['numberOfPayments']==0 ? 1:$temp['numberOfPayments'];
+		 	$subject->addChild('payments',$numberOfPayments);
+		 	$subject->addChild('firstpaymentsum',$temp['firstPayment']);
+		 	$subject->addChild('additionalpaymentsum',0);
+		 	$subject->addChild('total',$temp['total']);
+		 	$subject->addChild('ownerid',$temp['ownerId']);
 			$docInfo->addChild('total',$total);
 			$docInfo->addChild('orderid',$order->id);
 		}			
