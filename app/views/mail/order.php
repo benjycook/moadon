@@ -6,8 +6,11 @@
 	<?php foreach ($items as $item) { ?>
 		<li><?=$item['supplierName']?> - <?= $item['name']?> ,כמות מוזמנת: <?=$item['qty']?></li>
 	<?php } ?>
-	<li style="margin-top:10px;"><strong>יש לתאם מראש לפני הגעה.</strong></li>
-	<li><strong>יש להציג מספר הזמנה בקופה.</strong></li>
+	<li style="margin-top:10px;"><strong>יש להציג מספר הזמנה בקופה.</strong></li>
+	<li ><strong>יש לתאם מראש לפני הגעה:</strong></li>
+	<?php  foreach ($suppliers as $supplier) { ?>
+		<li><?=$supplier['supplierName']?>: <?=$supplier['phone2']?> ,<?=$supplier['city']?></li>
+	<?php }?>
 	<li style="margin-top:10px;">קופונופש - מועדון חברים</li>
 </ul>
 

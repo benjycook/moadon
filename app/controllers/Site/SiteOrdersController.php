@@ -50,17 +50,25 @@ class SiteOrdersController extends SiteBaseController
     	$client['key'] = $key;
 		$order = Order::create($client);
 		$total = 0;
-
+		$info['suppliers'] = [];
 		foreach ($items as $item) {
 			$orderItem = Item::find($item->items_id);
 			$orderItem->items_id = $item->items_id;
 			$orderItem->qty = $item->qty;
 			$orderItem->orders_id = $order->id;
 			$total += $orderItem->priceSingle*$item->qty;
-			$orderItem->supplierName = $orderItem->supplier->name;
+			$supplier = SiteDetails::where('suppliers_id','=',$orderItem->supplier->id)->first();
+			$orderItem->supplierName = $supplier->supplierName;
 			$info['items'][] = $orderItem;
+			if(!isset($info['suppliers'][$supplier->suppliers_id]))
+			{
+				$city = City::find($supplier->cities_id);
+				$supplier->city = $city->name;
+				$info['suppliers'][$supplier->suppliers_id] = $supplier;
+			}
 			OrderItem::create($orderItem->toArray());
 		}
+		
 		//card date here!!!!!!!!!!
 
 
@@ -85,7 +93,7 @@ class SiteOrdersController extends SiteBaseController
 		$msg[]	= "מספר הזמנתך היא: ".$order->id."".PHP_EOL;
 		$msg[]	= "לפרטי ההזמנה:".PHP_EOL;
 		$msg[]	= "$url".PHP_EOL;
-		// $msg[]  = "קופונופש, מועדון חברים";
+		$msg[]  = "קופונופש, מועדון חברים";
 		$msg = implode('',$msg);
 		$postUrl = Config::get('smsapi.url');
 	    $projectKey = Config::get('smsapi.key');
