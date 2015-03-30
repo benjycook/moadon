@@ -26,3 +26,6 @@ function number_format(number, decimals, dec_point, thousands_sep) {
   }
   return s.join(dec);
 }
+function replaceAt(val,index,character) {
+    return val.substr(0, index) + character + val.substr(index+character.length);
+}
