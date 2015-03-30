@@ -16,12 +16,10 @@ App.InputNumberComponent = Em.TextField.extend({
 	// }.observes('value'),
 
 
-	// _elementValueDidChange: function(){
-	// 	//e.target.value;
-	// 	//this.set('value', e.target.value);
-	// 	//console.log(this.get('value'), this.$().val());
-	// 	this.set('value', this.$().val());
-	// },
+	_elementValueDidChange: function(){
+		var val = this.$().val().replace(/[^0-9\.]+/g,'');
+		this.set('value', val);
+	},
 
 	// didInsertElement: function()
 	// {

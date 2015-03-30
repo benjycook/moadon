@@ -7,7 +7,7 @@
 		<li><?=$item['supplierName']?> - <?= $item['name']?> ,כמות מוזמנת: <?=$item['qty']?></li>
 	<?php } ?>
 	<li style="margin-top:10px;"><strong>יש להציג מספר הזמנה בקופה.</strong></li>
-	<li ><strong>יש לתאם מראש לפני הגעה:</strong></li>
+	<li style="margin-bottom:10px;"><strong>יש לתאם מראש לפני הגעה:</strong></li>
 	<?php  foreach ($suppliers as $supplier) { ?>
 		<li><?=$supplier['supplierName']?>: <?=$supplier['phone2']?> ,<?=$supplier['city']?></li>
 	<?php }?>
