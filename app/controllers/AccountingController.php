@@ -25,20 +25,18 @@ class AccountingController extends BaseController
 			return Response::json("אנא ספק מזהה.",401);
 		$start 	= date("Y-m-d H:i:s",strtotime($start));
 		$end 	= date("Y-m-d H:i:s",strtotime($end));
-		$orders = Order::with('items','payment')->whereRaw('createdOn >= ? AND createdOn <= ?',[$start,$end])->orderBy('createdOn','ASC')->get();
+		$orders = Order::with(['items'=>function($q){$q->with('sitedetails');}],'payment')->whereRaw('createdOn >= ? AND createdOn <= ?',[$start,$end])->orderBy('createdOn','ASC')->get();
 		$xml = simplexml_load_file(public_path()."/base.xml");
-		$number = 1;
 		foreach ($orders as $order) {
 			$doc = $xml->addChild('doc');
 			$docInfo = $doc->addChild('docinfo');
 			$docInfo->addChild('type',320);
-			$docInfo->addChild('number',$number);
+			$docInfo->addChild('number',$order->id+1000);
 			$client = $docInfo->addChild('client');
 			$client->addChild('firstname',$order->firstName);
 			$client->addChild('lastname',$order->lastName);
 			$client->addChild('mobile',$order->mobile);
 			$client->addChild('address',$this->address($order));
-			$number++;
 			$date = str_replace('-','',date('Y-m-d',strtotime($order->createdOn)));
 			$docInfo->addChild('date',$date);
 			$total = 0;
@@ -50,7 +48,7 @@ class AccountingController extends BaseController
 			 	$subject->addChild('quantity',$item->qty);
 			 	$subject->addChild('price',$item->priceSingle);
 			 	$subject->addChild('total',$item->qty*$item->priceSingle);
-			 	$subject->addChild('description',$item->description);
+			 	$subject->addChild('description',$item->sitedetails->supplierName." - ".$item->name);
 			} 
 			$docPayments = $doc->addChild('payments');
 		    $temp = $order->payment;

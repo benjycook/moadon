@@ -75,7 +75,7 @@ class Item extends Eloquent {
 	{
 		return $this->belongsTo('Supplier','suppliers_id','id');
 	}
-
+	
   	public function galleries()
   	{
       return $this->belongsToMany('Gallery','galleries_items', 'items_id','galleries_id')->with('images');
