@@ -1,0 +1,27 @@
+<li class="first-page" {{action 'firstPage'}}>
+	<a>
+		<i class="fa fa-chevron-right"></i><i class="fa fa-chevron-right"></i>
+	</a>
+</li>
+<li class="prev-page" {{action 'prevPage'}}>
+	<a>
+		<i class="fa fa-chevron-right"></i>
+	</a>
+</li>
+{{#each page in pagesList}}
+	<li {{bind-attr class=":page page.active:active"}}>
+		{{#link-to (query-params page=page.number)}}
+			{{page.title}}
+		{{/link-to}}
+	</li>
+{{/each}}
+<li class="next-page" {{action 'nextPage'}}>
+	<a>
+		<i class="fa fa-chevron-left"></i>
+	</a>
+</li>
+<li class="last-page" {{action 'lastPage'}}>
+	<a>
+		<i class="fa fa-chevron-left"></i><i class="fa fa-chevron-left"></i>
+	</a>
+</li>

@@ -89,20 +89,28 @@ class SiteClientController extends SiteBaseController
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}
 
+    public function userInfo()
+    {
+        $client = $this->client->toArray();
+        $client = Client::where('id','=',$client['id'])->select(['firstName','lastName','email','mobile'])->first();
+        return Response::json($client,200);
+    }
     public function updateInfo()
     {
-    	Config::set('auth.model','Client');
     	$json =	Request::getContent();
 	  	$data	=	json_decode($json,true);
-    	$client = Auth::user();
-    	$restrict = array('clubs_id','remember_token');
+        $client = $this->client->toArray();
+        $client = Client::find($client['id']);
+    	$allowed = ['firstName','lastName','email','mobile','password'];
     	foreach ($data as $key => $value) {
-    		if(in_array($key,$restrict))
+    		if(!in_array($key,$allowed))
     			unset($data[$key]);
     	}
+        if(is_null($data['password'])||$data['password']=="")
+            unset($data['password']);
     	$client->fill($data);
     	$client->save();
-    	return Response::json($client,200);
+    	return Response::json('הפרטים עודכנו בהצלחה.',200);
     }
 
 

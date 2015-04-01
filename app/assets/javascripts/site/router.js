@@ -16,7 +16,9 @@ App.Router.map(function(){
 	// });
 
 	this.resource('account', function(){
-		this.route('orders');
+		this.resource('orders',function(){
+			this.route('view',{path:':orders_id/view'});
+		});
 		this.route('register');
 	});
 

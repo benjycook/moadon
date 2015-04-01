@@ -1,0 +1,33 @@
+<form class="box order">
+			<div class="row">
+				
+				<label>הזמנה מס': {{model.id}}</label>
+
+		    	<label>הוזמן ב: {{model.createdOn}}</label>
+			
+		    	<label>סה"כ: {{model.total}}</label>
+				
+			</div>
+			<table class="orders edit">
+				<tbody>
+					{{#each supplier in model.suppliers}}
+						<tr><td colspan="4" class="supplierName">{{supplier.supplierName}}</td></tr>
+						<tr>
+							<td class="name">פריט</td>
+							<td  >כמות</td>
+							<td  >סה"כ</td>
+							<td  >סטטוס</td>
+						</tr>			
+						{{#each item in supplier.items}}
+							<tr>
+								<td class="name">{{item.name}}</td>
+								<td  >{{item.qty}}</td>
+								<td  >{{item.total}}</td>
+								<td  >{{item.realized}}</td>
+							</tr>	
+						{{/each}}
+
+					{{/each}}
+				</tbody>
+			</table>
+</form>

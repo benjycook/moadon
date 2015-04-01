@@ -11,13 +11,53 @@ class SiteOrdersController extends SiteBaseController
 
 	public function index()
 	{
-		$orders = $this->client->orders()->with('items')->get()->toArray();
-    return Response::json($orders, 200);
+		$page  = Input::get('page',1);
+		$items = 10;
+		$data  = [];
+		$count    = $this->client->orders()->count();
+		$pages	  = ceil($count/$items);
+		$data['meta'] = [
+			'page'	=>	$page,
+			'count'	=>	$count,
+			'pages'	=>	$pages,
+		];
+		$data['orders'] = $this->client->orders()->join('orders_items','orders_items.orders_id','=','orders.id')
+							->select(DB::raw('DATE(createdOn) AS createdOn,orders.id,sum(priceSingle*qty) AS total'))
+							->groupBy('orders.id')->forPage($page,$items)->get();
+		
+    	foreach ($data['orders'] as $order) {
+    		$order['createdOn'] = date('d/m/Y',strtotime($order['createdOn']));
+    		$order['total'] 	= number_format($order['total'],2);
+    	}
+    	return Response::json($data, 200);
 	}
 
 	public function show($id)
 	{
-		$order = $this->client->order()->with('items')->where('id', '=', $id);
+		$order = $this->client->orders()->with(['items'=>function($q){$q->with('sitedetails');}])->where('id', '=', $id)->first();
+		if($order)
+		{
+			$suppliers = [];
+			$total = 0;
+			foreach ($order['items'] as &$item) {
+				if(!isset($suppliers[$item['suppliers_id']]))
+					$suppliers[$item['suppliers_id']] = ['supplierName'=>$item['sitedetails']['supplierName'],'items'=>[]];
+				$realized = $item['fullyRealized']==0 ? 'לא מומש':'מומש';
+				$itemTotal = number_format($item['priceSingle']*$item['qty'],2);
+				$suppliers[$item['suppliers_id']]['items'][] = ['name'=>$item['name'],'qty'=>$item['qty'],'realized'=>$realized,'total'=>$itemTotal];
+	            $total += ($item['qty']*$item['priceSingle']);
+	        }
+	        $new = [];
+	        foreach ($suppliers as $supplier) {
+	        	$new[] = $supplier;
+	        }
+			$order = [
+				'id'			=> $order->id,
+				'createdOn'		=> date('d/m/Y',strtotime($order->createdOn)),
+				'suppliers'			=> $new,
+				'total'			=> number_format($total,2),
+			];
+		}
 		return Response::json($order, 200);
 	}
 
