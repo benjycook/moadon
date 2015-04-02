@@ -16,7 +16,6 @@ App.OrdersIndexRoute = App.UserProtectedRoute.extend({
 	setupController:function(ctrl,model)
 	{
 		ctrl.set('model',model);
-		console.log(ctrl);
 		ctrl.set('meta',model.meta);
 		window.scrollTo(0,0);
 	}

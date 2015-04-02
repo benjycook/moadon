@@ -16,7 +16,7 @@ App.AccountIndexRoute = App.UserProtectedRoute.extend({
 			}).then(function(data){
 				msg = data;
 				var session = _this.get('session');
-				session.set('client',model);
+				session.set('client',Em.copy(model));
 				_this.set('controller.model.password',null);
 			}).fail(function(data){
 				if(data.status == 500)
