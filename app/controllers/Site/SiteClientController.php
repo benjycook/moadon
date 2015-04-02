@@ -93,6 +93,7 @@ class SiteClientController extends SiteBaseController
     {
         $client = $this->client->toArray();
         $client = Client::where('id','=',$client['id'])->select(['firstName','lastName','email','mobile'])->first();
+        $client->password = "";
         return Response::json($client,200);
     }
     public function updateInfo()

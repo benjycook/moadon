@@ -7,20 +7,20 @@
 	background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%);
 	background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%);*/
 	padding: 25px;
+	min-height: 135px;
 }
 #content .box.myinfo .form-group
 {
-	display: inline-block;
-	width: 100%;
-	margin-bottom: 20px;
+	display: inline-table;
+    margin-bottom: 20px;
+    width: 47%;
 }
 #content .box.myinfo .form-group input 
 {
 	background-color: #f4f4fa;
     display: table-cell;
-    width: 48%;
 }
-#content .box.myinfo .form-group input:first-of-type
+#content .box.myinfo .form-group:nth-child(odd)
 {
 	margin-left: 25px;
 }
@@ -31,6 +31,11 @@
 
 
 /* orders table*/
+.box.myinfo .noOrders
+{
+	text-align: center;
+	color: #1b79ba;
+}
 table.orders{
 	position: relative;
 	border-spacing: 1px 10px;
@@ -104,4 +109,16 @@ table.orders.edit tbody tr td.supplierName
 table.orders.edit tbody tr td.name
 {
 	text-align: right;
+}
+.box.order .btn 
+{
+	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+    border: 2px solid #064d7c;
+    border-radius: 12px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 22px;
+    padding: 5px 15px;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }

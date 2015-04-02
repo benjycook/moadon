@@ -23,12 +23,14 @@ class SiteOrdersController extends SiteBaseController
 		];
 		$data['orders'] = $this->client->orders()->join('orders_items','orders_items.orders_id','=','orders.id')
 							->select(DB::raw('DATE(createdOn) AS createdOn,orders.id,sum(priceSingle*qty) AS total'))
-							->groupBy('orders.id')->forPage($page,$items)->get();
+							->groupBy('orders.id')->forPage($page,$items)->orderBy('createdOn','DESC')->get();
 		
     	foreach ($data['orders'] as $order) {
     		$order['createdOn'] = date('d/m/Y',strtotime($order['createdOn']));
-    		$order['total'] 	= number_format($order['total'],2);
+    		$order['total'] 	= "₪".number_format($order['total'],2);
     	}
+    	if(!count($data['orders']))
+    		$data['empty'] = "לא קיימות הזמנות בחשבונך.";
     	return Response::json($data, 200);
 	}
 
@@ -43,7 +45,7 @@ class SiteOrdersController extends SiteBaseController
 				if(!isset($suppliers[$item['suppliers_id']]))
 					$suppliers[$item['suppliers_id']] = ['supplierName'=>$item['sitedetails']['supplierName'],'items'=>[]];
 				$realized = $item['fullyRealized']==0 ? 'לא מומש':'מומש';
-				$itemTotal = number_format($item['priceSingle']*$item['qty'],2);
+				$itemTotal = "₪".number_format($item['priceSingle']*$item['qty'],2);
 				$suppliers[$item['suppliers_id']]['items'][] = ['name'=>$item['name'],'qty'=>$item['qty'],'realized'=>$realized,'total'=>$itemTotal];
 	            $total += ($item['qty']*$item['priceSingle']);
 	        }
@@ -55,7 +57,7 @@ class SiteOrdersController extends SiteBaseController
 				'id'			=> $order->id,
 				'createdOn'		=> date('d/m/Y',strtotime($order->createdOn)),
 				'suppliers'			=> $new,
-				'total'			=> number_format($total,2),
+				'total'			=> "₪".number_format($total,2),
 			];
 		}
 		return Response::json($order, 200);

@@ -1,16 +1,18 @@
-<form class="box myinfo" {{action 'update' on='submit'}}>
+{{#ui-form class="box myinfo" action='update' }}
 	<div class="form-group">
-        {{input type="text" placeholder="שם פרטי" value=model.firstName}}
-        {{input type="text" placeholder="שם משפחה" value=model.lastName}}
+        {{input type="text" placeholder="שם פרטי" value=model.firstName required="required"}} 
     </div>
-
     <div class="form-group">
-        {{input type="text" placeholder="דואר אלקטרוני" value=model.email}}
-        {{input type="text" placeholder="נייד" value=model.mobile}}
+        {{input type="text" placeholder="שם משפחה" value=model.lastName required="required"}}
     </div>
-
+    <div class="form-group">
+        {{input type="text" placeholder="דואר אלקטרוני" value=model.email required="required"}}
+    </div>
+    <div class="form-group">
+        {{input type="text" placeholder="נייד" value=model.mobile required="required"}}
+    </div>
     <div class="form-group">
         {{input type="text" placeholder="סיסמא" value=model.password}}
-        <button type="submit" >שמור</button>
     </div>
-</form>
+     <button type="submit" >שמור</button>
+{{/ui-form}}

@@ -13,10 +13,10 @@
 					{{#each supplier in model.suppliers}}
 						<tr><td colspan="4" class="supplierName">{{supplier.supplierName}}</td></tr>
 						<tr>
-							<td class="name">פריט</td>
-							<td  >כמות</td>
-							<td  >סה"כ</td>
-							<td  >סטטוס</td>
+							<td class="name"><strong>פריט</strong></td>
+							<td  ><strong>כמות</strong></td>
+							<td  ><strong>סה"כ</strong></td>
+							<td  ><strong>סטטוס</strong></td>
 						</tr>			
 						{{#each item in supplier.items}}
 							<tr>
@@ -30,4 +30,7 @@
 					{{/each}}
 				</tbody>
 			</table>
+			<div class="row">
+				{{#link-to 'orders' class="btn"}}חזור{{/link-to}}
+			</div>
 </form>

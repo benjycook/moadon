@@ -15,6 +15,8 @@ App.AccountIndexRoute = App.UserProtectedRoute.extend({
 				data: JSON.stringify(model)
 			}).then(function(data){
 				msg = data;
+				var session = _this.get('session');
+				session.set('client',model);
 				_this.set('controller.model.password',null);
 			}).fail(function(data){
 				if(data.status == 500)
