@@ -7,6 +7,9 @@ class SiteBaseController extends BaseController
 	{
 		$subdomain = array_shift($parameters);
 
+		if(empty($subdomain) || $subdomain == 'www')
+			$subdomain = 'cpnclub';
+
 		$club = Club::where('urlName','=',$subdomain)->first();
 		if(!$club)
 		{
