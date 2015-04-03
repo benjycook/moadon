@@ -16,18 +16,18 @@ App.IndexController = Em.Controller.extend({
   	return newsuppliers[0];
   }.property('model.newsupplier'),
 
-  newsupplier: function(){
-  	var newsuppliers =  this.get('model.newsuppliers').map(function(item){
+  mostviewed: function(){
+  	var mostviewed =  this.get('model.mostviewed').map(function(item){
   		return App.SupplierController.create({
   			model: item,
   			container: App.__container__
   		});
   	});
 
-  	return newsuppliers[0];
-  }.property('model.newsupplier'),
+  	return mostviewed[0];
+  }.property('model.mostviewed'),
   
-	hotdeals: function(){
+	hotdeal: function(){
 		var data =  this.get('model.hotdeals').map(function(item){
 			return item.images[0];
 		});

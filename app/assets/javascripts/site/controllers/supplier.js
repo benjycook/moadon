@@ -36,6 +36,15 @@ App.SupplierController = Em.ObjectController.extend({
 		return 'לא ידוע';
 	}.property('cities_id'),
 
+	categoryName: function()
+	{
+		var category = this.get('application.categories.children').findBy('id', this.get('mainCategory'));
+		if(category)
+			return category.name;
+
+		return false;
+	}.property('mainCategory'),
+
 	image: function(){
 		return this.get('images.0');
 	}.property('imagea'),

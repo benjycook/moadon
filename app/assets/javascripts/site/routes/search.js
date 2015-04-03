@@ -28,6 +28,10 @@ App.SearchRoute = App.ProtectedRoute.extend({
 
     subcategories: {
       refreshModel: true
+    },
+
+    q: {
+    	refreshModel: true
     }
   },
 
@@ -39,6 +43,7 @@ App.SearchRoute = App.ProtectedRoute.extend({
 		var category = params.category;
 		var subregions = params.subregions;
 		var subcategories = params.subcategories;
+		var q = params.q;
 
 		var terms = [];
 
@@ -56,6 +61,9 @@ App.SearchRoute = App.ProtectedRoute.extend({
 
 		if(subcategories && subcategories.length > 0)
 			terms.push('subcategories='+subcategories);
+
+		if(q && q.length > 0)
+			terms.push('q='+q);
 
 		return 'search?'+terms.join('&');
   },

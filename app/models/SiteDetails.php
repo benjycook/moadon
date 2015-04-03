@@ -60,7 +60,7 @@ class SiteDetails extends Eloquent {
   	return $query->with('galleries')->with('items');
   }
 
-  public function scopeHomePage($query, $filterField)
+  public function scopeHomePage($query, $filterField, $rand = false)
   {
   	// $mainCategory = "(
    //                SELECT id
@@ -84,7 +84,7 @@ class SiteDetails extends Eloquent {
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
 														))
-														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
+														->orderBy($rand ? DB::raw('RAND()') : DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
 														->groupBy('sitedetails.suppliers_id')
 														->with('galleries');
   }
