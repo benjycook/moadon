@@ -115,7 +115,7 @@ return array(
 			//new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
 		),
 		'.less' => array(
-			//new Codesleeve\AssetPipeline\Filters\LessphpFilter,
+			new Codesleeve\AssetPipeline\Filters\LessphpFilter,
 			//new Codesleeve\AssetPipeline\Filters\URLRewrite(App::make('url')->to('/')),
 			//new EnvironmentFilter(new Codesleeve\AssetPipeline\Filters\CssMinFilter, App::environment()),
 		),
