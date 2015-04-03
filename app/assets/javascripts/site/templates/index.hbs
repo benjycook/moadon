@@ -1,12 +1,28 @@
 <div id="top-categories">
-    <div class="box newsuppliers">
+    <div class="box">
+        {{#link-to 'newsuppliers' class='inner'}}
+            <label>אטרקציות</label>
+            <img {{bind-attr src="newsupplier.image"}} />
+            <h2>{{newsupplier.supplierName}}</h2>
+            
+            <address>
+                {{newsupplier.regionName}}, {{newsupplier.cityName}}
+            </address>
+
+            <span class="info-discount">{{newsupplier.discount}}% הנחה</span>
+            <div class="info">
+                <button class="button">לרכישה ופרטים נוספים</button>
+            </div>
+        {{/link-to}}
+    </div>
+{{!--     <div class="box newsuppliers">
         <div class="inner">
 
             {{ui-slider images=newsuppliers}}
             
             {{#link-to 'newsuppliers'}}בתי עסק חדשים <i class="fa fa-chevron-left"></i>{{/link-to}}
         </div>
-    </div>
+    </div> --}}
 
     <div class="box mostviewed">
         <div class="inner">
