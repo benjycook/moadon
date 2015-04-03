@@ -3,6 +3,22 @@
 class SiteClubsController extends SiteBaseController 
 {
 
+	protected function mainCategory($suppliers)
+	{
+		foreach ($suppliers as &$supplier) 
+		{
+			$categories = Category::join('categories_suppliers','categories_suppliers.categories_id','=','categories.id')
+										->whereRaw('categories_suppliers.suppliers_id = ?',[$supplier['id']])->get();
+			foreach ($categories as $category) {
+				if($category->parent_id == 0||Category::where('parent_id','=',0)->where('id','=',$category->categories_id)->count())
+				{
+					$supplier['mainCategory'] = $category->categories_id;
+					break;
+				}
+			}
+		}
+		return $suppliers;
+	}
 	protected function flaten($array)
 	{
 		$ids = array();
@@ -94,7 +110,7 @@ class SiteClubsController extends SiteBaseController
 
 		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
 		$data['suppliers'] = $this->images($suppliers);
-
+		
 		$newsuppliers = SiteDetails::homePage('newBusiness')->forPage(1, 5)->get()->toArray();
 		$data['newsuppliers'] = $this->images($newsuppliers);
 		
@@ -103,7 +119,7 @@ class SiteClubsController extends SiteBaseController
 		
 		$hotdeals = SiteDetails::homePage('hotDeal')->forPage(1, 5)->get()->toArray();
 		$data['hotdeals'] = $this->images($hotdeals);
-
+		$data['suppliers'] = $this->mainCategory($data['suppliers']);
 		return Response::json($data,200);
 	}
 

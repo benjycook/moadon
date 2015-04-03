@@ -1100,7 +1100,7 @@ ul.cart-items li > div {
 	padding: 40px 50px 0;
 }
 
-.lightbox button {
+.lightbox button,.box.myinfo button {
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
 	border: 2px solid #064d7c;
 	border-radius: 12px;
@@ -1146,7 +1146,9 @@ ul.cart-items li > div {
 }
 
 .lightbox form .form-group input,
-.lightbox form .row input {
+.lightbox form .row input,
+.box.myinfo .form-group input
+{
 	border: 1px solid #f4f4f4;
 	border-radius: 7px;
 	box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.7) inset;

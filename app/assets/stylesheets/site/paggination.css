@@ -1,0 +1,48 @@
+ul.ui-pagination { 
+	  clear: both;
+    line-height: 30px;
+    list-style: outside none none;
+    margin: 0;
+    overflow: hidden;
+    padding: 20px 0 0;
+    text-align: center;
+}
+
+ul.ui-pagination li {
+	display: inline-block;
+	padding: 0;
+	margin: 0;
+}
+
+ul.ui-pagination li a {
+	float: right;
+	color: #94846e;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+ul.ui-pagination li.page a {
+    border-radius: 50%;
+    color: #07609d;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    width: 30px;
+    font-size: 16px;
+    line-height: 27px;
+}
+
+ul.ui-pagination li.page.active a {
+    background-color: #d4efef;
+}
+
+
+ul.ui-pagination li.prev-page,
+ul.ui-pagination li.first-page {
+	margin-left: 10px;
+}
+
+ul.ui-pagination li.next-page,
+ul.ui-pagination li.last-page {
+	margin-right: 10px;
+}

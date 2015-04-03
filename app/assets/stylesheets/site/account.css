@@ -1,0 +1,124 @@
+#content .box.myinfo
+{
+	width: 100%;
+	background-color: #fff;
+
+	/*background-image: -moz-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%);
+	background-image: -webkit-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%);
+	background-image: -ms-linear-gradient( 90deg, rgb(0,0,0) 0%, rgb(255,255,255) 100%);*/
+	padding: 25px;
+	min-height: 135px;
+}
+#content .box.myinfo .form-group
+{
+	display: inline-table;
+    margin-bottom: 20px;
+    width: 47%;
+}
+#content .box.myinfo .form-group input 
+{
+	background-color: #f4f4fa;
+    display: table-cell;
+}
+#content .box.myinfo .form-group:nth-child(odd)
+{
+	margin-left: 25px;
+}
+.tree-node .active
+{
+	/*background: linear-gradient(to top, #22bdf1 0%, #fff 50%);*/
+}
+
+
+/* orders table*/
+.box.myinfo .noOrders
+{
+	text-align: center;
+	color: #1b79ba;
+}
+table.orders{
+	position: relative;
+	border-spacing: 1px 10px;
+	width: calc(100% - 60px);
+	margin: 0 auto;
+	font-size: 0;
+	background-color: #fff;
+	color:#07609d;
+}
+table.orders thead tr{
+    font-weight: bold;
+	background-color: transparent;
+	padding:8px 0 11px 0;
+	border-bottom: 1px solid transparent;
+	text-align: center;
+	height: 58px;
+
+}
+table.orders thead tr th 
+{
+	font-size: 20px;
+}
+
+table.orders tbody tr{
+	line-height: 48px;
+	font-size: 14px;
+	background-color: #fff;
+	border-bottom: 1px solid #d9dcde;
+}
+table.orders tbody tr td{
+	text-align: center;
+}
+table.orders tbody tr td i.fa:before{
+	 color: #1b79ba;
+    font-size: 25px;
+    vertical-align: middle;
+}
+/* order */
+.box.order
+{
+	width: 100%;
+	background-color: #fff;
+}
+.box.order .row
+{
+	padding: 20px 30px;
+	text-align: center;
+}
+.box.order .row label
+{
+	font-size: 18px;
+	font-weight: bold;
+	color: #1b79ba;
+	margin-left: 10px;
+}
+.box.order .row label:last-of-type
+{
+	margin-left: 0;
+}
+
+/* order table*/
+.min
+{
+	width:1%;
+}
+table.orders.edit tbody tr td.supplierName 
+{
+	font-size: 20px;
+	text-align: center;
+}
+table.orders.edit tbody tr td.name
+{
+	text-align: right;
+}
+.box.order .btn 
+{
+	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+    border: 2px solid #064d7c;
+    border-radius: 12px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 22px;
+    padding: 5px 15px;
+    text-decoration: none;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}

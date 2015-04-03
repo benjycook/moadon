@@ -1,7 +1,7 @@
 <div class="panel panel-default grid">
   <div class="panel-heading">
     <form>
-      <div class="panel-label">מימושים</div>
+      <div class="panel-label">הזמנה</div>
       <div class="search">
         {{input type="text" value=id class="search-query input-medium search" placeholder="הכנס מס' הזמנה"}}
       </div>
@@ -10,7 +10,7 @@
       </div>
     </form>
   </div>
-    {{#if items.length}}
+   {{!--  {{#if items.length}}
       <table class="table table-striped table-bordered">
         <thead>
           <tr>
@@ -34,12 +34,11 @@
                         
         </tbody>
       </table> 
-    {{else}}
-      {{#if msg}}
-          <div class="panel-body" style="background-color: #f4f4f4;text-align:center;">
-            <h2 >{{msg}}</h2>
-          </div>
-      {{/if}}
+    {{else}} --}}
+    {{#if msg}}
+        <div class="panel-body" style="background-color: #f4f4f4;text-align:center;">
+          <h2 >{{msg}}</h2>
+        </div>
     {{/if}}
 </div>
 

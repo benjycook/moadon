@@ -44,7 +44,9 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 		Route::group(array('before' => 'ClubClientAuth'), function(){
 
 			Route::resource('orders', 'SiteOrdersController');
-			Route::post('info/update', 'SiteClientController@updateInfo');
+			Route::get('info', 'SiteClientController@userInfo');
+			Route::post('update/info', 'SiteClientController@updateInfo');
+
 			//Route::get('orders', 'SiteClientController@orders');
 			//Route::get('order/{id}', 'SiteClientController@order');
 			//Route::post('purchase', 'SiteClientController@purchase');
@@ -108,3 +110,5 @@ Route::group(array('prefix' => 'suppliers'), function()
 
 
 Route::get('v{key}','SiteOrdersController@viewOrder');
+
+Route::get('orders/report','AccountingController@orders');
