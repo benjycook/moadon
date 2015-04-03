@@ -18,44 +18,45 @@ $domain = getenv('ROOTDOMAIN');
 if(empty($domain))
 	$domain = 'moadonofesh.co.il';
 
+function RegisterRouteForDomain($base)
+{ 
+	Route::group(array('domain' => $base), function(){
+		Route::get('/', 'SiteIndexController@index');
+		Route::get('options', 'SiteClubsController@options');
+		Route::post('login', 'SiteClubsController@login');
+		Route::get('logout', 'SiteClubsController@logout');
 
-Route::group(array('domain' => "{subdomain}.$domain"), function(){
-	Route::get('/', 'SiteIndexController@index');
-	Route::get('options', 'SiteClubsController@options');
-	Route::post('login', 'SiteClubsController@login');
-	Route::get('logout', 'SiteClubsController@logout');
+		Route::post('account/login', 'SiteClientController@login');
+		Route::post('account/register', 'SiteClientController@register');
+		Route::get('account/logout', 'SiteClientController@logout');
 
-	Route::post('account/login', 'SiteClientController@login');
-	Route::post('account/register', 'SiteClientController@register');
-	Route::get('account/logout', 'SiteClientController@logout');
+		Route::group(array('before' => 'ClubAuth'), function(){
 
-	Route::group(array('before' => 'ClubAuth'), function(){
+			Route::get('supplier/{id}','SiteClubsController@supplier');
+			Route::get('search', 'SiteClubsController@search');
+			Route::post('cart','SiteCartController@cart');
+			Route::post('register', 'SiteClientController@register');
+			Route::post('remined/password', 'SiteClientController@passReminder');
 
-		Route::get('supplier/{id}','SiteClubsController@supplier');
-		Route::get('search', 'SiteClubsController@search');
-		Route::post('cart','SiteCartController@cart');
-		Route::post('register', 'SiteClientController@register');
-		Route::post('remined/password', 'SiteClientController@passReminder');
+			Route::get('newsuppliers', 'SiteClubsController@newsuppliers');
+			Route::get('mostviewed', 'SiteClubsController@mostviewed');
+			Route::get('hotdeals', 'SiteClubsController@hotdeals');
 
-		Route::get('newsuppliers', 'SiteClubsController@newsuppliers');
-		Route::get('mostviewed', 'SiteClubsController@mostviewed');
-		Route::get('hotdeals', 'SiteClubsController@hotdeals');
+			Route::group(array('before' => 'ClubClientAuth'), function(){
 
-		Route::group(array('before' => 'ClubClientAuth'), function(){
+				Route::resource('orders', 'SiteOrdersController');
+				Route::get('info', 'SiteClientController@userInfo');
+				Route::post('update/info', 'SiteClientController@updateInfo');
 
-			Route::resource('orders', 'SiteOrdersController');
-			Route::get('info', 'SiteClientController@userInfo');
-			Route::post('update/info', 'SiteClientController@updateInfo');
-
-			//Route::get('orders', 'SiteClientController@orders');
-			//Route::get('order/{id}', 'SiteClientController@order');
-			//Route::post('purchase', 'SiteClientController@purchase');
-
+			});
+			
 		});
-		
-	});
 
-});
+	});
+}
+
+RegisterRouteForDomain("{subdomain}.$domain");
+RegisterRouteForDomain("$domain");
 
 Route::group(array('prefix' => 'admin'), function()
 {

@@ -27,10 +27,10 @@
 
             <div id="search">
                 <label>החברים שלנו משלמים פחות</label>
-                <div class="search-field">
+                {{#ui-form action="search" class="search-field" parslay=false}}
                     {{input type="text" placeholder="חיפוש חופשי באתר" value=search}}
-                    <button type="button" {{action 'search'}}>&gt;</button>
-                </div>
+                    <button type="submit">&gt;</button>
+                {{/ui-form}}
             </div>
 
         </div>
