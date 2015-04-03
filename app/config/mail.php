@@ -54,7 +54,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'info@dev.webt.co.il', 'name' => 'מועדונופש'),
+	'from' => array('address' => 'info@dev.webt.co.il', 'name' => 'קופונופש'),
 
 	/*
 	|--------------------------------------------------------------------------

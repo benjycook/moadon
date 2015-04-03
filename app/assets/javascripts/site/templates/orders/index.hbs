@@ -1,0 +1,27 @@
+<div class="box myinfo">
+	{{#if model.orders.length}}
+		<table class="orders">
+				<thead>
+					<tr>
+						<th>מספר הזמנה</th>
+						<th>תאריך</th>
+						<th>סך שולם</th>
+						<th>פרטים נוספים</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each order in model.orders}}
+						<tr>
+							<td>{{order.id}}</td>
+							<td>{{order.createdOn}}</td>
+							<td>{{order.total}}</td>
+							<td>{{#link-to 'orders.view' order.id}}<i class="fa fa-edit"></i>{{/link-to}}</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+			{{ui-pagination page=page pages=meta.pages}}
+	{{else}}
+		<h2 class="noOrders">{{model.empty}}</h2>
+	{{/if}}
+</div>

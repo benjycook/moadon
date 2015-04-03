@@ -1,0 +1,13 @@
+<ul class="slides">
+    {{#each image in images}}
+        <li>
+            <img {{bind-attr src="image"}} />
+        </li>
+    {{/each}}
+</ul>
+
+<div class="dots">
+	{{#each link in links}}
+		<span {{bind-attr class=":dot link.active:active"}} {{action 'setSlide' link.index}}></span>
+	{{/each}}
+</div>

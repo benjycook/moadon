@@ -14,14 +14,13 @@ class OrderItem extends Eloquent {
 		return $this->hasMany('Realized','orders_items_id','id');
 	}
 
-	// public function supplier()
-	// {
-	// 	return $this->hasOne('SiteDetails','suppliers_id','suppliers_id');
-	// }
-
 	public function supplier()
 	{
 		return $this->belongsTo('Supplier','suppliers_id','id');
+	}
+	public function sitedetails()
+	{
+		return $this->belongsTo('SiteDetails','suppliers_id','suppliers_id');
 	}
 }
 

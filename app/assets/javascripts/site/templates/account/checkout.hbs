@@ -1,16 +1,23 @@
 <div class="overlay">
-    <div class="lightbox checkout">
+    <div class="lightbox small">
         <div class="close" {{action 'closeModal'}}>&times;</div>
 
-				<h2 class="lightbox-title">קופה</h2>
 
 				<form class="box" {{action 'checkout' on='submit'}}>
 
+						<h2>קופה</h2>
+
+						<h3>שלום {{session.client.firstName}} {{session.client.lastName}},</h3>
+
 						{{#if success}}
-						  <div class="alert success">
-						      <div class="close">&times;</div>
-						      {{{success}}}
-						  </div>
+							<h4>
+								הזמנתך בוצעה בהצלחה.<br />
+								פרטי ההזמנה נשלחו אליך במייל וב-SMS.<br />
+								מספר ההזמנה שלך הוא <span>{{success}}</span><br /><br />
+								<strong>חובה להציג מספר הזמנה בהגעה לבית העסק</strong><br />
+								<strong>מומלץ לתאם מראש</strong>
+							</h4>
+
 						{{/if}}
 
 						{{#if error}}
@@ -21,9 +28,10 @@
 						{{/if}}
 
 						{{#unless success}}
-							<h3>
-								כרטיס האשראי שלך יחוייב בסכום כולל של ‎{{cart.total}}&rlm;₪
-							</h3>
+							<h4>
+								כרטיס האשראי שלך יחוייב
+								בסכום כולל של ‎<span>{{cart.total}}&rlm;₪</span>
+							</h4>
 
 					    <div class="form-group">
 					        {{input type="text" placeholder="מספר כרטיס" value=cardNumber}}
@@ -31,13 +39,21 @@
 
 					    <div class="row">
 
-						    <div class="form-group exp">
-						        {{input type="text" placeholder="תוקף" value=cardExp}}
-						    </div>
+						    		{{ui-chosen
+						    			classNames="years"
+						    			options=years
+						    			prompt="שנה"
+						    			selected=cardYear
+						    		}}
 
-						    <div class="form-group cvv">
-						        {{input type="text" placeholder="cvv" value=cvv}}
-						    </div>
+						    		{{ui-chosen
+						    			classNames="months"
+						    			options=months
+						    			prompt="חודש"
+						    			selected=cardMonth
+						    		}}
+
+										{{input type="text" placeholder="CVV" value=cvv}}
 						  
 						  </div>
 
@@ -49,7 +65,7 @@
 							<button {{action 'openCart'}}>חזור לסל</button>
 					    <button {{action 'pay'}}>שלם</button>
 				    {{else}}
-				    	<button {{action 'closeModal'}}>סגור</button>
+				    	<button  style="display: block; margin: 0 auto 20px;" {{action 'closeModal'}}>סגור</button>
 				    {{/unless}}
 				</form>
 

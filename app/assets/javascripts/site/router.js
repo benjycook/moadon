@@ -16,9 +16,15 @@ App.Router.map(function(){
 	// });
 
 	this.resource('account', function(){
-		this.route('orders');
+		this.resource('orders',function(){
+			this.route('view',{path:':orders_id/view'});
+		});
 		this.route('register');
 	});
+
+	this.route('newsuppliers', {path: 'בתי-עסק-חדשים'});
+	this.route('mostviewed', {path: 'הנצפים-ביותר'});
+	this.route('hotdeals', {path: 'מבצעים-חמים'});
 
 
 	this.route('supplier', {path: 'supplier/:id'});

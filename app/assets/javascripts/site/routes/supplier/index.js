@@ -22,7 +22,7 @@ App.SupplierRoute = Em.Route.extend({
 		this.render('search/sidebar', {
 			into: 'application', 
 			outlet: 'search',
-			controller: appCtrl
+			controller: this.controllerFor('search')
 		});
 	},
 

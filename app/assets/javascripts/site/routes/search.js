@@ -95,7 +95,6 @@ App.SearchRoute = App.ProtectedRoute.extend({
 		ctrl.set('model', model.data);
 		ctrl.set('loadingCategory', null);
 		ctrl.set('loadingRegion', null);
-	
 	},
 
 	actions: {

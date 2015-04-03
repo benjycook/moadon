@@ -59,4 +59,33 @@ class SiteDetails extends Eloquent {
   {
   	return $query->with('galleries')->with('items');
   }
+
+  public function scopeHomePage($query, $filterField)
+  {
+  	// $mainCategory = "(
+   //                SELECT id
+   //                FROM   categories
+   //                WHERE  id IN (
+   //                               (
+   //                               SELECT DISTINCT parent_id
+   //                               FROM            categories
+   //                               WHERE           id IN
+   //                                               (
+   //                                                      SELECT categories_id
+   //                                                      FROM   categories_suppliers
+   //                                                      WHERE  suppliers_id = sitedetails.suppliers_id)))
+   //                AND    parent_id=0 LIMIT 1) AS mainCategory,";
+
+
+  	return $query->join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
+  													->where($filterField, '=', '1')
+														->where('sitedetails.states_id', '=', '2')
+														->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100))')
+														->select(DB::raw(
+															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
+														))
+														->orderBy(DB::raw('MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100))'), 'DESC')
+														->groupBy('sitedetails.suppliers_id')
+														->with('galleries');
+  }
 }

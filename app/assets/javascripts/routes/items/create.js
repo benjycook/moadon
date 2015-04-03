@@ -26,7 +26,35 @@ App.ItemsEditController = Em.ObjectController.extend({
 			test = test.substr(0,14);
 		this.set(key,test);
 		this.set('changed',true);
-	}.observes('name','shortDescription','description')
+	}.observes('name','shortDescription','description'),
+
+	profitPrecent:function()
+	{
+		var clubCommissionPrecent  = this.get('clubCommission');
+		var priceSingle     = this.get('priceSingle') || 0;
+		var netPrice 		= this.get('netPrice') || 0;
+		if(netPrice==0)
+			return "100%";
+		if(priceSingle==0)
+			return "0%";
+		var creditComission = priceSingle*(2/100);
+		var clubCommission  = (priceSingle-creditComission)*(clubCommissionPrecent/100);	
+		var income 			= priceSingle-creditComission-clubCommission;
+		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
+		if(profitPrecent==Infinity||profitPrecent==-Infinity)
+			profitPrecent = 0;
+		return profitPrecent+"%";
+	}.property('priceSingle','netPrice'),
+
+	discountPrecent:function()
+	{
+		var priceSingle     = this.get('priceSingle') || 0;
+		var listPrice 		= this.get('listPrice') || 0;
+		var discountPrecent = 100-Math.floor(priceSingle/listPrice*100);
+		if(isNaN(discountPrecent))
+			return "0%";
+		return discountPrecent+"%";
+	}.property('priceSingle','listPrice'),
 });
 
 

@@ -36,10 +36,17 @@ Route::group(array('domain' => "{subdomain}.$domain"), function(){
 		Route::post('cart','SiteCartController@cart');
 		Route::post('register', 'SiteClientController@register');
 		Route::post('remined/password', 'SiteClientController@passReminder');
+
+		Route::get('newsuppliers', 'SiteClubsController@newsuppliers');
+		Route::get('mostviewed', 'SiteClubsController@mostviewed');
+		Route::get('hotdeals', 'SiteClubsController@hotdeals');
+
 		Route::group(array('before' => 'ClubClientAuth'), function(){
 
 			Route::resource('orders', 'SiteOrdersController');
-			Route::post('info/update', 'SiteClientController@updateInfo');
+			Route::get('info', 'SiteClientController@userInfo');
+			Route::post('update/info', 'SiteClientController@updateInfo');
+
 			//Route::get('orders', 'SiteClientController@orders');
 			//Route::get('order/{id}', 'SiteClientController@order');
 			//Route::post('purchase', 'SiteClientController@purchase');
@@ -75,7 +82,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('sitedetails','AdminSiteDetailsController');
 		Route::post('sitedetails/minisite/{id}','AdminSiteDetailsController@miniSite');
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
-
+		Route::get('suppliersReport','AdminReportsController@suppliersReport');
 		Route::resource('pages','AdminPagesController');
 	});
 
@@ -96,9 +103,12 @@ Route::group(array('prefix' => 'suppliers'), function()
 	{
 		Route::get('order/{id}','SupplierOrderController@order');
 		Route::post('realize','SupplierOrderController@realize');
+		Route::get('realizations','SupplierReportsController@realizations');
 	});
 
 });
 
 
 Route::get('v{key}','SiteOrdersController@viewOrder');
+
+Route::get('orders/report','AccountingController@orders');

@@ -11,10 +11,6 @@ App.ItemController = Em.ObjectController.extend({
 		return App.states.findBy('id',states_id).name;
 	}.property('states_id'),
 
-	total:function()
-	{
-		return number_format(this.get('netPrice')*this.get('qty'),2);
-	}.property('content'),
 	// lengthTest:function(obj,key)
 	// {
 	// 	var name = this.get('name');

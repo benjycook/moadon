@@ -12,7 +12,7 @@
 			<title><?= $club->name ?></title>
 		<?php }
 		else { ?>
-			<title>מועדונופש</title>
+			<title>קופונופש</title>
 		<?php } ?>	
 	</head>
 

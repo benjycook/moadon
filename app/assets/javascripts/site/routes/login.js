@@ -11,6 +11,7 @@ App.LoginRoute = Em.Route.extend({
 	renderTemplate: function()
 	{
 		var appCtrl = this.controllerFor('application');
+		var indexCtrl = this.controllerFor('index');
 
 		this.render('index', {
 			into: 'application', 

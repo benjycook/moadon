@@ -33,7 +33,12 @@ App.SuppliersEditController = Em.ObjectController.extend({
 			this.set('sitedetails.description',description.substr(0,49));
 	}.observes('sitedetails.description'),
 
-	
+	supplierName:function()
+	{
+		var supplierName = this.get('sitedetails.supplierName');
+		if(supplierName&&supplierName.length>18)
+			this.set('sitedetails.supplierName',supplierName.substr(0,18));
+	}.observes('sitedetails.supplierName'),
 
 	// sortedLevel1:function()
 	// {
@@ -83,7 +88,14 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			name: 'root element',
 			children: model.categories
 		};
-
+		var items = [];
+		var self = this;
+		model.items.forEach(function(item){
+			var ctrl = App.ItemController.create({model:item})
+			ctrl.set('target',self);
+			items.pushObject(ctrl);
+		});
+		model.items = items;
 		ctrl.set('model',model);
 	},
 
@@ -91,8 +103,10 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 	actions:
 	{
 
-		'editItem':function(id,items)
+		'editItem':function(item)
 		{
+			console.log(item);
+			var id = item.id;
 			if(id)
 			{
 				var self =this;
@@ -149,9 +163,13 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			}).then(function(data){
 				var item = items.findBy('id',data.id);
 				if(item == undefined)
-					items.pushObject(data);
+				{
+					item = App.ItemController.create({model:data});
+					item.set('target',self);
+					items.pushObject(item);
+				}
 				else
-					item.galleries = data.galleries;
+					item.set('model',data);
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');

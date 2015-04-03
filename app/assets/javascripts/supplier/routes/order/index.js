@@ -1,5 +1,3 @@
-App.OrderController = Em.ObjectController.extend({
-});
 App.OrderRoute = App.ProtectedRoute.extend({
 	templateName:"order/index",
 	
@@ -18,28 +16,34 @@ App.OrderRoute = App.ProtectedRoute.extend({
 		{
 			var self = this;
 			$.getJSON('order/'+id).then(function(data){
-				self.set('controller.model',data);
+				self.set('controller.model',{});
+				var ctrl = Em.ObjectController.create({model:data});
+				ctrl.set('target',self);
+				self.render('order/realize',{into: 'application',outlet: 'modal',controller:ctrl});
 			}).fail(function(data){
 				if(data.status == 500)
-					var model = {msg:"אנא נסה שנית או פנה לתמיכה טכנית"};
+					var msg = {msg:"אנא נסה שנית או פנה לתמיכה טכנית"};
 				else
-					var model = data.responseJSON
-				self.set('controller.model',data);
+					var msg = data.responseJSON.msg;
+				self.set('controller.model',{msg:msg});
 			});
 		},
-
-		'selectQty':function(item)
+		'close':function(controller)
 		{
-			var left = item.qty-item.realized;
-			var options = [];
-			options.pushObject({id:left,name:left});
-			// for (var i = 1; i <=left ; i++) {
-			// 	options.pushObject({id:i,name:i});
-			// };
-			var ctrl = Em.ObjectController.create({model:{realizedQty:0,options:options,item:item}});
-			ctrl.set('target',this);
-			this.render('order/realize',{into: 'application',outlet: 'modal',controller:ctrl});
+			controller.set('error',null);
 		},
+		// 'selectQty':function(item)
+		// {
+		// 	var left = item.qty-item.realized;
+		// 	var options = [];
+		// 	options.pushObject({id:left,name:left});
+		// 	// for (var i = 1; i <=left ; i++) {
+		// 	// 	options.pushObject({id:i,name:i});
+		// 	// };
+		// 	var ctrl = Em.ObjectController.create({model:{realizedQty:0,options:options,item:item}});
+			
+		// 	this.render('order/realize',{into: 'application',outlet: 'modal',controller:ctrl});
+		// },
 		'closeWindow':function()
 		{
 			this.render('empty',{into: 'application',outlet: 'modal'});
@@ -57,14 +61,7 @@ App.OrderRoute = App.ProtectedRoute.extend({
 				url: 'realize',
 				data: JSON.stringify(model)
 			}).then(function(data){
-				App.set('logedin',true);
-				App.set('user',data.user);
-				self.render('empty', {
-					  into: 'application',
-					  outlet: 'modal'
-					});
 				self.send('closeWindow');
-				self.send('load',model.item.orders_id);
 			}).fail(function(data){
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
