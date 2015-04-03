@@ -110,16 +110,17 @@ class SiteClubsController extends SiteBaseController
 
 		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
 		$data['suppliers'] = $this->images($suppliers);
-		
-		$newsuppliers = SiteDetails::homePage('newBusiness')->forPage(1, 5)->get()->toArray();
+		$data['suppliers'] = $this->mainCategory($data['suppliers']);
+
+		$newsuppliers = SiteDetails::homePage('newBusiness', true)->forPage(1, 1)->get()->toArray();
 		$data['newsuppliers'] = $this->images($newsuppliers);
 		
-		$mostviewed = SiteDetails::homePage('mostViewed')->forPage(1, 5)->get()->toArray();
+		$mostviewed = SiteDetails::homePage('mostViewed', true)->forPage(1, 1)->get()->toArray();
 		$data['mostviewed'] = $this->images($mostviewed);
 		
-		$hotdeals = SiteDetails::homePage('hotDeal')->forPage(1, 5)->get()->toArray();
+		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
 		$data['hotdeals'] = $this->images($hotdeals);
-		$data['suppliers'] = $this->mainCategory($data['suppliers']);
+
 		return Response::json($data,200);
 	}
 
@@ -222,6 +223,7 @@ class SiteClubsController extends SiteBaseController
 		$name = Input::get('supplier',0);
 		$items = Input::get('items', 9);
 		$page = Input::get('page', 1);
+		$query = Input::get('q', 0);
 		//$item = Input::get('item',0);
 		$supplier  = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
 														->where('sitedetails.states_id', '=', '2')
@@ -233,6 +235,11 @@ class SiteClubsController extends SiteBaseController
 														->groupBy('sitedetails.suppliers_id')
 														->with('galleries');
 														//->get()->toArray();
+		if($query)
+		{
+			$supplier->where('sitedetails.supplierName', 'LIKE', "%$query%");
+		}
+
 		if($category)
 		{
 			if($subcategories)

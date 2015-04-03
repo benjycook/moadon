@@ -22,7 +22,12 @@ App.SearchController = Em.Controller.extend({
 
     subcategories: {
       replace: true
+    },
+
+    q: {
+      replace: true
     }
+    
   },
 
   hesMore: function()

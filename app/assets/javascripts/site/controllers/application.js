@@ -7,6 +7,7 @@ App.ApplicationController = Em.ObjectController.extend({
   regions: Ember.computed.alias("model.regions"),
   categories: Ember.computed.alias("model.categories"),
 
+
 	newsuppliers: function(){
 		var data =  this.get('model.newsuppliers').map(function(item){
 			return item.images[0];
@@ -54,5 +55,11 @@ App.ApplicationController = Em.ObjectController.extend({
 		return flatRegions;
 
 	}.property('model.regions'),
+
+	actions: {
+		search: function(){
+			this.transitionToRoute('search', {queryParams: {q: this.get('search')}});
+		}
+	}
 
 });
