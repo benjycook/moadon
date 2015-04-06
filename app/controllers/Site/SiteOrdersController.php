@@ -23,7 +23,7 @@ class SiteOrdersController extends SiteBaseController
 		];
 		$data['orders'] = $this->client->orders()->join('orders_items','orders_items.orders_id','=','orders.id')
 							->select(DB::raw('DATE(createdOn) AS createdOn,orders.id,sum(priceSingle*qty) AS total'))
-							->groupBy('orders.id')->forPage($page,$items)->orderBy('createdOn','DESC')->get();
+							->groupBy('orders.id')->forPage($page,$items)->orderBy('orders.id','DESC')->get();
 		
     	foreach ($data['orders'] as $order) {
     		$order['createdOn'] = date('d/m/Y',strtotime($order['createdOn']));
