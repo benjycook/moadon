@@ -18,12 +18,16 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 
 	actions: {
 		'closeModal': function(){
-			this.disconnectOutlet({
-	      outlet: 'lightbox',
-	      parentView: 'application'
-	    });
+				this.disconnectOutlet({
+		      outlet: 'lightbox',
+		      parentView: 'application'
+		    });
 		},
-
+		'close':function(ctrl)
+		{
+			ctrl.set('model.success',false);
+			ctrl.set('model.error',false);
+		},
 		'addItem': function(item, supplierName)
 		{
 			var cartCtrl = this.controllerFor('cart');
@@ -76,6 +80,21 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			});
 
 			this.render('account/modal', {
+				into: 'application',
+				outlet: 'lightbox',
+				controller: ctrl
+			});
+		},
+
+		'openPassReminder': function()
+		{
+			var ctrl = this.controllerFor('account.register');
+
+			ctrl.set('model', {
+				email: '',
+			});
+
+			this.render('account/restore', {
 				into: 'application',
 				outlet: 'lightbox',
 				controller: ctrl

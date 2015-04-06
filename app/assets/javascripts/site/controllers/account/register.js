@@ -60,6 +60,21 @@ App.AccountRegisterController = Em.ObjectController.extend(SimpleAuth.LoginContr
 			});
 		},
 
+		'restore': function(){
+			var _this = this;
+			var model = this.get('model');
+			$.ajax({
+				type: 'POST',
+				url: 'account/restore',
+				data: JSON.stringify(model)
+			}).then(function(data){
+				_this.set('model',{success:data});
+			}).fail(function(data){
+				var data = data.responseJSON;
+				_this.set('error', data.error);
+			});
+		},
+
 		'openLogin': function(){
 			this.set('showLogin', true);
 		},

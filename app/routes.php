@@ -28,6 +28,7 @@ function RegisterRouteForDomain($base)
 
 		Route::post('account/login', 'SiteClientController@login');
 		Route::post('account/register', 'SiteClientController@register');
+		Route::post('account/restore', 'SiteClientController@restore');
 		Route::get('account/logout', 'SiteClientController@logout');
 
 		Route::group(array('before' => 'ClubAuth'), function(){
