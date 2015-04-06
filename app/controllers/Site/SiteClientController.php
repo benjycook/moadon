@@ -21,7 +21,7 @@ class SiteClientController extends SiteBaseController
         $validator = Validator::make($data, $rules);
 
         if($validator->fails()) 
-            return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים"),501);
+            return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים"),501);
 
     	if(isset($data['taxId'])&&Client::where('taxId','=',$data['taxId'])->where('id','=',$club->id)->count())
     		return Response::json(array('error'=>'ת"ז זו כבר קיימת במערכת'),501);
@@ -67,7 +67,7 @@ class SiteClientController extends SiteBaseController
 
         $validator = Validator::make($data, $rules);
         if($validator->fails()) 
-            return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים"),501);
+            return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים."),501);
 	  	
         $client = $club->clients()->where('email','=',$data['email'])
                                   ->where('password','=',$data['password'])
@@ -75,7 +75,7 @@ class SiteClientController extends SiteBaseController
  
 
 		if(!$client)
-			return Response::json(array('error' => 'לקוח זה לא נמצא במערכת.'),403);
+			return Response::json(array('error' => 'שם משתמש או סיסמא אינם נכונים.'),403);
         
         $this->bindCart($client->id);
 
@@ -125,7 +125,7 @@ class SiteClientController extends SiteBaseController
         );
         $validator = Validator::make($data, $rules);
         if($validator->fails()) 
-            return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים"),501);
+            return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים"),501);
         
         $client = $club->clients()->where('email','=',$data['email'])->select('id', 'firstName', 'lastName','password','email')->first();
         if(!$client)
