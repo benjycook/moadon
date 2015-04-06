@@ -13,6 +13,7 @@ App.UiFormComponent = Em.Component.extend({
     submit: function()
     {
         this.sendAction();
+        return false;
     }
 
 });
