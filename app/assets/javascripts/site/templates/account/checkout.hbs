@@ -7,6 +7,13 @@
 
 						<h2>קופה</h2>
 
+						{{#if error}}
+						  <div class="alert error">
+						      <div class="close" {{action 'close' controller}}>&times;</div>
+						      {{error}}
+						  </div>
+						{{/if}}
+
 						<h3>שלום {{session.client.firstName}} {{session.client.lastName}},</h3>
 
 						{{#if success}}
@@ -20,12 +27,7 @@
 
 						{{/if}}
 
-						{{#if error}}
-						  <div class="alert error">
-						      <div class="close">&times;</div>
-						      {{error}}
-						  </div>
-						{{/if}}
+						
 
 						{{#unless success}}
 							<h4>
@@ -62,8 +64,8 @@
 					        {{input type="text" placeholder="תעודת זהות של בעל הכרטיס" value=ownerId}}
 					    </div>
 
-							<button {{action 'openCart'}}>חזור לסל</button>
-					    <button {{action 'pay'}}>שלם</button>
+							<button {{action 'openCart'}} type='button'>חזור לסל</button>
+					    <button {{action 'pay'}} type='submit'>שלם</button>
 				    {{else}}
 				    	<button  style="display: block; margin: 0 auto 20px;" {{action 'closeModal'}}>סגור</button>
 				    {{/unless}}

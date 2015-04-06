@@ -166,7 +166,7 @@ class SiteClientController extends SiteBaseController
                      'clubUrl'      =>  URL::to('/'),
                      ), function($message) use($result) 
                     {
-                        $message->to($result->email)->subject('תזכורת סיסמא');
+                        $message->to($result->email)->subject('תזכורת סיסמא-קופונופש מועדון חברים');
                     });
                     return Response::json('הסיסמא נשלחה לדוא"ל שלך', 200);
                 }

@@ -71,8 +71,12 @@ App.AccountRegisterController = Em.ObjectController.extend(SimpleAuth.LoginContr
 				_this.set('model',{success:data});
 			}).fail(function(data){
 				var data = data.responseJSON;
-				_this.set('error', data.error);
+				if(data==undefined)
+					_this.set('error', 'במהל הפעולה אירע שגיאה אנא פנה לתמיכה טכנית.');
+				else
+					_this.set('error', data.error);
 			});
+			return false;
 		},
 
 		'openLogin': function(){
