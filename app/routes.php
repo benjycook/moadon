@@ -22,7 +22,7 @@ function RegisterRouteForDomain($base)
 { 
 	Route::group(array('domain' => $base), function(){
 		Route::get('/', 'SiteIndexController@index');
-		Route::get('options', 'SiteClubsController@options');
+		Route::get('site/options', 'SiteClubsController@options');
 		Route::post('login', 'SiteClubsController@login');
 		Route::get('logout', 'SiteClubsController@logout');
 

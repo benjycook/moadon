@@ -90,4 +90,13 @@ class SiteBaseController extends BaseController
 		else
 			$this->cart = null;
 	}
+
+	protected function _getCart()
+	{
+		$cart = CartItem::where('carts_id','=',$this->payload['cart_id'])->join('items','items.id','=','items_id')
+						->join('sitedetails','items.suppliers_id','=','sitedetails.suppliers_id')
+						->select(DB::raw('supplierName,priceSingle,items.name,carts_items.qty,items.priceSingle,carts_items.items_id AS id,items.description,carts_items.carts_id'))
+						->groupBy('items_id')->get();
+		return $cart;
+	}
 }

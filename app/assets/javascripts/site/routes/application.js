@@ -1,11 +1,9 @@
 App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
-
-	model: function(){
-		return $.getJSON('options');
+	model:function()
+	{
+		return this.get('options');
 	},
-
-	setupController: function(ctrl, model){
-		
+	setupController: function(ctrl,model){
 		model.categories = {children: model.categories};
 		
 		model.regions = {
