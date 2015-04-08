@@ -1345,3 +1345,8 @@ ul.cart-items li > div {
 	background-color: #ccc;
 	border-color: #fff;
 }
+
+.box.mostviewed:hover,.box.newsuppliers:hover,.box.hotdeals:hover
+{
+	cursor: pointer;
+}
