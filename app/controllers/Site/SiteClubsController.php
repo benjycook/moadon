@@ -119,7 +119,7 @@ class SiteClubsController extends SiteBaseController
 		$data['mostviewed'] = $this->images($mostviewed);
 		
 		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
-		$data['hotdeals'] = $this->images($hotdeals);
+		$data['hotdeal'] = $this->images($hotdeals);
 
 		return Response::json($data,200);
 	}

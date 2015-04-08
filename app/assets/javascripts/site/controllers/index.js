@@ -28,10 +28,13 @@ App.IndexController = Em.Controller.extend({
   }.property('model.mostviewed'),
   
 	hotdeal: function(){
-		var data =  this.get('model.hotdeals').map(function(item){
-			return item.images[0];
-		});
-		return data;
-	}.property('model.hotdeals'),
+		var hotdeal =  this.get('model.hotdeal').map(function(item){
+		    return App.SupplierController.create({
+        model: item,
+        container: App.__container__
+      });
+    });
+		return hotdeal[0];
+	}.property('model.hotdeal'),
 
 });
