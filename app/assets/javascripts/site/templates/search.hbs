@@ -1,39 +1,43 @@
-{{#each supplier in model itemController="supplier"}}
+{{#if model.length}}
+    {{#each supplier in model itemController="supplier"}}
 
-    {{#link-to 'supplier' supplier.id tagName="div" class="search box"}}
-        <div class="inner">
-            <div class="left">
-                <img {{bind-attr src="supplier.image"}} />
-                <h2>{{supplier.supplierName}}</h2>
-                <address>
-                    {{supplier.regionName}}, {{supplier.cityName}}
-                    <br />
-                    {{supplier.phone2}}
-                </address>
-                <div class="info">
-                    <span>{{supplier.discount}}% הנחה</span>
-                    {{#link-to 'supplier' supplier.id class="button"}}לרכישה ופרטים נוספים{{/link-to}}
+        {{#link-to 'supplier' supplier.id tagName="div" class="search box"}}
+            <div class="inner">
+                <div class="left">
+                    <img {{bind-attr src="supplier.image"}} />
+                    <h2>{{supplier.supplierName}}</h2>
+                    <address>
+                        {{supplier.regionName}}, {{supplier.cityName}}
+                        <br />
+                        {{supplier.phone2}}
+                    </address>
+                    <div class="info">
+                        <span>{{supplier.discount}}% הנחה</span>
+                        {{#link-to 'supplier' supplier.id class="button"}}לרכישה ופרטים נוספים{{/link-to}}
+                    </div>
+                </div>
+
+                <div class="right">
+                    <strong>שעות פעילות:</strong><br />
+                    {{{supplier.workingHoursLines}}}<br /><br />
+                    <strong>מתאים לגילאים:</strong><br />
+                    {{{supplier.ageDevisionLines}}}
                 </div>
             </div>
+        {{/link-to}}
 
-            <div class="right">
-                <strong>שעות פעילות:</strong><br />
-                {{{supplier.workingHoursLines}}}<br /><br />
-                <strong>מתאים לגילאים:</strong><br />
-                {{{supplier.ageDevisionLines}}}
-            </div>
+    {{/each}}
+
+    {{#search-scroll content=model hasMore=hesMore}}
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
         </div>
-    {{/link-to}}
-
-{{/each}}
-
-{{#search-scroll content=model hasMore=hesMore}}
-    <div class="spinner">
-        <div class="rect1"></div>
-        <div class="rect2"></div>
-        <div class="rect3"></div>
-        <div class="rect4"></div>
-        <div class="rect5"></div>
-    </div>
-{{/search-scroll}}
+    {{/search-scroll}}
+{{else}}
+    <h2 style="text-align:center;">לא נמצאו תוצאות מתאימות</h2>
+{{/if}}
 

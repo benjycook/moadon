@@ -215,6 +215,7 @@ class SiteClubsController extends SiteBaseController
 	public function search()
 	{
 		//sleep(3);
+
 		$region = Input::get('region', 0);
 		$category = Input::get('category', 0);
 		$subregions = Input::get('subregions',0);
@@ -315,10 +316,8 @@ class SiteClubsController extends SiteBaseController
 			],
 
 			'data' => $suppliers,
-
-			'query' => DB::getQueryLog()
 		];
-
+		
 		return Response::json($data,200);
 	}
 }
