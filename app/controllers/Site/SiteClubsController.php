@@ -161,6 +161,7 @@ class SiteClubsController extends SiteBaseController
 		$supplier['images'] = $rawImages;
 		
 		foreach ($supplier['items'] as $key => &$item) {
+
 			$rawImages = array();
 
 			$images = $supplier['items'][$key]['galleries'][0]['images'];

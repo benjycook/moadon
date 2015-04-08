@@ -50,15 +50,16 @@ class SiteDetails extends Eloquent {
 	  	return $query->select('id','supplierName','altHeadline','city','regions_id','phone1')->take(9)->with('galleries');
 	}
 
-  public function items()
+  	public function items()
 	{
 		return $this->hasMany('Item','suppliers_id','suppliers_id')->with('galleries');
 	}
-
-  public function scopeMini($query)
-  {
-  	return $query->with('galleries')->with('items');
-  }
+	public function scopeMini($query)
+	{
+		return $query->with('galleries')->with(['items'=>function($iteQuery){
+			$iteQuery->where('states_id','=',2);
+		}]);
+	}
 
   public function scopeHomePage($query, $filterField, $rand = false)
   {
