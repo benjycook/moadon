@@ -107,19 +107,6 @@ class SiteClubsController extends SiteBaseController
 		}
 
 		$data['cities'] = $cities;
-
-		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
-		$data['suppliers'] = $this->images($suppliers);
-		$data['suppliers'] = $this->mainCategory($data['suppliers']);
-
-		$newsuppliers = SiteDetails::homePage('newBusiness', true)->forPage(1, 1)->get()->toArray();
-		$data['newsuppliers'] = $this->images($newsuppliers);
-		
-		$mostviewed = SiteDetails::homePage('mostViewed', true)->forPage(1, 1)->get()->toArray();
-		$data['mostviewed'] = $this->images($mostviewed);
-		
-		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
-		$data['hotdeal'] = $this->images($hotdeals);
 		
 		return Response::json($data,200);
 	}
@@ -139,14 +126,16 @@ class SiteClubsController extends SiteBaseController
 		
 		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
 		$data['hotdeal'] = $this->images($hotdeals);
-		$token = TokenAuth::getToken();
-		if($token)
+		try
 		{
+			$token = TokenAuth::getToken();
 			$token = $token->get();
 			$payload = TokenAuth::getPayload($token);
 			$payloadArray = $payload->toArray();
 			$data['cart'] =  $this->_getCart($payloadArray['cart_id']);
 		}
+		catch(Exception $e)
+		{}
 		return Response::json($data,200);
 	}
 
