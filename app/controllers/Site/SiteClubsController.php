@@ -129,10 +129,13 @@ class SiteClubsController extends SiteBaseController
 		try
 		{
 			$token = TokenAuth::getToken();
-			$token = $token->get();
-			$payload = TokenAuth::getPayload($token);
-			$payloadArray = $payload->toArray();
-			$data['cart'] =  $this->_getCart($payloadArray['cart_id']);
+			if($token)
+			{
+				$token = $token->get();
+				$payload = TokenAuth::getPayload($token);
+				$payloadArray = $payload->toArray();
+				$data['cart'] =  $this->_getCart($payloadArray['cart_id']);
+			}
 		}
 		catch(Exception $e)
 		{}
