@@ -52,7 +52,21 @@ class SiteClientController extends SiteBaseController
         $cart = Cart::where('clients_id','=',$client)->first();
         if($cart)
         {
-            CartItem::where('carts_id','=',$cart->id)->update(['carts_id'=>$this->cart->id]);
+            $id    = $this->cart->id;
+            $items = CartItem::where('carts_id','=',$cart->id)->get();
+            foreach ($items as $item) {
+                if($temp = CartItem::where('carts_id','=',$id)->where('items_id','=',$item->items_id)->first())
+                {
+                    $temp->qty = $temp->qty+$item->qty;
+                    $temp->save();
+                    $item->delete();
+                }
+                else
+                {
+                    $item->carts_id = $id;
+                    $item->save();
+                }
+            }
             Cart::where('id','=',$cart->id)->delete();
         }
         else
