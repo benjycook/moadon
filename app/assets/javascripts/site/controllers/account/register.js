@@ -54,6 +54,13 @@ App.AccountRegisterController = Em.ObjectController.extend(SimpleAuth.LoginContr
 					_this.send('closeModal');
 					_this.transitionToRoute('account.index');
 				}		
+				var cartCtrl = _this.controllerFor('cart');
+				cartCtrl.set('suspendUpdate',true);
+				cartCtrl.set('model',[]);
+				data.cart.forEach(function(item){
+				 	cartCtrl.pushObject(item,true);
+				});
+				cartCtrl.set('suspendUpdate',false);
 			}).fail(function(data){
 				var data = data.responseJSON;
 				_this.set('error', data.error);

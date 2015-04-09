@@ -25,14 +25,13 @@ function RegisterRouteForDomain($base)
 		Route::get('site/options', 'SiteClubsController@options');
 		Route::post('login', 'SiteClubsController@login');
 		Route::get('logout', 'SiteClubsController@logout');
-
+		Route::get('suppliers','SiteClubsController@suppliers');
 		Route::post('account/login', 'SiteClientController@login');
 		Route::post('account/register', 'SiteClientController@register');
 		Route::post('account/restore', 'SiteClientController@restore');
 		Route::get('account/logout', 'SiteClientController@logout');
 
 		Route::group(array('before' => 'ClubAuth'), function(){
-
 			Route::get('supplier/{id}','SiteClubsController@supplier');
 			Route::get('search', 'SiteClubsController@search');
 			Route::post('cart','SiteCartController@cart');
@@ -68,7 +67,7 @@ Route::group(array('prefix' => 'admin'), function()
 	Route::get('logout',	'AdminLoginController@logout');
 	Route::post('restore',	'AdminLoginController@restore');
 	Route::get('options','AdminOptionsController@index');
-
+	
 	Route::group(array('before' => 'auth'), function() 
 	{
 		Route::resource('clubs','AdminClubsController');

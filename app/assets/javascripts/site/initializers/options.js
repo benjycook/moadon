@@ -1,6 +1,5 @@
 Ember.Application.initializer({
   name: "options",
-  after: 'simple-auth-token',
   initialize: function(container, application) {
     console.log('options');
   	application.deferReadiness();
@@ -16,15 +15,10 @@ Ember.Application.initializer({
   	Em.$.getJSON('site/options').then(function(data){
       var Options = container.lookup('options:main');
 
-  		for(var i in data.options)
+  		for(var i in data)
   		{
-  			Options.set(i, data.options[i]);
+  			Options.set(i, data[i]);
   		}
-      if(data.cart)
-      {
-        var cart = this.controllerFor('cart');
-        cart.set('model',data.cart);
-      }
   		application.advanceReadiness();
 
   	});

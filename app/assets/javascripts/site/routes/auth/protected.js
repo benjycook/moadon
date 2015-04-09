@@ -8,8 +8,8 @@ App.UserProtectedRoute = App.ProtectedRoute.extend({
 		if(this.get('session.claims.loginType') != 'client')
 		{          
 			transition.abort();
-      this.get('session').set('attemptedTransition', transition);
-      this.send('openRegister');
+	      this.get('session').set('attemptedTransition', transition);
+	      this.send('openRegister');
 		}
   }
 });

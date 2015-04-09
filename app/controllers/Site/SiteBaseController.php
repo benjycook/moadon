@@ -91,11 +91,11 @@ class SiteBaseController extends BaseController
 			$this->cart = null;
 	}
 
-	protected function _getCart()
+	protected function _getCart($carts_id)
 	{
-		$cart = CartItem::where('carts_id','=',$this->payload['cart_id'])->join('items','items.id','=','items_id')
+		$cart = CartItem::where('carts_id','=',$carts_id)->join('items','items.id','=','items_id')
 						->join('sitedetails','items.suppliers_id','=','sitedetails.suppliers_id')
-						->select(DB::raw('supplierName,priceSingle,items.name,carts_items.qty,items.priceSingle,carts_items.items_id AS id,items.description,carts_items.carts_id'))
+						->select(DB::raw('supplierName,priceSingle,items.name,carts_items.qty AS count,items.priceSingle,carts_items.items_id AS id,items.description,carts_items.carts_id'))
 						->groupBy('items_id')->get();
 		return $cart;
 	}

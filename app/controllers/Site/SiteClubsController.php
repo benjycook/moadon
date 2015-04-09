@@ -94,11 +94,11 @@ class SiteClubsController extends SiteBaseController
 
 		$data = array();
 	
-		$data['options']['club'] = $this->club->toArray();
-		$data['options']['club']['logo'] = URL::to('/')."/galleries/{$data['options']['club']['logo']}";
+		$data['club'] = $this->club->toArray();
+		$data['club']['logo'] = URL::to('/')."/galleries/{$data['club']['logo']}";
 
-		$data['options']['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
-		$data['options']['categories'] = Category::where('parent_id','=',0)->with('children')->get();
+		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();
+		$data['categories'] = Category::where('parent_id','=',0)->with('children')->get();
 		$cities = City::with('regions')->get();
 
 		foreach ($cities as &$city) {
@@ -106,31 +106,46 @@ class SiteClubsController extends SiteBaseController
 			unset($city['regions']);
 		}
 
-		$data['options']['cities'] = $cities;
+		$data['cities'] = $cities;
 
 		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
-		$data['options']['suppliers'] = $this->images($suppliers);
-		$data['options']['suppliers'] = $this->mainCategory($data['options']['suppliers']);
+		$data['suppliers'] = $this->images($suppliers);
+		$data['suppliers'] = $this->mainCategory($data['suppliers']);
 
 		$newsuppliers = SiteDetails::homePage('newBusiness', true)->forPage(1, 1)->get()->toArray();
-		$data['options']['newsuppliers'] = $this->images($newsuppliers);
+		$data['newsuppliers'] = $this->images($newsuppliers);
 		
 		$mostviewed = SiteDetails::homePage('mostViewed', true)->forPage(1, 1)->get()->toArray();
-		$data['options']['mostviewed'] = $this->images($mostviewed);
+		$data['mostviewed'] = $this->images($mostviewed);
 		
 		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
-		$data['options']['hotdeal'] = $this->images($hotdeals);
+		$data['hotdeal'] = $this->images($hotdeals);
+		
+		return Response::json($data,200);
+	}
+	public function suppliers()
+	{
+
+		$data = array();
+		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
+		$data['suppliers'] = $this->images($suppliers);
+		$data['suppliers'] = $this->mainCategory($data['suppliers']);
+
+		$newsuppliers = SiteDetails::homePage('newBusiness', true)->forPage(1, 1)->get()->toArray();
+		$data['newsuppliers'] = $this->images($newsuppliers);
+		
+		$mostviewed = SiteDetails::homePage('mostViewed', true)->forPage(1, 1)->get()->toArray();
+		$data['mostviewed'] = $this->images($mostviewed);
+		
+		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
+		$data['hotdeal'] = $this->images($hotdeals);
 		$token = TokenAuth::getToken();
-		$data['tokenAuth'] = $token;
 		if($token)
 		{
 			$token = $token->get();
-			$data['token'] = $token;
 			$payload = TokenAuth::getPayload($token);
 			$payloadArray = $payload->toArray();
-			$data['payloadArray'] = $payloadArray;
-			if($payloadArray['user'] > 0)
-				$data['cart'] =  $this->_getCart();
+			$data['cart'] =  $this->_getCart($payloadArray['cart_id']);
 		}
 		return Response::json($data,200);
 	}

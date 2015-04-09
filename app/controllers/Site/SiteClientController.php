@@ -34,7 +34,6 @@ class SiteClientController extends SiteBaseController
 
 
         $this->bindCart($client->id);
-
         $claims = array(
             'user'          => $client->id,
             'loginType'     => 'client'
@@ -50,8 +49,18 @@ class SiteClientController extends SiteBaseController
 	
     protected function bindCart($client)
 	{
-		$this->cart->clients_id = $client;
-        $this->cart->save();
+        $cart = Cart::where('clients_id','=',$client)->first();
+        if($cart)
+        {
+            CartItem::where('carts_id','=',$cart->id)->update(['carts_id'=>$this->cart->id]);
+            Cart::where('id','=',$cart->id)->delete();
+        }
+        else
+        {
+            $this->cart->clients_id = $client;
+            $this->cart->save();
+        }
+
 	}
 
 	public function login()
@@ -85,8 +94,8 @@ class SiteClientController extends SiteBaseController
         );
 
         $token = TokenAuth::make('client', $claims);
-
-        return Response::json(compact('token', 'claims', 'client'), 200);
+        $cart  = $this->_getCart($this->cart->id);
+        return Response::json(compact('token', 'claims', 'client','cart'), 200);
 	}
 
     public function userInfo()
