@@ -32,6 +32,8 @@ App.AccountIndexRoute = App.UserProtectedRoute.extend({
 					controller: ctrl
 				});
 			});
+
+			return false;
 		},
 
 		'closeModal': function()

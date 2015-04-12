@@ -1,29 +1,46 @@
 App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
-
-	model: function(){
-		return $.getJSON('options');
+	
+	model:function()
+	{
+		return $.getJSON('suppliers');
 	},
 
-	setupController: function(ctrl, model){
-		
-		model.categories = {children: model.categories};
+	setupController: function(ctrl,model){
+		var options = this.get('options');
+		model.categories = {children: options.categories};
 		
 		model.regions = {
 			children: [
-				{name: "חיפוש לפי אזור", children: model.regions, id: 0}
+				{name: "חיפוש לפי אזור", children: options.regions, id: 0}
 		]};
 
-		ctrl.set('model', model);
+		if(model.cart)
+		{
+			var cartCtrl = this.controllerFor('cart');
+			cartCtrl.set('suspendUpdate',true);
+			cartCtrl.set('model',[]);
+			model.cart.forEach(function(item){
+				 cartCtrl.pushObject(item,true);
+			});
+			cartCtrl.set('suspendUpdate',false);
+			delete model.cart;
+		}
+		
+		ctrl.set('model',model);
 	},
 
 	actions: {
 		'closeModal': function(){
-			this.disconnectOutlet({
-	      outlet: 'lightbox',
-	      parentView: 'application'
-	    });
+				this.disconnectOutlet({
+		      outlet: 'lightbox',
+		      parentView: 'application'
+		    });
 		},
-
+		'close':function(ctrl)
+		{
+			ctrl.set('model.success',false);
+			ctrl.set('model.error',false);
+		},
 		'addItem': function(item, supplierName)
 		{
 			var cartCtrl = this.controllerFor('cart');
@@ -32,6 +49,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			{
 				var newItem = Em.copy(item.get('model'));
 				newItem.supplierName = supplierName;
+				console.log(newItem);
 				cartCtrl.pushObject(newItem, true);
 			}	
 			else
@@ -76,6 +94,21 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			});
 
 			this.render('account/modal', {
+				into: 'application',
+				outlet: 'lightbox',
+				controller: ctrl
+			});
+		},
+
+		'openPassReminder': function()
+		{
+			var ctrl = this.controllerFor('account.register');
+
+			ctrl.set('model', {
+				email: '',
+			});
+
+			this.render('account/restore', {
 				into: 'application',
 				outlet: 'lightbox',
 				controller: ctrl

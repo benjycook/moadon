@@ -3,7 +3,7 @@ App.SupplierController = Em.ObjectController.extend({
 	needs: ['application', 'search'],
 
 	application: Ember.computed.alias("controllers.application"),
-
+	options: Ember.computed.alias("application.options"),
 	workingHoursLines: function(){
 		return this.get('workingHours').split("\n").join('<br />');
 	}.property('workingHours'),
@@ -14,7 +14,7 @@ App.SupplierController = Em.ObjectController.extend({
 
 	city: function()
 	{
-		var city = this.get('application.cities').findBy('id', this.get('cities_id'));
+		var city = this.get('options.cities').findBy('id', this.get('cities_id'));
 		if(city)
 			return city;
 		return false;
@@ -30,7 +30,7 @@ App.SupplierController = Em.ObjectController.extend({
 
 	cityName: function()
 	{
-		var city = this.get('application.cities').findBy('id', this.get('cities_id'));
+		var city = this.get('options.cities').findBy('id', this.get('cities_id'));
 		if(city)
 			return city.name;
 		return 'לא ידוע';

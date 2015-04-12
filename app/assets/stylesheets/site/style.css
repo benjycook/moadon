@@ -384,7 +384,8 @@ body
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
     width: 150px;
-    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
 }
 
 .box .inner img {
@@ -1344,4 +1345,9 @@ ul.cart-items li > div {
 #top-categories .dots .dot.active {
 	background-color: #ccc;
 	border-color: #fff;
+}
+
+.box.mostviewed:hover,.box.newsuppliers:hover,.box.hotdeals:hover
+{
+	cursor: pointer;
 }

@@ -1,5 +1,5 @@
 App.CartController = Em.ArrayController.extend({
-
+	suspendUpdate:false,
 	itemController: 'item',
 
 	hasItems: function(){
@@ -9,6 +9,8 @@ App.CartController = Em.ArrayController.extend({
 	}.property('length'),
 
 	updateItems: function(){
+		if(this.get('suspendUpdate'))
+			return;
 		var data = [];
 		var items = this.get('model');
 		for(var i = 0; i < items.length; i++)

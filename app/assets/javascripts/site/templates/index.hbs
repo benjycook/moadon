@@ -1,5 +1,6 @@
 <div id="top-categories">
-    <div class="box newsuppliers">
+    {{#link-to 'newsuppliers' class="box newsuppliers" tag='div'}}
+    
         <div class="inner">
             {{!-- <label>אטרקציות</label> --}}
             <img {{bind-attr src="newsupplier.image"}} />
@@ -11,12 +12,11 @@
 
             <span class="info-discount">{{newsupplier.discount}}% הנחה</span>
             
-            {{#link-to 'newsuppliers'}}בתי עסק חדשים <i class="fa fa-chevron-left"></i>{{/link-to}}
+          <a href="javascript:void()">בתי עסק חדשים <i class="fa fa-chevron-left"></i></a>
         </div>
-    </div>
+    {{/link-to}}
 
-
-    <div class="box mostviewed">
+    {{#link-to 'mostviewed' tag='div' class="box mostviewed"}}
         <div class="inner">
             {{!-- <label>אטרקציות</label> --}}
             <img {{bind-attr src="mostviewed.image"}} />
@@ -28,12 +28,11 @@
 
             <span class="info-discount">{{mostviewed.discount}}% הנחה</span>
             
-            {{#link-to 'mostviewed'}}הנצפים ביותר <i class="fa fa-chevron-left"></i>{{/link-to}}
+            <a href="javascript:void()">הנצפים ביותר <i class="fa fa-chevron-left"></i></a>
         </div>
         
-    </div>
-
-    <div class="box hotdeals">
+    {{/link-to}}
+    {{#link-to 'hotdeals' class="box hotdeals" tag='div'}}
         <div class="inner">
             {{!-- <label>אטרקציות</label> --}}
             <img {{bind-attr src="hotdeal.image"}} />
@@ -45,9 +44,9 @@
 
             <span class="info-discount">{{hotdeal.discount}}% הנחה</span>
             
-            {{#link-to 'hotdeals'}}מבצעים חמים <i class="fa fa-chevron-left"></i>{{/link-to}}
+            <a href="javascript:void()">מבצעים חמים <i class="fa fa-chevron-left"></i></a>
         </div>
-    </div>
+    {{/link-to}}
 </div>
 
 {{#each supplier in model.suppliers itemController="supplier"}}

@@ -122,3 +122,13 @@ table.orders.edit tbody tr td.name
     text-decoration: none;
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
+.forgotPass
+{
+	   color: #064d7c;
+    font-size: 15px;
+    font-weight: bold;
+}
+.forgotPass:hover
+{
+	cursor: pointer;
+}

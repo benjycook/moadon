@@ -54,10 +54,36 @@ App.AccountRegisterController = Em.ObjectController.extend(SimpleAuth.LoginContr
 					_this.send('closeModal');
 					_this.transitionToRoute('account.index');
 				}		
+				var cartCtrl = _this.controllerFor('cart');
+				cartCtrl.set('suspendUpdate',true);
+				cartCtrl.set('model',[]);
+				data.cart.forEach(function(item){
+				 	cartCtrl.pushObject(item,true);
+				});
+				cartCtrl.set('suspendUpdate',false);
 			}).fail(function(data){
 				var data = data.responseJSON;
 				_this.set('error', data.error);
 			});
+		},
+
+		'restore': function(){
+			var _this = this;
+			var model = this.get('model');
+			$.ajax({
+				type: 'POST',
+				url: 'account/restore',
+				data: JSON.stringify(model)
+			}).then(function(data){
+				_this.set('model',{success:data});
+			}).fail(function(data){
+				var data = data.responseJSON;
+				if(data==undefined)
+					_this.set('error', 'במהל הפעולה אירע שגיאה אנא פנה לתמיכה טכנית.');
+				else
+					_this.set('error', data.error);
+			});
+			return false;
 		},
 
 		'openLogin': function(){

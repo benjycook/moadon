@@ -107,7 +107,13 @@ class SiteClubsController extends SiteBaseController
 		}
 
 		$data['cities'] = $cities;
+		
+		return Response::json($data,200);
+	}
+	public function suppliers()
+	{
 
+		$data = array();
 		$suppliers = SiteDetails::homePage('visibleOnSite')->get()->toArray();
 		$data['suppliers'] = $this->images($suppliers);
 		$data['suppliers'] = $this->mainCategory($data['suppliers']);
@@ -119,8 +125,20 @@ class SiteClubsController extends SiteBaseController
 		$data['mostviewed'] = $this->images($mostviewed);
 		
 		$hotdeals = SiteDetails::homePage('hotDeal', true)->forPage(1, 1)->get()->toArray();
-		$data['hotdeals'] = $this->images($hotdeals);
-
+		$data['hotdeal'] = $this->images($hotdeals);
+		try
+		{
+			$token = TokenAuth::getToken();
+			if($token)
+			{
+				$token = $token->get();
+				$payload = TokenAuth::getPayload($token);
+				$payloadArray = $payload->toArray();
+				$data['cart'] =  $this->_getCart($payloadArray['cart_id']);
+			}
+		}
+		catch(Exception $e)
+		{}
 		return Response::json($data,200);
 	}
 
@@ -161,6 +179,7 @@ class SiteClubsController extends SiteBaseController
 		$supplier['images'] = $rawImages;
 		
 		foreach ($supplier['items'] as $key => &$item) {
+
 			$rawImages = array();
 
 			$images = $supplier['items'][$key]['galleries'][0]['images'];
@@ -214,6 +233,7 @@ class SiteClubsController extends SiteBaseController
 	public function search()
 	{
 		//sleep(3);
+
 		$region = Input::get('region', 0);
 		$category = Input::get('category', 0);
 		$subregions = Input::get('subregions',0);
@@ -314,10 +334,8 @@ class SiteClubsController extends SiteBaseController
 			],
 
 			'data' => $suppliers,
-
-			'query' => DB::getQueryLog()
 		];
-
+		
 		return Response::json($data,200);
 	}
 }

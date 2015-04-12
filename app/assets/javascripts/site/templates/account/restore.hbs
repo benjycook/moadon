@@ -1,0 +1,39 @@
+<div class="overlay">
+    <div class="lightbox small">
+        <div class="close" {{action 'closeModal'}}>&times;</div>
+
+        {{#ui-form class='box' action='restore'}}
+        
+            <h2>תזכורת סיסמא</h2>
+
+            {{#if success}}
+                <div class="alert success" style="text-align:center;">
+                    {{success}}
+                </div>
+
+            {{else}}
+
+                {{#if error}}
+                    <div class="alert error">
+                        <div class="close" {{action 'close' controller}}>&times;</div>
+                        {{error}}
+                    </div>
+                {{/if}}
+                <div class="form-group">
+                    {{input type="text" placeholder="דואר אלקטרוני" value=email required='required' data-parsley-type='email' }}
+                </div>
+
+                <div style="text-align:center;">
+                    <button type='submit' style="text-align:center;margin:0;">שלח</button>
+                </div>
+
+            {{/if}}
+
+            
+
+
+        {{/ui-form}}
+
+
+    </div>
+</div>
