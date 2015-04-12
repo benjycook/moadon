@@ -1,7 +1,7 @@
 Ember.Application.initializer({
   name: "options",
   initialize: function(container, application) {
-    console.log('options');
+
   	application.deferReadiness();
   	
   	var Options = Em.Object.extend();

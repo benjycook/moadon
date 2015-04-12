@@ -4,7 +4,7 @@ App.LoginController = Em.ObjectController.extend(SimpleAuth.LoginControllerMixin
 
 	needs: ['application'],
 	
-	club: Ember.computed.alias("controllers.application.club"),
+	club: Ember.computed.alias("controllers.application.options.club"),
 
 	actions: {
 		authenticate: function() {
