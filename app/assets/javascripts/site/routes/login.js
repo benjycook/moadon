@@ -1,12 +1,12 @@
 App.LoginRoute = Em.Route.extend({
 
-	model: function(){
-		return {
-				username: '',
-				password: '',
-				clubident: '',
-		};
-	},
+	// model: function(){
+	// 	return {
+	// 			username: '',
+	// 			password: '',
+	// 			clubident: '',
+	// 	};
+	// },
 
 	renderTemplate: function()
 	{

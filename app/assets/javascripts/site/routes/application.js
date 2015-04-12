@@ -1,8 +1,10 @@
 App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
+	
 	model:function()
 	{
 		return $.getJSON('suppliers');
 	},
+
 	setupController: function(ctrl,model){
 		var options = this.get('options');
 		model.categories = {children: options.categories};
@@ -11,6 +13,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			children: [
 				{name: "חיפוש לפי אזור", children: options.regions, id: 0}
 		]};
+
 		if(model.cart)
 		{
 			var cartCtrl = this.controllerFor('cart');
@@ -22,6 +25,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			cartCtrl.set('suspendUpdate',false);
 			delete model.cart;
 		}
+		
 		ctrl.set('model',model);
 	},
 

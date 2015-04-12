@@ -6,28 +6,40 @@ App.ApplicationController = Em.ObjectController.extend({
 
   regions: Ember.computed.alias("model.regions"),
   categories: Ember.computed.alias("model.categories"),
+	club: Ember.computed.alias("options.club"),
 
+  newsupplier: function(){
+  	var newsuppliers =  this.get('model.newsuppliers').map(function(item){
+  		return App.SupplierController.create({
+  			model: item,
+  			container: App.__container__
+  		});
+  	});
 
-	newsuppliers: function(){
-		var data =  this.get('model.newsuppliers').map(function(item){
-			return item.images[0];
-		});
-		return data;
-	}.property('model.newsuppliers'),
+  	return newsuppliers[0];
+  }.property('model.newsupplier'),
 
-	mostviewed: function(){
-		var data =  this.get('model.mostviewed').map(function(item){
-			return item.images[0];
-		});
-		return data;
-	}.property('model.mostviewed'),
+  mostviewed: function(){
+  	var mostviewed =  this.get('model.mostviewed').map(function(item){
+  		return App.SupplierController.create({
+  			model: item,
+  			container: App.__container__
+  		});
+  	});
 
-	hotdeals: function(){
-		var data =  this.get('model.hotdeals').map(function(item){
-			return item.images[0];
-		});
-		return data;
-	}.property('model.hotdeals'),
+  	return mostviewed[0];
+  }.property('model.mostviewed'),
+  
+	hotdeal: function(){
+		var hotdeal =  this.get('model.hotdeal').map(function(item){
+		    return App.SupplierController.create({
+        model: item,
+        container: App.__container__
+      });
+    });
+		return hotdeal[0];
+	}.property('model.hotdeal'),
+
 
 	flatRegions: function(){
 		var regions = this.get('regions.children');
