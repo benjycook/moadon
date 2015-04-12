@@ -25,7 +25,7 @@ function RegisterRouteForDomain($base)
 		Route::get('site/options', 'SiteClubsController@options');
 		Route::post('login', 'SiteClubsController@login');
 		Route::get('logout', 'SiteClubsController@logout');
-		Route::get('suppliers','SiteClubsController@suppliers');
+		Route::get('home','SiteClubsController@suppliers');
 		Route::post('account/login', 'SiteClientController@login');
 		Route::post('account/register', 'SiteClientController@register');
 		Route::post('account/restore', 'SiteClientController@restore');

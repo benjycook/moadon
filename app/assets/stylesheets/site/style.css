@@ -379,13 +379,13 @@ body
     line-height: 36px;
     position: absolute;
     text-align: center;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.7);
+    font-weight: bold;
     top: 18px;
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
     width: 150px;
-    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.7);
-    font-weight: bold;
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.5);
 }
 
 .box .inner img {

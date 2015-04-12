@@ -2,7 +2,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 	
 	model:function()
 	{
-		return $.getJSON('suppliers');
+		return $.getJSON('home');
 	},
 
 	setupController: function(ctrl,model){
