@@ -30,9 +30,13 @@ App.SearchController = Em.Controller.extend({
     
   },
 
+  updateSearch: function(){
+    this.set('controllers.application.search', this.get('q'));
+  }.observes('q'),
+
   hesMore: function()
   {
-    console.log(this.get('page'), this.get('meta'));
+    //console.log(this.get('page'), this.get('meta'));
     if(this.get('page') < this.get('meta.pages'))
       return true;
     return false;
@@ -44,5 +48,6 @@ App.SearchController = Em.Controller.extend({
   subregions: [],
   category: null,
   subcategories: [],
+  q: null,
 
 });
