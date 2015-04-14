@@ -70,7 +70,13 @@ App.ApplicationController = Em.ObjectController.extend({
 
 	actions: {
 		search: function(){
-			this.transitionToRoute('search', {queryParams: {q: this.get('search')}});
+			this.transitionToRoute('search', {queryParams: {
+				q: this.get('search'),
+			  region: null,
+			  subregions: [],
+			  category: null,
+			  subcategories: []
+			}});
 		}
 	}
 
