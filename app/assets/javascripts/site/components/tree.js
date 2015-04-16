@@ -6,6 +6,7 @@ App.UiTreeLinkComponent = Em.LinkView.extend({
     var item = this.get('item');
     var values = {};
     values[type] = item.id;
+    values['q'] = '';
     this.queryParamsObject = {};
     this.queryParamsObject['values'] = values;
   }.on('init'),

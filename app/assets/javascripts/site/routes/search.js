@@ -79,7 +79,7 @@ App.SearchRoute = App.ProtectedRoute.extend({
 	model: function(params)
 	{
 		//this.get('session').set('user', 'igor@webt.co.il');
-		console.log(this.get('session'));
+		//console.log(this.get('session'));
 		params.page = 1;
 		params.items = 9;
 
