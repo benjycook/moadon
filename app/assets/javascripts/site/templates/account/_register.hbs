@@ -1,4 +1,4 @@
-<form class="box" {{action 'register' on='submit'}}>
+{{#ui-form class="box" action='register'}}
 
     <h2>הרשמה</h2>
 
@@ -10,26 +10,26 @@
     {{/if}}
 
     <div class="form-group">
-        {{input type="text" placeholder="שם פרטי" value=firstName}}
+        {{input type="text" placeholder="שם פרטי" value=firstName required="required"}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="שם משפחה" value=lastName}}
+        {{input type="text" placeholder="שם משפחה" value=lastName required="required"}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="דואר אלקטרוני" value=email}}
+        {{input type="text" placeholder="דואר אלקטרוני" value=email required="required" data-parsley-type='email'}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="נייד" value=mobile}}
+        {{input type="text" placeholder="נייד" value=mobile required="required" data-parsley-mobile="mobile"}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="סיסמא" value=password}}
+        {{input type="text" placeholder="סיסמא" value=password required="required"}}
     </div>
 
-    <button {{action 'register'}}>הרשם</button>
+    <button type="submit">הרשם</button>
     <button {{action 'openLogin'}}>משתמש קיים</button>
 
-</form>
+{{/ui-form}}

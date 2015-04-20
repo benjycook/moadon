@@ -1,13 +1,30 @@
-<ul class="slides">
-    {{#each image in images}}
-        <li>
-            <img {{bind-attr src="image"}} />
-        </li>
-    {{/each}}
-</ul>
+{{#if controls}}
+	<span class="prev" {{action "prev"}}>
+		<i class="fa fa fa-chevron-right"></i>
+	</span>
+	<span class="next" {{action "next"}}>
+		<i class="fa fa fa-chevron-left"></i>
+	</span>
+{{/if}}
 
-<div class="dots">
-	{{#each link in links}}
-		<span {{bind-attr class=":dot link.active:active"}} {{action 'setSlide' link.index}}></span>
-	{{/each}}
+<div class="slides">
+
+	<ul class="images">
+		{{#each item in data}}
+		  <li>
+		  		<img {{bind-attr src=item.src}} />
+		  </li>
+		{{/each}}
+	</ul>
+
 </div>
+
+{{#if pagination}}
+	<div class="pagination">
+		<ul>
+			{{#each item in navigation}}
+				<li {{bind-attr class="item.active:active" }} {{action "setSlide" item.index }}></li>
+			{{/each}}
+		</ul>
+	</div>
+{{/if}}

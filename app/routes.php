@@ -28,7 +28,7 @@ function RegisterRouteForDomain($base)
 		Route::get('home','SiteClubsController@suppliers');
 		Route::post('account/login', 'SiteClientController@login');
 		Route::post('account/register', 'SiteClientController@register');
-		Route::post('account/restore', 'SiteClientController@restore');
+		Route::post('account/restore', 'SiteClientController@passReminder');
 		Route::get('account/logout', 'SiteClientController@logout');
 
 		Route::group(array('before' => 'ClubAuth'), function(){
@@ -36,7 +36,7 @@ function RegisterRouteForDomain($base)
 			Route::get('search', 'SiteClubsController@search');
 			Route::post('cart','SiteCartController@cart');
 			Route::post('register', 'SiteClientController@register');
-			Route::post('remined/password', 'SiteClientController@passReminder');
+			//Route::post('remined/password', 'SiteClientController@passReminder');
 
 			Route::get('newsuppliers', 'SiteClubsController@newsuppliers');
 			Route::get('mostviewed', 'SiteClubsController@mostviewed');

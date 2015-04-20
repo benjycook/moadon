@@ -53,6 +53,18 @@ App.SupplierController = Em.ObjectController.extend({
 		return this.get('images.0');
 	}.property('images'),
 
+	galleryImages: function(){
+		var images = this.get('images');
+		var data = [];
+		for(var i = 0; i < images.length; i++)
+		{
+			data.push({
+				src: images[i]
+			});
+		}
+		return data;
+	}.property('images'),
+
 	phoneNumbers: function(){
 		var parts = [];
 		var phone1 = this.get('phone1');
