@@ -8,10 +8,9 @@ App.UiSliderComponent = Em.Component.extend({
 			var lis = this.get('data.length');
 			var firstSlide = this.$('.slides ul.images li')[0].offsetWidth;
 			var totalWidth = (this.$('.slides ul.images li')[0].offsetWidth) * lis;
+			totalWidth = parseInt(totalWidth * 100) / 100;
 			var slideWidth = this.$('.slides ul.images')[0].offsetWidth;
-			var totalSlides = Math.ceil( totalWidth / slideWidth);
-
-			console.log(firstSlide, this.$('.slides ul.images li')[0].offsetWidth, totalWidth, totalSlides, this.$(), totalWidth / slideWidth);
+			var totalSlides = Math.ceil( parseInt((totalWidth / slideWidth) * 100) / 100 );
 
 			var properties = {
 				index : 0,
@@ -58,6 +57,8 @@ App.UiSliderComponent = Em.Component.extend({
 			if( index >= slides ){
 				index = 0;
 			}
+
+
 			if(index < 0){
 				index= slides - 1;
 			}
