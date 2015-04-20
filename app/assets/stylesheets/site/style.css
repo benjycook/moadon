@@ -673,7 +673,8 @@ ul.tree > li ul {
 	position: relative;
 }
 
-.mini-site .header img{
+
+.mini-site .header .left {
 	width: 50%;
 	float: left;
 	height: 100%;
@@ -733,7 +734,7 @@ ul.items {
 	border-bottom: 1px solid #cbcbcc;
 }
 
-ul.items li {
+ul.items > li {
 	border-top: 1px solid #cbcbcc;
 	overflow: hidden;
 }
@@ -854,37 +855,6 @@ ul.items li .description{
   width: 110%;
 }
 
-.mini-site .gallery {
-  height: 135px;
-  padding: 5px 0;
-  width: 50%;
-  float: right;
-}
-
-.mini-site .gallery-images {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	white-space: nowrap;
-	font-size: 0;
-	overflow: hidden;
-}
-
-.mini-site .gallery-images li {
-  display: inline-block;
-  height: 135px;
-  margin-left: 15px;
-  overflow: hidden;
-  white-space: nowrap;
-  width: 171px;
-}
-
-.mini-site .gallery-images li img {
-	min-width: 100%;
-	min-height: 100%;
-	max-width: 100%;
-	max-height: 100%;
-}
 
 .qty .wrap{
 	position: relative;
@@ -1291,60 +1261,6 @@ ul.cart-items li > div {
 
 #top-categories .hotdeals a {
 	background-color: #f9bb00;
-}
-
-#top-categories .box ul.slides {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-	position: absolute;
-	left: 0;
-	right: 0;
-	top: 0;
-	bottom: 40px;
-	font-size: 0;
-	white-space: nowrap;
-	transition: all 0.6s ease 0s;
-}
-
-#top-categories .box ul.slides li {
-	width: 239px;
-	height: 100%;
-	display: inline-block;
-	overflow: hidden;
-}
-
-#top-categories .box ul.slides li img{
-  position: relative;
-  height: 100%;
-  width: auto;
-  right: 50%;
-  transform: translateX(50%);
-  -webkit-transform: translateX(50%);
-}
-
-#top-categories .dots {
-    bottom: 50px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    text-align: center;
-}
-
-#top-categories .dots .dot {
-	background-color: #06568D;
-	border: 1px solid #fff;
-	border-radius: 50%;
-	display: inline-block;
-	height: 10px;
-	width: 10px;
-	cursor: pointer;
-	transition: all 0.6s ease 0s;
-}
-
-#top-categories .dots .dot.active {
-	background-color: #ccc;
-	border-color: #fff;
 }
 
 .box.mostviewed:hover,.box.newsuppliers:hover,.box.hotdeals:hover

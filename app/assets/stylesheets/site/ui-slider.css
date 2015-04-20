@@ -1,0 +1,144 @@
+.ui-slider{
+	width: 100%;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	font-size: 1px;
+	position: relative;
+}
+
+.ui-slider .slides{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+}
+
+.ui-slider .slides ul.images{
+	height: 100%;
+	width: auto;
+	position: relative;
+	right: 0;
+	top: 0;
+	margin: 0;
+	padding: 0;
+	-webkit-transition: all 0.6s ease 0s;
+	transition: all 0.6s ease 0s;
+	list-style: none;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.ui-slider .slides ul.images li {
+	display: inline-block;
+	height: 100%;
+	width: 100%;
+}
+
+.mini-site .ui-slider .slides ul.images li img{
+	min-width: 100%;
+	min-height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	height: 100%;
+	width: 100%;
+	display: block;
+	float: none;
+}
+
+/* buttons */
+
+.ui-slider .next ,
+.ui-slider .prev{
+	cursor: pointer;
+	position: absolute;
+	top: 50%;
+	width: 20px;
+	height: 30px;
+	text-align: center;
+	z-index: 2;
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	background-color: #fff;
+	font-size: 18px;
+	color: #898689;
+	line-height: 30px;
+}
+
+
+.ui-slider .prev{
+	right: 0;
+	border-radius: 5px 0 0 5px;
+}
+
+.ui-slider .next{
+	left: 0;
+	border-radius: 0 5px 5px 0;
+}
+
+.ui-slider .prev .fa {
+	position: relative;
+	left: 3px;
+}
+
+
+.ui-slider .next .fa {
+	position: relative;
+	right: 3px;
+}
+
+.pagination{
+	background-color: #FFF;
+	bottom: 0;
+	font-size: 0;
+	height: 40px;
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%);
+	width: 100%;
+	z-index: 1;
+}
+.pagination ul{
+	height: inherit;
+	line-height: 50px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	white-space: nowrap;
+}
+.pagination ul li{
+	background-color: #000;
+	border-radius: 50%;
+	box-shadow: 0 0 1px #000;
+	cursor: pointer;
+	height: 10px;
+	line-height: 30px;
+	margin: 0 5px;
+	width: 10px;
+}
+
+.pagination ul li.active{
+	background-color: #7f7f7f;
+	box-shadow: 0 0 1px #7f7f7f;
+}
+
+.items .gallery {
+	float: right;
+	height: 147px;
+	margin-left: 14px;
+	width: calc(50% - 14px);
+}
+
+.items .gallery ul.images {
+	margin: 0 -7px;
+}
+
+.items .gallery ul.images li {
+	width: calc(50% - 14px);
+	padding: 0 7px;
+}
