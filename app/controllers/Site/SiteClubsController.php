@@ -139,6 +139,7 @@ class SiteClubsController extends SiteBaseController
 		}
 		catch(Exception $e)
 		{}
+		$data['suppliersUrl'] = str_replace($this->club->urlName.".","",URL::to('suppliers'));
 		return Response::json($data,200);
 	}
 

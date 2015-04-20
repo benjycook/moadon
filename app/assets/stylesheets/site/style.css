@@ -230,6 +230,7 @@ body
 #header p a:hover,
 #header p a.active{
 	background-color: #0b81c1;
+	cursor: pointer;
 }
 
 #header p.right {
