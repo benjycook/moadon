@@ -1,6 +1,6 @@
 {{outlet modal}}
 {{#if App.logedin}}
-<div class="container">
+<div class="container" style="width:1300px;">
 	<div id="header">
 		<div class="navbar navbar-default">
 			<ul class="nav navbar-nav">
@@ -16,12 +16,14 @@
 			  	<li>{{#link-to 'pages'}}דפים{{/link-to}}</li>
 			  	<li>{{#link-to 'clients'}}לקוחות{{/link-to}}</li>
 			  	<li>{{#link-to 'orders'}}הזמנות{{/link-to}}</li>
+
 			  	<li class="dropdown">
 			      	<a href="javascript:void" class="dropdown-toggle" data-toggle="dropdown">דוחות</a>
 			      	<ul class="dropdown-menu">
 			      		<li>{{#link-to 'suppliersReport' }}ספקים{{/link-to}}</li>
 			      	</ul>
 			    </li>
+			    <li><a href="javascript:void" {{action 'settings'}}><i class="fa fa-cog"></i></a></li>
 			</ul>
 			
 			<ul class="nav navbar-nav pull-left">

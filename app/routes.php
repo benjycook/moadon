@@ -85,6 +85,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 		Route::get('suppliersReport','AdminReportsController@suppliersReport');
 		Route::resource('pages','AdminPagesController');
+		Route::resource('settings','AdminSettingsController');
 	});
 
 });

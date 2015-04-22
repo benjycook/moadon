@@ -33,10 +33,15 @@ App.ItemsEditController = Em.ObjectController.extend({
 		var clubCommissionPrecent  = this.get('clubCommission');
 		var priceSingle     = this.get('priceSingle') || 0;
 		var netPrice 		= this.get('netPrice') || 0;
+		var vat 			= App.get('vat');
 		if(netPrice==0)
 			return "100%";
 		if(priceSingle==0)
 			return "0%";
+		priceSingle = priceSingle/(vat/100+1);
+		netPrice    = netPrice/(vat/100+1);
+		console.log(priceSingle);
+		console.log(netPrice);
 		var creditComission = priceSingle*(2/100);
 		var clubCommission  = (priceSingle-creditComission)*(clubCommissionPrecent/100);	
 		var income 			= priceSingle-creditComission-clubCommission;
