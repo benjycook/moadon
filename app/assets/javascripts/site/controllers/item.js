@@ -8,4 +8,16 @@ App.ItemController = Em.ObjectController.extend({
 		return this.get('count') * this.get('listPrice');
 	}.property('count', 'listPrice'),
 
+	galleryImages: function(){
+		var images = this.get('images');
+		var data = [];
+		for(var i = 0; i < images.length; i++)
+		{
+			data.push({
+				src: images[i]
+			});
+		}
+		return data;
+	}.property('images')
+
 });

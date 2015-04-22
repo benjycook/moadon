@@ -29,21 +29,20 @@
 
 			</div>
 
-			<img {{bind-attr src=image}} />
+			<div class="left">
+				{{ui-slider data=galleryImages}}
+			</div>
 
 		</div>
 
 		<ul class="items">
 			{{#each item in items itemController="item"}}
 				<li>
-
+				
 					<div class="gallery">
-						<ul class="gallery-images">
-							{{#each image in item.images}}
-								<li><img {{bind-attr src=image}} /></li>
-							{{/each}}
-						</ul>
+						{{ui-slider data=item.galleryImages}}
 					</div>
+
 					<div class="item-info">
 						<h3 class="name">{{item.name}}</h3>
 						<p class="description">{{item.description}}</p>
