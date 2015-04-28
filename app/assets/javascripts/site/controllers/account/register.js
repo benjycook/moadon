@@ -88,9 +88,11 @@ App.AccountRegisterController = Em.ObjectController.extend(SimpleAuth.LoginContr
 
 		'openLogin': function(){
 			this.set('showLogin', true);
+			this.send('closeMsg',this);
 		},
 
 		'openRegister': function(){
+			this.send('closeMsg',this);
 			this.set('showLogin', false);
 		}
 	}
