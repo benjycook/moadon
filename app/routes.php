@@ -21,6 +21,7 @@ if(empty($domain))
 function RegisterRouteForDomain($base)
 { 
 	Route::group(array('domain' => $base), function(){
+		Route::get('v{id}', 'SiteOrdersController@showOrder');
 		Route::get('/', 'SiteIndexController@index');
 		Route::get('site/options', 'SiteClubsController@options');
 		Route::post('login', 'SiteClubsController@login');

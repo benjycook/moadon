@@ -111,6 +111,7 @@ body
 	margin-top: 10px;
 	text-align: center;
 	width: 100%;
+	outline-color: transparent;
 }
 
 .overlay .lightbox .right .box button {
@@ -291,6 +292,7 @@ body
     padding: 0 10px;
     width: 205px;
     box-sizing: border-box;
+    outline-color: transparent;
 }
 
 #search .search-field button {
@@ -1116,7 +1118,10 @@ ul.cart-items li > div {
 .lightbox form .form-group label {
 	display: block;
 }
-
+input
+{
+	outline-color: transparent;
+}
 .lightbox form .form-group input,
 .lightbox form .row input,
 .box.myinfo .form-group input
@@ -1131,12 +1136,14 @@ ul.cart-items li > div {
 	height: 38px;
 	padding: 0 10px;
 	width: 100%;
+	outline-color: transparent;
 }
 
 .lightbox form .row input {
 	display: inline;
 	vertical-align: top;
 	width: calc(30% - 10px);
+	outline-color: transparent;
 }
 
 .overlay .lightbox.small,
