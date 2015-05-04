@@ -12,7 +12,7 @@ class SiteBaseController extends BaseController
 
 		$club = Club::where('urlName','=',$subdomain)->first();
 		if(!$club)
-			return "מועדון זה לא קיים";
+			return "מועדון זה לא קיים $subdomain";
 		$this->club = $club;
 		
 		return parent::callAction($method, $parameters);
