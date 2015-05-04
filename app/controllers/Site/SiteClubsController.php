@@ -139,11 +139,8 @@ class SiteClubsController extends SiteBaseController
 		}
 		catch(Exception $e)
 		{}
-		$domain = getenv('ROOTDOMAIN');
-		if($this->club->urlName!=$domain)
-			$data['suppliersUrl'] = str_replace($this->club->urlName.".","",URL::to('suppliers'));
-		else
-			$data['suppliersUrl'] = URL::to('suppliers');
+		$schema = Request::secure() ? 'https://' : 'http://'; 
+		$data['suppliersUrl'] = $schema.getenv('ROOTDOMAIN').'/suppliers';
 		return Response::json($data,200);
 	}
 
