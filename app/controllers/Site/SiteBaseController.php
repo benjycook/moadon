@@ -6,14 +6,14 @@ class SiteBaseController extends BaseController
 	public function callAction($method,$parameters)
 	{
 		$host = Request::getHost();
-		
+
 		$subdomain = null;
 
-		if(!strpos($host, getenv('ROOTDOMAIN')))
+		if(strpos($host, getenv('ROOTDOMAIN')) !== 0)
 			$subdomain = array_shift($parameters);
 
 		if(empty($subdomain) || $subdomain == 'www')
-			$subdomain = 'cpnclub';
+			$subdomain = getenv('DEFUALT_CLUB');
 
 		$club = Club::where('urlName','=',$subdomain)->first();
 		if(!$club)
