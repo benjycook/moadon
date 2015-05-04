@@ -139,7 +139,11 @@ class SiteClubsController extends SiteBaseController
 		}
 		catch(Exception $e)
 		{}
-		$data['suppliersUrl'] = str_replace($this->club->urlName.".","",URL::to('suppliers'));
+		$domain = getenv('ROOTDOMAIN');
+		if($this->club->urlName!=$domain)
+			$data['suppliersUrl'] = str_replace($this->club->urlName.".","",URL::to('suppliers'));
+		else
+			$data['suppliersUrl'] = URL::to('suppliers');
 		return Response::json($data,200);
 	}
 

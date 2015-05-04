@@ -78,7 +78,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			});
 		},
 
-		'openRegister': function(transitionTo)
+		'openLogin': function(transitionTo)
 		{
 			var ctrl = this.controllerFor('account.register');
 
@@ -92,12 +92,13 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 				password: '',
 				cart_id: this.get('session.cart_id')
 			});
-
+			ctrl.set('showLogin', true);
 			this.render('account/modal', {
 				into: 'application',
 				outlet: 'lightbox',
 				controller: ctrl
 			});
+
 		},
 
 		'openPassReminder': function()
@@ -119,7 +120,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 		{
 			if(this.get('session.claims.loginType') != 'client')
 			{
-				this.send('openRegister', ['checkout']);
+				this.send('openLogin', ['checkout']);
 				return;
 			}
 
@@ -133,6 +134,12 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 					controller: ctrl
 				});
 
+		},
+
+		'closeMsg':function(controller)
+		{
+			controller.set('error',null);
+			controller.set('success',null);
 		}
 	}
 

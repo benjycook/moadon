@@ -1,0 +1,48 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close sendExit" {{action 'closeModal'}}>&times;</button>
+        <h4 class="modal-title">
+         הגדרות
+        </h4>
+      </div>     
+      <div class="modal-body">
+        <form>
+           {{#if error}}
+                <div class="alert alert-danger error">
+                  <strong>שגיאה:</strong> {{error}}
+                  <i class="fa fa-times" {{action 'close' controller}}></i>
+                </div>
+          {{/if}}
+          <div class="row">
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>אחוז מע"מ:</label>
+                  {{input-number type="text" class="form-control" valueBinding="vat" required="required"}}
+                </div>
+              </div>
+
+             <div class="col-md-6">
+                <div class="form-group">
+                  <label>עמלת אשראי:</label>
+                  {{input-number type="text" class="form-control" valueBinding="creditCommission" required="required"}}
+                </div>
+              </div>
+
+          </div>
+        </form>
+      </div>
+       <div class="modal-footer">
+        <button class="btn btn-default" {{action 'closeModal'}}>ביטול</button>
+        <div class="pull-left">
+             <button {{action "saveSettings" model view}} type="button" class="btn btn-success sendEnter">שמור</button>
+        </div>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}

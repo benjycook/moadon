@@ -1,16 +1,16 @@
-<form class="box" {{action 'login' on='submit'}}>
+{{#ui-form class="box" action='login' autocomplete="on"}}
 
     <h2>כניסה</h2>
 
     {{#if error}}
         <div class="alert error">
-            <div class="close">&times;</div>
+            <div class="close" {{action 'closeMsg' controller}}>&times;</div>
             {{error}}
         </div>
     {{/if}}
     
     <div class="form-group">
-        {{input type="text" placeholder="דואר אלקטרוני" value=email}}
+        {{input type="text" placeholder="דואר אלקטרוני" value=email name="email"}}
     </div>
 
     <div class="form-group">
@@ -19,7 +19,7 @@
     <div>
         <label {{action 'openPassReminder'}} class="forgotPass">שכחתי סיסמא &gt;&gt;</label>
     </div>
-    <button {{action 'login'}}>התחבר</button>
-    <button {{action 'openRegister'}}>הרשמה</button>
+    <button {{action 'openRegister'}} type="button">הרשמה</button>
+    <button type="submit">התחבר</button>
 
-</form>
+{{/ui-form}}

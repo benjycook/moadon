@@ -21,6 +21,7 @@ if(empty($domain))
 function RegisterRouteForDomain($base)
 { 
 	Route::group(array('domain' => $base), function(){
+		Route::get('v{id}', 'SiteOrdersController@showOrder');
 		Route::get('/', 'SiteIndexController@index');
 		Route::get('site/options', 'SiteClubsController@options');
 		Route::post('login', 'SiteClubsController@login');
@@ -85,6 +86,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 		Route::get('suppliersReport','AdminReportsController@suppliersReport');
 		Route::resource('pages','AdminPagesController');
+		Route::resource('settings','AdminSettingsController');
 	});
 
 });

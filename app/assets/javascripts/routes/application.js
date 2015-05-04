@@ -27,6 +27,8 @@ App.LoginRoute  = Em.Route.extend({
 	},
 	
 	actions: {
+		
+
 		'login': function(model, view){
 			var self = this;
 			var controller = this.controllerFor('login');
@@ -147,5 +149,52 @@ App.ApplicationRoute = Em.Route.extend({
 	            }
 	        }
 	    });
+	},
+	actions:
+	{
+		'settings':function()
+		{
+			var self = this;
+			var settingsCtrl = Em.ObjectController.create({});
+			$.getJSON('settings/0').then(function(data){
+				settingsCtrl.set('model',data);
+				settingsCtrl.set('target',self);
+				self.render('settings', {into: 'application', outlet: 'modal',controller:settingsCtrl});
+			});	
+		},
+
+		'saveSettings':function(model,view)
+		{
+			var self = this;
+			var form = view.$('form');
+			var valid = form.parsley().validate();
+			if(!valid)
+				return;
+			url  = "settings/0";
+			type = "PUT";
+			$.ajax({
+				type: type,
+				url: url,
+				data: JSON.stringify(model)
+			}).then(function(data){
+				App.set('vat',parseFloat(model.vat));
+				App.set('creditCommission',parseFloat(model.creditCommission));
+				self.send('closeModal');
+			}).fail(function(data){
+				if(data.status == 500)
+					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
+				else
+					var error = data.responseJSON.error;
+					controller.set('error',error);
+			});
+		},
+
+		'closeModal':function()
+		{
+			this.render('empty', {
+				  into: 'application',
+				  outlet: 'modal'
+			});
+		}
 	}
 });

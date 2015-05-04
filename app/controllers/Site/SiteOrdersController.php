@@ -171,4 +171,29 @@ class SiteOrdersController extends SiteBaseController
   		
 	}
 
+	public function showOrder($key)
+	{
+		$order = Order::with('items')->where('key','=',$key)->first();
+		if(!$order)
+			return "הזמנה זו לא נמצאה במערכת.";
+		$data = [];
+		$data['suppliers'] = [];
+
+		foreach ($order->items as &$item) {
+			$supplier = SiteDetails::where('suppliers_id','=',$item->supplier->id)->first();
+			$item->supplierName = $supplier->supplierName;
+			$data['items'][] = $item;
+			if(!isset($data['suppliers'][$supplier->suppliers_id]))
+			{
+				$city = City::find($supplier->cities_id);
+				$supplier->city = $city->name;
+				$data['suppliers'][$supplier->suppliers_id] = $supplier;
+			}
+		}
+		$data['orderNum'] = $order->id;
+		$data['client']['firstName'] = $order->firstName;
+		$data['client']['lastName']  = $order->lastName;
+		return View::make('mail.order',$data);
+	}
+
 }

@@ -12,30 +12,7 @@ class SiteBaseController extends BaseController
 
 		$club = Club::where('urlName','=',$subdomain)->first();
 		if(!$club)
-		{
-			$key = str_replace(URL::to('/')."/v","",Request::url());
-			$order = Order::with('items')->where('key','=',$key)->first();
-			if(!$order)
-				return "מועדון זה לא קיים";
-			$data = [];
-			$data['suppliers'] = [];
-
-			foreach ($order->items as &$item) {
-				$supplier = SiteDetails::where('suppliers_id','=',$item->supplier->id)->first();
-				$item->supplierName = $supplier->supplierName;
-				$data['items'][] = $item;
-				if(!isset($data['suppliers'][$supplier->suppliers_id]))
-				{
-					$city = City::find($supplier->cities_id);
-					$supplier->city = $city->name;
-					$data['suppliers'][$supplier->suppliers_id] = $supplier;
-				}
-			}
-			$data['orderNum'] = $order->id;
-			$data['client']['firstName'] = $order->firstName;
-			$data['client']['lastName']  = $order->lastName;
-			return View::make('mail.order',$data);
-		}
+			return "מועדון זה לא קיים";
 		$this->club = $club;
 		
 		return parent::callAction($method, $parameters);

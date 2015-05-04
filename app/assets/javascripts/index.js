@@ -29,6 +29,8 @@ Ember.Application.initializer({
 				App.itemTypes.set('content', data.itemTypes);
 				App.cities.set('content', data.cities);
 				App.set('logedin',data.logedin);
+				App.set('vat',data.vat);
+				App.set('creditCommission',data.creditCommission);
 				application.advanceReadiness();
 			});
   }
