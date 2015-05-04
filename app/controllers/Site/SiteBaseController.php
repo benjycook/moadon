@@ -5,7 +5,12 @@ class SiteBaseController extends BaseController
 
 	public function callAction($method,$parameters)
 	{
-		$subdomain = array_shift($parameters);
+		$host = Request::getHost();
+		
+		$subdomain = null;
+
+		if(!strpos($host, getenv('ROOTDOMAIN')))
+			$subdomain = array_shift($parameters);
 
 		if(empty($subdomain) || $subdomain == 'www')
 			$subdomain = 'cpnclub';
