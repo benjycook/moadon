@@ -105,6 +105,8 @@ class SiteOrdersController extends SiteBaseController
 		$this->cart->items()->delete();
 		$total = 0;
 		$info['suppliers'] = [];
+		$docItems = [];
+		$settings = Settings::find(1);
 		foreach ($items as $item) {
 			$orderItem = Item::find($item->items_id);
 			$orderItem->items_id = $item->items_id;
@@ -114,6 +116,12 @@ class SiteOrdersController extends SiteBaseController
 			$supplier = SiteDetails::where('suppliers_id','=',$orderItem->supplier->id)->first();
 			$orderItem->supplierName = $supplier->supplierName;
 			$info['items'][] = $orderItem;
+			$price = $orderItem->priceSingle/((floatval($settings->vat)/100)+1);
+			$docItems[] = [
+				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,
+				'sku'=>$orderItem->sku,'measurementunits_id'=>1,'itemtypes_id'=>1,'stock'=>1,'taxable'=>1,'t6111_id'=>1010,
+				'discount'=>0,
+			];
 			if(!isset($info['suppliers'][$supplier->suppliers_id]))
 			{
 				$city = City::find($supplier->cities_id);
@@ -121,22 +129,21 @@ class SiteOrdersController extends SiteBaseController
 				$info['suppliers'][$supplier->suppliers_id] = $supplier;
 			}
 			OrderItem::create($orderItem->toArray());
-		}
-		
+		}	
 		//card date here!!!!!!!!!!
 
 
 	    // if($data['numberOfPayments'] > 1)
 	    // 	$data['creditDealType'] = 2;
 	    // else
-	    	$data['creditDealType'] = 1;
+	    $data['creditDealType'] = 1;
 
 	    $data['firstPayment'] = $total;//$total/$data['numberOfPayments'];
 	    $data['total'] = $total;
 	    $data['creditCardType'] = 1;
 		$data['orders_id'] = $order->id;
 
-		Payment::create($data);
+		$payment = Payment::create($data);
 		
     	$url = URL::to("v".$key);
 		$info['orderNum'] = $order->id;
@@ -161,12 +168,47 @@ class SiteOrdersController extends SiteBaseController
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$result = json_decode(curl_exec($ch),true);
 		curl_close($ch);
+		$invoiceUrl = Config::get('invoice.url','');
+		$doc = new stdClass;
+		$doc->token 			= Config::get('invoice.key','');
+    	$doc->type    			= 320;
+	    $doc->docs_id 			= 0;
+	    $doc->discountType		= 1;
+	    $doc->discountAmmount 	= 0;
+	    $doc->roundingAmmount 	= 0;
+	    $doc->dueDate 			= date('d/m/Y');
+	    $doc->createdDate 		= date('d/m/Y');
+	    $doc->dateOfVal 		= date('d/m/Y');
+	    $doc->vatmodes_id		= 1;
+	    $doc->languages_id		= "he";
+	    $doc->currencies_id		= "ILS";
+	    $doc->notes 			= "";
+	    $doc->discount 			= 0;
+	    $doc->client 			= $client;
+	    $doc->items 			= $docItems;
+	    $doc->payments          = [
+	    	[
+	    		"paymenttypes_id"=>3,"creditcardtypes_id"=>$payment->creditCardType,"creditdealtypes_id"=>$payment->creditDealType,
+	    		"date"=> $data['cardExp'],"ammount"=>$payment->total,"bank"=>0,"branch"=>0,"payments"=>is_null($payment->numberOfPayments) ? 1:$payment->numberOfPayments,
+	    		 "firstPayment"=>$payment->firstPayment ,"account"=>"","number"=> substr($payment->cardNumber,-4)
+	    	],
+	    ];
+	    $ch = curl_init();
+		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
+		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$result = json_decode(curl_exec($ch),true);
+		curl_close($ch);
+
 		Mail::send('mail.order',$info,function($message) use($info){
             $message->to($info['client']['email'])->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
         }); 
 
 		return Response::json([
 			'success' => $order->id,
+			'invoice' => $result,
+			'doc'	  => json_encode($doc),
+			'invoiceUrl' => $invoiceUrl
 			],201);
   		
 	}
@@ -197,3 +239,4 @@ class SiteOrdersController extends SiteBaseController
 	}
 
 }
+
