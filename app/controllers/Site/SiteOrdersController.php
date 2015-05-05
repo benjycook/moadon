@@ -102,6 +102,7 @@ class SiteOrdersController extends SiteBaseController
     	} 
     	$client['key'] = $key;
 		$order = Order::create($client);
+		$this->cart->items()->delete();
 		$total = 0;
 		$info['suppliers'] = [];
 		foreach ($items as $item) {
@@ -138,7 +139,6 @@ class SiteOrdersController extends SiteBaseController
 		Payment::create($data);
 		
     	$url = URL::to("v".$key);
-		$this->cart->items()->delete();
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
 		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
@@ -153,7 +153,7 @@ class SiteOrdersController extends SiteBaseController
 	    $sms = new stdClass;
 	    $sms->msg = $msg;
 	    $sms->key = $projectKey;
-	    $sms->senderNumber  = "0525001920";//1700700400
+	    $sms->senderNumber  = "1700700400";//"0525001920";//
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $postUrl);
@@ -166,7 +166,7 @@ class SiteOrdersController extends SiteBaseController
         }); 
 
 		return Response::json([
-			'success' => $order->id
+			'success' => $order->id,
 			],201);
   		
 	}

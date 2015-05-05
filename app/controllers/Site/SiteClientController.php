@@ -52,28 +52,27 @@ class SiteClientController extends SiteBaseController
         $cart = Cart::where('clients_id','=',$client)->first();
         if($cart)
         {
-            $id    = $this->cart->id;
-            $items = CartItem::where('carts_id','=',$cart->id)->get();
-            foreach ($items as $item) {
-                if($temp = CartItem::where('carts_id','=',$id)->where('items_id','=',$item->items_id)->first())
-                {
-                    $temp->qty = $temp->qty+$item->qty;
-                    $temp->save();
-                    $item->delete();
-                }
-                else
-                {
-                    $item->carts_id = $id;
-                    $item->save();
-                }
-            }
+            // $id    = $this->cart->id;
+            // $items = CartItem::where('carts_id','=',$cart->id)->get();
+            // foreach ($items as $item) {
+            //     if($temp = CartItem::where('carts_id','=',$id)->where('items_id','=',$item->items_id)->first())
+            //     {
+            //         $temp->qty = $temp->qty+$item->qty;
+            //         $temp->save();
+            //         $item->delete();
+            //     }
+            //     else
+            //     {
+            //         $item->carts_id = $id;
+            //         $item->save();
+            //     }
+            // }
+            CartItem::where('carts_id','=',$cart->id)->delete();
             Cart::where('id','=',$cart->id)->delete();
+
         }
-        else
-        {
-            $this->cart->clients_id = $client;
-            $this->cart->save();
-        }
+        $this->cart->clients_id = $client;
+        $this->cart->save();
 
 	}
 
