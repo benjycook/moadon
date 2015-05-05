@@ -65,6 +65,8 @@ class SiteOrdersController extends SiteBaseController
 
 	public function store()
 	{
+		if(!$this->cart)
+        	return Response::json('failed', 401);
 		$data = json_decode(Request::getContent(),true);
 		$rules = array( 
             'cardNumber'  	=> 'required',
@@ -73,10 +75,11 @@ class SiteOrdersController extends SiteBaseController
             'cvv'  			=> 'required',
             'ownerId'  		=> 'required',
         );
-
+        
         $validator = Validator::make($data, $rules);
         if($validator->fails()) 
             return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים."),501);
+
 		$items = $this->cart->items()->get();
 		$data['cardExp'] = date('m',strtotime($data['cardYear']."-".$data['cardMonth']."-01"))."/".date('y',strtotime($data['cardYear']."-01-01"));
 		if(!preg_match("/(0[1-9]|1[0-2])\/[0-9]{2}/",$data['cardExp']))
