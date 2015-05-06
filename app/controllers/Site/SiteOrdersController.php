@@ -163,7 +163,7 @@ class SiteOrdersController extends SiteBaseController
 	    $sms = new stdClass;
 	    $sms->msg = $msg;
 	    $sms->key = $projectKey;
-	    $sms->senderNumber  = "1700700400";//"0525001920";//
+	    $sms->senderNumber  = "0525001920";//"1700700400";
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $postUrl);
@@ -172,6 +172,10 @@ class SiteOrdersController extends SiteBaseController
 		$result = json_decode(curl_exec($ch),true);
 		curl_close($ch);
 		$invoiceUrl = Config::get('invoice.url','');
+		$client = $this->client->toArray();
+		$client['name'] = $client['firstName']." ".$client['lastName'];
+		if(!isset($client['zipcode'])||!$client['zipcode']||$client['zipcode']=="")
+			unset($client['zipcode']);
 		$doc = new stdClass;
 		$doc->token 			= Config::get('invoice.key','');
     	$doc->type    			= 320;
