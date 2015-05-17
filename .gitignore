@@ -1,6 +1,7 @@
 /bootstrap/compiled.php
 /vendor
 /misc
+/ssl
 composer.phar
 .env.*.php
 .env.php
