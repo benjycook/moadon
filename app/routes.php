@@ -114,4 +114,4 @@ Route::group(array('prefix' => 'suppliers'), function()
 
 Route::get('v{key}','SiteOrdersController@viewOrder');
 
-Route::get('orders/report','AccountingController@orders');
+Route::get('ordersreport','AccountingController@orders');

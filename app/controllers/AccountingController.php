@@ -23,9 +23,9 @@ class AccountingController extends BaseController
 		$dealsKey = Config::get('dealsApi.dealsKey',0);
 		if($dealsKey!=$key)
 			return Response::json("אנא ספק מזהה.",401);
-		$start 	= date("Y-m-d H:i:s",strtotime($start));
-		$end 	= date("Y-m-d H:i:s",strtotime($end));
-		$orders = Order::with(['items'=>function($q){$q->with('sitedetails');}],'payment')->whereRaw('createdOn >= ? AND createdOn <= ?',[$start,$end])->orderBy('createdOn','ASC')->get();
+		$start 	= date("Y-m-d",strtotime($start));
+		$end 	= date("Y-m-d",strtotime($end));
+		$orders = Order::with(['items'=>function($q){$q->with('sitedetails');}],'payment')->whereRaw('DATE(createdOn) >= ? AND DATE(createdOn) <= ?',[$start,$end])->orderBy('createdOn','ASC')->get();
 		$xml = simplexml_load_file(public_path()."/base.xml");
 		foreach ($orders as $order) {
 			$doc = $xml->addChild('doc');
