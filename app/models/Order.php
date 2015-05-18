@@ -18,6 +18,6 @@ class Order extends Eloquent {
 	}
 	public function payment()
 	{
-		return $this->hasOne('Payment','orders_id','id');
+		return $this->hasOne('GatewayLog','orders_id','id');
 	}
 }

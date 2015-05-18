@@ -5,7 +5,7 @@
             <form class="box" {{action 'authenticate' on='submit'}}>
                 <h2>{{club.pageHeadline}}</h2>
                 <p>{{club.altHeadline}}</p>
-                {{input type="text" placeholder="הקלד קוד כניסה" value=clubident}}
+                {{input type="password" placeholder="הקלד קוד כניסה" value=clubident}}
                 {{#if error}}
                     <div class="error">{{error}}</div>
                 {{/if}}
