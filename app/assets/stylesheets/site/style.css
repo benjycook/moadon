@@ -1275,3 +1275,8 @@ input
 {
 	cursor: pointer;
 }
+.itemNote
+{
+	color: red;
+	display: block;
+}

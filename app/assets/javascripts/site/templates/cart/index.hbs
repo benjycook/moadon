@@ -11,7 +11,12 @@
 
                     <div class="info">
                         <h3 class="name">{{item.supplierName}} - {{item.name}}</h3>
-                        <p class="description">{{item.description}}</p>
+                        <p class="description">
+                            {{item.description}}
+                            {{#if item.notes}}
+                                <label class="itemNote">*{{item.notes}}</label>
+                            {{/if}}
+                        </p>
                     </div>
 
                     {{ui-qty count=item.count class="count"}}
