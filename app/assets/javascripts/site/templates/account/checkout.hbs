@@ -10,65 +10,29 @@
 						{{#if error}}
 						  <div class="alert error">
 						      <div class="close" {{action 'close' controller}}>&times;</div>
-						      {{error}}
+						      <p style="margin: 0; width: 90%;">{{error}}</p>
 						  </div>
 						{{/if}}
 
 						<h3>שלום {{session.client.firstName}} {{session.client.lastName}},</h3>
 
 						{{#if success}}
-							<h4>
-								הזמנתך בוצעה בהצלחה.<br />
-								פרטי ההזמנה נשלחו אליך במייל וב-SMS.<br />
-								מספר ההזמנה שלך הוא <span>{{success}}</span><br /><br />
-								<strong>חובה להציג מספר הזמנה בהגעה לבית העסק</strong><br />
-								<strong>מומלץ לתאם מראש</strong>
-							</h4>
-
+							{{#unless error}}
+								<h4>
+									הזמנתך בוצעה בהצלחה.<br />
+									פרטי ההזמנה נשלחו אליך במייל וב-SMS.<br />
+									מספר ההזמנה שלך הוא <span>{{success}}</span><br /><br />
+									<strong>חובה להציג מספר הזמנה בהגעה לבית העסק</strong><br />
+									<strong>מומלץ לתאם מראש</strong>
+								</h4>
+							{{/unless}}
 						{{/if}}
-
-						
-
 						{{#unless success}}
-							<h4>
-								כרטיס האשראי שלך יחוייב
-								בסכום כולל של ‎<span>{{cart.total}}&rlm;₪</span>
-							</h4>
-
-					    <div class="form-group">
-					        {{input type="text" placeholder="מספר כרטיס" value=cardNumber}}
-					    </div>
-
-					    <div class="row">
-
-						    		{{ui-chosen
-						    			classNames="years"
-						    			options=years
-						    			prompt="שנה"
-						    			selected=cardYear
-						    		}}
-
-						    		{{ui-chosen
-						    			classNames="months"
-						    			options=months
-						    			prompt="חודש"
-						    			selected=cardMonth
-						    		}}
-
-										{{input type="text" placeholder="CVV" value=cvv}}
-						  
-						  </div>
-
-
-					    <div class="form-group">
-					        {{input type="text" placeholder="תעודת זהות של בעל הכרטיס" value=ownerId}}
-					    </div>
-
-							<button {{action 'openCart'}} type='button'>חזור לסל</button>
-					    <button {{action 'pay'}} type='submit'>שלם</button>
-				    {{else}}
-				    	<button  style="display: block; margin: 0 auto 20px;" {{action 'closeModal'}}>סגור</button>
-				    {{/unless}}
+							<iframe {{bind-attr src=model.url}} style="height:300px; width: 330px; border:none; margin-bottom: 20px;" scrolling="no"></iframe>
+							<div class="payment-block" {{action 'checkterms'}}></div>
+					    {{else}}
+					    	<button  style="display: block; margin: 0 auto 20px;" {{action 'closeModal'}}>סגור</button>
+					    {{/unless}}
 				</form>
 
     </div>

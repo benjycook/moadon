@@ -123,19 +123,44 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 				this.send('openLogin', ['checkout']);
 				return;
 			}
-
-			var ctrl = this.controllerFor('checkout');
+			var self = this;
+			$.getJSON('checkout').then(function(data){
+				var ctrl = self.controllerFor('checkout');
 			
-				ctrl.set('model', {});
+				ctrl.set('model', data);
 
-				this.render('account/checkout', {
+				self.render('account/checkout', {
 					into: 'application',
 					outlet: 'lightbox',
 					controller: ctrl
 				});
+			});
 
 		},
-
+		'success':function(info)
+		{
+			console.log(info);
+			var ctrl = this.controllerFor('checkout');
+			var cartCtrl = this.controllerFor('cart');
+			cartCtrl.set('suspendUpdate',true);
+			cartCtrl.set('model',[]);
+			info.cart.forEach(function(item){
+				 cartCtrl.pushObject(item,true);
+			});
+			cartCtrl.set('suspendUpdate',false);
+			ctrl.set('model',info.order);
+		},
+		'creditGuardError': function(data)
+		{
+			console.log(data);
+			var ctrl = this.controllerFor('checkout');
+			var error = data.ErrorText+" מספר: "+data.ErrorCode;
+			ctrl.set('model',{error:error,success:1});
+		},
+		'cancelCheckOut':function()
+		{
+			this.send('openCart');
+		},
 		'closeMsg':function(controller)
 		{
 			controller.set('error',null);
