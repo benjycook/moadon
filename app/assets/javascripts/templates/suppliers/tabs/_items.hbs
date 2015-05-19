@@ -16,8 +16,10 @@
             <tbody>
               {{#if items.length}}
                 {{#each item in items}}
-                    <tr>
-                      <td class="min center">{{item.num}}</td>
+                   <tr {{bind-attr data-id=item.id}}>
+                      <td class="min center">
+                        <i class="fa fa-bars"></id>
+                      </td>
                       <td >{{item.name}}</td>
                       <td class="min center">{{item.displayDate}}</td>
                       <td class="min center">{{item.clubPrice}}</td>

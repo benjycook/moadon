@@ -19,3 +19,11 @@ textarea
 {
 	resize:none;
 }
+.ghost {
+  opacity: 0.4;
+}
+
+.fa-bars {
+  cursor: move;
+  cursor: -webkit-grabbing;
+}

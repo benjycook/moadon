@@ -89,6 +89,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 		Route::get('suppliersReport','AdminReportsController@suppliersReport');
 		Route::resource('pages','AdminPagesController');
+		Route::post('items/position','AdminItemsController@position');
 		Route::resource('settings','AdminSettingsController');
 	});
 

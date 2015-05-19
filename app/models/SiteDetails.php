@@ -58,6 +58,7 @@ class SiteDetails extends Eloquent {
 	{
 		return $query->with('galleries')->with(['items'=>function($iteQuery){
 			$iteQuery->where('states_id','=',2);
+			$iteQuery->orderBy('pos','ASC');
 		}]);
 	}
 
