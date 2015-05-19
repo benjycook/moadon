@@ -4,7 +4,12 @@
 	<li style="margin-bottom:10px;">מספר הזמנה: <?=$orderNum?></li>
 	<li>להלן פרטי ההזמנה:</li>
 	<?php foreach ($items as $item) { ?>
-		<li><?=$item['supplierName']?> - <?= $item['name']?> ,כמות מוזמנת: <?=$item['qty']?></li>
+		<li>
+			<?=$item['supplierName']?> - <?= $item['name']?> ,כמות מוזמנת: <?=$item['qty']?> 
+			<?php if($item['notes']!="") { ?>
+				<span style="color:red;">(*<?=$item['notes']?>)</span>
+			<?php } ?>
+		</li>
 	<?php } ?>
 	<li style="margin-top:10px;"><strong>יש להציג מספר הזמנה בקופה.</strong></li>
 	<li style="margin-bottom:10px;"><strong>יש לתאם מראש לפני הגעה:</strong></li>
