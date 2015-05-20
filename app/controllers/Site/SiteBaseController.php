@@ -29,7 +29,7 @@ class SiteBaseController extends BaseController
 		$this->auth = $auth;
 		if($this->_setPayload())
 		{
-				$this->_setClient();
+			$this->_setClient();
 			$this->_setCart();
 		}
 

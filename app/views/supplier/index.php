@@ -6,7 +6,7 @@
 
 		<meta charset="utf-8">
 		<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-		<title>קופונופש</title>
+		<title>קופונופש מועדון חברים</title>
 		<!--[if lte IE 9]>
 			<link rel="stylesheet" type="text/css" href="css/ie9.css">
 		<![endif]-->

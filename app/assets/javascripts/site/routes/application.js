@@ -6,6 +6,14 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 	},
 
 	setupController: function(ctrl,model){
+		$(document).ajaxStart(function( event, jqxhr, settings, thrownError ) {
+			//$(".blockUi").show();
+				
+		});
+		$(document).ajaxStop(function( event, jqxhr, settings, thrownError ) {
+			console.log("completed");
+			//$(".blockUi").hide();
+		});
 		var options = this.get('options');
 		model.categories = {children: options.categories};
 		
@@ -27,6 +35,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 		}
 		
 		ctrl.set('model',model);
+
 	},
 
 	actions: {

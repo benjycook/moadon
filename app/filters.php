@@ -20,6 +20,9 @@ Route::filter('ClubAuth', function(){
 		$token = $token->get();
 
 		$payload = TokenAuth::getPayload($token);
+		$payload = $payload->toArray();
+		if(!Cart::find($payload['cart_id']))
+			return Response::json('token_invalid', 401);
 	}
 	catch(Exception $e)
 	{
