@@ -56,4 +56,9 @@ class SiteCartController extends SiteBaseController
 		CartItem::where('carts_id','=',$cart->id)->whereNotIn('items_id',$ids)->delete();
 		return Response::json($info,201);
 	}
+
+	public function getCart()
+	{
+		return Response::json($this->_getCart($this->cart->id),201);
+	}
 }

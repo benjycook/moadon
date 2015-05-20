@@ -38,6 +38,7 @@ function RegisterRouteForDomain($base)
 			Route::get('supplier/{id}','SiteClubsController@supplier');
 			Route::get('search', 'SiteClubsController@search');
 			Route::post('cart','SiteCartController@cart');
+			Route::get('cart','SiteCartController@getCart');
 			Route::post('register', 'SiteClientController@register');
 			//Route::post('remined/password', 'SiteClientController@passReminder');
 			

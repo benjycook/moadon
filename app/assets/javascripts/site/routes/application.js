@@ -30,6 +30,17 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 	},
 
 	actions: {
+
+		'updateCartItems':function(cart)
+		{
+			var cartCtrl = this.controllerFor('cart');
+			cartCtrl.set('suspendUpdate',true);
+			cartCtrl.set('model',[]);
+			cart.forEach(function(item){
+				 cartCtrl.pushObject(item,true);
+			});
+			cartCtrl.set('suspendUpdate',false);
+		},
 		'closeModal': function(){
 				this.disconnectOutlet({
 		      outlet: 'lightbox',
@@ -49,7 +60,6 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 			{
 				var newItem = Em.copy(item.get('model'));
 				newItem.supplierName = supplierName;
-				console.log(newItem);
 				cartCtrl.pushObject(newItem, true);
 			}	
 			else
@@ -68,14 +78,30 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 				cartCtrl.removeObject(found);
 		},
 
-		'openCart': function()
+		'openCart': function(type)
 		{
 			var cartCtrl = this.controllerFor('cart');
-			this.render('cart/index', {
-				into: 'application',
-				outlet: 'lightbox',
-				controller: this.controller
-			});
+			var self = this;
+			if(type)
+			{
+				$.getJSON('cart').then(function(data){
+					self.send('updateCartItems',data);
+					self.render('cart/index', {
+						into: 'application',
+						outlet: 'lightbox',
+						controller: this.controller
+					});
+				});
+			}
+			else
+			{
+				self.render('cart/index', {
+						into: 'application',
+						outlet: 'lightbox',
+						controller: this.controller
+					});
+			}
+			
 		},
 
 		'openLogin': function(transitionTo)
@@ -139,27 +165,19 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 		},
 		'success':function(info)
 		{
-			console.log(info);
 			var ctrl = this.controllerFor('checkout');
-			var cartCtrl = this.controllerFor('cart');
-			cartCtrl.set('suspendUpdate',true);
-			cartCtrl.set('model',[]);
-			info.cart.forEach(function(item){
-				 cartCtrl.pushObject(item,true);
-			});
-			cartCtrl.set('suspendUpdate',false);
+			this.send("updateCartItems",info.cart);
 			ctrl.set('model',info.order);
 		},
 		'creditGuardError': function(data)
 		{
-			console.log(data);
 			var ctrl = this.controllerFor('checkout');
 			var error = data.ErrorText+" מספר: "+data.ErrorCode;
 			ctrl.set('model',{error:error,success:1});
 		},
 		'cancelCheckOut':function()
 		{
-			this.send('openCart');
+			this.send('openCart',1);
 		},
 		'closeMsg':function(controller)
 		{

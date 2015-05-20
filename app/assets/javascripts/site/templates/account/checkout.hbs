@@ -5,16 +5,17 @@
 
 				<form class="box" {{action 'checkout' on='submit'}}>
 
-						<h2>קופה</h2>
+						
 
 						{{#if error}}
 						  <div class="alert error">
-						      <div class="close" {{action 'close' controller}}>&times;</div>
 						      <p style="margin: 0; width: 90%;">{{error}}</p>
 						  </div>
+						{{else}}
+						 	<h2>קופה</h2>
+							<h3>שלום {{session.client.firstName}} {{session.client.lastName}},</h3>
 						{{/if}}
 
-						<h3>שלום {{session.client.firstName}} {{session.client.lastName}},</h3>
 
 						{{#if success}}
 							{{#unless error}}

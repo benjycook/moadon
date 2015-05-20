@@ -19,6 +19,7 @@ class SitePaymentController extends SiteBaseController  {
 			$otherpayment				= Input::get('periodicalPayment', 0);
 			$parts = "$password$txid$errorCode$cardtoken$exp$holderid$uniqueid";
 			$str = hash('sha256', $parts);
+
 			if($str == $mac)
 			{
 
