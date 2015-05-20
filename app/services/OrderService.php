@@ -20,15 +20,13 @@ class OrderService
 		$order = Order::create($client);
 		$log->orders_id = $order->id;
 		$log->save();
-		CartItem::join('carts',function($q) use($log){
-			$q->on('carts.id','=','carts_items.carts_id');
-			$q->where('clients_id','=',$log->clients_id);
-		})->delete();
 		$total = 0;
 		$info['suppliers'] = [];
 		$docItems = [];
+		
 		$settings = Settings::find(1);
 		foreach ($items as $item) {
+			$cart = $item->carts_id;
 			$orderItem = Item::find($item->items_id);
 			$orderItem->items_id = $item->items_id;
 			$orderItem->qty = $item->qty;
@@ -50,8 +48,19 @@ class OrderService
 				$info['suppliers'][$supplier->suppliers_id] = $supplier;
 			}
 			OrderItem::create($orderItem->toArray());
+			$originItem = CartItem::where('carts_id','=',$item->carts_id)->where('items_id','=',$item->items_id)->first();
+			if($originItem)
+			{
+				$qty = $originItem->qty-$item->qty;
+				if($qty>0)
+				{
+					$originItem->qty = $qty;
+					$originItem->save();
+				}
+				else
+					$originItem->delete();
+			}
 		}	
-		
     	$url = URL::to("v".$key);
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
@@ -116,13 +125,9 @@ class OrderService
 		Mail::send('mail.order',$info,function($message) use($info){
             $message->to($info['client']['email'])->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
         }); 
-        $cartItems = CartItem::join('carts',function($q) use($log){
-			$q->on('carts.id','=','carts_items.carts_id');
-			$q->where('clients_id','=',$log->clients_id);
-		})->get();
         return [
 			'order'	=> ['success'=>$order->id],
-			'cart'	=> $cartItems,
+			'carts_id'	=> $cart,
 			'result'=> $result,
 		];
 	}

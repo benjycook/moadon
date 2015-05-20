@@ -67,16 +67,26 @@ class SiteOrdersController extends SiteBaseController
 		if(!$this->cart)
         	return Response::json('failed', 401);
         $total = $this->cart->items()->sum(DB::raw("price*qty"));
-		$tran = CreditGuardService::startTransaction($total,$this->cart->id,$this->client->id);
+        if($total<=0)
+        	return Response::json('failed', 401);
+		$tran = CreditGuardService::startTransaction($total,$this->client);
 		if($tran->status == 0)
-		{	
+		{		
 			return Response::json([
 				'code' => $tran->code,
 				'message' => $tran->message
 			], 501);
 		}
+		//log_items save
+		$items = $this->cart->items;
+		foreach ($items as $item) {
+			$item = $item->toArray();
+			$item['gateway_id'] = $tran->id;
+			GatewayItem::create($item);
+		}
 		$url = $tran->url;
 		$data = [
+			'items'	=> $items,
 			'url' 				=> $url,
 		];
 		return Response::json($data,200);

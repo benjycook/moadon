@@ -8,7 +8,7 @@
 			return GatewayLog::where('uniqueid', '=', $uniqueid);
 		}
 
-		public static function startTransaction($total,$reference,$client,$maxpayments = 1)
+		public static function startTransaction($total,$client,$maxpayments = 1)
 		{
 			$amount = $total;
 			$cgConf['tid'] 						= Config::get('creditguard.tid');
@@ -25,23 +25,23 @@
 			$successUrl 	= URL::to('payment/success') . '?';
 			$errorUrl		= URL::to('payment/error') . '?';
 			$cancelUrl		= URL::to('payment/cancel') . '?';
-
-			$uniqueid = $reference.strtotime('now');			
+			
 
 			$log = new GatewayLog;
-
+			
 			$log->status				= 	0;
 			$log->maxpayments			= 	$maxpayments;		
 			$log->amount				= 	$amount;
-			$log->reference				= 	$reference;
-			$log->uniqueid				= 	$uniqueid;
 			$log->code					= 	0;
 			$log->message				= 	'';		
 			$log->info					= 	'';
 			$log->url					= 	'';
 			$log->tranid				= 	'';
 			$log->txid					= 	'';
-			$log->clients_id			=   $client;
+			$log->clients_id			=   $client->id;
+			$log->clubs_id 				=   $client->clubs_id;
+			$log->save();
+			$log->uniqueid	= $uniqueid = $log->id.strtotime('now');
 			$log->save();
 
 			$poststring.='&int_in=<ashrait>
@@ -68,7 +68,7 @@
 							 <periodicalPayment/>
 							 <validation>TxnSetup</validation>
 							 <dealerNumber/>
-							 <user>'.$reference.'</user>
+							 <user>'.$log->id.'</user>
 							 <mid>'.$cgConf['mid'].'</mid>
 							 <uniqueid>'.$uniqueid.'</uniqueid>
 							 <mpiValidation>autoComm</mpiValidation>
@@ -128,6 +128,7 @@
 				$log->tranid  = (string)$xmlObj->response->tranId;
 				$log->txid 		= (string)$xmlObj->response->doDeal->token;
 				$log->save();
+
 				return $log;
 			}
 			else

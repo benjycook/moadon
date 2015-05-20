@@ -1,5 +1,5 @@
 <?php 
-class SitePaymentController extends  SiteBaseController  {
+class SitePaymentController extends SiteBaseController  {
 
 		public function success()
 		{
@@ -23,7 +23,7 @@ class SitePaymentController extends  SiteBaseController  {
 			{
 
 				$log = GatewayLog::where('uniqueid', '=', $uniqueid)->first();
-				$items = CartItem::where('carts_id','=',$log->reference)->get();
+				$items = GatewayItem::where('gateway_id','=',$log->id)->get();
 				$client = Client::where('id','=',$log->clients_id)->first()->toArray();
 				
 				$log->success 				= 1;
@@ -41,7 +41,7 @@ class SitePaymentController extends  SiteBaseController  {
 
 				$log->save();
 				$info = OrderService::createOrder($items,$client,$log);
-				
+				$info['cart'] =  $this->_getCart($info['carts_id']);
 
 				
 				return '
