@@ -1,10 +1,7 @@
 <?php
 
 
-if(file_exists(__DIR__.'/../.env.php'))
-	putenv('APP_ENV=production');
-else
-	putenv('APP_ENV=local');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +29,10 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(function()
 {
-	return getenv('APP_ENV');
+	if(file_exists(__DIR__.'/../.env.php'))
+		return "production";
+	else
+		return "local";
 });
 
 /*

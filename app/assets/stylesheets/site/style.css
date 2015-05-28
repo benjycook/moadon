@@ -49,6 +49,16 @@ body
 	background-image: linear-gradient(to top, #dbe2e5 10%, #e6e9eb 20%, #f0f0f0 50%, #f9f9f9 100%);
 }
 
+.overlay .lightbox .logo {
+	height: 120px;
+	text-align: center;
+}
+
+.overlay .lightbox .logo img {
+	max-width: 100%;
+	max-height: 100px;
+}
+
 .overlay .lightbox .left,
 .overlay .lightbox .right {
 	width: 49%;
@@ -62,12 +72,12 @@ body
 	text-align: center;
 }
 
-.overlay .lightbox .left img {
+/*.overlay .lightbox .left img {
 	position: absolute;
 	bottom: 0;
 	width: 100%;
 	height: auto;
-}
+}*/
 
 .overlay .lightbox .left p {
 	font-size: 14px;
@@ -124,10 +134,10 @@ body
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
 	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-
 	position: absolute;
 	bottom: 20px;
-	left: 40px;
+	left: 50%;
+	margin-left: -55px;
 }
 
 .overlay .lightbox .right .box img {
@@ -1274,4 +1284,20 @@ input
 .box.mostviewed:hover,.box.newsuppliers:hover,.box.hotdeals:hover
 {
 	cursor: pointer;
+}
+.itemNote
+{
+	color: red;
+	display: block;
+}
+.blockUi
+{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: transparent;
+	z-index: 10;
 }

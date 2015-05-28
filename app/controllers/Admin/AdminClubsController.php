@@ -32,13 +32,21 @@ class AdminClubsController extends BaseController
 		$sql = $query ? "name LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Club::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
-		$club = Club::whereRaw($sql,array($query))->orderBy($sortField,$sortOrder)->forPage($page,$items)->get();
+		$clubs = Club::whereRaw($sql,array($query))->orderBy($sortField,$sortOrder)->forPage($page,$items)->get();
+		
+		$schema = Request::secure() ? 'https://' : 'http://'; 
+		$domain = getenv('ROOTDOMAIN');
+
+		foreach ($clubs as $club) {
+			$club->fullUrl = "$schema{$club->urlName}.$domain";
+		}
+
 		$meta = array(
 			'pages' => $pages,
 			'count' => $count,
 			'page'	=> $page
 			);
-		$data = array('collection'=>$club,'meta'=>$meta);
+		$data = array('collection'=>$clubs,'meta'=>$meta);
 		return Response::json($data,200);
 	}
 

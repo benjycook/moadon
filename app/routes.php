@@ -31,20 +31,24 @@ function RegisterRouteForDomain($base)
 		Route::post('account/register', 'SiteClientController@register');
 		Route::post('account/restore', 'SiteClientController@passReminder');
 		Route::get('account/logout', 'SiteClientController@logout');
-
+		Route::get('payment/success', 'SitePaymentController@success');
+		Route::get('payment/error', 	'SitePaymentController@error');
+		Route::get('payment/cancel', 'SitePaymentController@cancel');
 		Route::group(array('before' => 'ClubAuth'), function(){
 			Route::get('supplier/{id}','SiteClubsController@supplier');
 			Route::get('search', 'SiteClubsController@search');
 			Route::post('cart','SiteCartController@cart');
+			Route::get('cart','SiteCartController@getCart');
 			Route::post('register', 'SiteClientController@register');
 			//Route::post('remined/password', 'SiteClientController@passReminder');
-
+			
 			Route::get('newsuppliers', 'SiteClubsController@newsuppliers');
 			Route::get('mostviewed', 'SiteClubsController@mostviewed');
 			Route::get('hotdeals', 'SiteClubsController@hotdeals');
 
 			Route::group(array('before' => 'ClubClientAuth'), function(){
-
+				
+				Route::get('checkout', 	'SiteOrdersController@checkout');
 				Route::resource('orders', 'SiteOrdersController');
 				Route::get('info', 'SiteClientController@userInfo');
 				Route::post('update/info', 'SiteClientController@updateInfo');
@@ -86,6 +90,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::post('{id}/uploadImage','AdminImagesController@uploadImage');
 		Route::get('suppliersReport','AdminReportsController@suppliersReport');
 		Route::resource('pages','AdminPagesController');
+		Route::post('items/position','AdminItemsController@position');
 		Route::resource('settings','AdminSettingsController');
 	});
 

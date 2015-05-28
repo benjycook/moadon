@@ -55,7 +55,8 @@ class SiteClubsController extends SiteBaseController
 	  $data	=	json_decode($json);
 
 	  //print_r($this->club->clubCode);die($data->clubident);
-						
+		if(!isset($data->clubident)||$data->clubident=="")
+			return Response::json(array('error' => 'אנא הזן קוד מועדון.'), 401);
 		if($data->clubident != $this->club->clubCode)
 			return Response::json(array('error' => 'הקוד שהזנת שגוי. נסה שנית.'), 401);
 		

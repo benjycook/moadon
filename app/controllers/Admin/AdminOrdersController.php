@@ -11,7 +11,7 @@ class AdminOrdersController extends BaseController
 		$sql = $query ? "CONCAT_WS(' ',lastName,firstName,id) LIKE CONCAT('%',?,'%')" :'? = 0';
 		$count = Order::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
-		$orders = Order::with('club')->whereRaw($sql,array($query))->forPage($page,$items)->get();
+		$orders = Order::with('club')->whereRaw($sql,array($query))->forPage($page,$items)->orderBy('id','DESC')->get();
 		$orders = $orders->toArray();
         $newOrders = [];
         foreach ($orders as $order) {
@@ -79,11 +79,11 @@ class AdminOrdersController extends BaseController
 			return Response::json(array('error'=>"הזמנה זו לא נמצאה במערכת"),501);
         $order = $order->toArray();
         $order['createdOn'] = date('d/m/y',strtotime($order['createdOn']));
-        $order['total'] = $order['payment']['total'];
-        $order['cardNumber'] = substr($order['payment']['cardNumber'],-4);
-        $order['ownerName'] = $order['payment']['ownerName'];
-        $order['ownerId'] = $order['payment']['ownerId'];
-        $order['numberOfPayments'] = $order['payment']['numberOfPayments'];
+        $order['total'] = $order['payment']['amount'];
+        $order['cardNumber'] = substr($order['payment']['cardmask'],-4);
+        $order['ownerName'] = $order['payment']['holdername'];
+        $order['ownerId'] = $order['payment']['holderid'];
+        $order['numberOfPayments'] = 1;
         $order['realized'] = [];
         $suppliers   = array();
         foreach ($order['items'] as &$item) {

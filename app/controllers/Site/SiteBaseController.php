@@ -29,7 +29,7 @@ class SiteBaseController extends BaseController
 		$this->auth = $auth;
 		if($this->_setPayload())
 		{
-				$this->_setClient();
+			$this->_setClient();
 			$this->_setCart();
 		}
 
@@ -77,7 +77,7 @@ class SiteBaseController extends BaseController
 	{
 		$cart = CartItem::where('carts_id','=',$carts_id)->join('items','items.id','=','items_id')
 						->join('sitedetails','items.suppliers_id','=','sitedetails.suppliers_id')
-						->select(DB::raw('supplierName,priceSingle,items.name,carts_items.qty AS count,items.priceSingle,carts_items.items_id AS id,items.description,carts_items.carts_id'))
+						->select(DB::raw('supplierName,priceSingle,items.name,carts_items.qty AS count,items.priceSingle,carts_items.items_id AS id,items.notes AS notes,items.description,carts_items.carts_id'))
 						->groupBy('items_id')->get();
 		return $cart;
 	}

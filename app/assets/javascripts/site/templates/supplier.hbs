@@ -45,8 +45,13 @@
 
 					<div class="item-info">
 						<h3 class="name">{{item.name}}</h3>
-						<p class="description">{{item.description}}</p>
-
+						<p class="description">
+							{{item.description}}
+							{{#if item.notes}}
+								<label class="itemNote">*{{item.notes}}</label>
+							{{/if}}
+						</p>
+						
 						<div class="order">
 							<div class="price">
 								{{#ui-qty count=item.count class="count"}}{{/ui-qty}}

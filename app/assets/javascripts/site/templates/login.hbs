@@ -1,21 +1,28 @@
 <div class="overlay">
     <div class="lightbox">
         <div class="right">
-            <img src="img/site/logo.png" />
+            
+            <div class="logo">
+                <img {{bind-attr src=options.club.logo}} />
+            </div>
+
             <form class="box" {{action 'authenticate' on='submit'}}>
                 <h2>{{club.pageHeadline}}</h2>
                 <p>{{club.altHeadline}}</p>
-                {{input type="text" placeholder="הקלד קוד כניסה" value=clubident}}
+                {{input type="password" placeholder="הקלד קוד כניסה" value=clubident}}
                 {{#if error}}
                     <div class="error">{{error}}</div>
                 {{/if}}
                 <button {{action 'authenticate'}}>כניסה <i class="fa fa-arrow-circle-o-left "></i></button>
-                <img {{bind-attr src=options.club.logo}} />
+                
             </form>
         </div>
 
         <div class="left">
-            <p>{{club.pageDescription}}</p>
+            <div class="logo">
+                <img src="img/site/logo.png" />
+            </div>
+            {{!-- <p>{{club.pageDescription}}</p> --}}
             <img src="img/site/loginimg.png" />
         </div>
     </div>

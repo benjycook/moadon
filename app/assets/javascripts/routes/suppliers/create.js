@@ -88,7 +88,10 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			name: 'root element',
 			children: model.categories
 		};
-		var items = [];
+		var items = Em.ArrayController.create({
+			sortProperties: ['pos'],
+			content:[]
+		});
 		var self = this;
 		model.items.forEach(function(item){
 			var ctrl = App.ItemController.create({model:item})
@@ -97,11 +100,37 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 		});
 		model.items = items;
 		ctrl.set('model',model);
+	    Ember.run.schedule('afterRender', this, function () {
+	      
+	      var rows = $('tbody')[0];
+	      var sortable = Sortable.create(rows, {
+	        handle: ".fa-bars", 
+	        ghostClass: "ghost",
+	        draggable: 'tr',
+	        onSort: function(evt){
+	        	self.send('sort', sortable.toArray());
+	        }
+	      });
+	    });
 	},
 
 
 	actions:
 	{
+
+
+		'sort': function(data)
+		{
+			$.ajax({
+				type: 'POST',
+				url: 'items/position',
+				data: JSON.stringify(data)
+			}).then(function(){
+				
+			}).fail(function(data){
+
+			});
+		},
 
 		'editItem':function(item)
 		{

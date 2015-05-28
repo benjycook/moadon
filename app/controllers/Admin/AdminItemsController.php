@@ -184,4 +184,17 @@ class AdminItemsController extends BaseController
 		$item->delete();
 		return Response::json('success',201);
 	}
+	public function position()
+	{
+		$json   	= Request::getContent();
+	    $data   	= json_decode($json,true);
+	    $index 		= 0;
+	    foreach ($data as $id) 
+	    {
+	    	$item = Item::find($id);
+	    	$item->pos = $index;
+	    	$item->save();
+	    	$index++;
+	    }
+	}
 }
