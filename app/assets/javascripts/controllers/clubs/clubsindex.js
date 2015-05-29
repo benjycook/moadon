@@ -31,6 +31,11 @@ App.ClubsIndexController = GRID.TableController.extend({
         GRID.column('creditDiscount',            {title: 'הנחת אשראי',     style: ''  ,  isSortable: false  }),
         GRID.column('displayTotalDiscount',            {title: 'סך הנחה',     style: ''  , isSortable: false  }),
         GRID.column('actions',			{title: 'פעולות',			style: 'min center', templateName: 'clubs/grid/actions'  })
-    ]
+    ],
+
+    rowClick: function(){
+        console.log('row click');
+        return true;
+    }
 
 });
