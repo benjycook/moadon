@@ -88,8 +88,8 @@ class OrderService
 		$client['name'] = $client['firstName']." ".$client['lastName'];
 		if(!isset($client['zipcode'])||!$client['zipcode']||$client['zipcode']=="")
 			unset($client['zipcode']);
-		$year = substr("0318",2);
-		$month = substr("0318",0,2);
+		$year = substr($log->exp,2);
+		$month = substr($log->exp,0,2);
 		$expDate = "$month/$year";
 		$doc = new stdClass;
 		$doc->token 			= Config::get('invoice.key','');
