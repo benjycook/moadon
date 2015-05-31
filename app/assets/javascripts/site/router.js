@@ -7,6 +7,8 @@ App.Router.map(function(){
 	// this.route('account/register');
 	//this.route('login');
 
+	this.route('page', {path: 'page/:page_id'});
+
 	this.route('search', {path: 'search'});
 
 	// this.route('search', function(){
