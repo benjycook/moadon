@@ -54,6 +54,9 @@ function RegisterRouteForDomain($base)
 				Route::post('update/info', 'SiteClientController@updateInfo');
 
 			});
+
+			Route::get('page/{id}', 'SitePagesController@page');
+
 			
 		});
 
