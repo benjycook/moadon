@@ -184,11 +184,25 @@
               <label class="title"></label>
 
               <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>כותרת SEO:</label>
+                    {{input type="text" class="form-control" valueBinding="title" required="required" }}
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>תיאור SEO:</label>
+                    {{textarea class="form-control" valueBinding="description" required="required" }}
+                  </div>
+                </div>
+              
 
-                <div class="col-md-6">
+
+                <div class="col-md-12">
                   <div class="form-group">
                     <label>לוגו:</label>
-                      <div class="imgwraper" style="height:170px; max-height:170px;">
+                      <div class="imgwraper" style="height:108px; max-height:108px; width: auto;">
                             <label class="imageUpload">
                                 <img {{bind-attr src=logoUrl}} class="previewImage">
                                 {{file-upload url=uploadUrl linkBinding="logoUrl" errorBinding="error" name="fileUpload"}}
@@ -197,7 +211,7 @@
                   </div>
                 </div>
 
-              </div>
+           
 
             </div>
             

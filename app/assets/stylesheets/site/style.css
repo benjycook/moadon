@@ -221,6 +221,16 @@ body
 	bottom: 0;
 }
 
+#header #logo img {
+	height: 108px;
+	vertical-align: middle;
+}
+
+#header #logo img#club-logo {
+	height: calc(108px - 48px);
+	margin-right: 20px;
+}
+
 #header p {
 	margin: 0;
 	padding: 0;
@@ -1054,6 +1064,17 @@ ul.cart-items li > div {
 	padding-top: 50px;
 }
 
+.cart-notes {
+	color: #ff0000;
+	float: right;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.cart-notes p {
+	margin: 0;
+	margin-bottom: 5px;
+}
 /*.cart-buttons button {
 	background-color: #06568d;
 	border: medium none;
@@ -1300,4 +1321,12 @@ input
 	bottom: 0;
 	background-color: transparent;
 	z-index: 10;
+}
+
+.overlay .lightbox.small.checkout {
+	padding-bottom: 0;
+}
+
+.overlay .lightbox.small.checkout form {
+
 }

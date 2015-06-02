@@ -66,10 +66,25 @@ class SiteOrdersController extends SiteBaseController
 	{
 		if(!$this->cart)
         	return Response::json('failed', 401);
-        $total = $this->cart->items()->sum(DB::raw("price*qty"));
-        if($total<=0)
-        	return Response::json('failed', 401);
-		$tran = CreditGuardService::startTransaction($total,$this->client);
+
+    $total = $this->cart->items()->sum(DB::raw("price*qty"));
+    
+    if($total<=0)
+    	return Response::json('failed', 401);
+
+
+    //compute total
+    if($this->club->creditDiscount > 0)
+    {
+    	$creditDiscount = 1 - ($this->club->creditDiscount / 100);
+    	$ccTotal = $total / $creditDiscount;
+    }else{
+    	$ccTotal = $total;
+    }
+
+    $ccTotal = round($ccTotal, 2);
+
+		$tran = CreditGuardService::startTransaction($ccTotal,$this->client);
 		if($tran->status == 0)
 		{		
 			return Response::json([
@@ -77,6 +92,7 @@ class SiteOrdersController extends SiteBaseController
 				'message' => $tran->message
 			], 501);
 		}
+
 		//log_items save
 		$items = $this->cart->items;
 		foreach ($items as $item) {
@@ -86,8 +102,10 @@ class SiteOrdersController extends SiteBaseController
 		}
 		$url = $tran->url;
 		$data = [
-			'items'	=> $items,
+			'items'				=> $items,
 			'url' 				=> $url,
+			'ccTotal'			=> $ccTotal,
+			'total'				=> $total
 		];
 		return Response::json($data,200);
 	}
