@@ -22,6 +22,8 @@ class Club extends Eloquent {
 		'contactLastName',
 		'contactPhone',
 		'contactEmail',
+		'title',
+		'description'
 	);
 
 	public $timestamps = false;
@@ -33,6 +35,6 @@ class Club extends Eloquent {
 
 	public function scopeSite($query)
 	{
-		return $query->select('name','pageDescription','identificationtypes_id','pageHeadline','logo','altHeadline');
+		return $query->select('description', 'title', 'name','pageDescription','identificationtypes_id','pageHeadline','logo','altHeadline');
 	}
 }
