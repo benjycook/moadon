@@ -1301,3 +1301,11 @@ input
 	background-color: transparent;
 	z-index: 10;
 }
+
+.overlay .lightbox.small.checkout {
+	padding-bottom: 0;
+}
+
+.overlay .lightbox.small.checkout form {
+
+}
