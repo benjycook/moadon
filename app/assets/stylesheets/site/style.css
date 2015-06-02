@@ -221,6 +221,16 @@ body
 	bottom: 0;
 }
 
+#header #logo img {
+	height: 108px;
+	vertical-align: middle;
+}
+
+#header #logo img#club-logo {
+	height: calc(108px - 48px);
+	margin-right: 20px;
+}
+
 #header p {
 	margin: 0;
 	padding: 0;
