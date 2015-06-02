@@ -1054,6 +1054,17 @@ ul.cart-items li > div {
 	padding-top: 50px;
 }
 
+.cart-notes {
+	color: #ff0000;
+	float: right;
+	font-size: 14px;
+	margin-top: 10px;
+}
+
+.cart-notes p {
+	margin: 0;
+	margin-bottom: 5px;
+}
 /*.cart-buttons button {
 	background-color: #06568d;
 	border: medium none;
