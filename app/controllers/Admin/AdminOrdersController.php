@@ -81,7 +81,7 @@ class AdminOrdersController extends BaseController
         $order['createdOn'] = date('d/m/y',strtotime($order['createdOn']));
         $order['total'] = $order['payment']['amount'];
         $order['cardNumber'] = substr($order['payment']['cardmask'],-4);
-        $order['ownerName'] = $order['payment']['holdername'];
+        $order['ownerName'] = "";//$order['payment']['holdername'];
         $order['ownerId'] = $order['payment']['holderid'];
         $order['numberOfPayments'] = 1;
         $order['realized'] = [];
