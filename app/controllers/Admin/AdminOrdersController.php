@@ -88,7 +88,7 @@ class AdminOrdersController extends BaseController
         $suppliers   = array();
         foreach ($order['items'] as &$item) {
             $item['supplierName'] = $item['supplier']['name'];
-            $item['total'] = $item['qty']*$item['priceSingle'];
+            $item['total'] = $item['qty']*$item['noCreditDiscountPrice'];
             $suppliers[$item['supplierName']] = $item['supplier']['id'];
             unset($item['supplier']);
         }

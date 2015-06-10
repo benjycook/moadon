@@ -5,7 +5,11 @@ class SitePaymentController extends SiteBaseController  {
 		{
 			$client = [];
 			$mac 							= Input::get('responseMac');
-			$password						= Config::get('creditguard.password');
+			if($this->club->creditDiscount>0)
+				$terminal = 'creditguard1';
+			else
+				$terminal = 'creditguard2';
+			$password						= Config::get($terminal.'.password');
 			$txid 							= Input::get('txId');
 			$errorCode  				= Input::get('errorCode', '000');
 			$cardtoken 					= Input::get('cardToken', '');
@@ -41,7 +45,7 @@ class SitePaymentController extends SiteBaseController  {
 				$log->otherpayment    = $otherpayment;
 
 				$log->save();
-				$info = OrderService::createOrder($items,$client,$log);
+				$info = OrderService::createOrder($items,$client,$log,$this->club);
 				$info['cart'] =  $this->_getCart($info['carts_id']);
 
 				

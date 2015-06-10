@@ -6,7 +6,7 @@ class OrderService
         $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         return substr(str_shuffle($charset), 0, $length);
     }
-	public static function createOrder($items,$client,$log)
+	public static function createOrder($items,$client,$log,$club)
 	{
 		$info = [];
 		$client['clients_id'] = $client['id'];
@@ -35,9 +35,16 @@ class OrderService
 			$supplier = SiteDetails::where('suppliers_id','=',$orderItem->supplier->id)->first();
 			$orderItem->supplierName = $supplier->supplierName;
 			$info['items'][] = $orderItem;
-			//if credit :
-			//$creditDiscount = 1 - ($this->club->creditDiscount / 100);
-			$price = $orderItem->priceSingle/((floatval($settings->vat)/100)+1);
+			if($club->creditDiscount>0)
+			{
+				$creditDiscount = 1 - ($club->creditDiscount / 100);
+				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle/$creditDiscount;
+			}
+			else
+				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle;
+			$orderItem->noDiscountPrice = $orderItem->priceSingle/(1 - (($club->creditDiscount+$club->regularDiscount) / 100));
+			
+			$price = $price/((floatval($settings->vat)/100)+1);
 
 			$docItems[] = [
 				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,

@@ -22,7 +22,7 @@ class SiteOrdersController extends SiteBaseController
 			'pages'	=>	$pages,
 		];
 		$data['orders'] = $this->client->orders()->join('orders_items','orders_items.orders_id','=','orders.id')
-							->select(DB::raw('DATE(createdOn) AS createdOn,orders.id,sum(priceSingle*qty) AS total'))
+							->select(DB::raw('DATE(createdOn) AS createdOn,orders.id,sum(noCreditDiscountPrice*qty) AS total'))
 							->groupBy('orders.id')->forPage($page,$items)->orderBy('orders.id','DESC')->get();
 		
     	foreach ($data['orders'] as $order) {
@@ -45,9 +45,9 @@ class SiteOrdersController extends SiteBaseController
 				if(!isset($suppliers[$item['suppliers_id']]))
 					$suppliers[$item['suppliers_id']] = ['supplierName'=>$item['sitedetails']['supplierName'],'items'=>[]];
 				$realized = $item['fullyRealized']==0 ? 'לא מומש':'מומש';
-				$itemTotal = "₪".number_format($item['priceSingle']*$item['qty'],2);
+				$itemTotal = "₪".number_format($item['noCreditDiscountPrice']*$item['qty'],2);
 				$suppliers[$item['suppliers_id']]['items'][] = ['name'=>$item['name'],'qty'=>$item['qty'],'realized'=>$realized,'total'=>$itemTotal];
-	            $total += ($item['qty']*$item['priceSingle']);
+	            $total += ($item['qty']*$item['noCreditDiscountPrice']);
 	        }
 	        $new = [];
 	        foreach ($suppliers as $supplier) {
