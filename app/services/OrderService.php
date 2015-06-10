@@ -35,7 +35,10 @@ class OrderService
 			$supplier = SiteDetails::where('suppliers_id','=',$orderItem->supplier->id)->first();
 			$orderItem->supplierName = $supplier->supplierName;
 			$info['items'][] = $orderItem;
+			//if credit :
+			//$creditDiscount = 1 - ($this->club->creditDiscount / 100);
 			$price = $orderItem->priceSingle/((floatval($settings->vat)/100)+1);
+
 			$docItems[] = [
 				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,
 				'sku'=>$orderItem->sku,'measurementunits_id'=>1,'itemtypes_id'=>1,'stock'=>1,'taxable'=>1,'t6111_id'=>1010,
