@@ -38,18 +38,19 @@ class OrderService
 			if($club->creditDiscount>0)
 			{
 				$creditDiscount = 1 - ($club->creditDiscount / 100);
-				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle/$creditDiscount;
+				$orderItem->noCreditDiscountPrice = $price = round(($orderItem->priceSingle/$creditDiscount)/0.01)*0.01;
 			}
 			else
 				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle;
+
 			$orderItem->noDiscountPrice = $orderItem->priceSingle/(1 - (($club->creditDiscount+$club->regularDiscount) / 100));
 			
 			$price = $price/((floatval($settings->vat)/100)+1);
-
+			$price = round($price/0.01)*0.01;
 			$docItems[] = [
-				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,
-				'sku'=>$orderItem->sku,'measurementunits_id'=>1,'itemtypes_id'=>1,'stock'=>1,'taxable'=>1,'t6111_id'=>1010,
-				'discount'=>0,
+				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,
+				'priceWithVat'=>$orderItem->noCreditDiscountPrice,'sku'=>$orderItem->sku,'measurementunits_id'=>1,'stock'=>1,'taxable'=>1,
+				't6111_id'=>1010,'discount'=>0,
 			];
 			if(!isset($info['suppliers'][$supplier->suppliers_id]))
 			{
@@ -125,6 +126,7 @@ class OrderService
 	    		 "firstPayment"=>$log->amount,"account"=>"","number"=> substr($log->cardmask,-4)
 	    	],
 	    ];
+
 	    $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));

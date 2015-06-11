@@ -79,13 +79,13 @@ class SiteOrdersController extends SiteBaseController
     {
     	$terminal = 2;
     	$creditDiscount = 1 - ($this->club->creditDiscount / 100);
-    	$ccTotal = $total / $creditDiscount;
+    	$ccTotal = ($total / $creditDiscount);
     }else{
     	$ccTotal = $total;
     }
 
     $ccTotal = round($ccTotal, 2);
-    //if $this->club->creditDiscount allways go to credit
+    //if $this->club->creditDiscount >0 allways go to credit
 		$tran = CreditGuardService::startTransaction($ccTotal,$this->client,$terminal);
 		if($tran->status == 0)
 		{		
