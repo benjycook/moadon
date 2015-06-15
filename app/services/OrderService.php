@@ -38,7 +38,7 @@ class OrderService
 			if($club->creditDiscount>0)
 			{
 				$creditDiscount = 1 - ($club->creditDiscount / 100);
-				$orderItem->noCreditDiscountPrice = $price = round(($orderItem->priceSingle/$creditDiscount)/0.01)*0.01;
+				$orderItem->noCreditDiscountPrice = $price = floor($orderItem->priceSingle/$creditDiscount);
 			}
 			else
 				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle;
