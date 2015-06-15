@@ -81,14 +81,14 @@ class AdminOrdersController extends BaseController
         $order['createdOn'] = date('d/m/y',strtotime($order['createdOn']));
         $order['total'] = $order['payment']['amount'];
         $order['cardNumber'] = substr($order['payment']['cardmask'],-4);
-        $order['ownerName'] = $order['payment']['holdername'];
+        $order['ownerName'] = "";//$order['payment']['holdername'];
         $order['ownerId'] = $order['payment']['holderid'];
         $order['numberOfPayments'] = 1;
         $order['realized'] = [];
         $suppliers   = array();
         foreach ($order['items'] as &$item) {
             $item['supplierName'] = $item['supplier']['name'];
-            $item['total'] = $item['qty']*$item['priceSingle'];
+            $item['total'] = $item['qty']*$item['noCreditDiscountPrice'];
             $suppliers[$item['supplierName']] = $item['supplier']['id'];
             unset($item['supplier']);
         }
