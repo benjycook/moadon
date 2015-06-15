@@ -8,6 +8,12 @@ App.ApplicationController = Em.ObjectController.extend({
   categories: Ember.computed.alias("model.categories"),
 	club: Ember.computed.alias("options.club"),
 
+	hasCreditDiscount: function(){
+		if(this.get('club.creditDiscount') > 0)
+			return true;
+		return false;
+	}.property('club.creditDiscount'),
+
   newsupplier: function(){
   	var newsuppliers =  this.get('model.newsuppliers').map(function(item){
   		return App.SupplierController.create({

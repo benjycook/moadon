@@ -40,6 +40,19 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 
 	actions: {
 
+		checkterms: function(){
+			this.get('session').set('termsBoxOpen', true);
+		},
+
+		closeTermsBox: function(){
+			this.get('session').set('termsBoxOpen', false);
+		},
+
+		terms: function(){
+			this.get('session').set('termsBoxOpen', false);
+			this.get('session').toggleProperty('terms');
+		},
+
 		'updateCartItems':function(cart)
 		{
 			var cartCtrl = this.controllerFor('cart');

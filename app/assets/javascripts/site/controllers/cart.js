@@ -2,6 +2,10 @@ App.CartController = Em.ArrayController.extend({
 	suspendUpdate:false,
 	itemController: 'item',
 
+	hasCreditDiscount: function(){
+
+	},
+
 	hasItems: function(){
 		if(this.get('length') > 0)
 			return true;

@@ -2,8 +2,29 @@
     <div class="lightbox small checkout">
         <div class="close" {{action 'closeModal'}}>&times;</div>
 
+       	{{#if session.termsBoxOpen}}
+        	<div id="check-terms-box">
+        		
+        		<div class="center">
+	        		<h2>אישור תקנון</h2>
+	        		<p>על מנת להשלים את תהליך הרכישה עליך לאשר את התקנון ואת תנאי השימוש באתר.</p>
+        		
+        			<div id="terms">
+								{{#if session.terms}}
+									<i class="fa fa-check-square-o" {{action 'terms'}}></i>
+								{{else}}
+									<i class="fa fa-square-o" {{action 'terms'}}></i>
+								{{/if}}
+								קראתי ואני מסכים לתנאי השימוש באתר בכפוף <a target="_blank" {{bind-attr href=model.termsUrl}}>לתקנון</a>
+							</div>
 
-				<form class="box" {{action 'checkout' on='submit'}}>
+							<button type="button" {{action "closeTermsBox"}}><i class="fa fa-close"></i> סגור</button>
+        		</div>
+
+        	</div>
+        {{/if}}
+        
+				<div class="box">
 
 						<h2>קופה</h2>
 
@@ -29,26 +50,45 @@
 						{{#unless success}}
 							<h3>שלום {{session.client.firstName}} {{session.client.lastName}},</h3>
 							
-							<p>
-								<strong>שים לב:</strong>
-								לקבלת מולא ההנחה יש לבצע את התשלום באמצעות כרטיס אשראי של מועדון {{options.club.name}} בלבד!
-								<br />
-								<strong>כרטיס האשראי שלך יחוייב בסכום כולל של ₪{{total}}</strong>
-							</p>
+							{{#if hasCreditDiscount}}
+								<p>
+									<strong>שים לב:</strong>
+									לקבלת מלוא ההנחה יש לבצע את התשלום באמצעות כרטיס אשראי של מועדון {{options.club.name}} בלבד!
+									<br />
+									<strong>כרטיס האשראי שלך יחוייב בסכום כולל של ₪{{total}}</strong>
+								</p>
 
-							<p style="color: red;">
-								<strong>שים לב:</strong>
-								במידה והתשלום יבוצע באמצעות כרטיס אשראי שאינו שייך למועדון {{options.club.name}}
-								<br />
-								<strong>כרטיס האשראי שלך יחוייב בסכום כולל של ₪{{ccTotal}}</strong>
-							</p>
+								<p style="color: red;">
+									<strong>שים לב:</strong>
+									במידה והתשלום יבוצע באמצעות כרטיס אשראי שאינו שייך למועדון {{options.club.name}},
+									<br />
+									<strong>כרטיס האשראי שלך יחוייב בסכום כולל של ₪{{ccTotal}}</strong>
+								</p>
+							{{else}}
+								<p>
+									<strong>כרטיס האשראי שלך יחוייב בסכום כולל של ₪{{total}}</strong>
+								</p>
+							{{/if}}
 
-							<iframe {{bind-attr src=model.url}} style="height:250px; width: 100%; border:none;" scrolling="no"></iframe>
-							<div class="payment-block" {{action 'checkterms'}}></div>
+							<div id="terms">
+								{{#if session.terms}}
+									<i class="fa fa-check-square-o" {{action 'terms'}}></i>
+								{{else}}
+									<i class="fa fa-square-o" {{action 'terms'}}></i>
+								{{/if}}
+								קראתי ואני מסכים לתנאי השימוש באתר בכפוף <a target="_blank" {{bind-attr href=model.termsUrl}}>לתקנון</a>
+							</div>
+
+							<iframe {{bind-attr src=model.url}} style="height:310px; width: 100%; border:none;" scrolling="no"></iframe>
+							{{#unless session.terms}}
+								<div class="payment-block" {{action 'checkterms'}}></div>
+				    	{{/unless}}
+
 				    {{else}}
 				    	<button  style="display: block; margin: 0 auto 20px;" {{action 'closeModal'}}>סגור</button>
 				    {{/unless}}
-				</form>
+				
+				</div>
 
     </div>
 </div>
