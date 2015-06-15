@@ -44,11 +44,11 @@ class OrderService
 				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle;
 
 			$orderItem->noDiscountPrice = $orderItem->priceSingle/(1 - (($club->creditDiscount+$club->regularDiscount) / 100));
-			
-			$price = $price/((floatval($settings->vat)/100)+1);
+			$vat = ((floatval($settings->vat)/100)+1);
+			$price = $price/$vat;
 			$price = round($price/0.01)*0.01;
 			$docItems[] = [
-				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,
+				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,'total'=>($orderItem->noCreditDiscountPrice*$orderItem->qty)/$vat
 				'priceWithVat'=>$orderItem->noCreditDiscountPrice,'sku'=>$orderItem->sku,'measurementunits_id'=>1,'stock'=>1,'taxable'=>1,
 				't6111_id'=>1010,'discount'=>0,
 			];
@@ -115,6 +115,7 @@ class OrderService
 	    $doc->vatmodes_id		= 1;
 	    $doc->languages_id		= "he";
 	    $doc->currencies_id		= "ILS";
+	    $doc->rounding          = true;
 	    $doc->notes 			= "";
 	    $doc->discount 			= 0;
 	    $doc->client 			= $client;
