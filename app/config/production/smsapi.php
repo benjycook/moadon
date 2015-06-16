@@ -1,5 +1,5 @@
 <?php
 return array(
 	'url' => 'http://sms.webt.co.il/sendsms',
-	'key' => '$2y$10$gKJs..52FNc8s/xuS9dXFOBExhFXAu4TaKDaDl/BQ8gpoeCNgn.SS',
+	'key' => '$2y$10$zwssbluOasRXQypVAwV3jOBMl8iK8f14TFpl5nafIF7tLLCI6CYMq',
 );
