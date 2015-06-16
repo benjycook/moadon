@@ -87,7 +87,7 @@ class OrderService
 	    $sms = new stdClass;
 	    $sms->msg = $msg;
 	    $sms->key = $projectKey;
-	    $sms->senderNumber  = "0525001920";//"1700700400";
+	    $sms->senderNumber  = "1700700400";
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $postUrl);
