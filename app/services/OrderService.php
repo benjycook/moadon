@@ -48,7 +48,7 @@ class OrderService
 			$price = $price/$vat;
 			$price = round($price/0.01)*0.01;
 			$docItems[] = [
-				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,
+				'name'=>$supplier->supplierName." - ".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,
 				'total'=>($orderItem->noCreditDiscountPrice*$orderItem->qty)/$vat,'sku'=>$orderItem->sku,'measurementunits_id'=>1,
 				'stock'=>1,'taxable'=>1,'t6111_id'=>1010,'discount'=>0,
 			];
