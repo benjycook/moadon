@@ -6,6 +6,10 @@ App.UiSliderComponent = Em.Component.extend({
 
 		setupControoler: function(){
 			var lis = this.get('data.length');
+			if(lis == 0)
+			{
+				return false;
+			}
 			var firstSlide = this.$('.slides ul.images li')[0].offsetWidth;
 			var totalWidth = (this.$('.slides ul.images li')[0].offsetWidth) * lis;
 			totalWidth = parseInt(totalWidth * 100) / 100;
