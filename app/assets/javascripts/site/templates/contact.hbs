@@ -1,0 +1,56 @@
+<div class="box mini-site">
+	<div class="inner">
+
+		<h2>צור קשר</h2>
+		
+		<div class="content contact">
+
+		<div class="contact-form">
+			{{#ui-form action='send' }}
+
+				<div class="form-group">
+				    {{input type="text" placeholder="שם פרטי" value=model.firstName required="required"}} 
+				</div>
+
+				<div class="form-group">
+				    {{input type="text" placeholder="שם משפחה" value=model.lastName required="required"}}
+				</div>
+
+				<div class="form-group">
+				    {{input type="text" placeholder="דואר אלקטרוני" value=model.email required="required" data-parsley-type='email'}}
+				</div>
+
+				<div class="form-group">
+				    {{input type="text" placeholder="נייד" value=model.mobile required="required"}}
+				</div>
+
+				<div class="form-group">
+				    {{textarea placeholder="נושא הפניה" value=model.message required="required"}}
+				</div>
+
+				<button type="submit" ><i class="fa fa-mail"></i>שלח</button>
+
+			{{/ui-form}}
+		</div>
+		
+		<div class="contact-info">
+		 <h3>כתובת למשלוח דואר</h3>
+		 <address>נימטאג בע"מ, ת.ד 2343 טבריה 1412202</address>
+		 <br />
+		 <h3>דואר אלקטרוני</h3>
+		 <a href="mailto:cpnclub10@gmail.com">cpnclub10@gmail.com</a>
+		 <br />
+		 <br />
+		 <h3>שירות לקוחות טלפוני</h3><br />
+		 <strong>א'-ה' בין השעות 9:00- 19:00</strong><br /><br />
+		 
+		 <h3>1-700-700-400</h3><br />
+
+		 <h3>04-6725060</h3>
+
+		</div>
+
+		</div>
+
+	</div>
+</div>

@@ -1106,7 +1106,9 @@ ul.cart-items li > div {
 	padding: 40px 50px 0;
 }
 
-.lightbox button,.box.myinfo button {
+.lightbox button,
+.box.myinfo button,
+.contact button {
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
 	border: 2px solid #064d7c;
 	border-radius: 12px;
@@ -1123,7 +1125,8 @@ ul.cart-items li > div {
 	float: left;
 }
 
-.lightbox form .form-group {
+.lightbox form .form-group,
+.contact form .form-group {
 	margin-bottom: 15px;
 }
 
@@ -1156,7 +1159,9 @@ input
 }
 .lightbox form .form-group input,
 .lightbox form .row input,
-.box.myinfo .form-group input
+.box.myinfo .form-group input,
+.contact  form input,
+.contact  form textarea
 {
 	border: 1px solid #f4f4f4;
 	border-radius: 7px;
@@ -1169,6 +1174,12 @@ input
 	padding: 0 10px;
 	width: 100%;
 	outline-color: transparent;
+}
+
+.contact  form textarea {
+   height: 150px;
+    padding-top: 10px;
+    resize: none;
 }
 
 .lightbox form .row input {
@@ -1404,4 +1415,20 @@ input
 	-ms-transform: translateY(-50%);
 	-webkit-transform: translateY(-50%);
 	z-index: 1000;
+}
+
+.contact .contact-form {
+	width: 40%;
+	float: right;
+	margin-top: 20px;
+}
+
+.contact .contact-info {
+	width: 40%;
+	float: left;
+	margin-top: 20px;
+}
+
+.contact .contact-info h3 {
+	margin: 0;
 }

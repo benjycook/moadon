@@ -8,7 +8,9 @@ App.Router.map(function(){
 	//this.route('login');
 
 	this.route('page', {path: 'page/:page_id'});
+	this.route('contact', {path: 'contact'});
 
+	
 	this.route('search', {path: 'search'});
 
 	// this.route('search', function(){
@@ -16,6 +18,8 @@ App.Router.map(function(){
 	// 	this.route('region', 	  			{path: 'region/:region_id'});
 	// 	this.route('categoryRegion', 	{path: 'category/:category_id/region/:region_id'});
 	// });
+
+	
 
 	this.resource('account', function(){
 		this.resource('orders',function(){

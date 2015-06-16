@@ -88,6 +88,7 @@ App.Router.map(function(){
 	});
 	this.resource('pages', function(){
 	});
+	
 	this.resource('suppliersReport', function(){});
 });
 
