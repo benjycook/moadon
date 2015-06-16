@@ -1098,7 +1098,8 @@ ul.cart-items li > div {
 	float: left;
 }
 
-.lightbox form {
+.lightbox form,
+.lightbox div.box {
 	width: 100%;
 	padding: 0;
 	margin: 0;
@@ -1183,9 +1184,11 @@ input
 	padding-top: 0;
 	height: auto;
 	background-image: linear-gradient(to top, #dbe2e5 10%, #e6e9eb 20%, #f0f0f0 50%, #f9f9f9 100%);
+	overflow: hidden;
 }
 
-.overlay .lightbox.small  form {
+.overlay .lightbox.small  form,
+.overlay .lightbox.small  div.box {
 	margin: 0;
 	padding: 0 10px;
 	width: 100%;
@@ -1329,4 +1332,76 @@ input
 
 .overlay .lightbox.small.checkout form {
 
+}
+
+.creditcard-icons {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 0;
+	margin: 0 -5px;
+}
+
+.creditcard-icons li {
+  display: inline-block;
+  padding: 5px;
+  width: calc(20% - 10px);
+}
+
+.creditcard-icons li img {
+	width: 100%;
+	height: auto;
+}
+
+#terms {
+	font-size: 14px;
+	font-weight: bold;
+	margin: 10px 0 15px;
+	text-align: center;
+}
+
+#terms a {
+	color: #000;
+}
+
+#terms i {
+	vertical-align: middle;
+}
+
+.payment-block{
+	background-color: #fff;
+	bottom: 25px;
+	cursor: pointer;
+	height: 56px;
+	left: 30px;
+	opacity: 0;
+	position: absolute;
+	width: 130px;
+	z-index: 1000;
+}
+
+#check-terms-box {
+	background-color: rgba(255, 255, 255, 0.95);
+	bottom: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
+	z-index: 100;
+}
+
+#check-terms-box .center {
+	border-radius: 10px;
+	left: 30px;
+	opacity: 1;
+	position: absolute;
+	right: 30px;
+	text-align: center;
+	top: 50%;
+	transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	z-index: 1000;
 }

@@ -6,7 +6,7 @@ class OrderService
         $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         return substr(str_shuffle($charset), 0, $length);
     }
-	public static function createOrder($items,$client,$log)
+	public static function createOrder($items,$client,$log,$club)
 	{
 		$info = [];
 		$client['clients_id'] = $client['id'];
@@ -35,11 +35,22 @@ class OrderService
 			$supplier = SiteDetails::where('suppliers_id','=',$orderItem->supplier->id)->first();
 			$orderItem->supplierName = $supplier->supplierName;
 			$info['items'][] = $orderItem;
-			$price = $orderItem->priceSingle/((floatval($settings->vat)/100)+1);
+			if($club->creditDiscount>0)
+			{
+				$creditDiscount = 1 - ($club->creditDiscount / 100);
+				$orderItem->noCreditDiscountPrice = $price = floor($orderItem->priceSingle/$creditDiscount);
+			}
+			else
+				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle;
+
+			$orderItem->noDiscountPrice = $orderItem->priceSingle/(1 - (($club->creditDiscount+$club->regularDiscount) / 100));
+			$vat = ((floatval($settings->vat)/100)+1);
+			$price = $price/$vat;
+			$price = round($price/0.01)*0.01;
 			$docItems[] = [
-				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,
-				'sku'=>$orderItem->sku,'measurementunits_id'=>1,'itemtypes_id'=>1,'stock'=>1,'taxable'=>1,'t6111_id'=>1010,
-				'discount'=>0,
+				'name'=>$supplier->supplierName."-".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,
+				'total'=>($orderItem->noCreditDiscountPrice*$orderItem->qty)/$vat,'sku'=>$orderItem->sku,'measurementunits_id'=>1,
+				'stock'=>1,'taxable'=>1,'t6111_id'=>1010,'discount'=>0,
 			];
 			if(!isset($info['suppliers'][$supplier->suppliers_id]))
 			{
@@ -104,6 +115,7 @@ class OrderService
 	    $doc->vatmodes_id		= 1;
 	    $doc->languages_id		= "he";
 	    $doc->currencies_id		= "ILS";
+	    $doc->rounding          = true;
 	    $doc->notes 			= "";
 	    $doc->discount 			= 0;
 	    $doc->client 			= $client;
@@ -115,6 +127,7 @@ class OrderService
 	    		 "firstPayment"=>$log->amount,"account"=>"","number"=> substr($log->cardmask,-4)
 	    	],
 	    ];
+
 	    $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));

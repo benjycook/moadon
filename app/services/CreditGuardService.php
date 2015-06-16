@@ -8,14 +8,15 @@
 			return GatewayLog::where('uniqueid', '=', $uniqueid);
 		}
 
-		public static function startTransaction($total,$client,$maxpayments = 1)
+		public static function startTransaction($total,$client,$terminal,$maxpayments = 1)
 		{
+			$terminal = "creditguard".$terminal;
 			$amount = $total;
-			$cgConf['tid'] 						= Config::get('creditguard.tid');
-			$cgConf['mid'] 						= Config::get('creditguard.mid');
-			$cgConf['user']						= Config::get('creditguard.user');
-			$cgConf['password']					= Config::get('creditguard.password');
-			$cgConf['cg_gateway_url']			= Config::get('creditguard.url');
+			$cgConf['tid'] 						= Config::get($terminal.'.tid');
+			$cgConf['mid'] 						= Config::get($terminal.'.mid');
+			$cgConf['user']						= Config::get($terminal.'.user');
+			$cgConf['password']					= Config::get($terminal.'.password');
+			$cgConf['cg_gateway_url']			= Config::get($terminal.'.url');
 			
 			$cgConf['amount'] 					= $amount * 100;
 
@@ -142,13 +143,14 @@
 			}
 		}
 
-		protected static function query($token)
+		protected static function query($token,$terminal = 1)
 		{
-			$cgConf['tid'] 						= Config::get('creditguard.tid');
-			$cgConf['mid'] 						= Config::get('creditguard.mid');
-			$cgConf['user']						= Config::get('creditguard.user');
-			$cgConf['password']				= Config::get('creditguard.password');
-			$cgConf['cg_gateway_url']	= Config::get('creditguard.url');
+			$terminal = "creditguard".$terminal;
+			$cgConf['tid'] 						= Config::get($terminal.'.tid');
+			$cgConf['mid'] 						= Config::get($terminal.'.mid');
+			$cgConf['user']						= Config::get($terminal.'.user');
+			$cgConf['password']					= Config::get($terminal.'.password');
+			$cgConf['cg_gateway_url']			= Config::get($terminal.'.url');
 
 			$poststring = '';
 			$poststring = 'user='.$cgConf['user'];

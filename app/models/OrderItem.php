@@ -5,7 +5,7 @@ class OrderItem extends Eloquent {
 	protected $table = 'orders_items';
 	protected $fillable = array('name','description','expirationDate','listPrice','clubPrice','netPrice','items_id','suppliers_id','qty',
 					'shortDescription','sku','notes','listPriceGroup','netPriceGroup','minParticipants','maxParticipants','itemtypes_id',
-					'orders_id','priceSingle','priceGroup',
+					'orders_id','priceSingle','priceGroup',"noCreditDiscountPrice","noDiscountPrice"
 					);
 	public $timestamps = false;
 
