@@ -24,7 +24,7 @@ App.ContactRoute = App.ProtectedRoute.extend({
 				 header:"הטופס נשלח בהצלחה",
 				 msg:"פנייתך התקבלה במערכת. נציגנו יצרו איתך קשר בהקדם."
 			};
-
+			$(".contact-form form").parsley().reset();
 			$.ajax({
 				type: 'POST',
 				url: 'contact',
