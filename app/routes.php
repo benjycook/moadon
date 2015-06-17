@@ -57,9 +57,7 @@ function RegisterRouteForDomain($base)
 
 			Route::get('page/{id}', 'SitePagesController@page');
 
-			Route::post('contact', function(){
-				return Response::json('ok', 200);
-			});
+			Route::post('contact','SiteIndexController@contact');
 
 		});
 
