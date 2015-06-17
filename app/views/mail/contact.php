@@ -4,8 +4,8 @@
 	<li style="margin-bottom:15px;">להלן פרטי הפניה:</li>
 	<li style="margin-bottom:10px;">שם פרטי: <?=$firstName?></li>
 	<li style="margin-bottom:10px;">שם משפחה: <?=$lastName?></li>
-	<li style="margin-bottom:10px;">דואר אלקטרוני: <?=$email?>:</li>
-	<li style="margin-bottom:10px;">נייד:<?=$mobile?></li>
+	<li style="margin-bottom:10px;">דואר אלקטרוני: <?=$email?></li>
+	<li style="margin-bottom:10px;">נייד: <?=$mobile?></li>
 	<li>נושא הפניה:</li>
 	<p style="width:280px">
 		<?=$emailMessage?>
