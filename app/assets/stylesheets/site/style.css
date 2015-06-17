@@ -93,7 +93,7 @@ body
 	position: absolute;
 	bottom: 0;
 	border-radius: 7px;
-	padding: 40px;
+	padding: 40px 15px;
 	color: #717171;
 }
 
@@ -1432,4 +1432,61 @@ input
 
 .contact .contact-info h3 {
 	margin: 0;
+}
+
+#club-login {
+	height: 35px;
+	position: relative;
+	margin-top: 10px;
+}
+
+#club-login input {
+	width: calc(100% - 85px);
+	margin: 0;
+	border-radius: 0 7px 7px 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+#club-login button {
+	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	border: 2px solid #064d7c;
+	border-radius: 7px 0 0 7px;
+	top: 0;
+	/*box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);*/
+	box-shadow: none;
+	color: #fff;
+	font-size: 20px;
+	height: 37px;
+	left: 0;
+	margin: 0;
+	position: absolute;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+	width: 85px;
+	padding-bottom: 3px;
+	box-sizing: border-box;
+	border-right-width: 1px;
+}
+
+.creditcard-icons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  margin: 0 10px;
+  position: absolute;
+  bottom: 0;
+}
+
+.creditcard-icons li {
+  display: inline-block;
+  padding: 5px;
+  width: calc(20% - 10px);
+  height: 50px;
+}
+
+.creditcard-icons li img {
+  width: 100%;
+  height: auto;
 }
