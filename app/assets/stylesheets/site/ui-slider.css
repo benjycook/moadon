@@ -39,7 +39,7 @@
 	width: 100%;
 }
 
-.mini-site .ui-slider .slides ul.images li img{
+.ui-slider .slides ul.images li img{
 	min-width: 100%;
 	min-height: 100%;
 	max-width: 100%;
@@ -129,16 +129,16 @@
 
 .items .gallery {
 	float: right;
-	height: 147px;
-	margin-left: 14px;
-	width: calc(50% - 14px);
+	height: 143px;
+	/*margin-left: 14px;*/
+	width: 170px
 }
 
-.items .gallery ul.images {
+/*.items .gallery ul.images {
 	margin: 0 -7px;
-}
+}*/
 
-.items .gallery ul.images li {
+/*.items .gallery ul.images li {
 	width: calc(50% - 14px);
 	padding: 0 7px;
-}
+}*/

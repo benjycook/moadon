@@ -16,10 +16,12 @@
     <div class="form-group">
         {{input type="password" placeholder="סיסמא" value=password}}
     </div>
-    <div>
-        <label {{action 'openPassReminder'}} class="forgotPass">שכחתי סיסמא &gt;&gt;</label>
+
+    <button class="login" type="submit">התחבר</button>
+
+    <div class="user-login-actions">
+        <a {{action 'openRegister'}}>צור חשבון חדש</a>
+        <a {{action 'openPassReminder'}}>שכחת את הסיסמא?</a>
     </div>
-    <button {{action 'openRegister'}} type="button">הרשמה</button>
-    <button type="submit">התחבר</button>
 
 {{/ui-form}}

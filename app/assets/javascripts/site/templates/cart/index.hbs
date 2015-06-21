@@ -5,7 +5,7 @@
 
         <h2 class="lightbox-title">סל הקניות שלי</h2>
         {{#if cart.hasItems}}
-        <ul class="items cart-items">
+{{!--         <ul class="items cart-items">
             {{#each item in cart}}
                 <li>
 
@@ -29,8 +29,57 @@
 
                 </li>
             {{/each}}
-        </ul>
+        </ul> --}}
+        <ul class="items">
+            {{#each item in cart}}
+                <li>
+                
+                    <div class="gallery">
+                        {{ui-slider data=item.galleryImages}}
+                    </div>
 
+                    <div class="item-info">
+                        <h3 class="name">{{item.supplierName}} - {{item.name}}</h3>
+                        <p class="description">
+                            {{item.description}}
+                            {{#if item.notes}}
+                                <label class="itemNote">*{{item.notes}}</label>
+                            {{/if}}
+                        </p>
+
+                    </div>
+
+                    <div class="order">
+                        <ul>
+                            <li class="unit-list-price">
+                                <label>
+                                    מחיר יחידה<br />
+                                    ₪{{item.unitPrice}}
+                                </label>
+                                {{ui-qty count=item.count class="count"}}
+                            </li>
+                            <li class="total-list-price">
+                                <label>
+                                    מחיר<br />
+                                    לפני הנחה
+                                </label>
+                                <span>₪{{item.totalListPrice}}</span>
+                            </li>
+                            <li class="total-club-price">
+                                <label> 
+                                    מחיר לאחר<br />
+                                    <strong>{{item.discount}}% הנחה</strong>
+                                </label>
+                                <span>₪{{item.totalPrice}}</span>
+                            </li>
+                            <li class="add-to-cart">
+                                <a href="javascript:void(0);" {{action 'removeItem' item}}><i class="fa fa-times"></i> הסר מהסל</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
         <div class="cart-notes">
             <p>* כל המחירים בסל הקניות הינם המחירים הסופיים <strong>לאחר כל ההנחות</strong>.</p>
             {{#if hasCreditDiscount}}
@@ -39,12 +88,10 @@
         </div>
 
         <div class="cart-totals">
-            סך הכל לתשלום: ₪{{cart.total}}
-        </div>
-
-        <div class="cart-buttons">
-            <button {{action 'closeModal'}}>המשך בקניות</button>
-            <button {{action 'checkout'}}>עבור לקופה</button>
+            <label>סה״כ<br />לתשלום</label>
+            <span>₪{{cart.total}}</span>
+            <button class="checkout" {{action 'checkout'}}>עבור לקופה</button>
+            <a href="javascript:void(0);" {{action 'closeModal'}}>המשך בקניות</a>
         </div>
         
         {{else}}

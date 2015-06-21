@@ -51,24 +51,36 @@
 								<label class="itemNote">*{{item.notes}}</label>
 							{{/if}}
 						</p>
-						
-						<div class="order">
-							<div class="price">
-								{{#ui-qty count=item.count class="count"}}{{/ui-qty}}
-								ֿ<span class="discount">₪{{item.total}}</span>
-								
-								<span class="discount note">
-									<i class="fa fa-angle-double-left"></i>
-									מחיר לאחר הנחה
-								</span>
-								
-								
-							</div>
 
-							<span class="info-discount">{{item.discount}}% הנחה</span>
-							<button class="btn" {{action 'addItem' controller supplierName}}>הוסף לסל</button>
-						</div>
+					</div>
 
+					<div class="order">
+						<ul>
+							<li class="unit-list-price">
+								<label>
+									מחיר יחידה<br />
+									₪{{item.unitPrice}}
+								</label>
+								{{ui-qty count=item.count class="count"}}
+							</li>
+							<li class="total-list-price">
+								<label>
+									מחיר<br />
+									לפני הנחה
+								</label>
+								<span>₪{{item.totalListPrice}}</span>
+							</li>
+							<li class="total-club-price">
+								<label> 
+									מחיר לאחר<br />
+									<strong>{{item.discount}}% הנחה</strong>
+								</label>
+								<span>₪{{item.totalPrice}}</span>
+							</li>
+							<li class="add-to-cart">
+								<button class="btn" {{action 'addItem' controller supplierName}}>הוסף לסל</button>
+							</li>
+						</ul>
 					</div>
 				</li>
 			{{/each}}
