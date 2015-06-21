@@ -12,8 +12,16 @@ class OrderCodeField extends Migration {
 	 */
 	public function up()
 	{
+		$orders = Order::all();
 		Schema::table('orders',function($table){
-			$table->string("code")->unique();
+			$table->string("code");
+		});
+		foreach ($orders as $order) {
+			$order->code = $order->id;
+			$order->save();
+		}
+		Schema::table('orders',function($table){
+			$table->unique("code");
 		});
 	}
 
