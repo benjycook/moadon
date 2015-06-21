@@ -787,8 +787,6 @@ ul.items li .name{
 ul.items li .description{
     color: #454547;
     font-size: 14px;
-    height: 45px;
-    margin: 0 0 45px;
     overflow: hidden;
 }
 
@@ -1284,6 +1282,7 @@ input
 {
 	color: red;
 	display: block;
+	margin-top: 3px;
 }
 .blockUi
 {
