@@ -132,6 +132,7 @@ body
 	color: #fff;
 	font-size: 22px;
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	background-color: #06568d;
 	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 	position: absolute;
@@ -1068,6 +1069,7 @@ a.back-to-login {
 .box.myinfo button,
 .contact button {
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	background-color: #06568d;
 	border: 2px solid #064d7c;
 	border-radius: 12px;
 	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
@@ -1409,6 +1411,7 @@ input
 
 #club-login button {
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	background-color: #06568d;
 	border: 2px solid #064d7c;
 	border-radius: 7px 0 0 7px;
 	top: 0;
