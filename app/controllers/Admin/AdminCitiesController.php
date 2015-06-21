@@ -61,7 +61,7 @@ class AdminCitiesController extends BaseController
     	$rules = array('name'=>'required'); 
     	$validator = Validator::make($data,$rules);
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(City::where('name','=',$data['name'])->count())
     		return Response::json(array('error'=>"שם ישוב זה קיים במערכת."),501);
     	$res = $this->validateRegions($data);
@@ -82,7 +82,7 @@ class AdminCitiesController extends BaseController
     	$rules = array('name'=>'required'); 
     	$validator = Validator::make($data,$rules);
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(City::where('name','=',$data['name'])->where('id','!=',$id)->count())
     		return Response::json(array('error'=>"שם ישוב זה קיים במערכת."),501);
     	$res = $this->validateRegions($data);

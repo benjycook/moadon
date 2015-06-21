@@ -71,7 +71,7 @@ class AdminItemsController extends BaseController
     		return Response::json(array('error'=>"סוג מוצר זה לא נמצא במערכת"),501);
     	$validator = Validator::make($data, $this->rules($data['itemtypes_id']));
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	$data['expirationDate'] = implode('-',array_reverse(explode('/',$data['expirationDate'])));
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
@@ -131,7 +131,7 @@ class AdminItemsController extends BaseController
     		return Response::json(array('error'=>"סוג מוצר זה לא נמצא במערכת"),501);
 		$validator = Validator::make($data,$this->rules($data['itemtypes_id']));
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
     	if(Item::where('sku','=',$data['sku'])->where('suppliers_id','=',$data['suppliers_id'])->where('id','!=',$id)->count())

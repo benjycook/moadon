@@ -33,7 +33,7 @@ class SupplierOrderController extends BaseController
     		);
     	$validator = Validator::make($data,$rules);
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(!$order = Order::with(array('items'=>function($q){$q->where('suppliers_id','=',Auth::id());}))->find($data['orderId']))
     		return Response::json(array('error'=>"הזמנה זו לא נמצאה במערכת."),501);
     	foreach ($order->items as $item) {
@@ -55,14 +55,14 @@ class SupplierOrderController extends BaseController
  //    		);
  //    	$validator = Validator::make($data,$rules);
  //    	if($validator->fails())
- //    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
  //    	$rules = array(
  //    		'id' => 'required',
  //    		'orders_id'=>'required'
  //    		);
  //    	$validator = Validator::make($data['item'],$rules);
  //    	if($validator->fails())
- //    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
 	// 	$orderItem = OrderItem::where('orders_id','=',$data['item']['orders_id'])->where('suppliers_id','=',Auth::id())
 	// 							->where('orders_items.id','=',$data['item']['id'])->where('fullyRealized','=',0)
 	// 							->join('items_realizations','items_realizations.orders_items_id','=','orders_items.id')

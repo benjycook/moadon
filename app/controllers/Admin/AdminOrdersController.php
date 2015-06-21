@@ -43,7 +43,7 @@ class AdminOrdersController extends BaseController
  //    		);
  //    	$validator = Validator::make($data,$rules);
  //    	if($validator->fails())
- //    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
  //    	if(!$client = Client::where('id','=',$data['clients_id'])->first())
  //    		return Response::json(array('error'=>"לקוח זה לא קיים במערכת"),501);
  //    	if(!count($data['items']))
@@ -53,7 +53,7 @@ class AdminOrdersController extends BaseController
  //    			return Response::json(array('error'=>"הכמות של מוצר לא יכולה להיות קטנה מ-1"),501);
  //    		$qty = $item['qty'];
  //    		if(!isset($item['id'])||!$item = Item::where('id','=',$item['id'])->first())
- //    			return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    			return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
  //    		$item = $item->toArray();
  //    		$item['qty'] = $qty;
  //    		$item['items_id'] = $item['id'];

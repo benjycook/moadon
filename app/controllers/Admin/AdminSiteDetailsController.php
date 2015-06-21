@@ -68,7 +68,7 @@ class AdminSiteDetailsController extends BaseController
  //    	$siteDetails 	= new SiteDetails;
  //    	$validator = Validator::make($data,$this->rules());
  //    	if($validator->fails())
- //    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+ //    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
  //    	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
  //    		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
  //    	$siteDetails = $siteDetails->create($data);
@@ -106,7 +106,7 @@ class AdminSiteDetailsController extends BaseController
 			return Response::json(array('error'=>'פרטי אתר זה לא נמצא במערכת'),501);
     	$validator = Validator::make($data,$this->rules());
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
     	$res = $this->validateCaregories($data);
