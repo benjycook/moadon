@@ -6,6 +6,7 @@ class OrderService
         $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         return substr(str_shuffle($charset), 0, $length);
     }
+
 	public static function createOrder($items,$client,$log,$club)
 	{
 		$info = [];
@@ -25,40 +26,61 @@ class OrderService
 		$docItems = [];
 		
 		$settings = Settings::find(1);
+		$vatPercent = floatval($settings->vat) / 100 + 1;
+
 		foreach ($items as $item) {
 			$cart = $item->carts_id;
+
 			$orderItem = Item::find($item->items_id);
+
 			$orderItem->items_id = $item->items_id;
-			$orderItem->qty = $item->qty;
 			$orderItem->orders_id = $order->id;
-			$total += $orderItem->priceSingle*$item->qty;
+
+			
 			$supplier = SiteDetails::where('suppliers_id','=',$orderItem->supplier->id)->first();
 			$orderItem->supplierName = $supplier->supplierName;
+			
+			$orderItem->qty = $item->qty;
+			
 			$info['items'][] = $orderItem;
-			if($club->creditDiscount>0)
-			{
-				$creditDiscount = 1 - ($club->creditDiscount / 100);
-				$orderItem->noCreditDiscountPrice = $price = floor($orderItem->priceSingle/$creditDiscount);
-			}
-			else
-				$orderItem->noCreditDiscountPrice = $price = $orderItem->priceSingle;
 
-			$orderItem->noDiscountPrice = $orderItem->priceSingle/(1 - (($club->creditDiscount+$club->regularDiscount) / 100));
-			$vat = ((floatval($settings->vat)/100)+1);
-			$price = $price/$vat;
-			$price = round($price/0.01)*0.01;
+			$totalDiscount 	= 1 - (($club->creditDiscount + $club->regularDiscount) / 100);
+			$creditDiscount = 1 - ($club->creditDiscount / 100);
+
+			$orderItem->noCreditDiscountPrice = $orderItem->priceSingle;
+			$orderItem->noDiscountPrice 			= $orderItem->priceSingle / $totalDiscount;
+
+			if($club->creditDiscount > 0)
+			{
+				$orderItem->noCreditDiscountPrice = $orderItem->priceSingle / $creditDiscount;
+			}
+
+			$total = floor($orderItem->noCreditDiscountPrice * $orderItem->qty / $vatPercent);
+			$price = $total / $orderItem->qty;
+
 			$docItems[] = [
-				'name'=>$supplier->supplierName." - ".$orderItem->name,'price'=>$price,'qty'=>$orderItem->qty,'itemtypes_id'=>1,
-				'total'=>($orderItem->noCreditDiscountPrice*$orderItem->qty)/$vat,'sku'=>$orderItem->sku,'measurementunits_id'=>1,
-				'stock'=>1,'taxable'=>1,'t6111_id'=>1010,'discount'=>0,
+				'name'									=>	$supplier->supplierName." - ".$orderItem->name,
+				'price'									=>	$price,
+				'qty'										=>	$orderItem->qty,
+				'itemtypes_id'					=>	1,
+				'total'									=>	$total,
+				'sku'										=>	$orderItem->sku,
+				'measurementunits_id'		=>	1,
+				'stock'									=>	1,
+				'taxable'								=>	1,
+				't6111_id'							=>	1010,
+				'discount'							=>	0,
 			];
+
 			if(!isset($info['suppliers'][$supplier->suppliers_id]))
 			{
 				$city = City::find($supplier->cities_id);
 				$supplier->city = $city->name;
 				$info['suppliers'][$supplier->suppliers_id] = $supplier;
 			}
+			
 			OrderItem::create($orderItem->toArray());
+
 			$originItem = CartItem::where('carts_id','=',$item->carts_id)->where('items_id','=',$item->items_id)->first();
 			if($originItem)
 			{

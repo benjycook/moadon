@@ -65,30 +65,38 @@ class SiteOrdersController extends SiteBaseController
 	public function checkout()
 	{
 		if(!$this->cart)
-        	return Response::json('failed', 401);
+        	return Response::json('failed no cart', 401);
 
-    $total = $this->cart->items()->sum(DB::raw("price*qty"));
+    $items = $this->cart->items()->get(['price', 'qty']);
     
+		$creditDiscount = 1 - ($this->club->creditDiscount / 100);
+    $total 					= 0;
+    $ccTotal 				= 0;
+
+    foreach ($items as $item) 
+    {
+    	$ccTotal 	+= floor($item->price * $item->qty / $creditDiscount);
+    	$total 		+= floor($item->price * $item->qty);
+    }
+
     if($total<=0)
-    	return Response::json('failed', 401);
+    	return Response::json('failed total < 0', 401);
 
 
     //compute total
-    $terminal = 1;
     if($this->club->creditDiscount > 0)
     {
     	$terminal = 2;
-    	$creditDiscount = 1 - ($this->club->creditDiscount / 100);
-    	$ccTotal = ($total / $creditDiscount);
     	$hasCreditDiscount = true;
     }else{
-    	$ccTotal = $total;
+    	$terminal = 1;
     	$hasCreditDiscount = false;
     }
 
     //do rounding
-    $ccTotal = round($ccTotal);
-    $total   = round($total);
+    //disable rounding
+    //$ccTotal = round($ccTotal);
+    //$total   = round($total);
     
     //if $this->club->creditDiscount >0 allways go to credit
 		$tran = CreditGuardService::startTransaction($ccTotal,$this->client,$terminal);
@@ -107,6 +115,7 @@ class SiteOrdersController extends SiteBaseController
 			$item['gateway_id'] = $tran->id;
 			GatewayItem::create($item);
 		}
+
 		$url = $tran->url;
 		$data = [
 			'items'							=> $items,
