@@ -152,7 +152,7 @@ class OrderService
 	    $doc->sendInvoice = new stdClass;
 	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש- מועדון חברים";
         $doc->sendInvoice->email    = $client['email'];
-        $doc->sendInvoice->content  = "שלום שם פרטי +שם משפחה,<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
+        $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
 	    $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));
