@@ -49,7 +49,7 @@ class SiteCartController extends SiteBaseController
 				'qty'=>$res['qty'],
 				'id'=>$res['items_id'],
 				'total'=>$res['qty']*$res['price'],
-				);
+			);
 			
 		}
 		

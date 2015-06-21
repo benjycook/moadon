@@ -71,15 +71,16 @@ class Item extends Eloquent {
 	{
 		return $this->hasMany('OrderItem','items_id','id');
 	}
+	
 	public function supplier()
 	{
 		return $this->belongsTo('Supplier','suppliers_id','id');
 	}
 	
-  	public function galleries()
-  	{
-      return $this->belongsToMany('Gallery','galleries_items', 'items_id','galleries_id')->with('images');
-  	}
+	public function galleries()
+	{
+    return $this->belongsToMany('Gallery','galleries_items', 'items_id','galleries_id')->with('images');
+	}
   	// public function scopeImages($query)
   	// {
   	// 	return 	$query->join('galleries_items','galleries_items.items_id','=','items.id')

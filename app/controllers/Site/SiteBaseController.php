@@ -75,10 +75,40 @@ class SiteBaseController extends BaseController
 
 	protected function _getCart($carts_id)
 	{
-		$cart = CartItem::where('carts_id','=',$carts_id)->join('items','items.id','=','items_id')
+		$items = CartItem::where('carts_id','=',$carts_id)
+						->with('galleries')
+						->join('items','items.id','=','items_id')
 						->join('sitedetails','items.suppliers_id','=','sitedetails.suppliers_id')
-						->select(DB::raw('supplierName,priceSingle,items.name,carts_items.qty AS count,items.priceSingle,carts_items.items_id AS id,items.notes AS notes,items.description,carts_items.carts_id'))
-						->groupBy('items_id')->get();
-		return $cart;
+						->select(DB::raw('
+							supplierName,
+							items.name,
+							carts_items.qty AS count,
+							ROUND(carts_items.price) AS priceSingle,
+							ROUND(items.listPrice) AS listPrice,
+							carts_items.items_id AS id,
+							items.notes AS notes,
+							items.description,
+							carts_items.carts_id'))
+						->groupBy('items_id')
+						->get();
+
+		//extract images
+		foreach ($items as  &$item) 
+		{
+			$images = $item['galleries'][0]['images'];
+	
+			$rawImages = array();
+
+			foreach ($images as $image) 
+			{
+				$rawImages[] = URL::to('/')."/galleries/{$image['src']}";
+			}
+
+			$item['images'] = $rawImages;
+
+			unset($item['galleries']);
+		}
+
+		return $items;
 	}
 }
