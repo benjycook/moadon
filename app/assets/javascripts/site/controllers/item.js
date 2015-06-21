@@ -1,12 +1,19 @@
 App.ItemController = Em.ObjectController.extend({
 
-	total: function(){
-		return this.get('count') * this.get('priceSingle');
+	
+	unitPrice: function(){
+		return Math.round(this.get('priceSingle'));
+	}.property('priceSingle'),
+
+	totalPrice: function(){
+		return Math.round(this.get('count') * this.get('priceSingle'));
 	}.property('count', 'priceSingle'),
 
 	totalListPrice: function(){
-		return this.get('count') * this.get('listPrice');
+		return Math.round(this.get('count') * this.get('listPrice'));
 	}.property('count', 'listPrice'),
+
+
 
 	galleryImages: function(){
 		var images = this.get('images');

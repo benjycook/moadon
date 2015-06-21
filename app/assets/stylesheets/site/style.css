@@ -763,18 +763,18 @@ ul.items > li {
 	overflow: hidden;
 }
 
-ul.items li > div {
+ul.items > li > div {
     display: inline-block;
-    height: 50px;
     margin: 7px 0;
     vertical-align: top;
 }
 
-.mini-site div.item-info {
-	width: 50%;
+ul.items div.item-info {
+	width: calc(100% - 370px);
 	float: right;
 	height: 100%;
 	overflow: hidden;
+	padding: 0 20px;
 }
 
 ul.items li .name{
@@ -786,17 +786,54 @@ ul.items li .name{
 
 ul.items li .description{
     color: #454547;
-    font-size: 12px;
+    font-size: 14px;
     height: 45px;
     margin: 0 0 45px;
     overflow: hidden;
 }
 
-.mini-site .items .order {
+ul.items .order {
 	position: relative;
+	width: 150px;
+	padding-right: 9px;
+	border-right: 1px solid #cbcbcc;
 }
 
-.mini-site .items .order button {
+
+ul.items .order ul { 
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+ul.items .order ul li {
+	padding: 0;
+	margin: 0;
+	font-size: 0;
+	padding: 4px 0;
+} 
+
+ul.items .order ul li label {
+	display: inline-block;
+	width: 85px;
+	height: 30px;
+	font-size: 16px;
+	line-height: 16px;
+	vertical-align: bottom;
+	margin: -2px 0 2px;
+}
+
+ul.items .order ul li span {
+	display: inline-block;
+	width: 65px;
+	font-size: 18px;
+	vertical-align: bottom;
+	line-height: 18px;
+	font-weight: bold;
+}
+
+ul.items .order button,
+ul.items .order .add-to-cart a {
 	background-color: #06568d;
 	border: none;
 	border-radius: 3px;
@@ -804,81 +841,46 @@ ul.items li .description{
 	display: inline-block;
 	font-size: 14px;
 	font-weight: bold;
-	line-height: 27px;
-	padding: 5px 20px;
+	line-height: 25px;
+	padding: 0 20px 2px;
 	text-align: center;
 	text-decoration: none;
-	float: left;
+	width: 100%;
 }
 
-.mini-site .items .order button:hover {
+ul.items .order .add-to-cart a {
+	box-sizing: border-box;
+	background-color: #a2a2a6;
+}
+
+ul.items .order button:hover {
 	background-color: #1b79ba;
 }
 
-.mini-site .items .order .info-discount {
-    position: absolute;
-    text-align: center;
-    top: -40px;
-    width: 96px;
-    left: 0;
-    font-size: 20px;
+ul.items .order ul li.unit-list-price {
+	padding-top: 0;
+	border-bottom: 1px solid #cbcbcc;
 }
+
+ul.items .order ul li.total-list-price {
+	border-bottom: 1px solid #cbcbcc;
+}
+
+
+ul.items .order ul li.add-to-cart {
+	padding-bottom: 0;
+}
+
+ul.items .order ul li.total-club-price {
+	color: #06568d;
+}
+
 
 .items .count {
-    display: inline-block;
-}
-
-.items .price {
-	display: inline-block;
-	font-size: 0;
-}
-
-.items .price label{
-    color: #0872bb;
-    display: block;
-    font-size: 20px;
-    letter-spacing: 2px;
-}
-
-.items .price .discount {
-  color: #000;
   display: inline-block;
-  font-size: 20px;
-  margin-right: 15px;
-  vertical-align: middle;
-  width: 72px;
+  vertical-align: top;
+  float: left;
 }
-
-.items .price .list {
-  color: #000;
-  margin-left: 10px;
-  position: relative;
-}
-
-.items .price .note {
-	font-size: 13px;
-	width: auto;
-	margin-right: 0;
-}
-
-.price .discount, .price .list, .price .count {
-	vertical-align: middle;
-}
-
-.items .price .list:after {
-  background: none repeat scroll 0 0 #000;
-  content: "";
-  display: block;
-  height: 2px;
-  left: -5%;
-  margin-top: -1px;
-  position: absolute;
-  top: 50%;
-  transform: rotate(-12deg);
-  -webkit-transform: rotate(-12deg);
-  width: 110%;
-}
-
 
 .qty .wrap{
 	position: relative;
@@ -892,8 +894,8 @@ ul.items li .description{
     box-shadow: 1px 1px 1px 0 rgba(0, 0, 0, 0.1) inset;
     color: #000;
     font-size: 18px;
-    height: 35px;
-    line-height: 35px;
+    height: 28px;
+    line-height: 28px;
     margin-left: 18px;
     text-align: center;
     width: 45px;
@@ -956,11 +958,11 @@ ul.items li .description{
 }
 
 .empty-cart {
-	background-image: linear-gradient(to top, #f4f4f4 0%, #f9f9f9 100%);
-	border: 1px solid #ddd;
+/*	background-image: linear-gradient(to top, #f4f4f4 0%, #f9f9f9 100%);
+	border: 1px solid #ddd;*/
 	border-radius: 5px;
 	color: #666;
-	font-size: 16px;
+	font-size: 18px;
 	margin-top: 10px;
 	padding: 10px;
 	text-align: center;
@@ -968,101 +970,52 @@ ul.items li .description{
 
 .lightbox.cart {
 	height: auto;
-}
-
-
-ul.cart-items {
-	border: none;
-}
-
-ul.cart-items li {
-	padding: 20px 10px;
-	position: relative;
-	border: 1px solid #e1e1e5;
-	border-bottom: none;
-}
-
-ul.cart-items li:first-child {
-	border-top-left-radius: 10px;
-	border-top-right-radius: 10px;
-}
-
-ul.cart-items li:last-child {
-	border-bottom-left-radius: 10px;
-	border-bottom-right-radius: 10px;
-	border-bottom: 1px solid #e1e1e5;
-}
-
-ul.cart-items li > div {
-	display: inline-block;
-	margin: 0;
-	height: auto;
-	vertical-align: middle;
-}
-
-.cart-items li > .info {
-	width: 500px;
-}
-
-.cart-items li > .info p.description {
-	height: auto;
-	margin: 0;
-}
-
-.cart-items li > .price label {
-	font-size: 14px;
-	letter-spacing: normal;
-}
-
-.items.cart-items li > .price {
-	height: auto;
-	margin-left: 20px;
-}
-
-.items.cart-items li > .price .discount {
-	line-height: normal;
-}
-
-.cart-items li > .count {
-	float: none;
-	display: inline-block;
-	margin: 0;
-	height: auto;
-}
-
-.cart-items li .remove {
-	font-size: 30px;
-	color: #ccc;
-	position: absolute;
-	left: 10px;
-	cursor: pointer;
-}
-
-.cart-items li .remove:hover {
-	color: #000;
+	padding: 35px 10px 10px;
 }
 
 .cart-totals {
-	  background-color: #f4f4f4;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    float: left;
-    margin-top: 10px;
-    padding: 20px;
-    text-align: center;
+  border-right: 1px solid #cbcbcc;
+  padding-right: 9px;
+  position: relative;
+  width: 150px;
+  float: left;
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0;
 }
 
-.cart-totals strong {
+.cart-totals button.checkout {
+	width: 100%;
+	margin-top: 10px;
+}
+
+.cart-totals label {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 18px;
+  text-align: right;
+  width: 85px;
+  color: #06568d;
+}
+
+.cart-totals span {
+  display: inline-block;
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 18px;
+  text-align: right;
+  width: 65px;
+  color: #06568d;
+}
+
+.cart-totals a {
 	display: block;
-	border-top: 1px solid #ccc;
-	margin-top: 5px;
-	padding-top: 5px;
-}
-
-.cart-buttons {
-	clear: both;
-	overflow: visible;
-	padding-top: 50px;
+	font-size: 18px;
+	margin: 10px 0;
+	color: #06568d;
+	font-weight: bold;
+	text-decoration: none;
 }
 
 .cart-notes {
@@ -1076,27 +1029,33 @@ ul.cart-items li > div {
 	margin: 0;
 	margin-bottom: 5px;
 }
-/*.cart-buttons button {
-	background-color: #06568d;
-	border: medium none;
-	border-radius: 3px;
-	color: #fff;
-	display: inline-block;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: 27px;
-	padding: 3px 20px;
-	text-align: center;
-	text-decoration: none;
-}*/
 
-/*.cart-buttons button:hover {
-	background-color: #1b79ba;
+button.login {
+	margin: 10px 0 !important;
+	width: 100% !important;
 }
-*/
 
-.cart-buttons button + button{
+.user-login-actions {
+	position: relative;
+	top: 10px;
+}
+
+.user-login-actions a, a.back-to-login {
+	font-size: 18px;
+	color: #06568d;
+	cursor: pointer;
+}
+
+.user-login-actions a + a {
 	float: left;
+}
+
+a.back-to-login {
+  display: block;
+  float: left;
+  line-height: 27px;
+  margin-top: 22px;
+  padding: 3px 0;
 }
 
 .lightbox form,

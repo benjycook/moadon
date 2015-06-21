@@ -28,8 +28,10 @@
     <div class="form-group">
         {{input type="password" placeholder="סיסמא" value=password required="required"}}
     </div>
-    <button {{action 'openLogin'}} type="button">חזור</button>
+    
     <button type="submit">הרשם</button>
+
+    <a class="back-to-login" {{action 'openLogin'}}>חזור למסך כניסה</a>
     
 
 {{/ui-form}}
