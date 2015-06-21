@@ -57,7 +57,7 @@ class AdminClubsController extends BaseController
     	$club 	= new Club;
     	$res 	= $this->clubValidation($data,$club);
     	if($res==false)
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	$discount = $data['regularDiscount']+$data['creditDiscount'];
 		if($discount<=0)
 			return Response::json(array('error'=>'שדה הנחה רגילה או שדה הנחת אשראי (אחד משניהם) צריך להיות גדול מאפס'),501);
@@ -102,7 +102,7 @@ class AdminClubsController extends BaseController
 			return Response::json(array('error'=>'מועדון זה לא נמצא במערכת'),501);
 		$res 	= $this->clubValidation($data,$club);
 		if($res==false)
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	$discount = $data['regularDiscount']+$data['creditDiscount'];
 		if($discount<=0)
 			return Response::json(array('error'=>'שדה הנחה רגילה או שדה הנחת אשראי (אחד משניהם) צריך להיות גדול מאפס'),501);

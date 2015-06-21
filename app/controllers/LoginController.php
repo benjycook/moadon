@@ -41,7 +41,7 @@ class LoginController extends BaseController {
         );
         $validator = Validator::make($data, $rules);
         if($validator->fails()) 
-            return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים"),501);
+            return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים"),501);
         else 
         {
             $attempt = array('email'=>$data['email'],'password'=>$data['password']);

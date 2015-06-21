@@ -58,7 +58,7 @@ class AdminMembersController extends BaseController
     	$member = new Member;
     	$res 	= $this->memberValidation($data,$member);
     	if($res==false)
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	$data['password'] = Hash::make($data['password']); 
     	$member->create($data);
     	return Response::json(array('sucsess'=>"הלקוח נוצר בהצלחה"),201);
@@ -83,7 +83,7 @@ class AdminMembersController extends BaseController
 			return Response::json(array('error'=>'לקוח זה לא נמצא במערכת'),501);
 		$res 	= $this->memberValidation($data,$member);
 		if($res===false)
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(isset($data['password']))
     		unset($data['password']);
     	$member->fill($data);

@@ -94,8 +94,7 @@ class SiteClientController extends SiteBaseController
         $client = $club->clients()->where('email','=',$data['email'])
                                   ->where('password','=',$data['password'])
                                   ->select('id', 'firstName', 'lastName')->first();
- 
-
+    
 		if(!$client)
 			return Response::json(array('error' => 'שם משתמש או סיסמא אינם נכונים.'),403);
         
