@@ -4,10 +4,10 @@ class SiteOrdersController extends SiteBaseController
 {
 
 	protected function generateKey($length)
-    {
-        $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        return substr(str_shuffle($charset), 0, $length);
-    }
+  {
+      $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      return substr(str_shuffle($charset), 0, $length);
+  }
 
 	public function index()
 	{
@@ -27,7 +27,7 @@ class SiteOrdersController extends SiteBaseController
 		
     	foreach ($data['orders'] as $order) {
     		$order['createdOn'] = date('d/m/Y',strtotime($order['createdOn']));
-    		$order['total'] 	= "₪".number_format($order['total'],2);
+    		$order['total'] 	= "₪".number_format(round($order['total']),2);
     	}
     	if(!count($data['orders']))
     		$data['empty'] = "לא קיימות הזמנות בחשבונך.";
@@ -57,7 +57,7 @@ class SiteOrdersController extends SiteBaseController
 				'id'			=> $order->id,
 				'createdOn'		=> date('d/m/Y',strtotime($order->createdOn)),
 				'suppliers'			=> $new,
-				'total'			=> "₪".number_format($total,2),
+				'total'			=> "₪".number_format(round($total),2),
 			];
 		}
 		return Response::json($order, 200);
@@ -75,8 +75,8 @@ class SiteOrdersController extends SiteBaseController
 
     foreach ($items as $item) 
     {
-    	$ccTotal 	+= floor($item->price * $item->qty / $creditDiscount);
-    	$total 		+= floor($item->price * $item->qty);
+    	$ccTotal 	+= $item->price * $item->qty / $creditDiscount;
+    	$total 		+= $item->price * $item->qty;
     }
 
     if($total<=0)
@@ -94,9 +94,8 @@ class SiteOrdersController extends SiteBaseController
     }
 
     //do rounding
-    //disable rounding
-    //$ccTotal = round($ccTotal);
-    //$total   = round($total);
+    $ccTotal = round($ccTotal);
+    $total   = round($total);
     
     //if $this->club->creditDiscount >0 allways go to credit
 		$tran = CreditGuardService::startTransaction($ccTotal,$this->client,$terminal);
