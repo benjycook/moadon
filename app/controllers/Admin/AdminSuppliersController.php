@@ -64,7 +64,7 @@ class AdminSuppliersController extends BaseController
     	$supplier 	= new Supplier;
     	$validator = Validator::make($data,$this->rules());
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(!isset($data['contacts'])||!count($data['contacts']))
     		return Response::json(array('error'=>"יש לציין לפחות איש קשר אחד."),501);
     	if(Supplier::where('username','=',$data['username'])->count())
@@ -157,7 +157,7 @@ class AdminSuppliersController extends BaseController
 			return Response::json(array('error'=>'ספק זה לא נמצא במערכת'),501);
     	$validator = Validator::make($data,$this->rules());
     	if($validator->fails())
-    		return Response::json(array('error'=>"אנא וודא שסיפקתה את כל הנתונים הדרושים"),501);
+    		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(!isset($data['contacts'])||!count($data['contacts']))
     		return Response::json(array('error'=>"יש לציין לפחות איש קשר אחד."),501);
     	if(Supplier::whereRaw('username = ? AND id != ?',array($data['username'],$supplier->id))->count())
