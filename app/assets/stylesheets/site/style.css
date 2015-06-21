@@ -1401,7 +1401,7 @@ input
 }
 
 #club-login input {
-	width: calc(100% - 85px);
+	width: calc(100% - 90px);
 	margin: 0;
 	border-radius: 0 7px 7px 0;
 	position: absolute;
@@ -1415,7 +1415,6 @@ input
 	border: 2px solid #064d7c;
 	border-radius: 7px 0 0 7px;
 	top: 0;
-	/*box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);*/
 	box-shadow: none;
 	color: #fff;
 	font-size: 20px;
@@ -1424,7 +1423,7 @@ input
 	margin: 0;
 	position: absolute;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-	width: 85px;
+	width: 90px;
 	padding-bottom: 3px;
 	box-sizing: border-box;
 	border-right-width: 1px;
