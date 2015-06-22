@@ -86,10 +86,10 @@ class SiteOrdersController extends SiteBaseController
     //compute total
     if($this->club->creditDiscount > 0)
     {
-    	$terminal = 2;
+    	$terminal = 1;
     	$hasCreditDiscount = true;
     }else{
-    	$terminal = 1;
+    	$terminal = 2;
     	$hasCreditDiscount = false;
     }
 
