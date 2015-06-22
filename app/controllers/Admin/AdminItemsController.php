@@ -133,8 +133,10 @@ class AdminItemsController extends BaseController
     		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
-    	if(Item::where('sku','=',$data['sku'])->where('suppliers_id','=',$data['suppliers_id'])->where('id','!=',$id)->count())
-    		return Response::json(array('error'=>'מוצר עם מק"ט זה כבר קיים במערכת במערכת'),501);
+    	
+    	// if(Item::where('sku','=',$data['sku'])->where('suppliers_id','=',$data['suppliers_id'])->where('id','!=',$id)->count())
+    	// 	return Response::json(array('error'=>'מוצר עם מק"ט זה כבר קיים במערכת במערכת'),501);
+    	
     	if(Item::where('name','=',$data['name'])->where('suppliers_id','=',$data['suppliers_id'])->where('id','!=',$id)->count())
     		return Response::json(array('error'=>'מוצר עם שם זה כבר קיים במערכת במערכת'),501);
     	if(isset($data['galleries']))
