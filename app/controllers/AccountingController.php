@@ -13,6 +13,7 @@ class AccountingController extends BaseController
 			$address = $info['city']." ".$info['street']." ".$info['house'];
 		return $address;
 	}
+
 	public function orders()
 	{
 		$key = Input::get('key',0);
@@ -31,7 +32,7 @@ class AccountingController extends BaseController
 			$doc = $xml->addChild('doc');
 			$docInfo = $doc->addChild('docinfo');
 			$docInfo->addChild('type',320);
-			$docInfo->addChild('number',$order->id+1000);
+			$docInfo->addChild('number',$order->id+50000);
 			$client = $docInfo->addChild('client');
 			$client->addChild('firstname',$order->firstName);
 			$client->addChild('lastname',$order->lastName);
@@ -53,19 +54,21 @@ class AccountingController extends BaseController
 			$docPayments = $doc->addChild('payments');
 		    $temp = $order->payment;
 		 	$subject = $docPayments->addChild('payment');
-		 	$subject->addChild('type',$temp['creditDealType']);
+		 	$subject->addChild('type',1);//$temp['creditDealType']);
 		 	$subject->addChild('cardtype',$temp['creditCardType']);
-		 	$subject->addChild('cardnumber',substr($temp['cardNumber'],-4));
-		 	$subject->addChild('voucher',$temp['voucher']);
+		 	$subject->addChild('cardnumber',substr($temp['cardmask'],-4));
+		 	$subject->addChild('voucher',$temp['auth']);
+
 		 	$expDate = date('m',strtotime($temp['date']))."/".date('y',strtotime($temp['date']));
 		 	$subject->addChild('cardexp',$expDate);
-		 	$numberOfPayments = $temp['numberOfPayments']==0 ? 1:$temp['numberOfPayments'];
+
+		 	$numberOfPayments = $temp['payments']==0 ? 1: $temp['payments'];
 		 	$subject->addChild('payments',$numberOfPayments);
-		 	$subject->addChild('firstpaymentsum',$temp['firstPayment']);
+
+		 	$subject->addChild('firstpaymentsum',$temp['firstpayment']);
 		 	$subject->addChild('additionalpaymentsum',0);
-		 	$subject->addChild('total',$temp['total']);
-		 	$subject->addChild('ownerid',$temp['ownerId']);
-			$docInfo->addChild('total',$total);
+		 	$subject->addChild('total',$temp['amount']);
+		 	$subject->addChild('ownerid',$temp['holderid']);
 			$docInfo->addChild('orderid',$order->id);
 		}			
 		return $xml->asXML();
