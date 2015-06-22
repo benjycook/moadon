@@ -5,7 +5,7 @@ class SupplierOrderController extends BaseController
 	
 	public function order($id)
 	{
-		$orderItems = OrderItem::where('orders_id','=',$id)->where('suppliers_id','=',Auth::id())->where('fullyRealized','=',0)
+		$orderItems = OrderItem::where('code','=',$id)->where('suppliers_id','=',Auth::id())->where('fullyRealized','=',0)
 						->leftjoin('items_realizations','items_realizations.orders_items_id','=','orders_items.id')
 						->leftjoin('orders','orders.id','=','orders_items.orders_id')
 						->select(DB::raw('sum(realizedQty) AS realized,name,qty,orders_items.id AS id,orders_id,CONCAT(orders.firstName," ",orders.lastName) AS clientName'))->groupBy('orders_items.id')->get();
@@ -16,7 +16,7 @@ class SupplierOrderController extends BaseController
 		}
 		else
 		{
-			if(!OrderItem::where('orders_id','=',$id)->where('suppliers_id','=',Auth::id())->count())
+			if(!Order::where('code','=',$id)->whereHas('items',function($q){$q->where('suppliers_id','=',Auth::id());})->count())
 				return Response::json(array('msg'=>'הזמנה זו לא נמצאה במערכת'),501);
 			else
 				return Response::json(array('msg'=>'כל הפריטים מומשו.'),501);
@@ -34,7 +34,7 @@ class SupplierOrderController extends BaseController
     	$validator = Validator::make($data,$rules);
     	if($validator->fails())
     		return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים הדרושים"),501);
-    	if(!$order = Order::with(array('items'=>function($q){$q->where('suppliers_id','=',Auth::id());}))->find($data['orderId']))
+    	if(!$order = Order::with(array('items'=>function($q){$q->where('suppliers_id','=',Auth::id());}))->where("code",'=',$data['orderId'])->first())
     		return Response::json(array('error'=>"הזמנה זו לא נמצאה במערכת."),501);
     	foreach ($order->items as $item) {
     		$item->fullyRealized = 1;

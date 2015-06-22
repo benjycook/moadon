@@ -147,6 +147,7 @@ class SiteOrdersController extends SiteBaseController
 			}
 		}
 		$data['orderNum'] = $order->id;
+		$data['code'] = $order->code;
 		$data['client']['firstName'] = $order->firstName;
 		$data['client']['lastName']  = $order->lastName;
 		return View::make('mail.order',$data);

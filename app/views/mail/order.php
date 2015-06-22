@@ -2,6 +2,7 @@
 	<li style="margin-bottom:10px;">שלום <?= $client['firstName']?> <?=$client['lastName']?>,</li>
 	<li style="margin-bottom:10px;">תודה שרכשת בקופונופש - מועדון חברים!</li>
 	<li style="margin-bottom:10px;">מספר הזמנה: <?=$orderNum?></li>
+	<li style="margin-bottom:10px;">קוד הזמנה: <?=$code?></li>
 	<li>להלן פרטי ההזמנה:</li>
 	<?php foreach ($items as $item) { ?>
 		<li>
@@ -11,7 +12,7 @@
 			<?php } ?>
 		</li>
 	<?php } ?>
-	<li style="margin-top:10px;"><strong>יש להציג מספר הזמנה בקופה.</strong></li>
+	<li style="margin-top:10px;"><strong>למימוש הזמנה יש להציג קוד הזמנה בקופה.</strong></li>
 	<li style="margin-bottom:10px;"><strong>יש לתאם מראש לפני הגעה:</strong></li>
 	<?php  foreach ($suppliers as $supplier) { ?>
 		<li><?=$supplier['supplierName']?>: <?=$supplier['phone2']?> ,<?=$supplier['city']?></li>

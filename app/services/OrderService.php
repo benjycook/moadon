@@ -1,6 +1,29 @@
 <?php 
 class OrderService
 {
+	protected static function calculateLuhn($subject)
+	 {
+	 	$subject = (string)$subject;
+	    $sum = 0;
+	    for ($i=0; $i<strlen($subject);$i++)
+		{
+
+			$sum += intval($subject[$i]);
+		}
+		$delta = [0,1,2,3,4,-4,-3,-2,-1,0];
+		for ($i=(strlen($subject)-1); $i>=0;$i-=2)
+	    {		
+			$deltaIndex = intval($subject[$i]);
+			$deltaValue = $delta[$deltaIndex];	
+			$sum += $deltaValue;
+		}	
+
+		$mod10 = $sum%10;
+		$mod10 = 10-$mod10;	
+		if($mod10==10)	
+			$mod10=0;
+		return $mod10;
+	 }
 	protected static function generateKey($length)
     {
         $charset = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -19,6 +42,15 @@ class OrderService
     	} 
     	$client['key'] = $key;
 		$order = Order::create($client);
+    	$code = $orgCode =(string)(1000000+$order->id);
+    	$code = $code."".rand(1000,9999);
+    	for ($i=0; $i < 3; $i++) { 
+    		$temp = static::calculateLuhn($code);
+    		$orgCode = $orgCode."".$temp;
+    		$code = $code."".$temp;
+    	}
+    	$order->code = $info['code'] = $orgCode;
+    	$order->save();
 		$log->orders_id = $order->id;
 		$log->save();
 		$total = 0;
@@ -149,7 +181,10 @@ class OrderService
 	    		 "firstPayment"=>$log->amount,"account"=>"","number"=> substr($log->cardmask,-4)
 	    	],
 	    ];
-
+	    $doc->sendInvoice = new stdClass;
+	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש- מועדון חברים";
+        $doc->sendInvoice->email    = $client['email'];
+        $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
 	    $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));
