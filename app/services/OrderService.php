@@ -96,7 +96,7 @@ class OrderService
 				'qty'										=>	$orderItem->qty,
 				'itemtypes_id'					=>	1,
 				'total'									=>	$total,
-				'sku'										=>	$orderItem->sku,
+				'sku'										=>	$orderItem->items_id,
 				'measurementunits_id'		=>	1,
 				'stock'									=>	1,
 				'taxable'								=>	1,
@@ -176,11 +176,20 @@ class OrderService
 	    $doc->items 			= $docItems;
 	    $doc->payments          = [
 	    	[
-	    		"paymenttypes_id"=>3,"creditcardtypes_id"=>1,"creditdealtypes_id"=>1,
-	    		"date"=> $expDate,"ammount"=>$log->amount,"bank"=>0,"branch"=>0,"payments"=>1,
-	    		 "firstPayment"=>$log->amount,"account"=>"","number"=> substr($log->cardmask,-4)
+					"paymenttypes_id"=>3,
+					"creditcardtypes_id"=>1,
+					"creditdealtypes_id"=>1,
+					"date"=> $expDate,
+					"ammount"=>$log->amount,
+					"bank"=>0,
+					"branch"=>0,
+					"payments"=>1,
+					"firstPayment"=>$log->amount,
+					"account"=> $log->auth,
+					"number"=> substr($log->cardmask,-4)
 	    	],
 	    ];
+
 	    $doc->sendInvoice = new stdClass;
 	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש- מועדון חברים";
         $doc->sendInvoice->email    = $client['email'];
