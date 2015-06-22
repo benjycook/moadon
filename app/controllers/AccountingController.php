@@ -1,6 +1,53 @@
 <?php 
 class AccountingController extends BaseController
 {
+	protected function cardType($number)
+	{
+			$number = (string)$number;
+			$number = str_replace('*', '0', $number);
+	    $number = preg_replace('/[^\d]/','',$number);
+	    if (preg_match('/^3[47][0-9]{13}$/', $number))
+	    {
+	        //American Express;
+	    		return 4;
+	    }
+	    elseif (preg_match('/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/', $number))
+	    {
+	        //Diners Club
+	    		return 5;
+	    }
+	    elseif (preg_match('/^6(?:011|5[0-9][0-9])[0-9]{12}$/', $number))
+	    {
+	        //Discover
+	    		return 7;
+	    }
+	    elseif (preg_match('/^(?:2131|1800|35\d{3})\d{11}$/', $number))
+	    {
+	        //JCB
+	    		return 6;
+	    }
+	    elseif (preg_match('/^5[1-5][0-9]{14}$/', $number))
+	    {
+	        //MasterCard
+	    		return 3;
+	    }
+	    elseif (preg_match('/^4[0-9]{12}(?:[0-9]{3})?$/',$number))
+	    {
+	        //Visa
+	    		return 2;
+	    }
+	    elseif (strlen($number) <= 10)
+	    {
+	    		//Isracard
+	    		return 1;
+	    }
+	    else
+	    {
+	        //Unknown
+	    		return 0;
+	    }
+	}
+
 	protected function address($info)
 	{
 		if($info['entrance']&&$info['apartment'])
@@ -54,8 +101,8 @@ class AccountingController extends BaseController
 			$docPayments = $doc->addChild('payments');
 		    $temp = $order->payment;
 		 	$subject = $docPayments->addChild('payment');
-		 	$subject->addChild('type',1);//$temp['creditDealType']);
-		 	$subject->addChild('cardtype',$temp['creditCardType']);
+		 	$subject->addChild('type' , 1);
+		 	$subject->addChild('cardtype',$this->cardType($temp['cardmask']);
 		 	$subject->addChild('cardnumber',substr($temp['cardmask'],-4));
 		 	$subject->addChild('voucher',$temp['auth']);
 
