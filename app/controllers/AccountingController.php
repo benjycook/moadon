@@ -79,7 +79,7 @@ class AccountingController extends BaseController
 			$doc = $xml->addChild('doc');
 			$docInfo = $doc->addChild('docinfo');
 			$docInfo->addChild('type',320);
-			$docInfo->addChild('number',$order->id+4999);
+			$docInfo->addChild('number',$order->id+49999);
 			$client = $docInfo->addChild('client');
 			$client->addChild('firstname',$order->firstName);
 			$client->addChild('lastname',$order->lastName);
