@@ -75,8 +75,7 @@ class AdminItemsController extends BaseController
     	$data['expirationDate'] = implode('-',array_reverse(explode('/',$data['expirationDate'])));
     	if(!Supplier::where('id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>"ספק זה לא נמצא במערכת"),501);
-    	if(Item::where('sku','=',$data['sku'])->where('suppliers_id','=',$data['suppliers_id'])->count())
-    		return Response::json(array('error'=>'מוצר עם מק"ט זה כבר קיים במערכת במערכת'),501);
+    	
     	if(Item::where('name','=',$data['name'])->where('suppliers_id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>'מוצר עם שם זה כבר קיים במערכת במערכת'),501);
     	$item 	= new Item;
