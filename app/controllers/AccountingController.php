@@ -102,8 +102,12 @@ class AccountingController extends BaseController
 		    $temp = $order->payment;
 		 	$subject = $docPayments->addChild('payment');
 		 	$subject->addChild('type' , 1);
-		 	$subject->addChild('cardtype',$this->cardType($temp['cardmask']);
-		 	$subject->addChild('cardnumber',substr($temp['cardmask'],-4));
+
+		 	$cardType = $this->cardType($temp['cardmask']);
+		 	$subject->addChild('cardtype', $cardType);
+
+		 	$subject->addChild('cardnumber',substr($temp['cardmask'], -4));
+
 		 	$subject->addChild('voucher',$temp['auth']);
 
 		 	$expDate = $temp['exp'];
