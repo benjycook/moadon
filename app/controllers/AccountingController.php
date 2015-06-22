@@ -59,7 +59,8 @@ class AccountingController extends BaseController
 		 	$subject->addChild('cardnumber',substr($temp['cardmask'],-4));
 		 	$subject->addChild('voucher',$temp['auth']);
 
-		 	$expDate = date('m',strtotime($temp['date']))."/".date('y',strtotime($temp['date']));
+		 	$expDate = $temp['exp'];
+		 	$expDate = substr($expDate, 0, 2) . '/' . substr($expDate, 2, 2);
 		 	$subject->addChild('cardexp',$expDate);
 
 		 	$numberOfPayments = $temp['payments']==0 ? 1: $temp['payments'];
