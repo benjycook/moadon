@@ -1,0 +1,198 @@
+.responsive-menu {
+  display: none;
+}
+
+.xs-header, .xs-header .navbar.navbar-default {
+  position: absolute;
+  z-index: 100000;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
+
+.xs-header.hidden {
+  display: none !important;
+}
+
+
+.xs-header ul.nav.navbar-nav{
+  display: block;
+  width: 100%;
+  height: auto;
+  position: absolute;
+  margin: 0;
+  padding: 0;
+}
+
+.xs-header ul.nav.navbar-nav li{
+  display: block;
+  width: 100%;
+  clear: both;
+  float: none;
+}
+
+.xs-header ul.nav.navbar-nav li {
+  border: none;
+  border-bottom: 1px solid #da4453;
+}
+
+.xs-header ul.nav.navbar-nav li.first {
+  border: none;
+  border-top: 1px solid #da4453;
+}
+
+
+.xs-header ul.nav.navbar-nav.pull-top{
+  top: 0;
+}
+
+.xs-header ul.nav.navbar-nav.pull-bottom{
+  bottom: 0;
+}
+
+.xs-header .close {
+  float: none;
+  left: 10px;
+  position: absolute;
+  top: 12px;
+  z-index: 1000000;
+}
+
+@media screen and (max-width: 1024px) {
+  .panel div.search {
+    left: 80px;
+    position: absolute;
+    top: 12px;
+    right: 15px;
+  }
+
+  .panel input.search { 
+    width: 100%;
+  }
+
+  .panel-label {
+    display: none;
+  }
+  .navbar-default .navbar-nav > li > a {
+    border-left: none !important;
+    padding-right: 10px !important;
+    padding-left: 10px !important;
+  }
+
+  .container {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  #header {
+    display: none;
+  }
+
+	.modal {
+		overflow: hidden;
+	}
+	
+  .modal-dialog {
+    width: 100% !important;
+    margin: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  .modal-content {
+    -webkit-box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .modal-footer {
+  	position: absolute;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  }
+
+  .modal-body {
+  	bottom: 74px;
+    left: 0;
+    overflow: auto;
+    position: absolute;
+    right: 0;
+    top: 57px;
+  }
+
+  .responsive-menu {
+    display: inline-block;
+  }
+
+  .panel-default > .panel-heading {
+    border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+  }
+
+  .bootstrap-datetimepicker-widget{
+    left: 50% !important;
+    position: absolute !important;
+    right: auto !important;
+    top: 70px !important;
+    transform: translateX(-50%) !important;
+    -webkit-transform: translateX(-50%) !important;
+  }
+
+  .lockscroll {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    position: fixed;
+  }
+
+  .lockscroll #app-container {
+    display: none;
+  }
+
+  .panel-footer {
+    text-align: center;
+    overflow: auto;
+    float: none;
+    width: 100%;
+  }
+
+  .panel-footer ul{
+    float: none !important;
+  }
+
+  .panel .totals {
+    float: none;
+    width: 100%;
+    text-align: center;
+  }
+
+  .panel-label {
+    position: absolute;
+    text-align: center;
+    top: 0;
+    left: 60px;
+    right: 60px;
+  }
+
+
+
+}

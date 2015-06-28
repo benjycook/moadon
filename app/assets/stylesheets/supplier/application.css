@@ -3,5 +3,6 @@
  *= require bootstrap
  *= require font-awesome
  *= require_tree ../admin
-  *= require_tree .
+ *= require supplier
+ *= require responsive
  */
