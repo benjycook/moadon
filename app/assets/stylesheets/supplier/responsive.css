@@ -64,6 +64,20 @@
 }
 
 @media screen and (max-width: 1024px) {
+
+  .alert {
+    text-align: center;
+    font-size: 30px;
+  }
+
+  .btn-success {
+    background-color: #5cb85c;
+    border-color: #3e8f3e;
+    font-size: 18px;
+    font-weight: bold;
+    padding-bottom: 10px;
+  }
+
   .panel div.search {
     left: 80px;
     position: absolute;

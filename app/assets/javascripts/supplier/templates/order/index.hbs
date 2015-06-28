@@ -1,12 +1,12 @@
 <div class="panel panel-default grid">
   <div class="panel-heading">
-    <form>
+    <form {{action "load" on="submit"}}>
       <div class="panel-label">הזמנה</div>
       <div class="search">
         {{input type="number" value=id class="search-query input-medium search" placeholder="הכנס קוד הזמנה"}}
       </div>
       <div class="pull-left actions">
-        <button class="btn btn-default" {{action 'load' id}}><i class="fa fa-search"></i></button>
+        <button type="submit" class="btn btn-default" {{action 'load' id}}><i class="fa fa-search"></i></button>
       </div>
     </form>
   </div>
@@ -14,15 +14,16 @@
 
     {{#if success}}
       <div class="alert alert-success">
-        <strong>ההזמנה מומשה בהצלחה!</strong>
-        <i class="fa fa-times" {{action 'closeSuccess' controller}}></i>
+        <strong>ההזמנה מומשה בהצלחה!</strong><br />
+        <button {{action 'closeAlert' controller}}><i class="fa fa-times"></i> סגור</button>
       </div>
     {{/if}}
 
     {{#if msg}}
-        <div class="panel-body" style="background-color: #f4f4f4;text-align:center;">
-          <h2 >{{msg}}</h2>
-        </div>
+      <div class="alert alert-warning">
+        <strong>{{msg}}</strong><br />
+        <button {{action 'closeAlert' controller}}><i class="fa fa-times"></i> סגור</button>
+      </div>
     {{/if}}
 </div>
 

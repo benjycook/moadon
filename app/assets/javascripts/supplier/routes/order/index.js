@@ -37,9 +37,10 @@ App.OrderRoute = App.ProtectedRoute.extend({
 			controller.set('error',null);
 		},
 
-		'closeSuccess': function(){
+		'closeAlert': function(){
 			var ctrl = this.controller;
 			ctrl.set('success', false); 
+			ctrl.set('msg', false); 
 		},
 
 		'closeWindow':function()
@@ -64,9 +65,9 @@ App.OrderRoute = App.ProtectedRoute.extend({
 
 				var tmpCtrl = self.get('controller');
 				tmpCtrl.set('success', true);
-				setTimeout(function(){
-					tmpCtrl.set('success', false);
-				}, 2000);
+				// setTimeout(function(){
+				// 	tmpCtrl.set('success', false);
+				// }, 2000);
 
 			}).fail(function(data){
 				if(data.status == 500)

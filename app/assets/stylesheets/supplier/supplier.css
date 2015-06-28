@@ -41,3 +41,22 @@ td.center,
 th.center {
 	text-align: center;
 }
+
+.alert button {
+  background-color: #fff;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 0 10px 5px;
+  margin-top: 15px;
+  border: none;
+}
+
+.alert button i {
+	display: inline-block;
+	position: relative;
+	top: auto;
+	left: auto;
+	right: auto;
+	bottom: auto;
+	float: none !important;
+}
