@@ -12,7 +12,10 @@ class SupplierOrderController extends BaseController
 		//return Response::json(DB::getQueryLog(),501);
 		if(count($orderItems))
 		{
-			$data = array('items'=>$orderItems,'orderId'=>$id);
+			$client = array(
+				'name' => $orderItems[0]->clientName
+			);
+			$data = array('client', 'items'=>$orderItems,'orderId'=>$id);
 		}
 		else
 		{

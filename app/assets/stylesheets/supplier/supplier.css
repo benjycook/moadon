@@ -11,11 +11,25 @@
     padding-top: 15px;
     vertical-align: middle;
 }
+
 .panel-heading .inlineList li input
 {
 	width: 100px;
 }
+
 table.reports tbody tr:last-of-type td
 {
 	font-weight: bold;
+}
+
+
+td.min,
+th.min {
+	width: 1%;
+	white-space: nowrap;
+}
+
+td.center,
+th.center {
+	text-align: center;
 }
