@@ -11,6 +11,14 @@
     </form>
   </div>
 
+
+    {{#if success}}
+      <div class="alert alert-success">
+        <strong>ההזמנה מומשה בהצלחה!</strong>
+        <i class="fa fa-times" {{action 'closeSuccess' controller}}></i>
+      </div>
+    {{/if}}
+
     {{#if msg}}
         <div class="panel-body" style="background-color: #f4f4f4;text-align:center;">
           <h2 >{{msg}}</h2>

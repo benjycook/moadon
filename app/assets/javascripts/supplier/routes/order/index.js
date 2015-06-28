@@ -10,10 +10,12 @@ App.OrderRoute = App.ProtectedRoute.extend({
 	{
 		ctrl.set('model',model);
 	},
+
 	actions:
 	{
 		'load':function(id)
 		{
+
 			var self = this;
 			$.getJSON('order/'+id).then(function(data){
 				self.set('controller.model',{});
@@ -26,28 +28,25 @@ App.OrderRoute = App.ProtectedRoute.extend({
 				else
 					var msg = data.responseJSON.msg;
 				self.set('controller.model',{msg:msg});
+
 			});
+
 		},
 		'close':function(controller)
 		{
 			controller.set('error',null);
 		},
-		// 'selectQty':function(item)
-		// {
-		// 	var left = item.qty-item.realized;
-		// 	var options = [];
-		// 	options.pushObject({id:left,name:left});
-		// 	// for (var i = 1; i <=left ; i++) {
-		// 	// 	options.pushObject({id:i,name:i});
-		// 	// };
-		// 	var ctrl = Em.ObjectController.create({model:{realizedQty:0,options:options,item:item}});
-			
-		// 	this.render('order/realize',{into: 'application',outlet: 'modal',controller:ctrl});
-		// },
+
+		'closeSuccess': function(){
+			var ctrl = this.controller;
+			ctrl.set('success', false); 
+		},
+
 		'closeWindow':function()
 		{
 			this.render('empty',{into: 'application',outlet: 'modal'});
 		},
+
 		'realize':function(model,view,controller)
 		{
 			var form = view.$('form');
@@ -62,6 +61,13 @@ App.OrderRoute = App.ProtectedRoute.extend({
 				data: JSON.stringify(model)
 			}).then(function(data){
 				self.send('closeWindow');
+
+				var tmpCtrl = self.get('controller');
+				tmpCtrl.set('success', true);
+				setTimeout(function(){
+					tmpCtrl.set('success', false);
+				}, 2000);
+
 			}).fail(function(data){
 				if(data.status == 500)
 					var error = "אנא נסה שנית או פנה לתמיכה טכנית";

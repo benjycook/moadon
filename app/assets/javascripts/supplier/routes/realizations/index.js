@@ -17,8 +17,10 @@ App.RealizationsIndexRoute = App.ProtectedRoute.extend({
 		}
 		return $.getJSON('realizations?'+query.join('&'));
 	},
+
 	setupController:function(ctrl,model)
 	{
 		ctrl.set('model',model);
 	},
+	
 });

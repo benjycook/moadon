@@ -15,7 +15,7 @@ class SupplierOrderController extends BaseController
 			$client = array(
 				'name' => $orderItems[0]->clientName
 			);
-			$data = array('client', 'items'=>$orderItems,'orderId'=>$id);
+			$data = array('client' => $client, 'items'=>$orderItems,'orderId'=>$id);
 		}
 		else
 		{
