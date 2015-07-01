@@ -3,7 +3,7 @@
 		<table class="orders">
 				<thead>
 					<tr>
-						<th>מספר הזמנה</th>
+						<th>קוד הזמנה</th>
 						<th>תאריך</th>
 						<th>סך שולם</th>
 						<th>פרטים נוספים</th>
@@ -12,7 +12,7 @@
 				<tbody>
 					{{#each order in model.orders}}
 						<tr>
-							<td>{{order.id}}</td>
+							<td>{{order.code}}</td>
 							<td>{{order.createdOn}}</td>
 							<td>{{order.total}}</td>
 							<td>{{#link-to 'orders.view' order.id}}<i class="fa fa-edit"></i>{{/link-to}}</td>

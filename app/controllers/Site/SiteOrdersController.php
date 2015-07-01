@@ -22,7 +22,7 @@ class SiteOrdersController extends SiteBaseController
 			'pages'	=>	$pages,
 		];
 		$data['orders'] = $this->client->orders()->join('orders_items','orders_items.orders_id','=','orders.id')
-							->select(DB::raw('DATE(createdOn) AS createdOn,orders.id,sum(noCreditDiscountPrice*qty) AS total'))
+							->select(DB::raw('DATE(createdOn) AS createdOn,orders.code,orders.id,sum(noCreditDiscountPrice*qty) AS total'))
 							->groupBy('orders.id')->forPage($page,$items)->orderBy('orders.id','DESC')->get();
 		
     	foreach ($data['orders'] as $order) {
@@ -54,6 +54,7 @@ class SiteOrdersController extends SiteBaseController
 	        	$new[] = $supplier;
 	        }
 			$order = [
+				'code'		=> $order->code,
 				'id'			=> $order->id,
 				'createdOn'		=> date('d/m/Y',strtotime($order->createdOn)),
 				'suppliers'			=> $new,

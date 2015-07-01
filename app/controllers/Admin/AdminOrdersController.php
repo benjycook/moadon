@@ -23,6 +23,7 @@ class AdminOrdersController extends BaseController
                 'email'         =>$order['email'],    
                 'total'         =>number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*priceSingle')),2),    
                 'clubName'      =>$order['club']['name'], 
+                'code'          =>$order['code']
                 );
         }
 		$meta = array(

@@ -1,17 +1,17 @@
 App.UiFormComponent = Em.Component.extend({
 
     tagName: 'form',
-    autocomplete:0,
-    parsley:true,
-    addParsley: function(){
+    autocomplete: true,
+    parsley: true,
+
+    _setup: function(){
+
         if(this.get('parsley'))
             this.$().parsley();
-        if(this.get('autocomplete'))
-            this.$().attr('autocomplete','on');
-        else
+
+        if(!this.get('autocomplete'))
             this.$().attr('autocomplete','off');
-        if(this.$('.modal'))
-            this.$('.modal').show().addClass('in');
+
     }.on('didInsertElement'),
 
     submit: function()

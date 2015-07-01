@@ -126,12 +126,12 @@ class OrderService
 					$originItem->delete();
 			}
 		}	
-    	$url = URL::to("v".$key);
+    $url = URL::to("v".$key);
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
 		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
 		$msg[]	= "תודה שרכשת בקופונופש - מועדון חברים!".PHP_EOL;
-		$msg[]	= "מספר הזמנתך היא: ".$order->id."".PHP_EOL;
+		$msg[]	= "קוד הזמנתך הוא: ".$order->code."".PHP_EOL;
 		$msg[]	= "לפרטי ההזמנה:".PHP_EOL;
 		$msg[]	= "$url".PHP_EOL;
 		$msg[]  = "קופונופש, מועדון חברים";
@@ -191,7 +191,7 @@ class OrderService
 	    ];
 
 	    $doc->sendInvoice = new stdClass;
-	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש- מועדון חברים";
+	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש - מועדון חברים";
         $doc->sendInvoice->email    = $client['email'];
         $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
 	    $ch = curl_init();
@@ -205,7 +205,7 @@ class OrderService
             $message->to($info['client']['email'])->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
         }); 
         return [
-			'order'	=> ['success'=>$order->id],
+			'order'	=> ['success'=>$order->code],
 			'carts_id'	=> $cart,
 			'result'=> $result,
 		];
