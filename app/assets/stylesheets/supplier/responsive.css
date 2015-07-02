@@ -65,7 +65,7 @@
 
 @media screen and (max-width: 1024px) {
 
-  .alert {
+  .alert.big {
     text-align: center;
     font-size: 30px;
   }

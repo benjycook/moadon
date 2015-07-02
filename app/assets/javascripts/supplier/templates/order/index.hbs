@@ -13,14 +13,14 @@
 
 
     {{#if success}}
-      <div class="alert alert-success">
+      <div class="alert alert-success big">
         <strong>ההזמנה מומשה בהצלחה!</strong><br />
         <button {{action 'closeAlert' controller}}><i class="fa fa-times"></i> סגור</button>
       </div>
     {{/if}}
 
     {{#if msg}}
-      <div class="alert alert-warning">
+      <div class="alert alert-warning big">
         <strong>{{msg}}</strong><br />
         <button {{action 'closeAlert' controller}}><i class="fa fa-times"></i> סגור</button>
       </div>
