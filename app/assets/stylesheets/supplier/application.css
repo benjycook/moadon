@@ -2,7 +2,8 @@
  *= require normalize
  *= require bootstrap
  *= require font-awesome
- *= require_tree ../admin
+ *= require ../admin/theme
+ *= require ../admin/rtl
  *= require supplier
  *= require responsive
  */
