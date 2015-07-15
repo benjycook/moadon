@@ -10,23 +10,23 @@
     {{/if}}
 
     <div class="form-group">
-        {{input type="text" placeholder="שם פרטי" value=firstName required="required"}}
+        {{input type="text" placeholder="שם פרטי" value=firstName required="required" name="cpn_firstName"}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="שם משפחה" value=lastName required="required"}}
+        {{input type="text" placeholder="שם משפחה" value=lastName required="required" name="cpn_lastName"}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="דואר אלקטרוני" value=email required="required" data-parsley-type='email'}}
+        {{input type="text" placeholder="דואר אלקטרוני" value=email required="required" data-parsley-type='email' name="cpn_email_reg"}}
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="נייד" value=mobile required="required" data-parsley-mobile="mobile"}}
+        {{input type="text" placeholder="נייד" value=mobile required="required" data-parsley-mobile="mobile" name="cpn_mobile_reg"}}
     </div>
 
     <div class="form-group">
-        {{input type="password" placeholder="סיסמא" value=password required="required"}}
+        {{input type="password" placeholder="סיסמא" value=password required="required" name="cpn_password_reg"}}
     </div>
     
     <button type="submit">הרשם</button>
