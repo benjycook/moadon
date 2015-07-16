@@ -250,6 +250,7 @@ class SiteClubsController extends SiteBaseController
 		//$item = Input::get('item',0);
 		$supplier  = SiteDetails::join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
 														->where('sitedetails.states_id', '=', '2')
+														->where('items.states_id', '=', '2')
 														//->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100)) > 1')
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'
