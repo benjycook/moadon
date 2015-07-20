@@ -157,23 +157,23 @@ class OrderService
 		$month = substr($log->exp,0,2);
 		$expDate = "$month/$year";
 		$doc = new stdClass;
-		$doc->token 			= Config::get('invoice.key','');
-    	$doc->type    			= 320;
-	    $doc->docs_id 			= 0;
-	    $doc->discountType		= 1;
+		$doc->token 							= Config::get('invoice.key','');
+    	$doc->type    					= 320;
+	    $doc->docs_id 					= 0;
+	    $doc->discountType			= 1;
 	    $doc->discountAmmount 	= 0;
-	    $doc->roundingAmmount 	= 0;
-	    $doc->dueDate 			= date('d/m/Y');
-	    $doc->createdDate 		= date('d/m/Y');
-	    $doc->dateOfVal 		= date('d/m/Y');
-	    $doc->vatmodes_id		= 1;
-	    $doc->languages_id		= "he";
-	    $doc->currencies_id		= "ILS";
+	    $doc->roundingType 			= 1;
+	    $doc->dueDate 					= date('d/m/Y');
+	    $doc->createdDate 			= date('d/m/Y');
+	    $doc->dateOfVal 				= date('d/m/Y');
+	    $doc->vatmodes_id				= 1;
+	    $doc->languages_id			= "he";
+	    $doc->currencies_id			= "ILS";
 	    $doc->rounding          = true;
-	    $doc->notes 			= "";
-	    $doc->discount 			= 0;
-	    $doc->client 			= $client;
-	    $doc->items 			= $docItems;
+	    $doc->notes 						= "";
+	    $doc->discount 					= 0;
+	    $doc->client 						= $client;
+	    $doc->items 						= $docItems;
 	    $doc->payments          = [
 	    	[
 					"paymenttypes_id"=>3,
@@ -192,8 +192,8 @@ class OrderService
 
 	    $doc->sendInvoice = new stdClass;
 	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש - מועדון חברים";
-        $doc->sendInvoice->email    = $client['email'];
-        $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
+      $doc->sendInvoice->email    = $client['email'];
+      $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
 	    $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));
