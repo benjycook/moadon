@@ -86,6 +86,7 @@ Route::group(array('prefix' => 'admin'), function()
 		Route::resource('users','AdminUsersController');
 		Route::resource('cities','AdminCitiesController');
 		Route::resource('orders','AdminOrdersController');
+		Route::post('orders/{id}/cancel','AdminOrdersController@cancelOrder');
 		Route::resource('clients','AdminClientsController');
 		Route::resource('categories','AdminCategoriesController');
 		Route::resource('regions','AdminRegionsController');

@@ -15,6 +15,13 @@
                       }}
               </div>
             </div>  
+           {{#if model.cancel}}
+               <div class="col-md-3 col-md-pull-6">
+                <div class="form-group">
+                  <button {{action 'openWarning'}} class="btn btn-info" style="margin-top: 25px;">ביטול עיסקה</button>
+                </div>
+              </div>  
+           {{/if}}
       </div>
 
       <div class="row">
@@ -22,42 +29,42 @@
         <div class="col-md-2">
           <div class="form-group">
             <label>שם פרטי:</label>
-            {{input type="text" class="form-control" valueBinding="firstName" disabled="disabled"}}
+            {{input type="text" class="form-control" valueBinding="firstName" readonly="readonly"}}
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>שם משפחה:</label>
-            {{input type="text" class="form-control" valueBinding="lastName" disabled="disabled"}}
+            {{input type="text" class="form-control" valueBinding="lastName" readonly="readonly"}}
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>ת.ז/ח.פ/ע.מ:</label>
-            {{input type="text"  class="form-control" valueBinding="taxId" disabled="disabled"}}
+            {{input type="text"  class="form-control" valueBinding="taxId" readonly="readonly"}}
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>עיר:</label>
-            {{input type="text"  class="form-control" valueBinding="city" disabled="disabled"}}
+            {{input type="text"  class="form-control" valueBinding="city" readonly="readonly"}}
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>נייד:</label>
-            {{input type="text" class="form-control" valueBinding="mobile"  disabled="disabled"}}
+            {{input type="text" class="form-control" valueBinding="mobile"  readonly="readonly"}}
           </div>
         </div>
 
         <div class="col-md-2">
           <div class="form-group">
             <label>דוא״ל:</label>
-            {{input type="text" class="form-control" valueBinding="email"  disabled="disabled" }}
+            {{input type="text" class="form-control" valueBinding="email"  readonly="readonly" }}
           </div>
         </div>       
 
@@ -67,34 +74,34 @@
       <div class="col-md-4">
         <div class="form-group">
           <label>רחוב:</label>
-            {{input type="text" class="form-control" valueBinding="street"  disabled="disabled" }}
+            {{input type="text" class="form-control" valueBinding="street"  readonly="readonly" }}
         </div> 
       </div>
 
       <div class="col-md-2">
         <div class="form-group">
           <label>בית:</label>
-            {{input type="text" class="form-control" valueBinding="house"  disabled="disabled"}}
+            {{input type="text" class="form-control" valueBinding="house"  readonly="readonly"}}
         </div>
       </div>
       <div class="col-md-2"> 
         <div class="form-group">
           <label>כניסה:</label>
-            {{input type="text" class="form-control" valueBinding="entrance" disabled="disabled"}}
+            {{input type="text" class="form-control" valueBinding="entrance" readonly="readonly"}}
         </div>
       </div>
 
       <div class="col-md-2">
         <div class="form-group">
           <label>דירה:</label>
-            {{input type="text" class="form-control" valueBinding="apartment" disabled="disabled"}}
+            {{input type="text" class="form-control" valueBinding="apartment" readonly="readonly"}}
         </div>  
       </div>
 
       <div class="col-md-2">
         <div class="form-group">
           <label>מיקוד:</label>
-          {{input type="text" class="form-control" valueBinding="zipcode"  disabled="disabled"}}
+          {{input type="text" class="form-control" valueBinding="zipcode"  readonly="readonly"}}
         </div>
       </div>
 

@@ -6,8 +6,8 @@ class SupplierReportsController extends BaseController
 	{
 		$startDate 	= Input::get('startDate',0);
 		$endDate   	= Input::get('endDate',0);
-		$query 		= ItemRealization::join('orders_items','orders_items.id','=','orders_items_id')->where('suppliers_id','=',Auth::id())
-						->select(DB::raw('DATE_FORMAT(realizedOn,"%d/%m/%Y") AS realizedOn,orders_id AS orderId,name,realizedQty AS qty,netPrice*realizedQty AS total'));
+		$query 		= ItemRealization::join('orders_items','orders_items.id','=','orders_items_id')->leftjoin('orders','orders.id','=','orders_id')->where('suppliers_id','=',Auth::id())
+						->select(DB::raw('DATE_FORMAT(realizedOn,"%d/%m/%Y") AS realizedOn,orders_id AS orderId,name,realizedQty AS qty,netPrice*realizedQty AS total,orders.code'));
 		if($startDate)
 			$query->whereRaw('DATE(realizedOn) >= ?',[date('Y-m-d',strtotime(str_replace('/','-',$startDate)))]);
 		if($endDate)

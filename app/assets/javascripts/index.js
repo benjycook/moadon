@@ -12,6 +12,7 @@ App.cities = Em.ArrayController.create();
 App.categories = Em.ArrayController.create();
 App.clubs = Em.ArrayController.create();
 App.itemTypes = Em.ArrayController.create();
+App.orderStatuses = Em.ArrayController.create();
 Ember.Application.initializer({
   name: "options",
  
@@ -31,6 +32,7 @@ Ember.Application.initializer({
 				App.set('logedin',data.logedin);
 				App.set('vat',data.vat);
 				App.set('creditCommission',data.creditCommission);
+				App.set('orderStatuses',data.orderStatuses);
 				application.advanceReadiness();
 			});
   }

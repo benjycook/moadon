@@ -39,6 +39,8 @@ App.OrderRoute = App.ProtectedRoute.extend({
 });
 App.OrdersIndexRoute = App.ProtectedRoute.extend({
 
+	
+
 	setupController: function(ctrl)
 	{
 		ctrl.refresh();

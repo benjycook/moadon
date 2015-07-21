@@ -22,5 +22,9 @@ class OrderItem extends Eloquent {
 	{
 		return $this->belongsTo('SiteDetails','suppliers_id','suppliers_id');
 	}
+	public function order()
+	{
+		return $this->belongsTo('Order','orders_id','id');
+	}
 }
 

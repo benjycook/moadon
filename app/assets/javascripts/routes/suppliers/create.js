@@ -121,11 +121,16 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 		'sort': function(data)
 		{
+			var self = this;
 			$.ajax({
 				type: 'POST',
 				url: 'items/position',
 				data: JSON.stringify(data)
-			}).then(function(){
+			}).then(function(data){
+				var items = self.get('controller.model.items');
+				items.forEach(function(item){
+					item = data.findBy('id',item.model.id);
+				});
 				
 			}).fail(function(data){
 
@@ -134,7 +139,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 		'editItem':function(item)
 		{
-			console.log(item);
+	
 			var id = item.id;
 			if(id)
 			{
@@ -168,6 +173,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 	    {
 			var items = this.controllerFor('suppliersEdit').get('items');
 			model.suppliers_id = this.controllerFor('suppliersEdit').get('supplier.id');
+			var suppliersEdit = this.controllerFor('suppliersEdit');
 			var form = view.$('form');
 			var valid = form.parsley().validate();
 			if(!valid)
@@ -190,6 +196,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: url,
 				data: JSON.stringify(model)
 			}).then(function(data){
+				suppliersEdit.set('items',[]);
 				var item = items.findBy('id',data.id);
 				if(item == undefined)
 				{
@@ -202,6 +209,25 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');
+				
+				console.log(items);
+				Ember.run.schedule('afterRender', self, function () {
+					var itemsNew = Em.ArrayController.create({
+						sortProperties: ['pos'],
+						content:items
+					});
+	      			suppliersEdit.set('items',itemsNew);
+			      var rows = $('tbody')[0];
+			      var sortable = Sortable.create(rows, {
+			        handle: ".fa-bars", 
+			        ghostClass: "ghost",
+			        draggable: 'tr',
+			        onSort: function(evt){
+			        	self.send('sort', sortable.toArray());
+			        }
+			      });
+			    });
+			   
 			}).fail(function(data){
 				controller.set('success',null);
 				if(data.status == 500)
@@ -214,7 +240,6 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	    'saveSiteDetails':function(model,view,controller)
 	    {
-	    	console.log(view);
 			var form = view.$('form');
 			var valid = form.parsley().validate();
 			model.suppliers_id = this.controllerFor('suppliersEdit').get('supplier.id');

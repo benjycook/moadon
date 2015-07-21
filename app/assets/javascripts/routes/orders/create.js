@@ -17,23 +17,49 @@ App.OrdersCreateRoute = App.OrdersEditRoute = App.ProtectedRoute.extend({
 		ctrl.set('model', model);
 	},
 
-	// actions:
-	// {
-	// 	'realized':function(item)
-	// 	{
-	// 		item.realized.forEach(function(item){
-	// 			var dateTime = item.realizedOn.split(' ');
-	// 			item.realizedDate = dateTime[0].split('-').reverse().join('/');
-	// 			item.realizedTime = dateTime[1];
-	// 		});
-	// 		var ctrl = App.ItemController.create({model:item});
-	// 		ctrl.set('target',this);//.controllerFor('ordersEdit')
-	// 		this.render('orders/realized', {into: 'application', outlet: 'modal',controller:ctrl});
-	// 	},
+	actions:
+	{
+		'openWarning':function()
+		{
+			var model = this.get('controller.model');
+			var ctrl = Em.ObjectController.create({model:{id:model.id,code:null}});
+			ctrl.set('target',this);
+			this.render('orders/cancel', {into: 'application', outlet: 'modal',controller:ctrl});
+		},
 
-	// 	'back':function()
-	// 	{
-	// 		this.render('empty', {into: 'application', outlet: 'modal'});
-	// 	},
-	// }
+		'back':function()
+		{
+			this.render('empty', {into: 'application', outlet: 'modal'});
+		},
+		'cancelOrder':function(model,view,controller)
+		{
+			var self = this;
+			var form = view.$('form');
+			var valid = form.parsley().validate();
+			if(!valid)
+				return;
+			$('.sendEnter').attr('disabled','disabled');
+			url = "orders/"+model.id+"/cancel";
+			type = "POST";
+			$.ajax({
+				type: type,
+				url: url,
+				data: JSON.stringify(model)
+			}).then(function(data){
+				controller.set('error',null);
+				controller.set('success',data);
+				self.controllerFor('ordersEdit').set('model.cancel',false);
+				self.send('back');
+			}).fail(function(data){
+				controller.set('success',null);
+				if(data.status == 500)
+					var error = "אנא נסה שנית או פנה לתמיכה טכנית";
+				else
+					var error = data.responseJSON.error;
+					controller.set('error',error);
+			}).always(function(){
+				$('.sendEnter').attr('disabled',false);
+			});
+		}
+	}
 });

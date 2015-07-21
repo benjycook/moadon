@@ -6,25 +6,39 @@ class AdminOrdersController extends BaseController
 		$items = Input::get('items',10);
 		$page  = Input::get('page',1);
 		$query = Input::get('query',0);
+        $startDate  = Input::get('startDate',0);
+        $endDate    = Input::get('endDate',0);
+        if($startDate)
+            $startDate = date('Y-m-d',strtotime(str_replace('/','-',$startDate)));
+        if($endDate)
+            $endDate = date('Y-m-d',strtotime(str_replace('/','-',$endDate)));
 		if($query=="")
 			$query = 0;
-		$sql = $query ? "CONCAT_WS(' ',lastName,firstName,id) LIKE CONCAT('%',?,'%')" :'? = 0';
-		$count = Order::whereRaw($sql,array($query))->count();
+		$sql = $query ? "CONCAT_WS(' ',code,id,firstName,lastName) LIKE CONCAT('%',?,'%')" :'? = 0';
+        $base = Order::whereRaw($sql,array($query));
+        if($startDate)
+            $base->where('createdOn','>=',$startDate);
+         if($endDate)
+            $base->where('createdOn','<=',$endDate);
+		$count = $base->count();
 		$pages = ceil($count/$items);
-		$orders = Order::with('club')->whereRaw($sql,array($query))->forPage($page,$items)->orderBy('id','DESC')->get();
+		$orders = $base->with('club')->with('payment')->forPage($page,$items)->orderBy('id','DESC')->get();
 		$orders = $orders->toArray();
         $newOrders = [];
         foreach ($orders as $order) {
             $newOrders[] = array(
-                'createdAt'     =>date('d/m/y',strtotime($order['createdOn'])),
-                'id'            =>$order['id'], 
-                'fullName'      =>$order['firstName']." ".$order['lastName'], 
-                'mobile'        =>$order['mobile'],   
-                'email'         =>$order['email'],    
-                'total'         =>number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*priceSingle')),2),    
-                'clubName'      =>$order['club']['name'], 
-                'code'          =>$order['code']
-                );
+                'createdAt'     =>  date('d/m/y',strtotime($order['createdOn'])),
+                'id'            =>  $order['id'], 
+                'fullName'      =>  $order['firstName']." ".$order['lastName'], 
+                'mobile'        =>  $order['mobile'],   
+                'email'         =>  $order['email'],    
+                'total'         =>  number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*priceSingle')),2),    
+                'clubName'      =>  $order['club']['name'], 
+                'code'          =>  $order['code'],
+                'docNumber'     =>  $order['docNumber'],
+                'auth'          =>  $order['payment']['auth'],
+                'status'        =>  $order['orders_statuses_id']
+                );  
         }
 		$meta = array(
 			'pages' => $pages,
@@ -112,7 +126,25 @@ class AdminOrdersController extends BaseController
                 $relizations[] = array('supplierName'=>$supKey,'items'=>$realized);
         }
         $order['realizations'] = $relizations;
+        $order['cancel'] = $order['orders_statuses_id']==1 ? true:false;
         unset($order['payment']);
 		return Response::json($order,200);
 	}
+
+    public function cancelOrder($id)
+    {
+        $json   = Request::getContent();
+        $data   = json_decode($json,true);
+        if(!isset($data['code']))
+            $data['code'] = 0;
+        $order = Order::where('code','=',$data['code'])->first();
+        if(!$order)
+            return Response::json(array('error'=>"הזמנה זו לא נמצאה במערכת"),501);
+        if($order->orders_statuses_id==1)
+        {
+            $order->orders_statuses_id = 4;
+            $order->save();
+        }
+        return Response::json('ההזמנה בוטלה בהצלחה.',201);
+    }
 }	
