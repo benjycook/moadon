@@ -1,0 +1,237 @@
+body
+{
+	direction: rtl;
+    font-family: arial;
+    font-size: 14px;
+}
+
+form {
+	margin: 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#creditForm h4
+{
+   color: #666;
+    font-size: 16.33px;
+    font-weight: normal;
+    margin: 0;
+  margin-bottom: 10px;
+}
+#creditForm h4 span
+{
+color: #000;
+    font-weight: bold;
+}
+.form-group,.row
+{
+  /*height: 45px;*/
+}
+.form-group {
+  /*margin-bottom: 15px;*/
+  height: 60px;
+}
+.form-group input,.row input
+{
+  border: 1px solid #f4f4f4;
+  border-radius: 7px;
+  box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.7) inset;
+  box-sizing: border-box;
+  color: #666;
+  display: block;
+  font-size: 18px;
+  height: 40px;
+  outline-color: transparent;
+  padding: 2px 10px 0;
+  width: 100%;
+  margin: 0;
+  border-color: transparent !important;
+}
+.row
+{
+    font-size: 0;
+    overflow: visible;
+    clear: both;
+}
+form .row input
+{
+ display: inline;
+    margin-right: 15px;
+    outline-color: transparent;
+    vertical-align: top;
+   width: calc(30% - 10px);
+    height: 37px;
+}
+a 
+{
+  text-decoration: none;
+}
+#submitBtnProxy
+{
+  float: left;
+}
+button,#cancelBtn
+{
+   background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+    border: 2px solid #064d7c;
+    border-radius: 12px;
+    box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-size: 16px;
+    height: 40px;
+    margin-top: 5px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+    width: 120px;
+}
+.td_style_invalidField 
+{
+  color: #ff0000;
+  font-size: 14px;
+  line-height: normal;
+  position: relative;
+  right: 0;
+  top: -2px;
+}
+.loading_invisible{
+  display:none;
+}
+
+.loading_visible{
+    display:block;
+    position:absolute;
+    top:0px;
+    left:0px;
+    height: 100%;
+    width: 100%;
+    text-align:center;
+
+    background: rgba(234, 234, 234, 0.9);
+}
+.row .chosen-container
+{
+  margin-right: 15px;
+   width: calc(35% - 10px) !important
+}
+.row .chosen-container .chosen-single
+{
+  height: 20px;
+}
+
+.loading_msg_visible{
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+}
+#submitBtn {
+  display: none;
+}
+.spinner {
+  margin: 70px auto 20px;
+  text-align: center;
+  width: 70px;
+}
+
+.spinner > div {
+  width: 18px;
+  height: 18px;
+  background-color: #000;
+
+  border-radius: 100%;
+  display: inline-block;
+  -webkit-animation: bouncedelay 1.4s infinite ease-in-out;
+  animation: bouncedelay 1.4s infinite ease-in-out;
+  /* Prevent first frame from flickering when animation starts */
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.spinner .bounce1 {
+  -webkit-animation-delay: -0.32s;
+  animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+  -webkit-animation-delay: -0.16s;
+  animation-delay: -0.16s;
+}
+
+@-webkit-keyframes bouncedelay {
+  0%, 80%, 100% { -webkit-transform: scale(0.0) }
+  40% { -webkit-transform: scale(1.0) }
+}
+
+@keyframes bouncedelay {
+  0%, 80%, 100% { 
+    transform: scale(0.0);
+    -webkit-transform: scale(0.0);
+  } 40% { 
+    transform: scale(1.0);
+    -webkit-transform: scale(1.0);
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+#invalidCardExp {
+  display: inline-block;
+  width: 245px;
+}
+
+#invalidCvv {
+  display: inline-block;
+    right: 140px;
+    width: auto;
+}
+
+.row .chosen-container .chosen-single {
+  height: 22px;
+}
+
+.creditcard-icons {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0;
+  margin: -5px -5px 0;
+}
+
+.creditcard-icons li {
+  display: inline-block;
+  padding: 5px;
+  width: calc(20% - 10px);
+  height: 50px;
+}
+
+.creditcard-icons li img {
+  width: 100%;
+  height: auto;
+}
+.row .chosen-container.chosen-container-single:first-of-type
+{
+  margin-right: 0;
+}
+form .row input.data_style_payment:first-of-type
+{
+  width: calc(35% - 10px);
+}
+.form-group.descriptions
+{
+   display: inline-block;
+    height: 25px;
+    width: 100%;
+}
+.form-group.descriptions label
+{
+  display: inline-block;
+    font-size: 18px;
+    margin-left: 20px;
+    width: 170px;
+}
+.form-group.descriptions label:last-of-type
+{
+   margin-left: 0;
+    width: 140px;
+}
