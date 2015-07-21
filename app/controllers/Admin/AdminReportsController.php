@@ -14,9 +14,12 @@ class AdminReportsController extends BaseController
 			return Response::json(['reports'=>[]],201);
 		$query1 = "(SELECT  suppliers.name            AS supplierName,
 					        suppliers.id              AS supplierId,
-					        count(DISTINCT orders.id) AS ordersNum,
+					        count(DISTINCT orders.id) AS ordersTotalNum,
 					        sum(pricesingle * qty)    AS ordersPayedTotal,
-					        sum(netprice * qty)       AS ordersNetTotal
+					        sum(netprice * qty)       AS ordersNetTotal,
+					        sum(IF(orders_statuses_id=4,1,0)) AS ordersCanceled,
+					        sum(IF(orders_statuses_id=4,qty,0)) AS ordersCanceledQty,
+					        sum(IF(orders_statuses_id!=4,qty,0)) AS ordersTotalQty
 					 FROM   orders
 					        INNER JOIN orders_items
 					                ON orders.id = orders_id
@@ -25,6 +28,7 @@ class AdminReportsController extends BaseController
 					 WHERE  date(createdOn) >= ?
 					        AND date(createdOn) <= ? group by supplierId)";
 		$query2 = "(SELECT   suppliers.name            AS supplierName,
+								count(DISTINCT orders_id) AS ordersNum,
 								sum(realizedQty) as realizedNum,
 					           suppliers.id       AS supplierId,
 					           sum(pricesingle*qty) AS realizedPayedTotal,
@@ -44,16 +48,25 @@ class AdminReportsController extends BaseController
 			$order = get_object_vars($order);
 			$temp[$order['supplierId']] = $order;
 		}
-		foreach ($realized as $realizedItem) {
+		foreach ($realized as &$realizedItem) {
 			$realizedItem = get_object_vars($realizedItem);
 			if(isset($temp[$realizedItem['supplierId']]))
 				$temp[$realizedItem['supplierId']] = array_merge($temp[$realizedItem['supplierId']],$realizedItem);
 			else
 				$temp[$realizedItem['supplierId']] = $realizedItem;
+			
 		}
 		$new = [];
-		foreach ($temp as $line) {
-			$new[] = array_merge(['ordersNum'=>0,'ordersPayedTotal'=>0,'ordersNetTotal'=>0,'realizedNum'=>0,'realizedPayedTotal'=>0,'realizedNetTotal'=>0,'supplierName'=>""],$line);
+		foreach ($temp as &$line) {
+			$line['displayRealizations'] = $line['ordersTotalNum']." (".$line['realizedNum'].")";
+			$line['ordersCanceled'] = Order::whereHas('items',function($q) use($line){
+				$q->where('suppliers_id','=',$line['supplierId']);
+			})->where('orders_statuses_id','=',4)->count();
+			$line['ordersNum'] 		= $line['ordersTotalNum']-$line['ordersCanceled']." (".$line['ordersTotalQty'].")";
+			
+			$line['ordersCanceled'] = $line['ordersCanceled']." (".$line['ordersCanceledQty'].")";
+			
+			$new[] = array_merge(['displayRealizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,'ordersNetTotal'=>0,'realizedNum'=>0,'realizedPayedTotal'=>0,'realizedNetTotal'=>0,'supplierName'=>""],$line);
 		}
 		$data['reports'] = $new;
 		$data['queries'] = DB::getQueryLog();

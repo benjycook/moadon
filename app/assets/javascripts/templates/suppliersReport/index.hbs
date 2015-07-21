@@ -12,10 +12,11 @@
         <thead>
           <tr>
             <th rowspan="2">ספק</th>
-            <th colspan="3" class="min center">הזמנות</th>
+            <th colspan="4" class="min center">הזמנות</th>
             <th colspan="3" class="min center">מימושים</th>
           </tr>
           <tr>
+             <th class="min center">בוטל</th>
             <th class="min center">כמות</th>
             <th class="min center">שולם</th>
             <th class="min center">נט</th>
@@ -31,6 +32,9 @@
                   <td>
                     {{item.supplierName}}
                   </td>
+                   <td class="min center">
+                    {{item.ordersCanceled}}
+                  </td>
                   <td class="min center">
                     {{item.ordersNum}}
                   </td>
@@ -42,7 +46,7 @@
                   </td>  
                   
                    <td class="min center">
-                    {{item.realizedNum}}
+                    {{item.displayRealizations}}
                   </td>
                   <td class="min center">
                     {{item.realizedPayedTotal}}

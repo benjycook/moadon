@@ -17,9 +17,9 @@ class AdminOrdersController extends BaseController
 		$sql = $query ? "CONCAT_WS(' ',code,id,firstName,lastName) LIKE CONCAT('%',?,'%')" :'? = 0';
         $base = Order::whereRaw($sql,array($query));
         if($startDate)
-            $base->where('createdOn','>=',$startDate);
-         if($endDate)
-            $base->where('createdOn','<=',$endDate);
+            $base->whereRaw('DATE(createdOn) >= ?',[$startDate]);
+         if($endDate) 
+            $base->whereRaw('DATE(createdOn) <= ?',[$endDate]);
 		$count = $base->count();
 		$pages = ceil($count/$items);
 		$orders = $base->with('club')->with('payment')->forPage($page,$items)->orderBy('id','DESC')->get();
