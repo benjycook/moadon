@@ -31,7 +31,10 @@ App.OrdersCreateRoute = App.OrdersEditRoute = App.ProtectedRoute.extend({
 			ctrl.set('target',this);
 			this.render('orders/cancel', {into: 'application', outlet: 'modal',controller:ctrl});
 		},
-
+		'backToOrders':function()
+		{
+			this.transitionTo('orders');
+		},
 		'back':function()
 		{
 			this.render('empty', {into: 'application', outlet: 'modal'});

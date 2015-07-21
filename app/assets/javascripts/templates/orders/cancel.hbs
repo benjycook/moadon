@@ -9,7 +9,7 @@
           {{#if success}}
              <div class="alert alert-success success">
                 <strong>{{success}}</strong> 
-                 <i class="fa fa-times" {{action 'back' controller}}></i>
+                 <i class="fa fa-times" {{action 'backToOrders' controller}}></i>
               </div>
           {{else}}
             {{#if error}}
@@ -44,7 +44,7 @@
       <div class="modal-footer">
         
           <div class="pull-left">
-            <button {{action "cancelOrder" model view controller}} type="button" class="btn btn-danger sendEnter">מחיקה</button>
+            <button {{action "cancelOrder" model view controller}} type="button" class="btn btn-danger sendEnter">אישור</button>
           </div>
            <div class="pull-right">
             <button {{action "back" controller}} type="button" class="btn btn-default active">ביטול</button>
