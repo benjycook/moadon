@@ -15,7 +15,8 @@ class AdminReportsController extends BaseController
 		$query1 = "(SELECT  suppliers.name            AS supplierName,
 					        suppliers.id              AS supplierId,
 					        count(DISTINCT orders.id) AS ordersTotalNum,
-					        sum(pricesingle * qty)    AS ordersPayedTotal,
+					        sum(noCreditDiscountPrice * qty)    AS ordersPayedTotal,
+					         sum(pricesingle*qty) AS priceSingleTotal,
 					        sum(netprice * qty)       AS ordersNetTotal,
 					        sum(IF(orders_statuses_id=4,1,0)) AS ordersCanceled,
 					        sum(IF(orders_statuses_id=4,qty,0)) AS ordersCanceledQty,
@@ -31,7 +32,8 @@ class AdminReportsController extends BaseController
 								count(DISTINCT orders_id) AS ordersNum,
 								sum(realizedQty) as realizedNum,
 					           suppliers.id       AS supplierId,
-					           sum(pricesingle*qty) AS realizedPayedTotal,
+					           sum(noCreditDiscountPrice*qty) AS realizedPayedTotal,
+					           sum(pricesingle*qty) AS priceSingleRealizedTotal,
 					           sum(netprice*qty) AS realizedNetTotal 
 					           FROM items_realizations
 					           INNER JOIN orders_items
@@ -58,7 +60,17 @@ class AdminReportsController extends BaseController
 		}
 		$new = [];
 		foreach ($temp as &$line) {
-			$line['displayRealizations'] = $line['ordersTotalNum']." (".$line['realizedNum'].")";
+			foreach ($line as $key => &$value) {
+				if(is_numeric($value))
+					$value = number_format($value);
+			}
+			$realizedNum = isset($line['realizedNum']) ? $line['realizedNum']:0;
+			if(isset($line['ordersNum']))
+				$line['displayRealizations'] = $line['ordersNum']." (".$realizedNum.")";
+			else
+				$line['displayRealizations'] = "0(0)";
+
+
 			$line['ordersCanceled'] = Order::whereHas('items',function($q) use($line){
 				$q->where('suppliers_id','=',$line['supplierId']);
 			})->where('orders_statuses_id','=',4)->count();
@@ -66,7 +78,9 @@ class AdminReportsController extends BaseController
 			
 			$line['ordersCanceled'] = $line['ordersCanceled']." (".$line['ordersCanceledQty'].")";
 			
-			$new[] = array_merge(['displayRealizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,'ordersNetTotal'=>0,'realizedNum'=>0,'realizedPayedTotal'=>0,'realizedNetTotal'=>0,'supplierName'=>""],$line);
+			$new[] = array_merge(['displayRealizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,
+				'ordersNetTotal'=>0,"priceSingleTotal"=>0,"priceSingleRealizedTotal"=>0,
+				'realizedNum'=>0,'realizedPayedTotal'=>0,'realizedNetTotal'=>0,'supplierName'=>""],$line);
 		}
 		$data['reports'] = $new;
 		$data['queries'] = DB::getQueryLog();

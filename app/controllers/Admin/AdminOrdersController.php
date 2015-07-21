@@ -32,7 +32,7 @@ class AdminOrdersController extends BaseController
                 'fullName'      =>  $order['firstName']." ".$order['lastName'], 
                 'mobile'        =>  $order['mobile'],   
                 'email'         =>  $order['email'],    
-                'total'         =>  number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*priceSingle')),2),    
+                'total'         =>  number_format(OrderItem::where('orders_id','=',$order['id'])->sum(DB::raw('qty*noCreditDiscountPrice')),2),    
                 'clubName'      =>  $order['club']['name'], 
                 'code'          =>  $order['code'],
                 'docNumber'     =>  $order['docNumber'],

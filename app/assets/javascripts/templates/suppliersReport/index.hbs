@@ -27,7 +27,7 @@
         </thead>
 
         <tbody >
-            {{#each item in model.reports}}
+            {{#each item in model.reports itemController="Report"}}
                 <tr>
                   <td>
                     {{item.supplierName}}
@@ -39,7 +39,7 @@
                     {{item.ordersNum}}
                   </td>
                   <td class="min center">
-                    {{item.ordersPayedTotal}}
+                    {{item.displayOrdersPayedTotal}}
                   </td>
                   <td class="min center">
                     {{item.ordersNetTotal}}
@@ -49,7 +49,7 @@
                     {{item.displayRealizations}}
                   </td>
                   <td class="min center">
-                    {{item.realizedPayedTotal}}
+                    {{item.displayRealizedPayedTotal}}
                   </td>
                   <td class="min center">
                     {{item.realizedNetTotal}}
