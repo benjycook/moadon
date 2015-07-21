@@ -19,6 +19,11 @@ App.OrdersCreateRoute = App.OrdersEditRoute = App.ProtectedRoute.extend({
 
 	actions:
 	{
+		'close':function(controller)
+		{
+			controller.set('error',null);
+			controller.set('success',null);
+		},
 		'openWarning':function()
 		{
 			var model = this.get('controller.model');
@@ -49,7 +54,7 @@ App.OrdersCreateRoute = App.OrdersEditRoute = App.ProtectedRoute.extend({
 				controller.set('error',null);
 				controller.set('success',data);
 				self.controllerFor('ordersEdit').set('model.cancel',false);
-				self.send('back');
+				//self.send('back');
 			}).fail(function(data){
 				controller.set('success',null);
 				if(data.status == 500)
