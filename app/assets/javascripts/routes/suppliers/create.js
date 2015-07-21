@@ -127,11 +127,15 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: 'items/position',
 				data: JSON.stringify(data)
 			}).then(function(data){
-				var items = self.get('controller.model.items');
-				items.forEach(function(item){
-					item = data.findBy('id',item.model.id);
-				});
-				
+				// var items = self.get('controller.model.items');
+				// items.forEach(function(item){
+				// 	console.log(data.findBy('id',item.model.id));
+				// 	item.set('model',data.findBy('id',item.model.id));
+				// });
+				// items = self.get('controller.model.items');
+				// items.forEach(function(item){
+				// 	console.log(item.get('name'),item.get('pos'));
+				// });
 			}).fail(function(data){
 
 			});
@@ -196,8 +200,9 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: url,
 				data: JSON.stringify(model)
 			}).then(function(data){
-				suppliersEdit.set('items',[]);
+				//suppliersEdit.set('items',[]);
 				var item = items.findBy('id',data.id);
+				console.log(item);
 				if(item == undefined)
 				{
 					item = App.ItemController.create({model:data});
@@ -205,28 +210,32 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 					items.pushObject(item);
 				}
 				else
+				{
 					item.set('model',data);
+				}
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');
 				
-				console.log(items);
-				Ember.run.schedule('afterRender', self, function () {
-					var itemsNew = Em.ArrayController.create({
-						sortProperties: ['pos'],
-						content:items
-					});
-	      			suppliersEdit.set('items',itemsNew);
-			      var rows = $('tbody')[0];
-			      var sortable = Sortable.create(rows, {
-			        handle: ".fa-bars", 
-			        ghostClass: "ghost",
-			        draggable: 'tr',
-			        onSort: function(evt){
-			        	self.send('sort', sortable.toArray());
-			        }
-			      });
-			    });
+				items.forEach(function(item){
+					console.log(item.get('name'),item.get('pos'));
+				});
+				// Ember.run.schedule('afterRender', self, function () {
+				// 	var itemsNew = Em.ArrayController.create({
+				// 		sortProperties: ['pos'],
+				// 		content:items
+				// 	});
+	   //    			suppliersEdit.set('items',itemsNew);
+				//     var rows = $('tbody')[0];
+				//     var sortable = Sortable.create(rows, {
+				//       handle: ".fa-bars", 
+				//       ghostClass: "ghost",
+				//       draggable: 'tr',
+				//       onSort: function(evt){
+				//       	self.send('sort', sortable.toArray());
+				//       }
+				//     });
+			  // });
 			   
 			}).fail(function(data){
 				controller.set('success',null);
