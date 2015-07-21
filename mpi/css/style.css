@@ -56,12 +56,11 @@ color: #000;
 }
 form .row input
 {
- display: inline;
-    margin-right: 15px;
+     display: inline;
     outline-color: transparent;
     vertical-align: top;
-   width: calc(30% - 10px);
-    height: 37px;
+    width: calc(30% - 10px);
+    
 }
 a 
 {
@@ -110,8 +109,8 @@ button,#cancelBtn
 }
 .row .chosen-container
 {
-  margin-right: 15px;
-   width: calc(35% - 10px) !important
+   margin-left: 10px;
+   width: calc(35% - 5px) !important;
 }
 .row .chosen-container .chosen-single
 {
@@ -182,8 +181,7 @@ button,#cancelBtn
 
 #invalidCvv {
   display: inline-block;
-    right: 140px;
-    width: auto;
+  width: auto;
 }
 
 .row .chosen-container .chosen-single {
@@ -208,30 +206,4 @@ button,#cancelBtn
 .creditcard-icons li img {
   width: 100%;
   height: auto;
-}
-.row .chosen-container.chosen-container-single:first-of-type
-{
-  margin-right: 0;
-}
-form .row input.data_style_payment:first-of-type
-{
-  width: calc(35% - 10px);
-}
-.form-group.descriptions
-{
-   display: inline-block;
-    height: 25px;
-    width: 100%;
-}
-.form-group.descriptions label
-{
-  display: inline-block;
-    font-size: 18px;
-    margin-left: 20px;
-    width: 170px;
-}
-.form-group.descriptions label:last-of-type
-{
-   margin-left: 0;
-    width: 140px;
 }

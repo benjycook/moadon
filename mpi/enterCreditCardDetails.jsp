@@ -19,12 +19,12 @@
 <script src="merchantPages/ResponsiveWebSources/js/<%=lang%>.js"></script>
 <script src="merchantPages/ResponsiveWebSources/js/main.js"></script>
 <script src="merchantPages/WebSources/js/jquery.js"></script>
-<script src="merchantPages/nimtag/js/chosen.jquery.js"></script>
+<script src="merchantPages/webtech/js/chosen.jquery.js"></script>
 
 <meta name="viewport" content="width=device-width">
 <link href="merchantPages/ResponsiveWebSources/css/normalize.css" rel="stylesheet" type="text/css" /> 
-<link href="merchantPages/nimtag/css/chosen.css" rel="stylesheet" type="text/css" /> 
-<link href="merchantPages/nimtag/css/style.css" rel="stylesheet" type="text/css" /> 
+<link href="merchantPages/webtech/css/chosen.css" rel="stylesheet" type="text/css" /> 
+<link href="merchantPages/webtech/css/style.css" rel="stylesheet" type="text/css" /> 
 
 <title><%=pageTitle%></title>
 </head>
@@ -109,19 +109,19 @@
 
   <ul class="creditcard-icons">
 		<li>
-			<img src="merchantPages/nimtag/images/visa.png" />
+			<img src="merchantPages/webtech/images/visa.png" />
 		</li>
 		<li>
-			<img src="merchantPages/nimtag/images/mastercard.png" />
+			<img src="merchantPages/webtech/images/mastercard.png" />
 		</li>
 		<li>
-			<img src="merchantPages/nimtag/images/americanexpress.png" />
+			<img src="merchantPages/webtech/images/americanexpress.png" />
 		</li>
 		<li>
-			<img src="merchantPages/nimtag/images/isracard.png" />
+			<img src="merchantPages/webtech/images/isracard.png" />
 		</li>
 		<li>
-			<img src="merchantPages/nimtag/images/dinersclub.png" />
+			<img src="merchantPages/webtech/images/dinersclub.png" />
 		</li>
 	</ul>
 	
