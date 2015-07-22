@@ -12,6 +12,7 @@ class AdminReportsController extends BaseController
 			$endDate = date('Y-m-d',strtotime(str_replace('/','-',$endDate)));
 		if(!$startDate&&!$endDate)
 			return Response::json(['reports'=>[]],201);
+			
 		$query1 = "(SELECT  suppliers.name            AS supplierName,
 					        suppliers.id              AS supplierId,
 					        count(DISTINCT orders.id) AS ordersTotalNum,
@@ -46,6 +47,9 @@ class AdminReportsController extends BaseController
 		$temp = [];
 		$orders = DB::select($query1,$bindings);
 		$realized = DB::select($query2,$bindings);
+		$formatNumbers = ['realizations','realizedNum','realizedPayedTotal','priceSingleRealizedTotal',
+			'realizedNetTotal','ordersTotalNum','ordersPayedTotal','priceSingleTotal','ordersNetTotal','ordersCanceled',
+			'ordersCanceledQty','ordersTotalQty'];
 		foreach ($orders as $order) {
 			$order = get_object_vars($order);
 			$temp[$order['supplierId']] = $order;
@@ -58,17 +62,13 @@ class AdminReportsController extends BaseController
 				$temp[$realizedItem['supplierId']] = $realizedItem;
 			
 		}
+
 		$new = [];
 		foreach ($temp as &$line) {
 			foreach ($line as $key => &$value) {
-				if(is_numeric($value))
+				if(is_numeric($value)&&in_array($key,$formatNumbers))
 					$value = number_format($value);
 			}
-			// $realizedNum = isset($line['realizedNum']) ? $line['realizedNum']:0;
-			// if(isset($line['ordersNum']))
-			// 	$line['realizations'] = $line['ordersNum']." (".$realizedNum.")";
-			// else
-			// 	$line['realizations'] = "0(0)";
 
 
 			$line['ordersCanceled'] = Order::whereHas('items',function($q) use($line){
