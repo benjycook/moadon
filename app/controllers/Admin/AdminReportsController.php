@@ -29,7 +29,7 @@ class AdminReportsController extends BaseController
 					 WHERE  date(createdOn) >= ?
 					        AND date(createdOn) <= ? group by supplierId)";
 		$query2 = "(SELECT   suppliers.name            AS supplierName,
-								count(DISTINCT orders_id) AS ordersNum,
+								count(DISTINCT orders_id) AS realizations,
 								sum(realizedQty) as realizedNum,
 					           suppliers.id       AS supplierId,
 					           sum(noCreditDiscountPrice*qty) AS realizedPayedTotal,
@@ -64,21 +64,21 @@ class AdminReportsController extends BaseController
 				if(is_numeric($value))
 					$value = number_format($value);
 			}
-			$realizedNum = isset($line['realizedNum']) ? $line['realizedNum']:0;
-			if(isset($line['ordersNum']))
-				$line['displayRealizations'] = $line['ordersNum']." (".$realizedNum.")";
-			else
-				$line['displayRealizations'] = "0(0)";
+			// $realizedNum = isset($line['realizedNum']) ? $line['realizedNum']:0;
+			// if(isset($line['ordersNum']))
+			// 	$line['realizations'] = $line['ordersNum']." (".$realizedNum.")";
+			// else
+			// 	$line['realizations'] = "0(0)";
 
 
 			$line['ordersCanceled'] = Order::whereHas('items',function($q) use($line){
 				$q->where('suppliers_id','=',$line['supplierId']);
-			})->where('orders_statuses_id','=',4)->count();
+			})->where('orders_statuses_id','=',4)->whereRaw('date(createdOn) >= ? && date(createdOn) <= ?',[$startDate,$endDate])->count();
 			$line['ordersNum'] 		= $line['ordersTotalNum']-$line['ordersCanceled']." (".$line['ordersTotalQty'].")";
 			
 			$line['ordersCanceled'] = $line['ordersCanceled']." (".$line['ordersCanceledQty'].")";
 			
-			$new[] = array_merge(['displayRealizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,
+			$new[] = array_merge(['realizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,
 				'ordersNetTotal'=>0,"priceSingleTotal"=>0,"priceSingleRealizedTotal"=>0,
 				'realizedNum'=>0,'realizedPayedTotal'=>0,'realizedNetTotal'=>0,'supplierName'=>""],$line);
 		}
