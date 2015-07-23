@@ -52,7 +52,7 @@ class AdminReportsController extends BaseController
 		$realized = DB::select($query2,$bindings);
 		$formatNumbers = ['realizations','realizedNum','realizedPayedTotal','priceSingleRealizedTotal',
 			'realizedNetTotal','ordersTotalNum','ordersPayedTotal','priceSingleTotal','ordersNetTotal','ordersCanceled',
-			'ordersCanceledQty','ordersTotalQty'];
+			'ordersCanceledQty','ordersTotalQty','ordersCanceledTotalSingle','ordersCanceledTotal','ordersCanceledNet'];
 		foreach ($orders as $order) {
 			$order = get_object_vars($order);
 			$temp[$order['supplierId']] = $order;
