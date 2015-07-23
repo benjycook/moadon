@@ -12,11 +12,14 @@
         <thead>
           <tr>
             <th rowspan="2">ספק</th>
-            <th colspan="4" class="min center">הזמנות</th>
+            <th colspan="3" class="min center">ביטולים</th>
+            <th colspan="3" class="min center">הזמנות</th>
             <th colspan="3" class="min center">מימושים</th>
           </tr>
           <tr>
-             <th class="min center">בוטל</th>
+            <th class="min center">כמות</th>
+            <th class="min center">שולם</th>
+            <th class="min center">נט</th>
             <th class="min center">כמות</th>
             <th class="min center">שולם</th>
             <th class="min center">נט</th>
@@ -34,6 +37,12 @@
                   </td>
                    <td class="min center">
                     {{item.ordersCanceled}}
+                  </td>
+                   <td class="min center">
+                    {{item.displayCanceledTotal}}
+                  </td>
+                   <td class="min center">
+                    {{item.ordersCanceledNet}}
                   </td>
                   <td class="min center">
                     {{item.ordersNum}}

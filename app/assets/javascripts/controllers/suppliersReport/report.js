@@ -23,4 +23,10 @@ App.ReportController = Em.ObjectController.extend({
         var priceSingleRealizedTotal = this.get('priceSingleRealizedTotal');
         return  realizedPayedTotal+" ("+priceSingleRealizedTotal+")";
     }.property('realizedPayedTotal'),
+     displayCanceledTotal:function()
+    {
+        var ordersCanceledTotal = this.get('ordersCanceledTotal');
+        var ordersCanceledTotalSingle = this.get('ordersCanceledTotalSingle');
+        return  ordersCanceledTotal+" ("+ordersCanceledTotalSingle+")";
+    }.property('ordersCanceledTotal'),
 });

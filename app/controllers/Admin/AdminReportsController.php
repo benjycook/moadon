@@ -16,11 +16,14 @@ class AdminReportsController extends BaseController
 		$query1 = "(SELECT  suppliers.name            AS supplierName,
 					        suppliers.id              AS supplierId,
 					        count(DISTINCT orders.id) AS ordersTotalNum,
-					        sum(noCreditDiscountPrice * qty)    AS ordersPayedTotal,
-					         sum(pricesingle*qty) AS priceSingleTotal,
-					        sum(netprice * qty)       AS ordersNetTotal,
+					        sum(IF(orders_statuses_id!=4,noCreditDiscountPrice * qty,0))    AS ordersPayedTotal,
+					        sum(IF(orders_statuses_id!=4,pricesingle * qty,0)) AS priceSingleTotal,
+					        sum(IF(orders_statuses_id!=4,netprice * qty,0)) AS ordersNetTotal,
 					        sum(IF(orders_statuses_id=4,1,0)) AS ordersCanceled,
 					        sum(IF(orders_statuses_id=4,qty,0)) AS ordersCanceledQty,
+					        sum(IF(orders_statuses_id=4,noCreditDiscountPrice * qty,0)) AS ordersCanceledTotal,
+					        sum(IF(orders_statuses_id=4,pricesingle * qty,0)) AS ordersCanceledTotalSingle,
+					        sum(IF(orders_statuses_id=4,netprice * qty,0)) AS ordersCanceledNet,
 					        sum(IF(orders_statuses_id!=4,qty,0)) AS ordersTotalQty
 					 FROM   orders
 					        INNER JOIN orders_items

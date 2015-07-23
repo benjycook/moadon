@@ -187,6 +187,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 		},
 		'success':function(info)
 		{
+			console.log(info);
 			var ctrl = this.controllerFor('checkout');
 			this.send("updateCartItems",info.cart);
 			ctrl.set('model',info.order);
