@@ -138,11 +138,13 @@ class OrderService
 		$msg[]  = "קופונופש, מועדון חברים";
 		$msg = implode('',$msg);
 		$postUrl = Config::get('smsapi.url');
-	    $projectKey = Config::get('smsapi.key');
-	    $sms = new stdClass;
-	    $sms->msg = $msg;
-	    $sms->key = $projectKey;
-	    $sms->senderNumber  = "1700700400";
+    $projectKey = Config::get('smsapi.key');
+    
+    $sms = new stdClass;
+    $sms->msg = $msg;
+    $sms->key = $projectKey;
+    $sms->senderNumber  = "0509995449";
+
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $postUrl);
