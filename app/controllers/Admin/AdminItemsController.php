@@ -190,12 +190,15 @@ class AdminItemsController extends BaseController
 		$json   	= Request::getContent();
 	    $data   	= json_decode($json,true);
 	    $index 		= 0;
+	    $items = [];
 	    foreach ($data as $id) 
 	    {
 	    	$item = Item::find($id);
 	    	$item->pos = $index;
 	    	$item->save();
 	    	$index++;
+	    	$items[] = $item->toArray();
 	    }
+	    return Response::json($items,201);
 	}
 }

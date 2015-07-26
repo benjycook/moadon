@@ -41,6 +41,7 @@ class OrderService
     	 	$key = static::generateKey(5);
     	} 
     	$client['key'] = $key;
+    	$client['orders_statuses_id'] = 1;
 		$order = Order::create($client);
     	$code = $orgCode =(string)(1000000+$order->id);
     	$code = $code."".rand(1000,9999);
@@ -91,15 +92,15 @@ class OrderService
 			$price = $total / $orderItem->qty;
 
 			$docItems[] = [
-				'name'									=>	$supplier->supplierName." - ".$orderItem->name,
-				'price'									=>	$price,
-				'qty'										=>	$orderItem->qty,
-				'itemtypes_id'					=>	1,
-				'total'									=>	$total,
-				'sku'										=>	$orderItem->items_id,
-				'measurementunits_id'		=>	1,
-				'stock'									=>	1,
-				'taxable'								=>	1,
+				'name'								=>	$supplier->supplierName." - ".$orderItem->name,
+				'price'								=>	$price,
+				'qty'								=>	$orderItem->qty,
+				'itemtypes_id'						=>	1,
+				'total'								=>	$total,
+				'sku'								=>	$orderItem->items_id,
+				'measurementunits_id'				=>	1,
+				'stock'								=>	1,
+				'taxable'							=>	1,
 				't6111_id'							=>	1010,
 				'discount'							=>	0,
 			];
@@ -126,7 +127,7 @@ class OrderService
 					$originItem->delete();
 			}
 		}	
-    $url = URL::to("v".$key);
+    	$url = URL::to("v".$key);
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
 		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
@@ -137,11 +138,13 @@ class OrderService
 		$msg[]  = "קופונופש, מועדון חברים";
 		$msg = implode('',$msg);
 		$postUrl = Config::get('smsapi.url');
-	    $projectKey = Config::get('smsapi.key');
-	    $sms = new stdClass;
-	    $sms->msg = $msg;
-	    $sms->key = $projectKey;
-	    $sms->senderNumber  = "1700700400";
+    $projectKey = Config::get('smsapi.key');
+    
+    $sms = new stdClass;
+    $sms->msg = $msg;
+    $sms->key = $projectKey;
+    $sms->senderNumber  = "0509995449";
+
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $postUrl);
@@ -192,15 +195,19 @@ class OrderService
 
 	    $doc->sendInvoice = new stdClass;
 	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש - מועדון חברים";
-      $doc->sendInvoice->email    = $client['email'];
-      $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
+	    $doc->sendInvoice->email    = $client['email'];
+	    $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
 	    $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$result = json_decode(curl_exec($ch),true);
 		curl_close($ch);
-
+		if(!isset($result['error']))
+		{
+			$order->docNumber = $result['number'];
+			$order->save();
+		}
 		Mail::send('mail.order',$info,function($message) use($info){
             $message->to($info['client']['email'])->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
         }); 

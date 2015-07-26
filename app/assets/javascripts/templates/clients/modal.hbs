@@ -63,23 +63,30 @@
             </div> 
 
             <div class="row">
-              <div class="col-md-4">
+              <div class="col-md-3">
                     <div class="form-group">
                       <label>עיר:</label>
                       {{input type="text"  class="form-control" valueBinding="city" required="required"}}
                     </div>
                   </div>
-               <div class="col-md-4">
+               <div class="col-md-3">
                   <div class="form-group">
                     <label>נייד:</label>
                     {{input type="text" class="form-control" valueBinding="mobile" data-parsley-type="digits" required="required"}}
                   </div>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label>דוא״ל:</label>
                     {{input type="text" class="form-control" valueBinding="email" data-parsley-type="email" required="required" }}
+                  </div>
+                </div>    
+
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label>סיסמא:</label>
+                    {{input type="text" class="form-control" valueBinding="password"  required="required" }}
                   </div>
                 </div>       
  

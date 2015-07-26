@@ -10,28 +10,28 @@
 	    			 <div class="col-md-4">
 	                    <div class="form-group">
 	                      <label>שם ספק:</label>
-	                      {{input type="text" class="form-control" valueBinding="item.supplierName" disabled="disabled"}}
+	                      {{input type="text" class="form-control" valueBinding="item.supplierName" readonly="readonly"}}
 	                    </div>
 	                </div>
 
 	                <div class="col-md-4">
 	                    <div class="form-group">
 	                      <label>שם המוצר:</label>
-	                      {{input type="text" class="form-control" valueBinding="item.name" disabled="disabled"}}
+	                      {{input type="text" class="form-control" valueBinding="item.name" readonly="readonly"}}
 	                    </div>
 	                </div>
 
 	                <div class="col-md-2">
 	                    <div class="form-group">
 	                      <label>מק"ט:</label>
-	                      {{input class="form-control" valueBinding="item.sku" disabled="disabled" }}
+	                      {{input class="form-control" valueBinding="item.sku" readonly="readonly" }}
 	                    </div>
 	                </div>
 
 	                <div class="col-md-2">
 	                    <div class="form-group">
 	                      <label>בתוקף עד:</label>
-	                      {{input-date-time picker="date" class="form-control" valueBinding="item.displayDate" disabled="disabled" }}
+	                      {{input-date-time picker="date" class="form-control" valueBinding="item.displayDate" readonly="readonly" }}
 	                    </div>
 	                </div>
 	            
@@ -42,34 +42,34 @@
 			              	<div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר מועדון:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.priceSingle" disabled="disabled"}}
+			                    {{input type="text" class="form-control" valueBinding="item.priceSingle" readonly="readonly"}}
 			                  </div>
 			                </div>
 			                <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר מחירון:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.listPrice" disabled="disabled"}}
+			                    {{input type="text" class="form-control" valueBinding="item.listPrice" readonly="readonly"}}
 			                  </div>
 			                </div>
 
 			                <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר נט:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.netPrice" disabled="disabled"}}
+			                    {{input type="text" class="form-control" valueBinding="item.netPrice" readonly="readonly"}}
 			                  </div>
 			                </div>
 
 			                 <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>כמות:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.qty" disabled="disabled"}}
+			                    {{input type="text" class="form-control" valueBinding="item.qty" readonly="readonly"}}
 			                  </div>
 			                </div>
 
 			                <div class="col-md-2">
 			                  <div class="form-group">
 			                    <label>מחיר ששולם:</label>
-			                    {{input type="text" class="form-control" valueBinding="item.total" disabled="disabled"}}
+			                    {{input type="text" class="form-control" valueBinding="item.total" readonly="readonly"}}
 			                  </div>
 			                </div>
 
@@ -80,7 +80,7 @@
 		                 <div class="col-md-12">
 		                    <div class="form-group">
 		                      <label>תיאור:</label>
-		                      {{textarea class="form-control" valueBinding="item.description" disabled="disabled"}}
+		                      {{textarea class="form-control" valueBinding="item.description" readonly="readonly"}}
 		                    </div>
 		                  </div>
 		            </div>
@@ -89,7 +89,7 @@
 		                 <div class="col-md-12">
 		                    <div class="form-group">
 		                      <label>הערות:</label>
-		                      {{textarea class="form-control" valueBinding="item.notes" disabled="disabled"}}
+		                      {{textarea class="form-control" valueBinding="item.notes" readonly="readonly"}}
 		                    </div>
 		                  </div>
 		            </div>

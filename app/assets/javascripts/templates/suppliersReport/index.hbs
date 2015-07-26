@@ -12,6 +12,7 @@
         <thead>
           <tr>
             <th rowspan="2">ספק</th>
+            <th colspan="3" class="min center">ביטולים</th>
             <th colspan="3" class="min center">הזמנות</th>
             <th colspan="3" class="min center">מימושים</th>
           </tr>
@@ -22,30 +23,42 @@
             <th class="min center">כמות</th>
             <th class="min center">שולם</th>
             <th class="min center">נט</th>
+            <th class="min center">כמות</th>
+            <th class="min center">שולם</th>
+            <th class="min center">נט</th>
           </tr>
         </thead>
 
         <tbody >
-            {{#each item in model.reports}}
+            {{#each item in model.reports itemController="Report"}}
                 <tr>
                   <td>
                     {{item.supplierName}}
+                  </td>
+                   <td class="min center">
+                    {{item.ordersCanceled}}
+                  </td>
+                   <td class="min center">
+                    {{item.displayCanceledTotal}}
+                  </td>
+                   <td class="min center">
+                    {{item.ordersCanceledNet}}
                   </td>
                   <td class="min center">
                     {{item.ordersNum}}
                   </td>
                   <td class="min center">
-                    {{item.ordersPayedTotal}}
+                    {{item.displayOrdersPayedTotal}}
                   </td>
                   <td class="min center">
                     {{item.ordersNetTotal}}
                   </td>  
                   
                    <td class="min center">
-                    {{item.realizedNum}}
+                    {{item.displayRealizations}}
                   </td>
                   <td class="min center">
-                    {{item.realizedPayedTotal}}
+                    {{item.displayRealizedPayedTotal}}
                   </td>
                   <td class="min center">
                     {{item.realizedNetTotal}}

@@ -12,6 +12,7 @@ class AdminOptionsController extends BaseController {
 			$data['categories']  = Category::orderBy('name', 'ASC')->get()->toArray();
 			$data['itemTypes']  = ItemType::orderBy('name', 'ASC')->get()->toArray();	
 			$data['cities']  = City::orderBy('name', 'ASC')->get()->toArray();
+			$data['orderStatuses']  = OrderStatus::orderBy('name', 'ASC')->get()->toArray();
 			$setting = Settings::find(1);
 			$data['vat'] = $setting->vat;
 			$data['creditCommission'] = $setting->creditCommission;	

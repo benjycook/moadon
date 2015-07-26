@@ -12,7 +12,7 @@
         <thead>
           <tr>
             <th class="min center">תאריך</th>
-            <th class="min center">מספר הזמנה</th>
+            <th class="min center">קוד הזמנה</th>
             <th >שם פריט</th>
             <th class="min center">כמות</th>
             <th class="min center">תשלום</th>
@@ -23,7 +23,7 @@
             {{#each item in model.reports}}
                 <tr>
                   <td class="min center">{{item.realizedOn}}</td>
-                  <td class="min center">{{item.orderId}}</td>
+                  <td class="min center">{{item.code}}</td>
                   <td >{{item.name}}</td>
                   <td class="min center">{{item.qty}}</td>
                   <td class="min center">{{item.total}}</td>

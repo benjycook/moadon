@@ -1460,3 +1460,8 @@ a.supplier-login {
 	right: 0;
 	text-decoration: none;
 }
+
+.email-input {
+	direction: ltr;
+	text-align: right;
+}

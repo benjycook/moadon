@@ -1,0 +1,58 @@
+{{#view App.ModalView}}
+<div class="modal-backdrop fade in"></div>
+<div class="modal fade" tabindex="-1">
+  <div class="modal-dialog" style="width: 520px;">
+    <div class="modal-content">
+      <form>
+
+        <div class="modal-body" style="padding-bottom:0;">        
+          {{#if success}}
+             <div class="alert alert-success success">
+                <strong>{{success}}</strong> 
+                 <i class="fa fa-times" {{action 'backToOrders' controller}}></i>
+              </div>
+          {{else}}
+            {{#if error}}
+                  <div class="alert alert-danger error">
+                    <strong>שגיאה:</strong> {{error}}
+                    <i class="fa fa-times" {{action 'close' controller}}></i>
+                  </div>
+          {{/if}}
+
+            <div class="row">
+              <div class="col-md-12">
+                  <p style="font-size:20px;margin:0;text-align: center; color: red;">
+                    שים לב, לאחר ביטול ההזמנה לא יהיה ניתן להפעילה מחדש!
+                  </p>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 col-md-pull-3">
+                <div class="form-group">
+                   <label>קוד ההזמנה</label>
+                  {{input class="form-control" value=model.code required="required"}}
+                </div>
+              </div>
+
+            </div>
+          {{/if}}
+        </div>
+
+      </form>
+      {{#unless success}}
+      <div class="modal-footer">
+        
+          <div class="pull-left">
+            <button {{action "cancelOrder" model view controller}} type="button" class="btn btn-danger sendEnter">אישור</button>
+          </div>
+           <div class="pull-right">
+            <button {{action "back" controller}} type="button" class="btn btn-default active">ביטול</button>
+          </div>
+        
+      </div>
+       {{/unless}}
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{{/view}}
