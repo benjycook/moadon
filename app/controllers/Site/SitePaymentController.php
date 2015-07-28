@@ -51,6 +51,8 @@ class SitePaymentController extends SiteBaseController  {
 				
 				return '
 					<script>
+							function preventBack(){window.history.forward();}
+    					setTimeout("preventBack()", 0);
 							var App = window.parent.App;
 							var currentRouteName = App.__container__.lookup("controller:application").get("currentRouteName");
 							var currentRoute = App.__container__.lookup("route:"+currentRouteName);
@@ -62,6 +64,8 @@ class SitePaymentController extends SiteBaseController  {
 
 			return '
 				<script>
+				    function preventBack(){window.history.forward();}
+    				setTimeout("preventBack()", 0);
 						var App = window.parent.App;
 						var currentRouteName = App.__container__.lookup("controller:application").get("currentRouteName");
 						var currentRoute = App.__container__.lookup("route:"+currentRouteName);
@@ -81,6 +85,8 @@ class SitePaymentController extends SiteBaseController  {
 
 			return '
 				<script>
+						function preventBack(){window.history.forward();}
+    				setTimeout("preventBack()", 0);
 						var App = window.parent.App;
 						var currentRouteName = App.__container__.lookup("controller:application").get("currentRouteName");
 						var currentRoute = App.__container__.lookup("route:"+currentRouteName);
@@ -90,10 +96,13 @@ class SitePaymentController extends SiteBaseController  {
 				</script>
 			';
 		}
+
 		public function cancel()
 		{
 			return '
 				<script>
+						function preventBack(){window.history.forward();}
+    				setTimeout("preventBack()", 0);
 						var App = window.parent.App;
 						var currentRouteName = App.__container__.lookup("controller:application").get("currentRouteName");
 						var currentRoute = App.__container__.lookup("route:"+currentRouteName);
