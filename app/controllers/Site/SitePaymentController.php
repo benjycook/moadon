@@ -23,14 +23,14 @@ class SitePaymentController extends SiteBaseController  {
 			$otherpayment				= Input::get('periodicalPayment', 0);
 			$parts = "$password$txid$errorCode$cardtoken$exp$holderid$uniqueid";
 			$str = hash('sha256', $parts);
+			$log = GatewayLog::where('uniqueid', '=', $uniqueid)->where('success','=',0)->first();
 
-			if($str == $mac)
+			if($str == $mac&&$log)
 			{
 
-				$log = GatewayLog::where('uniqueid', '=', $uniqueid)->first();
-				$items = GatewayItem::where('gateway_id','=',$log->id)->get();
-				$client = Client::where('id','=',$log->clients_id)->first()->toArray();
 				
+				$items = GatewayItem::where('gateway_id','=',$log->id)->get();
+				$client = Client::where('id','=',$log->clients_id)->first()->toArray();	
 				$log->success 				= 1;
 				//extended data on payment	
 				$log->cardmask				= $cardmask;
@@ -41,8 +41,8 @@ class SitePaymentController extends SiteBaseController  {
 				$log->auth					= $auth;
 				$log->rcode 				= $errorCode;
 				$log->payments				= $payments;
-				$log->firstpayment    = $firstpayment;
-				$log->otherpayment    = $otherpayment;
+				$log->firstpayment    		= $firstpayment;
+				$log->otherpayment    		= $otherpayment;
 
 				$log->save();
 				$info = OrderService::createOrder($items,$client,$log,$this->club);

@@ -80,7 +80,6 @@
 								{{/if}}
 								קראתי ואני מסכים לתנאי השימוש באתר בכפוף <a target="_blank" href="#/page/2">לתקנון</a>
 							</div>
-
 							<iframe {{bind-attr src=model.url}} style="height:310px; width: 100%; border:none;" scrolling="no"></iframe>
 							{{#unless session.terms}}
 								<div class="payment-block" {{action 'checkterms'}}></div>
