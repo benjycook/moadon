@@ -24,7 +24,6 @@ class SitePaymentController extends SiteBaseController  {
 			$parts = "$password$txid$errorCode$cardtoken$exp$holderid$uniqueid";
 			$str = hash('sha256', $parts);
 			$log = GatewayLog::where('uniqueid', '=', $uniqueid)->where('success','=',0)->first();
-
 			if($str == $mac&&$log)
 			{
 
