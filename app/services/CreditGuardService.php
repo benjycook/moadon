@@ -24,7 +24,7 @@
 			$poststring .= '&password='.$cgConf['password'];
 
 			$successUrl 	= URL::to('payment/success') . '?';
-			$errorUrl		= URL::to('payment/error') . '?';
+			$errorUrl			= URL::to('payment/error') . '?';
 			$cancelUrl		= URL::to('payment/cancel') . '?';
 			
 
@@ -54,7 +54,7 @@
 						<doDeal>
 							 <successUrl>' . $successUrl . '</successUrl>
 							 <errorUrl>' . $errorUrl . '</errorUrl>
-							  <cancelUrl>' . $cancelUrl . '</cancelUrl>
+							 <cancelUrl>' . $cancelUrl . '</cancelUrl>
 							 <terminalNumber>'.$cgConf['tid'].'</terminalNumber>
 							 <mainTerminalNumber/>
 							 <cardNo>CGMPI</cardNo>
