@@ -4,6 +4,7 @@ class AdminCategoriesController extends BaseController
 {
 	public $ids = array(-1);
 	public $branchIds = array(-1);
+	public $deleteIds = array(-1);
 	protected function idSet($category)
 	{
 		$this->branchIds[] = $category->id;
@@ -49,7 +50,15 @@ class AdminCategoriesController extends BaseController
 		$categories = Category::with('children')->where('parent_id','=',0)->get();
 		return Response::json($categories,200);
 	}
-
+	protected function deleteCategory($category)
+	{
+		foreach ($category->children as $child) {
+			$this->deleteCategory($child);
+		}
+		DB::table('categories_suppliers')->where('categories_id','=',$category->id)->delete();
+		$category->delete();
+		return;
+	}
 	public function store()
 	{
 		$json=Request::getContent();
@@ -71,23 +80,30 @@ class AdminCategoriesController extends BaseController
 	    	$test = array_intersect($this->branchIds,$bindings);
 	    	if(count($test))
 	    		$restricted = array_merge($restricted,$this->branchIds);
+	    	$this->deleteCategory($category);
+	    }
+	    // $restricted = array_unique($restricted);
+	   	// foreach ($restricted as $key => $value) {
+	   	// 	$cat = Category::find($value);
+	   	// 	if($cat)
+	   	// 		$names[] = $cat->name;
+	   	// }
 
-	    }
-	    $restricted = array_unique($restricted);
-	   	foreach ($restricted as $key => $value) {
-	   		$cat = Category::find($value);
-	   		if($cat)
-	   			$names[] = $cat->name;
-	   	}
-	    foreach ($categories as $category) {
-	    	if(!in_array($category->id,$restricted))
-	    		$category->delete();
-	    }
+	    // foreach ($categories as $category) {
+	    // 	if(in_array($category->id,$restricted))
+	    // 		DB::table('categories_suppliers')->where('categories_id','=',$category->id)->delete();
+
+	    // 	$category->delete();
+	    // }
 	    $categories = Category::orderBy('name','ASC')->get();
 	    $categoriesTree = json_decode($this->index()->getContent(),true);
 
 	    if(count($names))
-	    	return Response::json(array('error'=>'לא ניתן למחוק קטגוריה "'.implode(',',$names).'" מכיוון שהינה משויכת לאחד הספקים','tree'=>$categoriesTree),501);
+	    	return Response::json(array('error'=>'לא ניתן למחוק קטגוריה "'.implode(',',$names).'" מכיוון שהינה משויכת לאחד הספקים',
+	    		'tree'=>$categoriesTree,
+	    		'restricted'=>$restricted,
+	    		'bindings'=>$bindings,
+	    		),501);
 	    else
 			return Response::json(array('categories'=>$categories,'tree'=>$categoriesTree),200);
 	}
