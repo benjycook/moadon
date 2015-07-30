@@ -93,10 +93,15 @@ class AdminReportsController extends BaseController
 			})->where('orders_statuses_id','=',4)->whereRaw('date(createdOn) >= ? && date(createdOn) <= ?',[$startDate,$endDate])->count();
 			$line['ordersNum'] = intval($line['ordersTotalNum'])-intval($line['ordersCanceled']);
 			foreach ($line as $key => &$value) {
+				
 				if(is_numeric($value)&&isset($totals[$key]))
 					$totals[$key] = $totals[$key]+$value;
 				if(is_numeric($value)&&in_array($key,$formatNumbers))
-					$value = number_format($value);
+				{
+					$value = floatval($value);
+					$afterDot = floor( $value ) != $value ?2:0;
+					$value = number_format($value,$afterDot);
+				}
 			}
 			$new[] = array_merge(['realizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,
 				'ordersNetTotal'=>0,"priceSingleTotal"=>0,"priceSingleRealizedTotal"=>0,
@@ -106,8 +111,13 @@ class AdminReportsController extends BaseController
 		if(count($temp))
 		{
 			foreach ($totals as $key => &$value) {
+				
 				if(is_numeric($value))
-					$value = number_format(floatval($value));
+				{
+					$value = floatval($value);
+					$afterDot = floor( $value ) != $value ?2:0;
+					$value = number_format($value,$afterDot);
+				}
 			}
 			$new[] = $totals;
 		}
