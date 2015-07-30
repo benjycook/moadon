@@ -121,3 +121,7 @@ label.title {
 {
   cursor: text;
 }
+.reports tr:last-of-type td
+{
+  font-weight: bold;
+}
