@@ -91,6 +91,8 @@ class AdminReportsController extends BaseController
 			$line['ordersCanceled'] = Order::whereHas('items',function($q) use($line){
 				$q->where('suppliers_id','=',$line['supplierId']);
 			})->where('orders_statuses_id','=',4)->whereRaw('date(createdOn) >= ? && date(createdOn) <= ?',[$startDate,$endDate])->count();
+			$line['ordersTotalNum'] = isset($line['ordersTotalNum']) ? $line['ordersTotalNum']:0;
+			$line['ordersCanceledQty'] = isset($line['ordersCanceledQty']) ? $line['ordersCanceledQty']:0;
 			$line['ordersNum'] = intval($line['ordersTotalNum'])-intval($line['ordersCanceled']);
 			foreach ($line as $key => &$value) {
 				
