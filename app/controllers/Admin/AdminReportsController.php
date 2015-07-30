@@ -67,26 +67,61 @@ class AdminReportsController extends BaseController
 		}
 
 		$new = [];
+		$totals = [
+			'supplierName' => 'סיכום',
+			'ordersPayedTotal'=>0,
+			'ordersNetTotal'=>0,
+			"priceSingleTotal"=>0,
+			"priceSingleRealizedTotal"=>0,
+			'realizedPayedTotal'=>0,
+			'realizedNetTotal'=>0,
+			'ordersCanceledTotalSingle'=>0,
+			'ordersCanceledTotal'=>0,
+			'ordersCanceledNet'=>0,
+			'realizations'=>0,
+			'realizedNum'=>0,
+			'ordersNum'=>0,
+			'ordersTotalQty'=>0,
+			'ordersCanceled'=>0,
+			'ordersCanceledQty'=>0,
+		];
 		foreach ($temp as &$line) {
-			foreach ($line as $key => &$value) {
-				if(is_numeric($value)&&in_array($key,$formatNumbers))
-					$value = number_format($value);
-			}
 
-
+			
 			$line['ordersCanceled'] = Order::whereHas('items',function($q) use($line){
 				$q->where('suppliers_id','=',$line['supplierId']);
 			})->where('orders_statuses_id','=',4)->whereRaw('date(createdOn) >= ? && date(createdOn) <= ?',[$startDate,$endDate])->count();
-			$line['ordersNum'] 		= $line['ordersTotalNum']-$line['ordersCanceled']." (".$line['ordersTotalQty'].")";
-			
-			$line['ordersCanceled'] = $line['ordersCanceled']." (".$line['ordersCanceledQty'].")";
-			
+			$line['ordersNum'] = intval($line['ordersTotalNum'])-intval($line['ordersCanceled']);
+			foreach ($line as $key => &$value) {
+				
+				if(is_numeric($value)&&isset($totals[$key]))
+					$totals[$key] = $totals[$key]+$value;
+				if(is_numeric($value)&&in_array($key,$formatNumbers))
+				{
+					$value = floatval($value);
+					$afterDot = floor( $value ) != $value ?2:0;
+					$value = number_format($value,$afterDot);
+				}
+			}
 			$new[] = array_merge(['realizations'=>0,'ordersNum'=>0,'ordersPayedTotal'=>0,
 				'ordersNetTotal'=>0,"priceSingleTotal"=>0,"priceSingleRealizedTotal"=>0,
 				'realizedNum'=>0,'realizedPayedTotal'=>0,'realizedNetTotal'=>0,'supplierName'=>""],$line);
 		}
+
+		if(count($temp))
+		{
+			foreach ($totals as $key => &$value) {
+				
+				if(is_numeric($value))
+				{
+					$value = floatval($value);
+					$afterDot = floor( $value ) != $value ?2:0;
+					$value = number_format($value,$afterDot);
+				}
+			}
+			$new[] = $totals;
+		}
 		$data['reports'] = $new;
-		$data['queries'] = DB::getQueryLog();
 		$data['realized'] = $realized;
 		$data['orders'] = $orders;
 		return Response::json($data,201);

@@ -36,7 +36,7 @@
                     {{item.supplierName}}
                   </td>
                    <td class="min center">
-                    {{item.ordersCanceled}}
+                    {{item.displayOrdersCanceled}}
                   </td>
                    <td class="min center">
                     {{item.displayCanceledTotal}}
@@ -45,7 +45,7 @@
                     {{item.ordersCanceledNet}}
                   </td>
                   <td class="min center">
-                    {{item.ordersNum}}
+                    {{item.displayOrdersNum}}
                   </td>
                   <td class="min center">
                     {{item.displayOrdersPayedTotal}}
@@ -68,6 +68,8 @@
             {{/each}}
         </tbody>
       </table> 
+      {{#if model.reports}}
+      {{/if}}
 </div>
 
 

@@ -14,7 +14,7 @@ class AdminSiteDetailsController extends BaseController
 	protected function validateCaregories($data)
 	{
 		if(!isset($data['categories'])||!count($data['categories']))
-			return array('error'=>'יש לבחור לפחות קטגוריה אחת');
+			return false;
 		// if(!isset($data['regions'])||!count($data['regions']))
 		// 	return array('error'=>'יש לבחור לפחות אזור אחת');
 		if(Category::whereIn('id',$data['categories'])->count()!=count($data['categories']))
@@ -139,6 +139,8 @@ class AdminSiteDetailsController extends BaseController
     	$supplier = Supplier::find($siteDetails['suppliers_id']);
     	// $supplier->categories()->attach($data['categories']);
     	// $supplier->regions()->attach($data['regions']);
+    	if(!isset($data['categories'])||!count($data['categories']))
+			$data['categories'] = [];
     	$supplier->categories()->sync($data['categories']);
 		$temp = array();
 		$temp['main'] = isset($siteDetails['galleries'][0]) ? $siteDetails['galleries'][0]:array('images'=>array());
