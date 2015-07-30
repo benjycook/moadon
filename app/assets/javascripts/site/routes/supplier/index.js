@@ -1,4 +1,4 @@
-App.SupplierRoute = Em.Route.extend({
+App.SupplierRoute = App.ProtectedRoute.extend({
 
 
 	model: function(params)
