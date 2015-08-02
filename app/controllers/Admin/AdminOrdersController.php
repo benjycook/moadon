@@ -25,7 +25,11 @@ class AdminOrdersController extends BaseController
 		$orders = $base->with('club')->with('payment')->forPage($page,$items)->orderBy('id','DESC')->get();
 		$orders = $orders->toArray();
         $newOrders = [];
-        foreach ($orders as $order) {
+        
+        foreach ($orders as $order) 
+        {
+            $items = OrderItem::where('orders_id', '=', $order['id'])->first();
+
             $newOrders[] = array(
                 'createdAt'     =>  date('d/m/y',strtotime($order['createdOn'])),
                 'id'            =>  $order['id'], 
@@ -37,9 +41,11 @@ class AdminOrdersController extends BaseController
                 'code'          =>  $order['code'],
                 'docNumber'     =>  $order['docNumber'],
                 'auth'          =>  $order['payment']['auth'],
-                'status'        =>  $order['orders_statuses_id']
-                );  
+                'status'        =>  $order['orders_statuses_id'],
+                'supplierName'  =>  $item->supplier->name
+            ); 
         }
+
 		$meta = array(
 			'pages' => $pages,
 			'count' => $count,

@@ -9,42 +9,50 @@ class AccountingController extends BaseController
 	    if (preg_match('/^3[47][0-9]{13}$/', $number))
 	    {
 	        //American Express;
-	    		return 4;
+	    		//return 4;
+	    		return 14;
 	    }
 	    elseif (preg_match('/^3(?:0[0-5]|[68][0-9])[0-9]{11}$/', $number))
 	    {
 	        //Diners Club
-	    		return 5;
+	    		//return 5;
+	    		return 19;
 	    }
 	    elseif (preg_match('/^6(?:011|5[0-9][0-9])[0-9]{12}$/', $number))
 	    {
 	        //Discover
-	    		return 7;
+	    		//return 7;
+	    		return 5;
 	    }
 	    elseif (preg_match('/^(?:2131|1800|35\d{3})\d{11}$/', $number))
 	    {
 	        //JCB
-	    		return 6;
+	    		//return 6;
+	    		return 5;
 	    }
 	    elseif (preg_match('/^5[1-5][0-9]{14}$/', $number))
 	    {
 	        //MasterCard
-	    		return 3;
+	    		//return 3;
+	    		return 9;
 	    }
 	    elseif (preg_match('/^4[0-9]{12}(?:[0-9]{3})?$/',$number))
 	    {
 	        //Visa
-	    		return 2;
+	    		//return 2;
+	    		return 21;
 	    }
 	    elseif (strlen($number) <= 10)
 	    {
 	    		//Isracard
-	    		return 1;
+	    		//return 1;
+	    		return 20;
 	    }
 	    else
 	    {
 	        //Unknown
-	    		return 0;
+	    		//return 0;
+	    		return 5;
 	    }
 	}
 
@@ -81,8 +89,9 @@ class AccountingController extends BaseController
 			$docInfo->addChild('type',320);
 			$docInfo->addChild('number',$order->id+49999);
 			$client = $docInfo->addChild('client');
-			$client->addChild('firstname',$order->firstName);
-			$client->addChild('lastname',$order->lastName);
+			//$client->addChild('firstname',$order->firstName);
+			//$client->addChild('lastname',$order->lastName);
+			$client->addChild('name', "$order->firstName $order->lastName");
 			$client->addChild('mobile',$order->mobile);
 			$client->addChild('address',$this->address($order));
 			$date = str_replace('-','',date('Y-m-d',strtotime($order->createdOn)));
