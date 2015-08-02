@@ -82,6 +82,7 @@ class SiteDetails extends Eloquent {
   	return $query->join('items', 'sitedetails.suppliers_id', '=', 'items.suppliers_id')
   													->where($filterField, '=', '1')
 														->where('sitedetails.states_id', '=', '2')
+														->where('items.states_id', '=', '2')
 														->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100))')
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'

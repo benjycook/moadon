@@ -5,6 +5,8 @@
  *= require ../admin/theme
  *= require ../admin/rtl
  *= require ../admin/grid
+*= require ../admin/form
+*= require ../admin/bootstrap-datetimepicker
  *= require supplier
  *= require responsive
  */
