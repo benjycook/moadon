@@ -50,7 +50,7 @@ class SiteClientController extends SiteBaseController
         $data['clubUrl'] = URL::to('/');
 
         if(empty($data['email']))
-            $data['email'] = $_ENV['DEFAULT_EMAIL'];
+            $data['email'] = $_ENV['DEFUALT_EMAIL'];
 
         Mail::send('mail.clientReg',$data,function($message) use($data){
             $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');

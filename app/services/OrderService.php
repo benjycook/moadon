@@ -195,7 +195,7 @@ class OrderService
 
 	  if(empty($client['email']))
 	  {
-	  	$clientEmail = $_ENV['DEFAULT_EMAIL'];
+	  	$clientEmail = $_ENV['DEFUALT_EMAIL'];
 	  }else{
 	  	$clientEmail = $client['email'];
 	  }

@@ -20,7 +20,7 @@ class SendingService
 	{
         if(empty($email))
         {
-            $email = $_ENV['DEFAULT_EMAIL'];
+            $email = $_ENV['DEFUALT_EMAIL'];
         }
 
 		Mail::send($template,$info, function($message) use($subject,$email)
