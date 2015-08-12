@@ -50,7 +50,7 @@ class SiteClientController extends SiteBaseController
         $data['clubUrl'] = URL::to('/');
 
         if(empty($data['email']))
-            $data['email'] = 'info@cpnclub.co.il';
+            $data['email'] = $_ENV['DEFAULT_EMAIL'];
 
         Mail::send('mail.clientReg',$data,function($message) use($data){
             $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
@@ -146,7 +146,7 @@ class SiteClientController extends SiteBaseController
         $client = $this->client->toArray();
         $client = Client::find($client['id']);
 
-        
+
 
     	$allowed = ['firstName','lastName','email','mobile','password', 'taxId'];
     	
