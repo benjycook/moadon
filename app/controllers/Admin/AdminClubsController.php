@@ -8,7 +8,7 @@ class AdminClubsController extends BaseController
     		return false;
     	$keys 	= $club->getFillable();
 		$rules 	= array();
-		$nonrequired = array('logo');
+		$nonrequired = array('logo','pageDescription');
 		foreach ($keys as $key => $value) 
 		{
 			if(array_search("$value",$nonrequired,true)===false)
