@@ -38,7 +38,8 @@ class AdminClubsController extends BaseController
 		$domain = getenv('ROOTDOMAIN');
 
 		foreach ($clubs as $club) {
-			$club->fullUrl = "$schema{$club->urlName}.$domain";
+			$club->fullUrl 		= "$schema{$club->urlName}.$domain";
+			$club->directlink = "$schema{$club->urlName}.$domain/#/link/".md5($club->clubCode.$club->id);
 		}
 
 		$meta = array(
