@@ -147,14 +147,22 @@ class SiteClientController extends SiteBaseController
         $client = Client::find($client['id']);
 
 
-
+        $club = $this->club;
     	$allowed = ['firstName','lastName','email','mobile','password', 'taxId'];
     	
         foreach ($data as $key => $value) {
     		if(!in_array($key,$allowed))
     			unset($data[$key]);
     	}
-        
+        if( empty($data['taxId']) && empty($data['email']) )
+        {
+           return Response::json(array('error'=>"יש להזין כתובת דואר אלקטרוני או תעודת זהות".$data['taxId']),501);
+        }
+        if(!empty($data['taxId']) && Client::where('taxId','=',$data['taxId'])->where('clubs_id','=',$club->id)->where('id','!=',$client->id)->count())
+            return Response::json(array('error'=>'ת"ז זו קיימת במערכת'),501);
+
+        if(!empty($data['email']) && Client::where('email','=',$data['email'])->where('clubs_id','=',$club->id)->where('id','!=',$client->id)->count())
+            return Response::json(array('error'=>'דוא"ל זה קיים במערכת'),501);
         if(is_null($data['password'])||$data['password']=="")
             unset($data['password']);
 

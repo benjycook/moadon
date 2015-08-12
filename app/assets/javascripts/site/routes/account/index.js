@@ -22,7 +22,7 @@ App.AccountIndexRoute = App.UserProtectedRoute.extend({
 				if(data.status == 500)
 					msg = "אנא נסה שנית או פנה לתמיכה טכנית";
 				else
-					msg = data.responseJSON;
+					msg = data.responseJSON.error;
 			}).always(function(){
 				var ctrl = Em.Controller.create({model:{msg:msg,header:"פרטי חשבון"}});
 				ctrl.set('target',_this);
