@@ -9,25 +9,32 @@ class SiteClientController extends SiteBaseController
 		$json   = Request::getContent();
     	$data   = json_decode($json,true);
     	$rules = array( 
-            'email' 	 	=> 'required|email',
+            'email' 	 	=> 'sometimes|email',
+            'taxId'         => 'sometimes|id_check',
             'firstName'  	=> 'required',
             'lastName'   	=> 'required',
             'password'   	=> 'required',
-            'mobile'     	=> 'required',
-           // 'recieveNews'  	=> 'required',
-           // 'taxId'  		=> 'sometimes|id_check',
-           // 'cart_id'		=> 'required'
+            'mobile'     	=> 'required'
         );
+
         $validator = Validator::make($data, $rules);
+        
+        $messages = $validator->messages();
+
+
+        if( empty($data['taxId']) && empty($data['email']) )
+        {
+           return Response::json(array('error'=>"יש להזין כתובת דואר אלקטרוני או תעודת זהות".$data['taxId']),501);
+        }
 
         if($validator->fails()) 
             return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים"),501);
 
-    	if(isset($data['taxId'])&&Client::where('taxId','=',$data['taxId'])->where('id','=',$club->id)->count())
-    		return Response::json(array('error'=>'ת"ז זו כבר קיימת במערכת'),501);
+    	if(!empty($data['taxId']) && Client::where('taxId','=',$data['taxId'])->where('clubs_id','=',$club->id)->count())
+    		return Response::json(array('error'=>'ת"ז זו קיימת במערכת'),501);
 
-    	if($count = Client::where('email','=',$data['email'])->where('clubs_id','=',$club->id)->count())
-    		return Response::json(array('error'=>'דוא"ל זה כבר קיימת במערכת'),501);
+    	if(!empty($data['email']) && Client::where('email','=',$data['email'])->where('clubs_id','=',$club->id)->count())
+    		return Response::json(array('error'=>'דוא"ל זה קיים במערכת'),501);
 
     	$data['clubs_id'] = $club->id;
     	$client = Client::create($data);
@@ -41,9 +48,14 @@ class SiteClientController extends SiteBaseController
         
         $token = TokenAuth::make('client', $claims);
         $data['clubUrl'] = URL::to('/');
+
+        if(empty($data['email']))
+            $data['email'] = 'info@cpnclub.co.il';
+
         Mail::send('mail.clientReg',$data,function($message) use($data){
             $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
         }); 
+
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}
 	
@@ -83,7 +95,7 @@ class SiteClientController extends SiteBaseController
 		$json =	Request::getContent();
 	  	$data	=	json_decode($json,true);
 	  	$rules = array( 
-            'email'  => 'required|email',
+            'email'     => 'required',
             'password'  => 'required'
         );
 
@@ -91,10 +103,14 @@ class SiteClientController extends SiteBaseController
         if($validator->fails()) 
             return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים."),501);
 	  	
-        $client = $club->clients()->where('email','=',$data['email'])
+        $client = $club->clients()->where(function($q) use($data) 
+                                    {
+                                        $q->where('email', '=', $data['email']);
+                                        $q->orWhere('taxId', '=', $data['email']);
+                                    })
                                   ->where('password','=',$data['password'])
                                   ->select('id', 'firstName', 'lastName')->first();
-    
+
 		if(!$client)
 			return Response::json(array('error' => 'שם משתמש או סיסמא אינם נכונים.'),403);
         
@@ -113,7 +129,13 @@ class SiteClientController extends SiteBaseController
     public function userInfo()
     {
         $client = $this->client->toArray();
-        $client = Client::where('id','=',$client['id'])->select(['firstName','lastName','email','mobile'])->first();
+        $client = Client::where('id','=',$client['id'])->select(
+            [   'firstName',
+                'lastName',
+                'email',
+                'mobile',
+                'taxId'
+            ])->first();
         $client->password = "";
         return Response::json($client,200);
     }
@@ -123,13 +145,19 @@ class SiteClientController extends SiteBaseController
 	  	$data	=	json_decode($json,true);
         $client = $this->client->toArray();
         $client = Client::find($client['id']);
-    	$allowed = ['firstName','lastName','email','mobile','password'];
-    	foreach ($data as $key => $value) {
+
+        
+
+    	$allowed = ['firstName','lastName','email','mobile','password', 'taxId'];
+    	
+        foreach ($data as $key => $value) {
     		if(!in_array($key,$allowed))
     			unset($data[$key]);
     	}
+        
         if(is_null($data['password'])||$data['password']=="")
             unset($data['password']);
+
     	$client->fill($data);
     	$client->save();
     	return Response::json('הפרטים עודכנו בהצלחה.',200);

@@ -32,14 +32,14 @@ class SitePaymentController extends SiteBaseController  {
 				$client = Client::where('id','=',$log->clients_id)->first()->toArray();	
 				$log->success 				= 1;
 				//extended data on payment	
-				$log->cardmask				= $cardmask;
-				$log->exp					= $exp;
-				$log->cardtoken				= $cardtoken;
-				$log->holderid				= $holderid;
-				$log->holdername			= $client['firstName']." ".$client['lastName'];
-				$log->auth					= $auth;
-				$log->rcode 				= $errorCode;
-				$log->payments				= $payments;
+				$log->cardmask						= $cardmask;
+				$log->exp									= $exp;
+				$log->cardtoken						= $cardtoken;
+				$log->holderid						= $holderid;
+				$log->holdername					= $client['firstName']." ".$client['lastName'];
+				$log->auth								= $auth;
+				$log->rcode 							= $errorCode;
+				$log->payments						= $payments;
 				$log->firstpayment    		= $firstpayment;
 				$log->otherpayment    		= $otherpayment;
 

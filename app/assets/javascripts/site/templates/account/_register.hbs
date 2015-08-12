@@ -18,7 +18,11 @@
     </div>
 
     <div class="form-group">
-        {{input type="text" placeholder="דואר אלקטרוני" value=email required="required" data-parsley-type='email' name="cpn_email_reg" class="email-input"}}
+        {{input type="text" placeholder="תעודת זהות" value=taxId data-parsley-idcheck="idcheck" name="cpn_taxid" class="email-input"}}
+    </div>
+
+    <div class="form-group">
+        {{input type="text" placeholder="דואר אלקטרוני" value=email data-parsley-type='email' name="cpn_email_reg" class="email-input"}}
     </div>
 
     <div class="form-group">
