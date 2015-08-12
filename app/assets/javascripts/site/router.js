@@ -1,5 +1,8 @@
 App.Router.map(function(){
 
+
+	this.route('link', {path: 'link/:clubident'});
+
 	this.route('login');
 	this.route('logout');
 	this.route('cart');

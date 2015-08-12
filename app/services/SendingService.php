@@ -18,6 +18,11 @@ class SendingService
 
 	public static function sendEmail($email,$template,$subject,$info)
 	{
+        if(empty($email))
+        {
+            $email = $_ENV['DEFUALT_EMAIL'];
+        }
+
 		Mail::send($template,$info, function($message) use($subject,$email)
         {       
             $message->to($email)->subject($subject);

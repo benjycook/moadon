@@ -138,6 +138,7 @@ App.ApplicationRoute = Em.Route.extend(SimpleAuth.ApplicationRouteMixin, {
 				email: '',
 				mobile: '',
 				password: '',
+				taxId: '',
 				cart_id: this.get('session.cart_id')
 			});
 			ctrl.set('showLogin', true);
