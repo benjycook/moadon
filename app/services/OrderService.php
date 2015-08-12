@@ -193,8 +193,6 @@ class OrderService
 	    	],
 	    ];
 
-	  $
-
 	  if(empty($client['email']))
 	  {
 	  	$clientEmail = $_ENV['DEFAULT_EMAIL'];
