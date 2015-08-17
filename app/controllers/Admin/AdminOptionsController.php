@@ -8,6 +8,11 @@ class AdminOptionsController extends BaseController {
 			$data['identificationTypes'] = IdentificationType::orderBy('name', 'ASC')->get()->toArray();
 			$data['states']       = State::orderBy('name', 'ASC')->get()->toArray();
 			$data['clubs']       = Club::orderBy('name', 'ASC')->get()->toArray();
+			foreach ($data['clubs'] as $key => $value) {
+		
+					unset($data['clubs'][$key]['clubCode']);
+				unset($data['clubs'][$key]['password']);
+			}
 			$data['regions']     = Region::orderBy('name', 'ASC')->get()->toArray();
 			$data['categories']  = Category::orderBy('name', 'ASC')->get()->toArray();
 			$data['itemTypes']  = ItemType::orderBy('name', 'ASC')->get()->toArray();	
