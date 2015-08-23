@@ -23,9 +23,12 @@ class SendingService
             $email = $_ENV['DEFUALT_EMAIL'];
         }
 
-		Mail::send($template,$info, function($message) use($subject,$email)
-        {       
-            $message->to($email)->subject($subject);
-        });
+        //do not send emails if DEFUATL_EMAIL is null
+        if($email != NULL)
+        {
+            Mail::send($template,$info, function($message) use($subject,$email){       
+                $message->to($email)->subject($subject);
+            });
+        }
 	}
 }

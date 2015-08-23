@@ -8,6 +8,7 @@ class AdminOrdersController extends BaseController
 		$query = Input::get('query',0);
         $startDate  = Input::get('startDate',0);
         $endDate    = Input::get('endDate',0);
+        $status    = Input::get('orderStatus',0);
         if($startDate)
             $startDate = date('Y-m-d',strtotime(str_replace('/','-',$startDate)));
         if($endDate)
@@ -20,6 +21,8 @@ class AdminOrdersController extends BaseController
             $base->whereRaw('DATE(createdOn) >= ?',[$startDate]);
          if($endDate) 
             $base->whereRaw('DATE(createdOn) <= ?',[$endDate]);
+        if(!empty($status)&&in_array($status,[1,2,3,4]))
+            $base->where('orders_statuses_id',$status);
 		$count = $base->count();
 		$pages = ceil($count/$items);
 		$orders = $base->with('club')->with('payment')->forPage($page,$items)->orderBy('id','DESC')->get();

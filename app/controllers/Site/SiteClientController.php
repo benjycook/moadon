@@ -52,9 +52,12 @@ class SiteClientController extends SiteBaseController
         if(empty($data['email']))
             $data['email'] = $_ENV['DEFUALT_EMAIL'];
 
-        Mail::send('mail.clientReg',$data,function($message) use($data){
-            $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
-        }); 
+        if($data['email'] != NULL)
+        {
+            Mail::send('mail.clientReg',$data,function($message) use($data){
+                $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
+            }); 
+        }
 
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}

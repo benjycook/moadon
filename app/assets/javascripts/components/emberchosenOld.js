@@ -38,6 +38,7 @@ Ember.ChosenSelectView = Ember.Select.extend(Ember.TargetActionSupport,
     
     init: function(){
         var selected = this.get('selected');
+
         var self = this;
         var content = this.get('content');
         var path = this.get('optionValuePath');
@@ -73,6 +74,7 @@ Ember.ChosenSelectView = Ember.Select.extend(Ember.TargetActionSupport,
     valueTracker: function(){
 
       // User Ember.run.next to ensure the update doesn't happen too early.
+      console.log('valueTracker');
       Ember.run.next(this, function(){
         this.$().trigger("chosen:updated");
       });
@@ -81,7 +83,10 @@ Ember.ChosenSelectView = Ember.Select.extend(Ember.TargetActionSupport,
     observesSelected: function(){
       var multiple = this.get('multiple');
       if(!multiple)
+      {
+         console.log('observesSelected',this.get('selected'));
         this.set('value', this.get('selected'));
+      }
     }.observes('selected'),
 
     /////////////
@@ -170,6 +175,7 @@ Ember.ChosenSelectView = Ember.Select.extend(Ember.TargetActionSupport,
         var multiple = this.get('multiple');
         var path = this.get('optionValuePath');
         var valuePath = path.replace(/^content\.?/, '');
+        console.log(selection);
         if(Em.isArray(selection))
         {
             var ids = selection.map(function(item){

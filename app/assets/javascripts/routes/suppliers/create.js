@@ -201,41 +201,50 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				data: JSON.stringify(model)
 			}).then(function(data){
 				//suppliersEdit.set('items',[]);
-				var item = items.findBy('id',data.id);
-				console.log(item);
-				if(item == undefined)
-				{
-					item = App.ItemController.create({model:data});
-					item.set('target',self);
-					items.pushObject(item);
-				}
-				else
-				{
-					item.set('model',data);
-				}
+				// var item = items.findBy('id',data.id);
+				
+				// if(item == undefined)
+				// {
+				// 	item = App.ItemController.create({model:data});
+				// 	item.set('target',self);
+				// 	items.pushObject(item);
+				// }
+				// else
+				// {
+				// 	item.set('model',data);
+				// }
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');
 				
-				items.forEach(function(item){
-					console.log(item.get('name'),item.get('pos'));
-				});
-				// Ember.run.schedule('afterRender', self, function () {
-				// 	var itemsNew = Em.ArrayController.create({
-				// 		sortProperties: ['pos'],
-				// 		content:items
-				// 	});
-	   //    			suppliersEdit.set('items',itemsNew);
-				//     var rows = $('tbody')[0];
-				//     var sortable = Sortable.create(rows, {
-				//       handle: ".fa-bars", 
-				//       ghostClass: "ghost",
-				//       draggable: 'tr',
-				//       onSort: function(evt){
-				//       	self.send('sort', sortable.toArray());
-				//       }
-				//     });
-			  // });
+				// items.forEach(function(item){
+				// 	console.log(item.get('name'),item.get('pos'));
+				// });
+				Ember.run.schedule('afterRender', self, function () {
+					var items = Em.ArrayController.create({
+						sortProperties: ['pos'],
+						content:[]
+					});
+					data.forEach(function(item){
+						var ctrl = App.ItemController.create({model:item})
+						ctrl.set('target',self);
+						items.pushObject(ctrl);
+					});
+					var itemsNew = Em.ArrayController.create({
+						sortProperties: ['pos'],
+						content:items
+					});
+	      			suppliersEdit.set('items',itemsNew);
+				    var rows = $('tbody')[0];
+				    var sortable = Sortable.create(rows, {
+				      handle: ".fa-bars", 
+				      ghostClass: "ghost",
+				      draggable: 'tr',
+				      onSort: function(evt){
+				      	self.send('sort', sortable.toArray());
+				      }
+				    });
+			  });
 			   
 			}).fail(function(data){
 				controller.set('success',null);

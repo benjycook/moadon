@@ -3,4 +3,14 @@
         <li>{{input-date-time picker="date" class="form-control" valueBinding="startDate" }}</li>
         <li>עד:</li>
         <li>{{input-date-time picker="date" class="form-control" valueBinding="endDate" }}</li>
+        <li>סטטוס:</li>
+        <li>
+        	  {{ui-chosen
+                  options = App.orderStatuses
+                  selected=orderStatus
+                  prompt = "הכל"
+                }}
+        	
+        </li>
+        
 </ul>

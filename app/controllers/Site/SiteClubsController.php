@@ -98,6 +98,8 @@ class SiteClubsController extends SiteBaseController
 		$data = array();
 	
 		$data['club'] = $this->club->toArray();
+		unset($data['club']['clubCode']);
+		unset($data['club']['password']);
 		$data['club']['logo'] = URL::to('/')."/galleries/{$data['club']['logo']}";
 
 		$data['regions'] 		= Region::where('parent_id','=',0)->with('children')->get();

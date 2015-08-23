@@ -163,7 +163,23 @@ class AdminItemsController extends BaseController
     		$item->galleries()->attach($ids);
     	$item = $item->fill($data);
     	$item->save();
-    	return Response::json(json_decode($this->show($item->id)->getContent(),true),201);
+    	//json_decode($this->show($item->id)->getContent(),true)
+    	$items = Item::with('orders')->where('suppliers_id',$item->suppliers_id)->get();
+    	foreach ($items as &$item) {
+			if(count($item['orders']))
+				$item['removable'] = false;
+			else
+				$item['removable'] = true;
+			$galleries = $item['galleries'];
+			$item['linkId'] = $item['id'];
+			$temp = array();
+			$temp['main'] = isset($galleries[0]) ? $galleries[0]:array('images'=>array());
+			$temp['main']['base'] = URL::to('/')."/galleries/";
+			$item['galleries'] = $temp;
+			$item['uploadUrl'] = '/uploadImage';
+			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
+		}
+    	return Response::json($items,201);
 	}
 
 	public function destroy($id)
