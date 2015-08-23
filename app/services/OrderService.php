@@ -200,11 +200,15 @@ class OrderService
 	  	$clientEmail = $client['email'];
 	  }
 
-    $doc->sendInvoice = new stdClass;
-    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש - מועדון חברים";
-    $doc->sendInvoice->email    = $clientEmail;
-    $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
-    
+	  //do not send emails if DEFUATL_EMAIL is null
+	  if($clientEmail != NULL)
+    {
+	    $doc->sendInvoice = new stdClass;
+	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש - מועדון חברים";
+	    $doc->sendInvoice->email    = $clientEmail;
+	    $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
+    }
+
     $ch = curl_init();
 		curl_setopt($ch,CURLOPT_URL, $invoiceUrl);
 		curl_setopt($ch,CURLOPT_POSTFIELDS, json_encode($doc));
@@ -218,10 +222,13 @@ class OrderService
 		}
 
 
-
-		Mail::send('mail.order',$info,function($message) use($info, $clientEmail){
-            $message->to($clientEmail)->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
-    }); 
+	  //do not send emails if DEFUATL_EMAIL is null
+	  if($clientEmail != NULL)
+    {
+			Mail::send('mail.order',$info,function($message) use($info, $clientEmail){
+	    	$message->to($clientEmail)->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
+	    }); 
+   	}
 
     return [
 			'order'	=> ['success'=>$order->code],
