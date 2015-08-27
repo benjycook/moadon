@@ -64,26 +64,26 @@ body
 }
 
 .overlay .lightbox .logos {
-	height: 120px;
+	height: 70px;
 	text-align: center;
 	margin-bottom: 20px;
 }
 
 .overlay .lightbox .logos .logo-left{
-	height: 120px;
+	height: 70px;
 	float: left;
 	width: 50%;
 }
 
 .overlay .lightbox .logos .logo-right{
-	height: 120px;
+	height: 70px;
 	float: right;
 	width: 50%;
 }
 
 .overlay .lightbox .logos img {
 	max-width: 100%;
-	max-height: 120px;
+	max-height: 80px;
 	position: relative;
 	top: 50%;
 	transform: translateY(-50%);
