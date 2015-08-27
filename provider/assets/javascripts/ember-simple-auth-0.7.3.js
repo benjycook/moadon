@@ -839,7 +839,7 @@ define("simple-auth/mixins/login-controller-mixin",
           @method actions.authenticate
         */
         authenticate: function() {
-          var data = this.getProperties('identification', 'password', 'clubident');
+          var data = this.getProperties('identification', 'password', 'clubident', 'username', 'type', 'email');
           this.set('password', null);
           return this._super(data);
         }
