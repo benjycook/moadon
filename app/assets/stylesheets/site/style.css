@@ -1375,14 +1375,15 @@ input
 
 
 .lightbox.club-login .box button {
-	/*background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);*/
-	background-image: linear-gradient(to top, #169cca 0%, #43ccf2 100%);
-	background-color: #43ccf2;
-	/*border: 2px solid #064d7c;*/
-	border: none;
+	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	/*background-image: linear-gradient(to top, #169cca 0%, #43ccf2 100%);*/
+	background-color: #06568d;
+	border: 2px solid #064d7c;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+	/*border: none;*/
 	border-radius: 7px;
 	top: 0;
-	box-shadow: none;
+	/*box-shadow: none;*/
 	color: #fff;
 	font-size: 20px;
 	height: 40px;
