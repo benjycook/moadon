@@ -54,7 +54,7 @@ class SiteClubsController extends SiteBaseController
 		$json =	Request::getContent();
 	  $data	=	json_decode($json);
 
-	  if($data->type == 'user')
+	  if(isset($data->type) && $data->type == 'user')
 	  {
 	  	$controller = App::make('SiteClientController');
 	  	$controller->club = $this->club;
