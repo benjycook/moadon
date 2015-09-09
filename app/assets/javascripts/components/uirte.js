@@ -31,14 +31,11 @@ App.UiRteComponent = Em.Component.extend({
 		var self = this;
 		content.on('input', function(){
 			self.set('html', content.html());
-			console.log(content.html());
 		});
 
 		console.log(editor);
 	}.on('didInsertElement'),
+	
 
-	keyup: function(evt){
-		console.log('keyup', evt);
-	}
 
 });

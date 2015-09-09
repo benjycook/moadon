@@ -121,10 +121,16 @@ App.ModalView = Em.View.extend({
 	
 	keyPress:function(event,view)
 	{
-
-		if(event.keyCode == 13&&this.$('.sendEnter'))
+		var localName = 'textarea';
+		var role = "textbox";
+		var noRole = true;
+		if(event.target.attributes.role)
+			noRole = false;
+		if(event.keyCode == 13&&this.$('.sendEnter')&&event.target.localName.toLowerCase()!=localName)
 		{
-		  this.$('.sendEnter').trigger('click');
+			if(!noRole&&event.target.attributes.role.nodeValue==role)
+				return;
+		  	this.$('.sendEnter').trigger('click');
 		}
 		else 
 		{
@@ -153,9 +159,15 @@ App.FormView = Em.View.extend({
 	keyPress:function(event,view)
 	{
 		var localName = 'textarea';
+		var role = "textbox";
+		var noRole = true;
+		if(event.target.attributes.role)
+			noRole = false;
 		if(event.keyCode == 13&&this.$('.sendEnter')&&event.target.localName.toLowerCase()!=localName)
 		{
-		  this.$('.sendEnter').trigger('click');
+			if(!noRole&&event.target.attributes.role.nodeValue==role)
+				return;
+		  	this.$('.sendEnter').trigger('click');
 		}
 		else 
 		{
