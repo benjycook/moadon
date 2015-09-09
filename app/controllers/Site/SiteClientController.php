@@ -52,9 +52,12 @@ class SiteClientController extends SiteBaseController
         if(empty($data['email']))
             $data['email'] = $_ENV['DEFUALT_EMAIL'];
 
-        Mail::send('mail.clientReg',$data,function($message) use($data){
-            $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
-        }); 
+        if($data['email'] != NULL)
+        {
+            Mail::send('mail.clientReg',$data,function($message) use($data){
+                $message->to($data['email'])->subject('תודה שנרשמת לקופונופש - מועדון חברים!');
+            }); 
+        }
 
         return Response::json(compact('token', 'claims', 'client'), 200);
 	}
@@ -101,7 +104,7 @@ class SiteClientController extends SiteBaseController
 
         $validator = Validator::make($data, $rules);
         if($validator->fails()) 
-            return Response::json(array('error'=>"אנא וודא שסיפקת את כל הנתונים."),501);
+            return Response::json(array('error'=>"יש להזין שם משתמש וסיסמה."),501);
 	  	
         $client = $club->clients()->where(function($q) use($data) 
                                     {
@@ -112,11 +115,13 @@ class SiteClientController extends SiteBaseController
                                   ->select('id', 'firstName', 'lastName')->first();
 
 		if(!$client)
-			return Response::json(array('error' => 'שם משתמש או סיסמא אינם נכונים.'),403);
+			return Response::json(array('error' => 'שם המשתמש או הסיסמה אינם נכונים.'),403);
         
         $this->bindCart($client->id);
 
         $claims = array(
+            'club_id'       => $this->club->id,
+            'cart_id'       => $this->cart->id,
             'user'          => $client->id,
             'loginType'     => 'client'
         );

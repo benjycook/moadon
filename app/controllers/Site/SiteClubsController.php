@@ -54,6 +54,14 @@ class SiteClubsController extends SiteBaseController
 		$json =	Request::getContent();
 	  $data	=	json_decode($json);
 
+	  if(isset($data->type) && $data->type == 'user')
+	  {
+	  	$controller = App::make('SiteClientController');
+	  	$controller->club = $this->club;
+	  	$controller->cart = Cart::create(array());
+	  	return $controller->login();
+	  }
+
 		if(!isset($data->clubident)||$data->clubident=="")
 			return Response::json(array('error' => 'אנא הזן קוד מועדון.'), 401);
 		if(	($data->clubident != $this->club->clubCode) &&
@@ -65,7 +73,7 @@ class SiteClubsController extends SiteBaseController
 		$cart = Cart::create(array());
 
 		$claims = array(
-			'club_id'		=> $this->club->id,
+			'club_id'			=> $this->club->id,
 			'user'				=> null,
 			'cart_id' 		=> $cart->id,
 			'loginType' 	=> 'club'

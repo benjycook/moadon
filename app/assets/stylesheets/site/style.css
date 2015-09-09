@@ -49,116 +49,91 @@ body
 	background-image: linear-gradient(to top, #dbe2e5 10%, #e6e9eb 20%, #f0f0f0 50%, #f9f9f9 100%);
 }
 
-.overlay .lightbox .logo {
-	height: 120px;
-	text-align: center;
-}
-
-.overlay .lightbox .logo img {
-	max-width: 100%;
-	max-height: 100px;
-}
-
-.overlay .lightbox .left,
-.overlay .lightbox .right {
-	width: 49%;
-	height: 100%;
-	float: right;
-	position: relative;
-}
-
-.overlay .lightbox .right {
-	margin-left: 2%;
-	text-align: center;
-}
-
-/*.overlay .lightbox .left img {
-	position: absolute;
-	bottom: 0;
-	width: 100%;
+.overlay .lightbox.club-login {
+	width: 390px;
 	height: auto;
-}*/
-
-.overlay .lightbox .left p {
-	font-size: 14px;
-	color: #717171;
-	margin: 0;
-	line-height: 20px;
+	padding: 20px 20px 100px;
 }
 
-.overlay .lightbox .right .box {
-	background-color: #eaeaed;
-	height: 250px;
-	width: 100%;
-	position: absolute;
-	bottom: 0;
-	border-radius: 7px;
-	padding: 40px 15px;
-	color: #717171;
+.overlay .lightbox.club-login form {
+	padding: 0;
 }
 
-.overlay .lightbox .right .box h2 {
+.overlay .lightbox.club-login div.box {
+	padding: 0;
+}
+
+.overlay .lightbox .logos {
+	height: 70px;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.overlay .lightbox .logos .logo-left{
+	height: 70px;
+	float: left;
+	width: 50%;
+}
+
+.overlay .lightbox .logos .logo-right{
+	height: 70px;
+	float: right;
+	width: 50%;
+}
+
+.overlay .lightbox .logos img {
+	max-width: 100%;
+	max-height: 80px;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+}
+
+.overlay .lightbox.club-login .box {
+	 color: #717171;
+}
+
+.overlay .lightbox.club-login .box h2 {
 	margin: 0;
 	text-align: center;
 	padding: 0 70px;
 	line-height: 18px
 }
 
-.overlay .lightbox .right .box p {
+.overlay .lightbox.club-login .box p {
 	text-align: center;
 	margin: 0;
 	margin-top: 5px;
 	padding: 0 20px;
 }
 
-.overlay .lightbox .right .box input {
+.overlay .lightbox.club-login .box input {
 	border: medium none;
 	border-radius: 7px;
 	box-shadow: 1px 1px 4px -1px inset;
 	color: #717171;
 	font-size: 14px;
-	height: 35px;
+	height: 37px;
 	margin-top: 10px;
-	text-align: center;
 	width: 100%;
 	outline-color: transparent;
+	text-align: right;
+	padding: 0 10px;
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
 }
 
-.overlay .lightbox .right .box button {
-	border-radius: 12px;
-	width: 110px;
-	height: 40px;
-	border: 2px solid #064d7c;
-	color: #fff;
-	font-size: 22px;
-	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
-	background-color: #06568d;
-	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
-	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-	position: absolute;
-	bottom: 20px;
-	left: 50%;
-	margin-left: -55px;
-}
-
-.overlay .lightbox .right .box img {
-	float: right;
-	margin-top: 20px;
-	width: 160px;
-	height: 40px;
-
-	position: absolute;
-	bottom: 20px;
-	right: 40px;
-}
-
-.overlay .lightbox .right .box .error {
+.overlay .lightbox.club-login .box .error {
 	color: red;
 	font-weight: bold;
-	margin-top: 5px;
+	margin-top: 10px;
+	float: right;
 }
 
-.overlay .lightbox .right .box button:hover {
+.overlay .lightbox .box button:hover {
 	box-shadow: inset 0 0 3px 1px rgba(0, 0, 0, 0.5);
 	text-shadow: none;
 }
@@ -560,7 +535,6 @@ ul.tree {
 	background: #fff;
 	border: 1px solid #e7e7ec;
 	border-radius: 5px;
-	/*margin-bottom: 20px;*/
 }
 
 .tree-node i.fa {
@@ -921,7 +895,6 @@ ul.items .order ul li.total-club-price {
 
 .qty .down {
 	bottom: 1px;
-	/*border-top: 10px solid black;*/
 }
 
 .lightbox .close {
@@ -957,8 +930,6 @@ ul.items .order ul li.total-club-price {
 }
 
 .empty-cart {
-/*	background-image: linear-gradient(to top, #f4f4f4 0%, #f9f9f9 100%);
-	border: 1px solid #ddd;*/
 	border-radius: 5px;
 	color: #666;
 	font-size: 18px;
@@ -1102,9 +1073,7 @@ a.back-to-login {
 	vertical-align: top;
 }
 
-/*.lightbox form .form-group.exp .ember-chosenselect.months {
-	margin-left: 0;
-}*/
+
 
 .form-control.chosen-container-single .chosen-single {
 	box-sizing: border-box;
@@ -1395,38 +1364,45 @@ input
 }
 
 #club-login {
-	height: 35px;
+	overflow: auto;
+}
+
+#user-login .title {
+	font-size: 16px;
 	position: relative;
-	margin-top: 10px;
+	top: 5px;
 }
 
-#club-login input {
-	width: calc(100% - 90px);
-	margin: 0;
-	border-radius: 0 7px 7px 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-}
 
-#club-login button {
+.lightbox.club-login .box button {
 	background-image: linear-gradient(to top, #0e6fb1 0%, #1c97ea 100%);
+	/*background-image: linear-gradient(to top, #169cca 0%, #43ccf2 100%);*/
 	background-color: #06568d;
 	border: 2px solid #064d7c;
-	border-radius: 7px 0 0 7px;
+	box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.5);
+	/*border: none;*/
+	border-radius: 7px;
 	top: 0;
-	box-shadow: none;
+	/*box-shadow: none;*/
 	color: #fff;
 	font-size: 20px;
-	height: 37px;
+	height: 40px;
+	
+	position: relative;
 	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
 	margin: 0;
-	position: absolute;
+
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-	width: 90px;
+	width: 100px;
 	padding-bottom: 3px;
 	box-sizing: border-box;
-	border-right-width: 1px;
+	-webkit-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	float: left;
+	margin-top: 10px;
 }
 
 .creditcard-icons {
@@ -1434,9 +1410,11 @@ input
   margin: 0;
   padding: 0;
   font-size: 0;
-  margin: 0 10px;
+  margin: 0 15px;
   position: absolute;
-  bottom: 0;
+  bottom: 20px;
+  left: 0;
+  right: 0;
 }
 
 .creditcard-icons li {
@@ -1452,13 +1430,14 @@ input
 }
 
 a.supplier-login {
-	bottom: -24px;
+	bottom: 10px;
 	color: #005189;
 	font-size: 14px;
 	left: 0;
 	position: absolute;
 	right: 0;
 	text-decoration: none;
+	text-align: center;
 }
 
 .email-input {
