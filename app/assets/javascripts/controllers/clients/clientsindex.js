@@ -29,6 +29,7 @@ App.ClientsIndexController = GRID.TableController.extend({
         GRID.column('email',            {title: 'דוא"ל',   style: ''        }),
           GRID.column('password',            {title: 'סיסמא',   style: ''        }),
         GRID.column('mobile',           {title: 'נייד',       style: ''            }),
+         GRID.column('taxId',           {title: 'ת.ז',       style: ''            }),
         GRID.column('actions',			{title: 'פעולות',			style: 'min center ', templateName: 'clients/grid/actions' ,isSortable: false  })
     ]
 

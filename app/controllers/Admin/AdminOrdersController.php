@@ -15,8 +15,9 @@ class AdminOrdersController extends BaseController
             $endDate = date('Y-m-d',strtotime(str_replace('/','-',$endDate)));
 		if($query=="")
 			$query = 0;
-		$sql = $query ? "CONCAT_WS(' ',code,id,firstName,lastName) LIKE CONCAT('%',?,'%')" :'? = 0';
-        $base = Order::whereRaw($sql,array($query));
+		$sql = $query ? "CONCAT_WS(' ',orders.code,orders.id,firstName,lastName,taxId,auth) LIKE CONCAT('%',?,'%')" :'? = 0';
+        $base = Order::whereRaw($sql,array($query))
+                ->leftjoin('creditguardlog','creditguardlog.orders_id','=','orders.id')->where('success',1);
         if($startDate)
             $base->whereRaw('DATE(createdOn) >= ?',[$startDate]);
          if($endDate) 
@@ -25,14 +26,14 @@ class AdminOrdersController extends BaseController
             $base->where('orders_statuses_id',$status);
 		$count = $base->count();
 		$pages = ceil($count/$items);
-		$orders = $base->with('club')->with('payment')->forPage($page,$items)->orderBy('id','DESC')->get();
+		$orders = $base->with('club')->forPage($page,$items)->orderBy('orders.id','DESC')
+            ->select(DB::raw('orders.*,creditguardlog.auth AS auth'))->get();
 		$orders = $orders->toArray();
         $newOrders = [];
 
         foreach ($orders as $order) 
         {
             $item = OrderItem::where('orders_id', '=', $order['id'])->first();
-
             $newOrders[] = array(
                 'createdAt'     =>  date('d/m/y',strtotime($order['createdOn'])),
                 'id'            =>  $order['id'], 
@@ -43,8 +44,9 @@ class AdminOrdersController extends BaseController
                 'clubName'      =>  $order['club']['name'], 
                 'code'          =>  $order['code'],
                 'docNumber'     =>  $order['docNumber'],
-                'auth'          =>  $order['payment']['auth'],
+                'auth'          =>  $order['auth'],
                 'status'        =>  $order['orders_statuses_id'],
+                'taxId'         =>  $order['taxId'],
                 'supplierName'  =>  $item->supplier->name
             ); 
         }
