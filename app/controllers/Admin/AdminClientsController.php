@@ -49,7 +49,7 @@ class AdminClientsController extends BaseController
     		return Response::json(array('error'=>'מועדון זה לא נמצא במערכת'),501);
     	if(!empty($data['taxId']) && Client::where('taxId','=',$data['taxId'])->where('clubs_id','=',$data['clubs_id'])->count())
     		return Response::json(array('error'=>'ת"ז זו כבר קיימת במערכת'),501);
-    	if(!empty($data['taxId']) && Client::where('email','=',$data['email'])->where('clubs_id','=',$data['clubs_id'])->count())
+    	if(!empty($data['email']) && Client::where('email','=',$data['email'])->where('clubs_id','=',$data['clubs_id'])->count())
     		return Response::json(array('error'=>'דוא"ל זה כבר קיימת במערכת'),501);
     	
     	$client = Client::create($data);
@@ -92,7 +92,7 @@ class AdminClientsController extends BaseController
     			return Response::json(array('error'=>'מועדון זה לא נמצא במערכת'),501);
 			if(!empty($data['taxId']) && Client::whereRaw('taxId = ? AND id != ?',array($data['taxId'],$id))->where('clubs_id','=',$data['clubs_id'])->count())
     			return Response::json(array('error'=>'ת"ז זו כבר קיימת במערכת'),501);
-    		if(!empty($data['taxId']) && Client::whereRaw('email = ? AND id != ?',array($data['email'],$id))->where('clubs_id','=',$data['clubs_id'])->count())
+    		if(!empty($data['email']) && Client::whereRaw('email = ? AND id != ?',array($data['email'],$id))->where('clubs_id','=',$data['clubs_id'])->count())
     			return Response::json(array('error'=>'דוא"ל זה כבר קיימת במערכת'),501);
     		$client->fill($data);
     		$client->save();
