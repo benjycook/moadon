@@ -13,6 +13,7 @@ App.categories = Em.ArrayController.create();
 App.clubs = Em.ArrayController.create();
 App.itemTypes = Em.ArrayController.create();
 App.orderStatuses = Em.ArrayController.create();
+App.suppliers = Em.ArrayController.create();
 Ember.Application.initializer({
   name: "options",
  
@@ -29,6 +30,7 @@ Ember.Application.initializer({
 				App.clubs.set('content', data.clubs);
 				App.itemTypes.set('content', data.itemTypes);
 				App.cities.set('content', data.cities);
+				App.suppliers.set('content', data.suppliers);
 				App.set('logedin',data.logedin);
 				App.set('vat',data.vat);
 				App.set('creditCommission',data.creditCommission);

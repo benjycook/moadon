@@ -13,11 +13,15 @@ App.OrdersIndexController = GRID.TableController.extend({
         orderStatus: {
             replace: true
         },
+         suppliers_id: {
+            replace: true
+        },
     },
 
     startDate: moment().format('DD/MM/YYYY'),
     endDate: moment().format('DD/MM/YYYY'),
     orderStatus:null,
+    suppliers_id:null,
 	endpoint: 'orders',
 	collection: 'collection',
 	itemController: 'App.OrderController',
@@ -62,8 +66,9 @@ App.OrdersIndexController = GRID.TableController.extend({
         var startDate = this.get('startDate');
         var endDate = this.get('endDate');
         var orderStatus = this.get('orderStatus');
-        this.set('addOns',{startDate:startDate,endDate:endDate,orderStatus:orderStatus});
+        var suppliers_id = this.get('suppliers_id');
+        this.set('addOns',{startDate:startDate,endDate:endDate,orderStatus:orderStatus,suppliers_id:suppliers_id});
         this.refresh();
-    }.observes('startDate','endDate','orderStatus'),
+    }.observes('startDate','endDate','orderStatus','suppliers_id'),
 
 });

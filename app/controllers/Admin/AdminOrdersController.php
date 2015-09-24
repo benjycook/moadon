@@ -9,6 +9,7 @@ class AdminOrdersController extends BaseController
         $startDate  = Input::get('startDate',0);
         $endDate    = Input::get('endDate',0);
         $status    = Input::get('orderStatus',0);
+        $suppliers_id    = Input::get('suppliers_id',0);
         if($startDate)
             $startDate = date('Y-m-d',strtotime(str_replace('/','-',$startDate)));
         if($endDate)
@@ -24,6 +25,10 @@ class AdminOrdersController extends BaseController
             $base->whereRaw('DATE(createdOn) <= ?',[$endDate]);
         if(!empty($status)&&in_array($status,[1,2,3,4]))
             $base->where('orders_statuses_id',$status);
+        if($suppliers_id) 
+            $base->whereHas('items',function($q) use($suppliers_id){
+                $q->where('suppliers_id',$suppliers_id);
+            });
 		$count = $base->count();
 		$pages = ceil($count/$items);
 		$orders = $base->with('club')->forPage($page,$items)->orderBy('orders.id','DESC')
@@ -33,7 +38,10 @@ class AdminOrdersController extends BaseController
 
         foreach ($orders as $order) 
         {
-            $item = OrderItem::where('orders_id', '=', $order['id'])->first();
+            $item = OrderItem::where('orders_id', '=', $order['id']);
+            if($suppliers_id)
+                $item->where('suppliers_id',$suppliers_id);
+            $item = $item->first();
             $newOrders[] = array(
                 'createdAt'     =>  date('d/m/y',strtotime($order['createdOn'])),
                 'id'            =>  $order['id'], 
@@ -47,7 +55,8 @@ class AdminOrdersController extends BaseController
                 'auth'          =>  $order['auth'],
                 'status'        =>  $order['orders_statuses_id'],
                 'taxId'         =>  $order['taxId'],
-                'supplierName'  =>  $item->supplier->name
+                'supplierName'  =>  $item->supplier->name,
+                'suppliers_id'  =>  $item->supplier->id,
             ); 
         }
 
