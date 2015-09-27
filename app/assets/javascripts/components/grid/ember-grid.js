@@ -63,7 +63,8 @@ GRID.PaginatedMixin = Ember.Mixin.create({
         var temp = "";
         for(k in addOns)
         {
-            temp+="&"+k+"="+addOns[k];
+            if(addOns[k]!=''&&addOns[k])
+                temp+="&"+k+"="+addOns[k];
         }
         if(sortOrder)
         {
