@@ -1444,3 +1444,8 @@ a.supplier-login {
 	direction: ltr;
 	text-align: right;
 }
+.multiText p 
+{
+	margin: 0;
+	padding: 0;
+}

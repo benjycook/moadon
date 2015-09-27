@@ -19,6 +19,7 @@ class AdminOptionsController extends BaseController {
 			$data['cities']  = City::orderBy('name', 'ASC')->get()->toArray();
 			$data['orderStatuses']  = OrderStatus::orderBy('name', 'ASC')->get()->toArray();
 			$setting = Settings::find(1);
+			$data['suppliers'] = Supplier::orderBy('name', 'ASC')->get(['id','name']);
 			$data['vat'] = $setting->vat;
 			$data['creditCommission'] = $setting->creditCommission;	
 			if($user = Auth::user())

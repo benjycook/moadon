@@ -1850,6 +1850,7 @@ else if (typeof define === 'function' && define.amd) {
                                 if (navigator.userAgent.match(/firefox/i) && p === 0) {
                                     html += self.htmlEntities(paragraphs[p]);
                                 } else {
+
                                     html += '<p>' + self.htmlEntities(paragraphs[p]) + '</p>';
                                 }
                             }

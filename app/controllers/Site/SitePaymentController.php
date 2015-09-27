@@ -26,11 +26,11 @@ class SitePaymentController extends SiteBaseController  {
 			$log = GatewayLog::where('uniqueid', '=', $uniqueid)->where('success','=',0)->first();
 			if($str == $mac&&$log)
 			{
-
-				
+				$log->success = 1;
+				$log->save();
 				$items = GatewayItem::where('gateway_id','=',$log->id)->get();
 				$client = Client::where('id','=',$log->clients_id)->first()->toArray();	
-				$log->success 				= 1;
+				
 				//extended data on payment	
 				$log->cardmask						= $cardmask;
 				$log->exp									= $exp;

@@ -24,7 +24,7 @@ class SiteClientController extends SiteBaseController
 
         if( empty($data['taxId']) && empty($data['email']) )
         {
-           return Response::json(array('error'=>"יש להזין כתובת דואר אלקטרוני או תעודת זהות".$data['taxId']),501);
+           return Response::json(array('error'=>"יש להזין כתובת דואר אלקטרוני או תעודת זהות"),501);
         }
 
         if($validator->fails()) 

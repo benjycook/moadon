@@ -177,6 +177,7 @@ class OrderService
 	    $doc->discount 					= 0;
 	    $doc->client 						= $client;
 	    $doc->items 						= $docItems;
+	    //$doc->refrence          = $order->id;
 	    $doc->payments          = [
 	    	[
 					"paymenttypes_id"=>3,
