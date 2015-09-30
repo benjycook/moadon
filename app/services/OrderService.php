@@ -88,7 +88,7 @@ class OrderService
 				$orderItem->noCreditDiscountPrice = $orderItem->priceSingle / $creditDiscount;
 			}
 
-			$total = $orderItem->noCreditDiscountPrice;// * $orderItem->qty / $vatPercent;
+			$total = $orderItem->noCreditDiscountPrice * $orderItem->qty;
 			$price = $total / $orderItem->qty;
 
 			$docItems[] = [
