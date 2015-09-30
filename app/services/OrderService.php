@@ -88,21 +88,22 @@ class OrderService
 				$orderItem->noCreditDiscountPrice = $orderItem->priceSingle / $creditDiscount;
 			}
 
-			$total = $orderItem->noCreditDiscountPrice * $orderItem->qty / $vatPercent;
+			$total = $orderItem->noCreditDiscountPrice * $orderItem->qty;
 			$price = $total / $orderItem->qty;
 
 			$docItems[] = [
-				'name'								=>	$supplier->supplierName." - ".$orderItem->name,
-				'price'								=>	$price,
-				'qty'								=>	$orderItem->qty,
-				'itemtypes_id'						=>	1,
-				'total'								=>	$total,
-				'sku'								=>	$orderItem->items_id,
-				'measurementunits_id'				=>	1,
-				'stock'								=>	1,
-				'taxable'							=>	1,
+				'name'									=>	$supplier->supplierName." - ".$orderItem->name,
+				'price'									=>	$price,
+				'qty'										=>	$orderItem->qty,
+				'itemtypes_id'					=>	1,
+				'total'									=>	$total,
+				'sku'										=>	$orderItem->items_id,
+				'measurementunits_id'		=>	1,
+				'stock'									=>	1,
+				'taxable'								=>	1,
 				't6111_id'							=>	1010,
 				'discount'							=>	0,
+				'withVat'								=>  1
 			];
 
 			if(!isset($info['suppliers'][$supplier->suppliers_id]))
