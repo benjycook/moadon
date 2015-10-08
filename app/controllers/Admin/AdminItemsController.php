@@ -80,7 +80,7 @@ class AdminItemsController extends BaseController
     	if(Item::where('name','=',$data['name'])->where('suppliers_id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>'מוצר עם שם זה כבר קיים במערכת במערכת'),501);
     	$item 	= new Item;
-    	$data['pos'] = Item::where('suppliers_id','=',$data['suppliers_id'])->where('itemtypes_id',$data->itemtypes_id)->max('pos');
+    	$data['pos'] = Item::where('suppliers_id','=',$data['suppliers_id'])->where('itemtypes_id',$data['itemtypes_id'])->max('pos');
     	if(!is_null($data['pos']))
     		$data['pos'] = $data['pos']+1;
     	$item 	= $item->create($data);
