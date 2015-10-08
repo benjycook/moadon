@@ -51,7 +51,6 @@
 		_silent = false,
 
 		_dispatchEvent = function (rootEl, name, targetEl, fromEl, startIndex, newIndex) {
-			console.log('dispatchEvent');
 			var evt = document.createEvent('Event');
 
 			evt.initEvent(name, true, true);
@@ -162,7 +161,7 @@
 		this.el = el; // root element
 		this.options = options = (options || {});
 
-		console.log(options);
+
 		// Default options
 		var defaults = {
 			group: Math.random(),

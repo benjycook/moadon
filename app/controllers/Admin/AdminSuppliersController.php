@@ -92,7 +92,10 @@ class AdminSuppliersController extends BaseController
 
 	public function show($id)
 	{
-		$supplier = Supplier::with('sitedetails','items.orders','categories','contacts')->find($id);
+		$supplier = Supplier::with('sitedetails','categories','contacts')->with(['items'=>function($q){
+			$q->orderBy('pos','ASC');
+			$q->with('orders');
+		}])->find($id);
 		if(!$supplier)
 			return Response::json(array('error'=>'ספק זה לא נמצא במערכת'),501);
 		$supplier = $supplier->toArray();
@@ -114,6 +117,8 @@ class AdminSuppliersController extends BaseController
 		}
 		$sitedetails['galleries'] = $temp;
 		$sitedetails['uploadUrl'] = '/uploadImage';
+		$singles = $groups = [];
+		$clubCommission = Club::max('clubCommission');
 		foreach ($items as &$item) {
 			if(count($item['orders']))
 				$item['removable'] = false;
@@ -127,6 +132,11 @@ class AdminSuppliersController extends BaseController
 			$item['galleries'] = $temp;
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
+			$item['clubCommission'] = $clubCommission;
+			if($item['itemtypes_id']==1)
+				$singles[] = $item;
+			if($item['itemtypes_id']==2)
+				$groups[] = $item;
 		}
 		if(count($contacts)>1)
 		{
@@ -140,7 +150,8 @@ class AdminSuppliersController extends BaseController
 		$data = array(
 			'categories'			=> 	Category::with('children')->where('parent_id','=',0)->get(),
 			'supplier'				=>	$supplier,
-			'items'					=>	$items,
+			'singleItems'					=>	$singles,
+			'groupItems'					=>	$groups,
 			'sitedetails'			=>	$sitedetails,
 			'contacts'				=>  $contacts,
 		);

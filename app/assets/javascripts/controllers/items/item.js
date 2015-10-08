@@ -11,11 +11,56 @@ App.ItemController = Em.ObjectController.extend({
 		return App.states.findBy('id',states_id).name;
 	}.property('states_id'),
 
-	// lengthTest:function(obj,key)
-	// {
-	// 	var name = this.get('name');
-	// 	if(name&&name.length>49)
-	// 		this.set('name',name.substr(0,49));
-	// }.observes('name'),
+	profitPrecent:function()
+	{
+		var clubCommissionPrecent  = this.get('clubCommission');
+		var priceSingle     = this.get('priceSingle') || 0;
+		var netPrice 		= this.get('netPrice') || 0;
+		var vat 			= App.get('vat');
+		var creditComission = App.get('creditCommission');
+		if(netPrice==0)
+			return "100%";
+		if(priceSingle==0)
+			return "0%";
+		priceSingle = priceSingle/(vat/100+1);
+		netPrice    = netPrice/(vat/100+1);
+		console.log("priceSingle",priceSingle);
+		console.log("netPrice",netPrice);
+		
+		var creditComission = priceSingle*(creditComission/100);
+		console.log("creditComission",creditComission);
+		console.log("clubCommissionPrecent",clubCommissionPrecent);
+		var clubCommission  = (priceSingle-creditComission)*(clubCommissionPrecent/100);	
+		console.log("clubCommission",clubCommission);
+		var income 			= priceSingle-creditComission-clubCommission;
+
+		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
+		if(profitPrecent==Infinity||profitPrecent==-Infinity)
+			profitPrecent = 0;
+		return profitPrecent+"%";
+	}.property('priceSingle','netPrice'),
+	
+
+	profitPrecentGroup:function()
+	{
+		//var clubCommissionPrecent  = this.get('clubCommission');
+		var priceGroup     	  = this.get('priceGroup') || 0;
+		var netPrice 		= this.get('netPrice') || 0;
+		var vat 			= App.get('vat');
+		var creditComission = App.get('creditCommission');
+		if(netPrice==0)
+			return "100%";
+		if(priceGroup==0)
+			return "0%";
+		priceGroup = priceGroup/(vat/100+1);
+		netPrice    = netPrice/(vat/100+1);
+		var creditComission = priceGroup*(creditComission/100);
+		//var clubCommission  = (priceGroup-creditComission)*(clubCommissionPrecent/100);	
+		var income 			= priceGroup-creditComission;//-clubCommission
+		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
+		if(profitPrecent==Infinity||profitPrecent==-Infinity)
+			profitPrecent = 0;
+		return profitPrecent+"%";
+	}.property('priceGroup','netPrice'),
 
 });

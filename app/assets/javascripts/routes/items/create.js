@@ -49,7 +49,6 @@ App.ItemsEditController = Em.ObjectController.extend({
 			profitPrecent = 0;
 		return profitPrecent+"%";
 	}.property('priceSingle','netPrice'),
-
 	discountPrecent:function()
 	{
 		var priceSingle     = this.get('priceSingle') || 0;
@@ -59,6 +58,39 @@ App.ItemsEditController = Em.ObjectController.extend({
 			return "0%";
 		return discountPrecent+"%";
 	}.property('priceSingle','listPrice'),
+
+	profitPrecentGroup:function()
+	{
+		//var clubCommissionPrecent  = this.get('clubCommission');
+		var priceGroup     	  = this.get('priceGroup') || 0;
+		var netPrice 		= this.get('netPrice') || 0;
+		var vat 			= App.get('vat');
+		var creditComission = App.get('creditCommission');
+		if(netPrice==0)
+			return "100%";
+		if(priceGroup==0)
+			return "0%";
+		priceGroup = priceGroup/(vat/100+1);
+		netPrice    = netPrice/(vat/100+1);
+		var creditComission = priceGroup*(creditComission/100);
+		//var clubCommission  = (priceGroup-creditComission)*(clubCommissionPrecent/100);	
+		var income 			= priceGroup-creditComission;//-clubCommission
+		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
+		if(profitPrecent==Infinity||profitPrecent==-Infinity)
+			profitPrecent = 0;
+		return profitPrecent+"%";
+	}.property('priceGroup','netPrice'),
+	
+	discountPrecentGroup:function()
+	{
+		var priceGroup     = this.get('priceGroup') || 0;
+		var listPrice 		= this.get('listPrice') || 0;
+		var discountPrecent = 100-Math.floor(priceGroup/listPrice*100);
+		if(isNaN(discountPrecent))
+			return "0%";
+		return discountPrecent+"%";
+	}.property('priceGroup','listPrice'),
+	
 });
 
 

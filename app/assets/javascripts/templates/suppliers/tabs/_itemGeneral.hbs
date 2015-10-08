@@ -31,7 +31,7 @@
                 
             </div>
 
-            <div class="row">
+            {{!-- <div class="row">
                <div class="col-md-2">
                 <div class="form-group">
                   <label>סוג מוצר:</label>
@@ -44,15 +44,15 @@
                     }}
                 </div>
               </div>
-            </div>
+            </div> --}}
             
             {{#if single}}
 
-              <div class="row">
+           {{!--    <div class="row">
                 <div class="col-xs-12">
                  <label class="title">בודד</label>
                 </div>
-              </div>
+              </div> --}}
 
               <div class="row">
                   <div class="col-md-2">
@@ -99,11 +99,11 @@
               </div>
             {{/if}}
             {{#if group}}
-            <div class="row">
+          {{!--   <div class="row">
               <div class="col-xs-12">
                <label class="title">קבוצות</label>
               </div>
-            </div>
+            </div> --}}
               <div class="row">
                   
                    <div class="col-md-2">
@@ -112,7 +112,12 @@
                       {{input type="text" class="form-control" valueBinding="listPriceGroup" required="required" data-parsley-type="number" data-parsley-min="1"}}
                     </div>
                   </div>
-
+                   <div class="col-md-2">
+                    <div class="form-group">
+                      <label>קבוצה ישיר:</label>
+                      {{input type="text" class="form-control" valueBinding="listPrice" required="required" data-parsley-type="number" data-parsley-min="1"}}
+                    </div>
+                  </div>
 
                   <div class="col-md-2">
                     <div class="form-group">
@@ -128,7 +133,25 @@
                     </div>
                   </div>
 
-                  <div class="col-md-2">
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label>רווחיות:</label>
+                      {{input type="text" class="form-control" valueBinding="profitPrecentGroup" disabled="disabled" style="direction: ltr;text-align: right;"}}
+                    </div>
+                  </div>
+
+                  <div class="col-md-1">
+                    <div class="form-group">
+                      <label>הנחה:</label>
+                      {{input type="text" class="form-control" valueBinding="discountPrecentGroup" disabled="disabled" style="direction: ltr;text-align: right;"}}
+                    </div>
+                  </div>
+                  
+
+
+              </div>
+              <div class="row">
+                <div class="col-md-2">
                     <div class="form-group">
                       <label>מינימום משתתפים:</label>
                       {{input type="text" class="form-control" valueBinding="minParticipants" required="required" data-parsley-type="integer" data-parsley-min="1"}}
@@ -142,10 +165,7 @@
                       {{input type="text" class="form-control" valueBinding="maxParticipants" required="required" data-parsley-type="integer" data-parsley-min="1"}}
                     </div>
                   </div>
-
-
               </div>
-
             {{/if}}
 
            
