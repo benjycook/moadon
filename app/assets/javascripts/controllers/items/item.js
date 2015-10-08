@@ -24,14 +24,11 @@ App.ItemController = Em.ObjectController.extend({
 			return "0%";
 		priceSingle = priceSingle/(vat/100+1);
 		netPrice    = netPrice/(vat/100+1);
-		console.log("priceSingle",priceSingle);
-		console.log("netPrice",netPrice);
 		
 		var creditComission = priceSingle*(creditComission/100);
-		console.log("creditComission",creditComission);
-		console.log("clubCommissionPrecent",clubCommissionPrecent);
+		
 		var clubCommission  = (priceSingle-creditComission)*(clubCommissionPrecent/100);	
-		console.log("clubCommission",clubCommission);
+	
 		var income 			= priceSingle-creditComission-clubCommission;
 
 		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
@@ -43,9 +40,8 @@ App.ItemController = Em.ObjectController.extend({
 
 	profitPrecentGroup:function()
 	{
-		//var clubCommissionPrecent  = this.get('clubCommission');
 		var priceGroup     	  = this.get('priceGroup') || 0;
-		var netPrice 		= this.get('netPrice') || 0;
+		var netPrice 		= this.get('netPriceGroup') || 0;
 		var vat 			= App.get('vat');
 		var creditComission = App.get('creditCommission');
 		if(netPrice==0)
@@ -55,12 +51,11 @@ App.ItemController = Em.ObjectController.extend({
 		priceGroup = priceGroup/(vat/100+1);
 		netPrice    = netPrice/(vat/100+1);
 		var creditComission = priceGroup*(creditComission/100);
-		//var clubCommission  = (priceGroup-creditComission)*(clubCommissionPrecent/100);	
 		var income 			= priceGroup-creditComission;//-clubCommission
 		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
 		if(profitPrecent==Infinity||profitPrecent==-Infinity)
 			profitPrecent = 0;
 		return profitPrecent+"%";
-	}.property('priceGroup','netPrice'),
+	}.property('priceGroup','netPriceGroup'),
 
 });
