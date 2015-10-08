@@ -83,6 +83,8 @@ class AdminItemsController extends BaseController
     	$data['pos'] = Item::where('suppliers_id','=',$data['suppliers_id'])->where('itemtypes_id',$data['itemtypes_id'])->max('pos');
     	if(!is_null($data['pos']))
     		$data['pos'] = $data['pos']+1;
+    	else
+    		$data['pos'] = 0;
     	$item 	= $item->create($data);
     	$ids = array();
     	if(isset($data['galleries']))
