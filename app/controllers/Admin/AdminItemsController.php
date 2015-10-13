@@ -48,11 +48,13 @@ class AdminItemsController extends BaseController
 		$count = Item::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
 		$subjects = Item::with('supplier')->whereRaw($sql,array($query))->forPage($page,$items)->get();
-		foreach ($subjects as $item) {
+		$clubCommission = Club::max('clubCommission');
+		foreach ($subjects as &$item) {
 			if($item->orders()->count())
 				$item->removable = false;
 			else
 				$item->removable = true;
+			$item->clubCommission = $clubCommission;
 		}
 		$subjects = $item->toArray();
 		$meta = array(
@@ -99,6 +101,7 @@ class AdminItemsController extends BaseController
     	}	
     	if(count($ids))
     		$item->galleries()->attach($ids);
+    	$clubCommission = Club::max('clubCommission');
     	$items = Item::with('orders')->where('itemtypes_id',$item->itemtypes_id)->where('suppliers_id',$item->suppliers_id)->orderBy('pos','ASC')->get();
     	foreach ($items as &$item) {
 			if(count($item['orders']))
@@ -113,6 +116,7 @@ class AdminItemsController extends BaseController
 			$item['galleries'] = $temp;
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
+			$item['clubCommission'] = $clubCommission;
 		}
     	return Response::json($items,201);
 	}
@@ -185,6 +189,7 @@ class AdminItemsController extends BaseController
     	$item = $item->fill($data);
     	$item->save();
     	//json_decode($this->show($item->id)->getContent(),true)
+    	$clubCommission = Club::max('clubCommission');
     	$items = Item::with('orders')->where('itemtypes_id',$item->itemtypes_id)->where('suppliers_id',$item->suppliers_id)->orderBy('pos','ASC')->get();
     	foreach ($items as &$item) {
 			if(count($item['orders']))
@@ -199,6 +204,7 @@ class AdminItemsController extends BaseController
 			$item['galleries'] = $temp;
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
+			$item['clubCommission'] = $clubCommission;
 		}
     	return Response::json($items,201);
 	}

@@ -61,19 +61,17 @@ App.ItemsEditController = Em.ObjectController.extend({
 
 	profitPrecentGroup:function()
 	{
+
 		var priceGroup     	  = this.get('priceGroup') || 0;
 		var netPrice 		= this.get('netPriceGroup') || 0;
-		var vat 			= App.get('vat');
-		var creditComission = App.get('creditCommission');
+		var vat 			= App.get('vat');17
 		if(netPrice==0)
 			return "100%";
 		if(priceGroup==0)
 			return "0%";
 		priceGroup = priceGroup/(vat/100+1);
 		netPrice    = netPrice/(vat/100+1);
-		var creditComission = priceGroup*(creditComission/100);
-		var income 			= priceGroup-creditComission;//-clubCommission
-		var profitPrecent   = 100-Math.floor((100/income)*netPrice);
+		var profitPrecent   = 100-Math.floor((100/priceGroup)*netPrice);
 		if(profitPrecent==Infinity||profitPrecent==-Infinity)
 			profitPrecent = 0;
 		return profitPrecent+"%";
@@ -83,12 +81,12 @@ App.ItemsEditController = Em.ObjectController.extend({
 	{
 		
 		var priceGroup     = this.get('priceGroup') || 0;
-		var listPrice 		= this.get('listPriceGroup') || 0;
+		var listPrice 		= this.get('listPrice') || 0;
 		var discountPrecent = 100-Math.floor(priceGroup/listPrice*100);
 		if(isNaN(discountPrecent))
 			return "0%";
 		return discountPrecent+"%";
-	}.property('priceGroup','listPriceGroup'),
+	}.property('priceGroup','listPrice'),
 	
 });
 
