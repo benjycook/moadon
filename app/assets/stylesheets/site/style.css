@@ -1428,16 +1428,23 @@ input
   width: 100%;
   height: auto;
 }
-
+label.customerService {
+	bottom: 10px;
+	color: #005189;
+	font-size: 14px;
+	right: 20px;
+	position: absolute;
+	text-decoration: none;
+	text-align: right;
+}
 a.supplier-login {
 	bottom: 10px;
 	color: #005189;
 	font-size: 14px;
-	left: 0;
+	left: 20px;
 	position: absolute;
-	right: 0;
 	text-decoration: none;
-	text-align: center;
+	text-align: left;
 }
 
 .email-input {
