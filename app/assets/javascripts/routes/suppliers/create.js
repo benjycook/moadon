@@ -7,13 +7,13 @@ App.SuppliersEditController = Em.ObjectController.extend({
 		return true;
 	}.property('supplier.id'),
 
-	itemsNum:function()
-	{
-		var items = this.get('items');
-		items.forEach(function(item){
-			item.num = items.indexOf(item)+1;
-		});
-	}.observes('items.length'),
+	// itemsNum:function()
+	// {
+	// 	var items = this.get('items');
+	// 	items.forEach(function(item){
+	// 		item.num = items.indexOf(item)+1;
+	// 	});
+	// }.observes('items.length'),
 
 	messagesReset:function(sender,field)
 	{
@@ -40,34 +40,6 @@ App.SuppliersEditController = Em.ObjectController.extend({
 			this.set('sitedetails.supplierName',supplierName.substr(0,18));
 	}.observes('sitedetails.supplierName'),
 
-	// sortedLevel1:function()
-	// {
-	// 	return App.get('regions').filterBy('parent_id',0);
-	// }.property('content'),
-
-	// sortedLevel2:function()
-	// {
-	// 	var mainRegion = this.get('mainRegion');
-	// 	var secondaryRegion = this.get('secondaryRegion');
-	// 	secondaryRegion = App.get('regions').findBy('id',secondaryRegion);
-	// 	if(secondaryRegion&&mainRegion!=secondaryRegion.parent_id)
-	// 		this.set('secondaryRegion',0);
-	// 	if(mainRegion)
-	// 		return App.get('regions').filterBy('parent_id',mainRegion);
-	// 	return [];
-	// }.property('mainRegion'),
-
-	// sortedLevel3:function()
-	// {
-	// 	var secondaryRegion = this.get('secondaryRegion');
-	// 	if(secondaryRegion)
-	// 		return App.get('regions').filterBy('parent_id',secondaryRegion);
-	// 	this.set('sitedetails.regions_id',0);
-	// 	return [];
-	// }.property('secondaryRegion'),
-
-	
-
 });
 
 App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
@@ -88,30 +60,31 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			name: 'root element',
 			children: model.categories
 		};
-		var items = Em.ArrayController.create({
-			sortProperties: ['pos'],
-			content:[]
-		});
-		var self = this;
-		model.items.forEach(function(item){
-			var ctrl = App.ItemController.create({model:item})
-			ctrl.set('target',self);
-			items.pushObject(ctrl);
-		});
-		model.items = items;
 		ctrl.set('model',model);
-	    Ember.run.schedule('afterRender', this, function () {
+		var self = this;
+    
+	    Ember.run.schedule('afterRender', self, function () {
 	      
-	      var rows = $('tbody')[0];
-	      var sortable = Sortable.create(rows, {
+	      var rows = $('tbody.single')[0];
+	      var sortable1 = Sortable.create(rows, {
 	        handle: ".fa-bars", 
 	        ghostClass: "ghost",
 	        draggable: 'tr',
 	        onSort: function(evt){
-	        	self.send('sort', sortable.toArray());
+	        	self.send('sort', sortable1.toArray(),0);
+	        }
+	      });
+	      var rows = $('tbody.group')[0];
+	      var sortable2 = Sortable.create(rows, {
+	        handle: ".fa-bars", 
+	        ghostClass: "ghost",
+	        draggable: 'tr',
+	        onSort: function(evt){
+	        	self.send('sort', sortable2.toArray(),1);
 	        }
 	      });
 	    });
+	  
 	},
 
 
@@ -127,21 +100,12 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: 'items/position',
 				data: JSON.stringify(data)
 			}).then(function(data){
-				// var items = self.get('controller.model.items');
-				// items.forEach(function(item){
-				// 	console.log(data.findBy('id',item.model.id));
-				// 	item.set('model',data.findBy('id',item.model.id));
-				// });
-				// items = self.get('controller.model.items');
-				// items.forEach(function(item){
-				// 	console.log(item.get('name'),item.get('pos'));
-				// });
 			}).fail(function(data){
 
 			});
 		},
 
-		'editItem':function(item)
+		'editItem':function(item,type)
 		{
 	
 			var id = item.id;
@@ -160,7 +124,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 			else
 			{
 				var self = this;
-				$.getJSON('items/create').then(function(data){
+				$.getJSON('items/create?type='+type).then(function(data){
 					var ctrl = App.ItemsEditController.create({model:data});
 					ctrl.set('target',self);
 					self.render('suppliers/tabs/partials/item', {into: 'application',outlet: 'modal',controller:ctrl});
@@ -175,7 +139,6 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 
 	    'saveItem':function(model,view,controller)
 	    {
-			var items = this.controllerFor('suppliersEdit').get('items');
 			model.suppliers_id = this.controllerFor('suppliersEdit').get('supplier.id');
 			var suppliersEdit = this.controllerFor('suppliersEdit');
 			var form = view.$('form');
@@ -200,51 +163,32 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				url: url,
 				data: JSON.stringify(model)
 			}).then(function(data){
-				//suppliersEdit.set('items',[]);
-				// var item = items.findBy('id',data.id);
-				
-				// if(item == undefined)
-				// {
-				// 	item = App.ItemController.create({model:data});
-				// 	item.set('target',self);
-				// 	items.pushObject(item);
-				// }
-				// else
-				// {
-				// 	item.set('model',data);
-				// }
 				controller.set('error',null);
 				controller.set('success',"נשמר בהצלחה.");
 				self.send('closeWindow');
-				
-				// items.forEach(function(item){
-				// 	console.log(item.get('name'),item.get('pos'));
-				// });
-				Ember.run.schedule('afterRender', self, function () {
-					var items = Em.ArrayController.create({
-						sortProperties: ['pos'],
-						content:[]
-					});
-					data.forEach(function(item){
-						var ctrl = App.ItemController.create({model:item})
-						ctrl.set('target',self);
-						items.pushObject(ctrl);
-					});
-					var itemsNew = Em.ArrayController.create({
-						sortProperties: ['pos'],
-						content:items
-					});
-	      			suppliersEdit.set('items',itemsNew);
-				    var rows = $('tbody')[0];
-				    var sortable = Sortable.create(rows, {
-				      handle: ".fa-bars", 
-				      ghostClass: "ghost",
-				      draggable: 'tr',
-				      onSort: function(evt){
-				      	self.send('sort', sortable.toArray());
-				      }
-				    });
-			  });
+				console.log(model.itemtypes_id);
+				if(model.itemtypes_id == 1)
+				{
+					var table = "tbody.single";
+					suppliersEdit.set('model.singleItems',data);
+				}
+				if(model.itemtypes_id == 2)
+				{
+					suppliersEdit.set('model.groupItems',data);
+					var table = "tbody.group";
+				}
+				console.log(suppliersEdit);
+				// Ember.run.schedule('afterRender', self, function () {
+				//     var rows = $(table)[0];
+				//     var sortable = Sortable.create(rows, {
+				//       handle: ".fa-bars", 
+				//       ghostClass: "ghost",
+				//       draggable: 'tr',
+				//       onSort: function(evt){
+				//       	self.send('sort', sortable.toArray());
+				//       }
+				//     });
+			 //  });
 			   
 			}).fail(function(data){
 				controller.set('success',null);
@@ -375,7 +319,7 @@ App.SuppliersCreateRoute = App.SuppliersEditRoute = App.ProtectedRoute.extend({
 				type: "DELETE",
 				url: 'items/'+controller.get('deleteID'),
 			}).then(function(data){
-				var items = controller.get('items');
+				var items = controller.get(data.type);
 				var item = items.findBy('id',controller.get('deleteID'));
 				items.removeObject(item);
 				self.render('empty', {into: 'application',outlet: 'modal'});

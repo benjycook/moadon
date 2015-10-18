@@ -3,4 +3,5 @@
 	<li style="margin-bottom:10px;">סיסמתך היא: <?=$password?></li>
 	<li>קופונופש - מועדון חברים</li>
 	<li><?=$clubUrl?></li>
+	<li>שרות לקוחות 072-3712328</li>
 </ul>

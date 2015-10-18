@@ -58,6 +58,7 @@ class SiteDetails extends Eloquent {
 	{
 		return $query->with('galleries')->with(['items'=>function($iteQuery){
 			$iteQuery->where('states_id','=',2);
+			$iteQuery->where('itemtypes_id','=',1);
 			$iteQuery->orderBy('pos','ASC');
 		}]);
 	}
@@ -83,6 +84,7 @@ class SiteDetails extends Eloquent {
   													->where($filterField, '=', '1')
 														->where('sitedetails.states_id', '=', '2')
 														->where('items.states_id', '=', '2')
+														->where('itemtypes_id','=',1)
 														->whereRaw('(100 - FLOOR(items.priceSingle / items.listPrice * 100))')
 														->select(DB::raw(
 															'sitedetails.*, MAX(100 - FLOOR(items.priceSingle / items.listPrice * 100)) AS discount'

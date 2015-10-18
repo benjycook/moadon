@@ -36,6 +36,7 @@ class AdminItemsController extends BaseController
 		$item['galleries'] = $temp;
 		$item['uploadUrl'] = '/uploadImage';
 		$item['clubCommission'] = Club::max('clubCommission');
+		$item['itemtypes_id'] = Input::get('type',1);
 		return Response::json($item,200);
 	}
 	public function index()
@@ -47,11 +48,13 @@ class AdminItemsController extends BaseController
 		$count = Item::whereRaw($sql,array($query))->count();
 		$pages = ceil($count/$items);
 		$subjects = Item::with('supplier')->whereRaw($sql,array($query))->forPage($page,$items)->get();
-		foreach ($subjects as $item) {
+		$clubCommission = Club::max('clubCommission');
+		foreach ($subjects as &$item) {
 			if($item->orders()->count())
 				$item->removable = false;
 			else
 				$item->removable = true;
+			$item->clubCommission = $clubCommission;
 		}
 		$subjects = $item->toArray();
 		$meta = array(
@@ -79,6 +82,11 @@ class AdminItemsController extends BaseController
     	if(Item::where('name','=',$data['name'])->where('suppliers_id','=',$data['suppliers_id'])->count())
     		return Response::json(array('error'=>'מוצר עם שם זה כבר קיים במערכת במערכת'),501);
     	$item 	= new Item;
+    	$data['pos'] = Item::where('suppliers_id','=',$data['suppliers_id'])->where('itemtypes_id',$data['itemtypes_id'])->max('pos');
+    	if(!is_null($data['pos']))
+    		$data['pos'] = $data['pos']+1;
+    	else
+    		$data['pos'] = 0;
     	$item 	= $item->create($data);
     	$ids = array();
     	if(isset($data['galleries']))
@@ -93,7 +101,24 @@ class AdminItemsController extends BaseController
     	}	
     	if(count($ids))
     		$item->galleries()->attach($ids);
-    	return Response::json(json_decode($this->show($item->id)->getContent(),true),201);
+    	$clubCommission = Club::max('clubCommission');
+    	$items = Item::with('orders')->where('itemtypes_id',$item->itemtypes_id)->where('suppliers_id',$item->suppliers_id)->orderBy('pos','ASC')->get();
+    	foreach ($items as &$item) {
+			if(count($item['orders']))
+				$item['removable'] = false;
+			else
+				$item['removable'] = true;
+			$galleries = $item['galleries'];
+			$item['linkId'] = $item['id'];
+			$temp = array();
+			$temp['main'] = isset($galleries[0]) ? $galleries[0]:array('images'=>array());
+			$temp['main']['base'] = URL::to('/')."/galleries/";
+			$item['galleries'] = $temp;
+			$item['uploadUrl'] = '/uploadImage';
+			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
+			$item['clubCommission'] = $clubCommission;
+		}
+    	return Response::json($items,201);
 	}
 
 	public function show($id)
@@ -164,7 +189,8 @@ class AdminItemsController extends BaseController
     	$item = $item->fill($data);
     	$item->save();
     	//json_decode($this->show($item->id)->getContent(),true)
-    	$items = Item::with('orders')->where('suppliers_id',$item->suppliers_id)->get();
+    	$clubCommission = Club::max('clubCommission');
+    	$items = Item::with('orders')->where('itemtypes_id',$item->itemtypes_id)->where('suppliers_id',$item->suppliers_id)->orderBy('pos','ASC')->get();
     	foreach ($items as &$item) {
 			if(count($item['orders']))
 				$item['removable'] = false;
@@ -178,6 +204,7 @@ class AdminItemsController extends BaseController
 			$item['galleries'] = $temp;
 			$item['uploadUrl'] = '/uploadImage';
 			$item['expirationDate'] = implode('/',array_reverse(explode('-',$item['expirationDate'])));	
+			$item['clubCommission'] = $clubCommission;
 		}
     	return Response::json($items,201);
 	}
@@ -189,6 +216,11 @@ class AdminItemsController extends BaseController
 			return Response::json(array('error'=>'מוצר זה לא נמצא במערכת'),501);
 		if($item->orders()->count())
 			return Response::json(array('error'=>'לא ניתן למחוק מוצר אשר בומע עליו הזמנה.'),501);
+		$type = "";
+		if($item->itemtypes_id==1)
+			$type = "singleItems";
+		if($item->itemtypes_id==2)
+			$type = "groupItems";
 		ItemGallery::where('items_id','=',$item->id)->delete();
 		foreach ($item->galleries as $gallery) {
 			foreach ($gallery->images as $image) {
@@ -199,7 +231,7 @@ class AdminItemsController extends BaseController
 			$gallery->delete();
 		}
 		$item->delete();
-		return Response::json('success',201);
+		return Response::json(['type'=>$type],201);
 	}
 	public function position()
 	{
