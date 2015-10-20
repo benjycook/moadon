@@ -132,11 +132,11 @@ class OrderService
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
 		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
-		$msg[]	= "תודה שרכשת במועדון של וובטק!".PHP_EOL;
+		$msg[]	= "תודה שרכשת במועדון של ווב טק!".PHP_EOL;
 		$msg[]	= "קוד הזמנתך הוא: ".$order->code."".PHP_EOL;
 		$msg[]	= "לפרטי ההזמנה:".PHP_EOL;
 		$msg[]	= "$url".PHP_EOL;
-		$msg[]  = "קופונופש, מועדון חברים";
+		$msg[]  = "צוות ווב טק";
 		$msg = implode('',$msg);
 		$postUrl = Config::get('smsapi.url');
     $projectKey = Config::get('smsapi.key');
