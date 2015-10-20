@@ -194,7 +194,7 @@ body
 #header #logo {
 	position: absolute;
 	right: 0;
-	bottom: 0;
+	top: 50;
 	text-decoration: none;
 }
 
