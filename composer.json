@@ -18,7 +18,7 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"codesleeve/asset-pipeline": "dev-master",
-		
+		"igorgoroshit/l4ember": "dev-master",
 		"igorgoroshit/token-auth": "dev-master",
 		"intervention/image": "~2.0"
 	},
