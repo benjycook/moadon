@@ -194,12 +194,12 @@ body
 #header #logo {
 	position: absolute;
 	right: 0;
-	top: 50;
+	top: 50px;
 	text-decoration: none;
 }
 
 #header #logo img {
-	height: 108px;
+	height: 50px;
 	vertical-align: middle;
 }
 
