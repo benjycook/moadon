@@ -132,7 +132,7 @@ class OrderService
 		$info['orderNum'] = $order->id;
 		$info['client'] = $client;
 		$msg[]	= "שלום ".$client['firstName'].",".PHP_EOL;
-		$msg[]	= "תודה שרכשת בקופונופש - מועדון חברים!".PHP_EOL;
+		$msg[]	= "תודה שרכשת במועדון של וובטק!".PHP_EOL;
 		$msg[]	= "קוד הזמנתך הוא: ".$order->code."".PHP_EOL;
 		$msg[]	= "לפרטי ההזמנה:".PHP_EOL;
 		$msg[]	= "$url".PHP_EOL;
@@ -144,7 +144,7 @@ class OrderService
     $sms = new stdClass;
     $sms->msg = $msg;
     $sms->key = $projectKey;
-    $sms->senderNumber  = "0723712328";
+    $sms->senderNumber  = "0525001920";
 
 		$sms->resiverNumber = $client['mobile'];
 		$ch = curl_init();
@@ -206,9 +206,9 @@ class OrderService
 	  if($clientEmail != NULL)
     {
 	    $doc->sendInvoice = new stdClass;
-	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - קופונופש - מועדון חברים";
+	    $doc->sendInvoice->subject  = "חשבונית מס קבלה - עבור רכישה במועדון ווב טק";
 	    $doc->sendInvoice->email    = $clientEmail;
-	    $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר קופונופש-מועדון חברים!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
+	    $doc->sendInvoice->content  = "שלום ".$client['name'].",<br>תודה על רכישתך באתר במועדון ווב טק!<br>מצורף בקובץ חשבונית מס קבלה.<br><br>יום טוב";
     }
 
     $ch = curl_init();
@@ -228,7 +228,7 @@ class OrderService
 	  if($clientEmail != NULL)
     {
 			Mail::send('mail.order',$info,function($message) use($info, $clientEmail){
-	    	$message->to($clientEmail)->subject("קופונופש - מועדון חברים: הזמנה מס' ".$info['orderNum']);
+	    	$message->to($clientEmail)->subject("מועדון ווב טק: הזמנה מס' ".$info['orderNum']);
 	    }); 
    	}
 

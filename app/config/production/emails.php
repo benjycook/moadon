@@ -1,4 +1,4 @@
 <?php
 return [
-		'contact'=>"info@cpnclub.co.il",
-	];
+		'contact'=>"igor@webt.co.il",
+];

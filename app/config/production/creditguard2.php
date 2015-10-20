@@ -1,5 +1,4 @@
 <?php
-
 return array(
 	'tid' 			=>  $_ENV['CREDITGUARD_TID2'],
 	'mid' 			=> 	$_ENV['CREDITGUARD_MID2'],
