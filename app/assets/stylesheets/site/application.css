@@ -3,4 +3,5 @@
  *= require libs/font-awesome
  *= require chosen
  *= require_tree .
+ *= require responsive.css
  */

@@ -1,0 +1,27 @@
+@media screen and (max-width: 639px) {
+	body #sidebar {
+		display: none;
+	}
+
+	body #content {
+		width: 100%;
+		margin: 0;
+		float: none;
+	}
+
+	body .container {
+		width: 100%;
+	}
+
+	body .box {
+		width: 100%;
+	}
+
+	body .box .inner > label {
+		display: none;
+	}
+
+	body .box .inner address {
+		display: none;
+	}
+}
